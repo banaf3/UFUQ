@@ -118,8 +118,9 @@ values must not be lifted without convention analysis.
   as modern geodesy.
 - `INFORMATIONAL_ONLY`: Mosque orientation or a historical map must never supply the
   production Kaaba coordinate.
-- `HUMAN_REVIEW_REQUIRED`: Nothing in the studied papers establishes specifically
-  Najdi star usage.
+- `HUMAN_REVIEW_REQUIRED`: Specifically Najdi star usage is
+  `NOT_FOUND_IN_REVIEWED_SCOPE` in the studied papers; geographic basis remains
+  `UNKNOWN` and this is not historical disproof.
 
 ## Testing implications
 
@@ -142,7 +143,8 @@ values must not be lifted without convention analysis.
 - Historical coordinate tables may contain source/copying errors and different
   conventions.
 - The volume does not approve a Kaaba coordinate, WGS84 realization, runtime
-  algorithm, numerical tolerance, or Najdi cultural mapping.
+  algorithm, numerical tolerance, or cultural mapping. A specifically Najdi mapping
+  was not established in the bounded review.
 
 ## Conflicts and ambiguities
 

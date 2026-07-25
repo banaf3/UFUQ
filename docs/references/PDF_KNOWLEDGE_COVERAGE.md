@@ -27,9 +27,9 @@ provenance is inadequate.
 | Hipparcos I/311 ReadMe | Text/HTML | 6/6, 100% | Notice, File Summary, four byte descriptions, all relevant notes/history | Catalogue row values deliberately excluded | Searchable; high confidence in field/note metadata | 10 trace items; acquisition, field, quality, covariance, and stop rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
 | van Leeuwen I/311 validation | 12 PDF pages | 5/5, 100% | §§1-5, relevant equations, tables, and figures | No row coordinates or downstream science use | Searchable; high confidence, limited by study's own samples | 8 trace items; per-row uncertainty and layered-validation rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
 | Karney geodesics | 12 PDF pages | 7/7, 100% | §§1-5, §7, Tables 1 and 3-6 | Polygon area and gnomonic projection are outside current need | Searchable; high confidence in preprint locations | 8 trace items; inverse, azimuth, difficult-case, and tolerance-stop rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
-| Ibn Qutaybah, Kitab al-Anwa | 92-page derivative | 4/4 targeted units, 100% | Contents/introduction; sections 31-32 and 52-53 using local discovery pointers | Full lunar-station/weather/verse corpus; stable-edition verification | Searchable but edition/completeness/provenance unverified; low-medium confidence | 7 trace items; `OLD_ARABIAN` candidates and hard human/edition gates | `SOURCE_STUDY_PARTIAL` |
+| Ibn Qutaybah, Kitab al-Anwa | 92-page derivative | 4/4 targeted units, 100% | Contents/introduction; sections 31-32 and 52-53 using local discovery pointers | Full lunar-station/weather/verse corpus; stable-edition verification | Searchable but edition/completeness/provenance unverified; low-medium confidence | 7 trace items; claim-specific historical attestation candidates and hard human/edition gates | `SOURCE_STUDY_PARTIAL` |
 | Kunitzsch 1961 | 130 PDF pages | 12/12 targeted units, 100% | Part I A-E and entries 55-57, 96, 107a-b, 136a-c, 148a-149 | Remaining catalogue entries | OCR; page-image/German/Arabic/Greek review required; medium confidence | 7 trace items; layer classification, variants, and negative-mapping rules | `SOURCE_STUDY_PARTIAL` |
-| Hafez 2010 | 406 PDF pages | 8/8, 100% | Intro, §2.3, Ursa chapters, §§5.1 and 5.10-5.12, Tables 18/19/24/26 | Remaining 48-constellation catalogue and quantitative analysis | Searchable; high confidence in thesis pointers, mappings still provisional | 7 trace items; Greco-Arabic crosswalk and human-review rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
+| Hafez 2010 | 406 PDF pages | 8/8, 100% | Intro, §2.3, Ursa chapters, §§5.1 and 5.10-5.12, Tables 18/19/24/26 | Remaining 48-constellation catalogue and quantitative analysis | Searchable; high confidence in thesis pointers, mappings still provisional | 7 trace items; secondary Greco-Arabic crosswalk and human-review rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
 | King 1993 | 358 PDF pages | 7/7, 100% | Preface, Paper I, Papers IX-XIV relevant portions | Prayer-time/crescent/timekeeping studies | OCR; page-image verification needed for quotations; medium-high conceptual confidence | 7 trace items; historical-method distinction and no-modern-coordinate rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
 | King 1999 | 679 PDF pages | 8/8, 100% | Foreword/prefaces, Ch. 1 relevant units, Ch. 2 §§2.1-2.5, 2.8-2.9 | Full gazetteers, appendices, object catalogue, later map detail | OCR; medium-high conceptual confidence | 8 trace items; method/data/convention limits and historical-map prohibition | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
 | JSON Schema Core/Validation 2020-12 | Official HTML, no fixed pages | 8/8, 100% | Core §§4.2-13; Validation §§1-10 and App. A, scoped by `READING_PLAN.md` | Hypermedia detail, every format, Relative JSON Pointer | Official searchable HTML; high confidence in section pointers | 10 trace items; dialect, vocabulary, reference, composition, output, and validator-experiment rules | `SOURCE_STUDY_COMPLETE_FOR_CURRENT_PHASE` |
@@ -53,7 +53,7 @@ experiment or human approval.
 | `ufuq-astronomy-validation` | 9 | 8 | 9 | 4 | 0 | 4 | 0 |
 | `ufuq-catalogue-provenance` | 8 | 8 | 8 | 2 | 0 | 3 | 0 |
 | `ufuq-qibla-geodesy` | 9 | 7 | 9 | 3 | 0 | 4 | 0 |
-| `ufuq-najdi-arabian-sky` | 8 | 4 | 7 | 0 | 6 | 4 | 0 |
+| `ufuq-historical-arabic-sky-evidence` | 10 | 6 | 9 | 0 | 6 | 5 | 0 |
 
 Each `references/traceability.md` also maps the skill's stop conditions and prohibited
 assumptions. A rule without one of the permitted bases is not retained.
@@ -61,7 +61,8 @@ assumptions. A rule without one of the permitted bases is not retained.
 ## Cross-source validation result
 
 - Historical sources are not used as modern geodesic or catalogue specifications.
-- General Arabic/Arabian/Islamic evidence is not relabelled `NAJDI_TRADITION`.
+- General Arabic/Arabian/Islamic evidence is not promoted to specifically Najdi
+  evidence, and reviewed-scope absence is not represented as historical disproof.
 - No proposed numerical tolerance is marked validated.
 - No Kaaba coordinate or catalogue coordinate was introduced.
 - Original-1997 `mu_alpha_star` evidence is not relabelled as a confirmed I/311 field
@@ -76,7 +77,9 @@ assumptions. A rule without one of the permitted bases is not retained.
   legal acquisition provenance.
 - The Astropy/PyERFA/IERS-data environment and official Astropy documentation remain
   unpinned and therefore were not studied as a versioned oracle source.
-- The current cultural source set cannot close Najdi, Arabic-human-review, exact
-  membership, line-segment, or instructional-route approval.
+- The current historical source set cannot establish a specifically Najdi claim,
+  Arabic/historical human review, exact membership, line-segment, or instructional
+  route approval. The first limitation is recorded as bounded absence or unknown
+  geography, not rejection.
 - The source study does not approve I/311, a runtime astronomy model, Qibla destination,
   schema validator, numerical tolerance, or learner-facing content.

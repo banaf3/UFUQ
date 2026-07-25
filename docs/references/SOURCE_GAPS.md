@@ -21,7 +21,7 @@ memory, an unpinned web page, or an unrelated local PDF.
 | DATA-SRC-001 | If I/311 is evaluated, its approved acquisition URL, retrieval timestamp, checksum, fields, filters, row ordering, quality/null rules, and redistribution determination; catalogue selection itself remains unresolved under IMP-008 | Reviewed candidate acquisition manifest, licence record, and separate source-selection decision |
 | DATA-SRC-002 | Official JSON Schema Draft 2020-12 Core/Validation version pins and runtime validator decision | Versioned schema references, dependency rationale if a validator is selected, and conformance tests |
 
-## Required before Najdi cultural claims
+## Required before a specifically Najdi or learner-facing historical-sky claim
 
 | Gap ID | Required source or decision evidence | Closure evidence |
 |---|---|---|
@@ -31,6 +31,8 @@ memory, an unpinned web page, or an unrelated local PDF.
 | CULT-SRC-004 | Explicit evidence for exact pattern membership and instructional routes | Claim table joining Arabic evidence, modern catalogue IDs, geometry, route role, and review status |
 
 Kunitzsch, Ibn Qutaybah, Hafez, and King cannot close these gaps by themselves.
+`CULT-SRC-001` and `CULT-SRC-002` apply when a specifically Najdi claim is proposed;
+their current absence is not evidence that such use was historically false.
 
 ## Required before assessment/BKT implementation
 
@@ -78,5 +80,7 @@ procedure.
   specification.
 - PROV Semantics is `OPTIONAL`; formal PROV reasoning is outside UFUQ scope.
 - David King's books are `HISTORICAL_CONTEXT_ONLY` for production geodesy.
-- No source currently supports a `NAJDI_TRADITION` production classification without
-  additional regional evidence and human review.
+- No reviewed source currently supports a specifically Najdi production claim without
+  additional claim-level regional evidence and human review. Record this as
+  `NOT_FOUND_IN_REVIEWED_SCOPE` or geographic basis `UNKNOWN`, as applicable, not as
+  historical disproof.

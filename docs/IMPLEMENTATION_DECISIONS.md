@@ -132,9 +132,10 @@ Historical report/deviation/authority status remains in `governance/`.
   guidance relationships, instructional geometry/explanations, and route content for
   learner-facing lessons.
 - **Current choice:** No concrete helper pattern or learner-facing mapping is selected.
-  The first reviewed route may use Banat Na'sh or Dhat al-Kursi to reach Al-Jady;
-  synthetic IDs may exercise generic interfaces in a technical spike but cannot ship as
-  content.
+  A future route may use one or more source-attested and human-reviewed helper patterns
+  and selected targets. Historical names, modern star mappings, membership, geometry,
+  and instructional suitability are not predetermined. Synthetic IDs may exercise
+  generic interfaces in a technical spike but cannot ship as content.
 - **Status:** unresolved
 - **What code it affects:** Curated `SkyPattern`, `GuidanceRelationship`, and
   `LessonRoute` data; scene overlays; assessment targets; lesson/scaffold configuration;
@@ -148,11 +149,11 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Decision:** How patterns, guidance edges, multi-step lessons, and alternative paths
   are represented and selected.
 - **Current choice:** Versioned generic `SkyPattern`, `GuidanceRelationship`, and
-  `LessonRoute` records form a content graph. Routes can compose helper pattern to Banat
-  Na'sh or Dhat al-Kursi, either pattern to Al-Jady, Al-Jady to True North, and True
-  North to Qibla. The server selects only routes whose resolved required stars are
-  available in the approved scenario; no named pattern is hardcoded as the universal
-  entry point.
+  `LessonRoute` records form a content graph. Routes can compose one or more reviewed
+  pattern/star relationships, a reviewed celestial cue to True North, and True North to
+  Qibla. The server selects only routes whose resolved required stars are available in
+  the approved scenario; concrete content is selected through the historical-evidence
+  review process and no named pattern is hardcoded as the universal entry point.
 - **Status:** approved
 - **What code it affects:** Catalogue/curation schemas, generated runtime content,
   scenario route selection, lesson renderer, assessment-step orchestration, scaffold

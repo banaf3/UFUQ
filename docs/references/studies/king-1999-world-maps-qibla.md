@@ -135,8 +135,9 @@ No historical table value, map reading, or formula is adopted as a production fi
   inputs.
 - `HUMAN_REVIEW_REQUIRED`: Historical/legal/cultural explanations require qualified
   review.
-- `HUMAN_REVIEW_REQUIRED`: The book provides no specifically Najdi star-pattern
-  evidence.
+- `HUMAN_REVIEW_REQUIRED`: Specifically Najdi star-pattern evidence is
+  `NOT_FOUND_IN_REVIEWED_SCOPE`; geographic basis remains `UNKNOWN` and this is not
+  historical disproof.
 
 ## Testing implications
 
@@ -158,7 +159,8 @@ No historical table value, map reading, or formula is adopted as a production fi
   errors.
 - The book provides no approved Kaaba coordinate, datum, ellipsoid, observer location,
   magnetic-declination model, or numerical tolerance.
-- It does not establish Najdi cultural claims.
+- A specifically Najdi cultural claim was not established in the bounded review; this
+  is a scope limitation, not historical disproof.
 
 ## Conflicts and ambiguities
 

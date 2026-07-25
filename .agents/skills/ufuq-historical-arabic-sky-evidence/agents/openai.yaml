@@ -1,0 +1,6 @@
+interface:
+  display_name: "UFUQ Historical Arabic Sky Evidence"
+  short_description: "Review historical Arabic sky evidence by separate facets"
+  default_prompt: "Use $ufuq-historical-arabic-sky-evidence to review this historical Arabic or Arabian sky claim without approving lesson content."
+policy:
+  allow_implicit_invocation: false

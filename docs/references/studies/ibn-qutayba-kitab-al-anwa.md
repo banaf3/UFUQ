@@ -34,8 +34,10 @@ dossier.
 - Intentionally not studied in depth: the full 28 lunar-station cycle, weather lore,
   seasonal verses, winds, and indexes. They are not needed to establish the current
   atomic Ursa/Polaris claims.
-- Scope reason: this pass tests whether the source can support `OLD_ARABIAN`
-  evidence for Banāt Naʿsh and al-jady. It does not attempt a general cultural atlas.
+- Scope reason: this bounded pass records claim-specific primary historical
+  attestation for the previously selected Banāt Naʿsh and al-jady passages. The names
+  are not a complete or approved research list, and this dossier does not attempt a
+  general cultural atlas.
 
 ## Terminology
 
@@ -47,37 +49,40 @@ dossier.
   gloss is “the lesser/little Daughters of Naʿsh”; rendering `نعش` as “bier” or
   “coffin” is philologically disputed and `HUMAN_REVIEW_REQUIRED`.
 - `بنات نعش الكبرى` — *Banāt Naʿsh al-kubrā*, provisionally the greater/large group.
-- `الجدي` — *al-jady/al-gady*. The local text associates it with the terminal bright
-  member in the lesser group and with direction-finding (section 31, local PDF
-  p. 68). Kunitzsch's reading history makes spelling/vocalization and “kid/goat”
-  translation `HUMAN_REVIEW_REQUIRED`.
-- `الفرقدان` — *al-farqadān*, a pair among the four-star portion of the lesser group
-  (section 31, local PDF p. 68). Translation was not independently verified here.
-- `السها` — *al-Suhā*, a small star beside the middle member of the greater group's
-  three-star portion (section 32, local PDF p. 69). Modern identification requires a
-  separate argument.
+- `الجدي` — *al-jady/al-gady*. The local derivative places the expression with the
+  lesser group (section 31 discovery pointer, local PDF p. 68), and section 53 uses it
+  in relative travel guidance (local PDF p. 82). The second verification pass could
+  not establish the earlier “terminal bright member” wording from this derivative;
+  that facet is `UNVERIFIED`. Spelling/vocalization and the “kid/goat” translation
+  remain `HUMAN_REVIEW_REQUIRED`.
+- `الفرقدان` — *al-farqadān*, a named pair associated with the lesser-group material
+  (section 31 discovery pointer, local PDF p. 68). Exact placement and translation
+  were not independently verified.
+- `السها` — *al-Suhā*. The earlier pass recorded a claimed position within the greater
+  group at section 32, local PDF p. 69, but the independent text-layer pass could not
+  recover that wording. The source form, placement, and modern identification are
+  `UNVERIFIED` pending edition/page-image and language review.
 
 ## Concepts and models
 
 ### Atomic cultural evidence records
 
-| Exact Arabic | Transliteration / provisional translation | Source tradition, period, geography | Stated membership or identification | Classification / status |
+| Exact Arabic | Transliteration / provisional translation | Source tradition, period, geography | Stated referent or relationship | Independent evidence facets and limits |
 |---|---|---|---|---|
-| `بنات نعش الصغرى` | *Banāt Naʿsh al-ṣughrā*; “little/lesser Daughters of Naʿsh” | Ibn Qutayba's ninth-century Arabic compilation of earlier reported material; no explicit Najdi scope | Seven stars arranged like the greater group: four `نعش`, three `بنات`; `الجدي` is in the three-star portion | `OLD_ARABIAN`; `PARTIAL`; `HUMAN_REVIEW_REQUIRED`; no modern IDs approved |
-| `الجدي` / `جدي بنات نعش` | *al-jady* / *jady Banāt Naʿsh*; provisional “kid/goat” | Same; historical direction-finding context, not modern geodesy | Described as the bright end member of the lesser group and used for `القبلة`/guidance because it remains available | `OLD_ARABIAN`; identification with Polaris is only a proposed cross-source argument |
-| `بنات نعش الكبرى` | *Banāt Naʿsh al-kubrā*; “great/greater Daughters of Naʿsh” | Same; no explicit Najdi scope | Seven visible stars: four `النعش`, three `بنات`; first and middle of the three are named `القائد` and `عناق`; `السها` is adjacent to the middle star | `OLD_ARABIAN`; `PARTIAL`; membership-to-catalogue mapping blocked |
-| `الاهتداء بالنجوم` | *al-ihtidāʾ bi-l-nujūm*; stellar guidance | Historical Arabic literary/technical compilation | Sections 52–53 describe travel orientation by risings/settings and relative placement of named stars | `OLD_ARABIAN` historical context; not a validated instructional route |
+| `بنات نعش الصغرى` | *Banāt Naʿsh al-ṣughrā*; “little/lesser Daughters of Naʿsh” | Ibn Qutayba's ninth-century Arabic compilation of earlier reported material; explicit geography `NOT_FOUND_IN_REVIEWED_SCOPE` | The derivative describes seven stars and an arrangement analogous to the greater group; its text layer did not independently verify the full four/three member wording | Attestation `ATTESTED` in the inspected derivative; referent `ASTERISM`; exact membership and modern identification `UNRESOLVED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; edition/witness remains unverified |
+| `الجدي` / `جدي بنات نعش` | *al-jady* / *jady Banāt Naʿsh*; provisional “kid/goat” | Same compilation; relative historical direction-finding context, not modern geodesy; explicit geography `NOT_FOUND_IN_REVIEWED_SCOPE` | The expression occurs with the lesser-group discussion and later among travel-orientation cues; exact terminal/brightness wording is `UNVERIFIED` | Attestation `ATTESTED` in the inspected derivative; referent `STAR`; exact membership and modern identification `UNRESOLVED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; a Polaris identification is a separate cross-source proposal |
+| `بنات نعش الكبرى` | *Banāt Naʿsh al-kubrā*; “great/greater Daughters of Naʿsh” | Same compilation; explicit geography `NOT_FOUND_IN_REVIEWED_SCOPE` | The derivative describes seven visible stars; the independent text-layer pass did not recover the full member names or four/three segmentation | Attestation `ATTESTED` in the inspected derivative; referent `ASTERISM`; exact membership and modern identification `UNRESOLVED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED` |
+| `الاهتداء بالنجوم` | *al-ihtidāʾ bi-l-nujūm*; stellar guidance | Historical Arabic literary/technical compilation | Sections 52–53 describe travel orientation by risings/settings and relative placement of named stars | Attestation `ATTESTED` in the inspected derivative; referent `DIRECTIONAL_RELATIONSHIP`; modern identification `UNRESOLVED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; not a validated UFUQ route |
 
-No studied passage explicitly names Najd or establishes a specifically Najdi chain of
-transmission or use. None may be classified `NAJDI_TRADITION`.
+For specifically Najdi use, the attestation result is
+`NOT_FOUND_IN_REVIEWED_SCOPE` and the geographic basis is `UNKNOWN` for the inspected
+sections 31–32 and 52–53. This is not proof that such use was historically false.
 
 ## Equations and algorithms
 
 The studied sections provide qualitative stellar-orientation rules, not a modern
 coordinate algorithm.
 
-- Section 31 (local PDF p. 68; generated contents source p. 145) links `الجدي` with
-  historical Qibla/direction inference because of its circumpolar behavior.
 - Sections 52–53 (local PDF pp. 80–82; contents source pp. 186–194) describe travel
   guidance using horizons, winds, risings/settings, and the relative placement of
   `الجدي`, Banāt Naʿsh, Suhayl, and the two Shiʿrā stars.
@@ -85,7 +90,7 @@ coordinate algorithm.
   domain are absent. Consequently these procedures are
   `HISTORICAL_CONTEXT_ONLY`, not production Qibla or astronomical algorithms.
 - Any educational reconstruction requires cultural review, a modern astronomical
-  visibility analysis, and an explicit `MODERN_PEDAGOGICAL` decision.
+  visibility analysis, and a separate project pedagogy decision.
 
 ## Conventions
 
@@ -107,14 +112,14 @@ coordinate algorithm.
   edition and record exact page/line or verse pointers.
 - `HUMAN_REVIEW_REQUIRED`: Verify every Arabic spelling, vocalization,
   transliteration, translation, quotation boundary, and literary attribution.
-- `HUMAN_REVIEW_REQUIRED`: Assign `OLD_ARABIAN` only claim-by-claim; never infer
-  `NAJDI_TRADITION`.
+- `HUMAN_REVIEW_REQUIRED`: Record primary historical attestation only claim by claim.
+  Do not infer a specifically Najdi geography from the compilation.
 - `PROJECT_DECISION_REQUIRED`: Keep historical group/name evidence in cultural
   curation and numerical coordinates in catalogue artifacts.
 - `SOURCE_REQUIRED`: A modern catalogue-ID crosswalk needs independent identification
   evidence; do not copy coordinates or infer IDs from shape alone.
-- `PROJECT_DECISION_REQUIRED`: Any learner route derived from historical guidance must
-  be labelled `MODERN_PEDAGOGICAL` unless an approved source supports the exact
+- `PROJECT_DECISION_REQUIRED`: Any learner route derived from historical guidance is a
+  separate pedagogical construction unless an approved source supports that exact
   historical route.
 - `INFORMATIONAL_ONLY`: Historical mention of Qibla direction-finding is not a modern
   geodetic specification and supplies no Kaaba coordinate.
@@ -124,7 +129,8 @@ coordinate algorithm.
 - Schema tests must require exact Arabic, transliteration system, translation source,
   stable edition pointer, period, geography, classification, evidence status, and
   human-review status.
-- Reject `NAJDI_TRADITION` when explicit Najdi evidence and human review are absent.
+- Block a specifically Najdi production claim when claim-level regional evidence and
+  human review are absent; do not convert that block into historical disproof.
 - Reject learner-facing records whose source pointer is only this reflowed local PDF
   page.
 - Referential-integrity tests may verify separately approved catalogue IDs, but cannot
@@ -135,8 +141,8 @@ coordinate algorithm.
 ## Limitations
 
 - Edition identity, completeness, and stable pagination are unresolved.
-- The inspected source does not establish Najdi geography or Rashid al-Khalawi
-  transmission.
+- Najdi geography and Rashid al-Khalawi transmission are
+  `NOT_FOUND_IN_REVIEWED_SCOPE` in the inspected passages; this is not disproof.
 - The text does not provide modern catalogue IDs, line segments, coordinate data,
   confidence metrics, or a culturally approved teaching route.
 - The descriptive relation between `الجدي` and Qibla is historically important but
@@ -160,10 +166,10 @@ coordinate algorithm.
 
 | Knowledge item | Source location | UFUQ implication | Status |
 |---|---|---|---|
-| Lesser Banāt Naʿsh has a four-plus-three structure | Section 31, local PDF p. 68; contents label source p. 145 | Create only a provisional pattern claim; no IDs/segments yet | `HUMAN_REVIEW_REQUIRED` |
-| `الجدي` is placed in the lesser group's three-star portion | Section 31, local PDF p. 68 | Cross-source identification to Polaris must be separate | `SOURCE_REQUIRED` |
-| Historical text associates `الجدي` with Qibla/guidance | Section 31, local PDF p. 68 | Historical context only; no production coordinate/algorithm | `INFORMATIONAL_ONLY` |
-| Greater Banāt Naʿsh has a four-plus-three structure | Section 32, local PDF p. 69; contents label source p. 147 | Pattern membership remains provisional | `HUMAN_REVIEW_REQUIRED` |
+| Lesser Banāt Naʿsh is described as seven stars in an arrangement analogous to the greater group | Section 31 discovery pointer, local PDF p. 68; contents label source p. 145 | Exact four/three membership is `UNVERIFIED`; no IDs or segments | `HUMAN_REVIEW_REQUIRED` |
+| `الجدي` occurs with the lesser-group material | Section 31 discovery pointer, local PDF p. 68 | Exact member position is `UNVERIFIED`; a Polaris crosswalk must be separate | `SOURCE_REQUIRED` |
+| Historical travel instructions include `الجدي` and Banāt Naʿsh as relative cues | Sections 52–53, especially local PDF p. 82 | Historical context only; no production coordinate or algorithm | `INFORMATIONAL_ONLY` |
+| Greater Banāt Naʿsh is described as seven visible stars | Section 32 discovery pointer, local PDF p. 69; contents label source p. 147 | Exact four/three membership and member names are `UNVERIFIED` in the independent text-layer pass | `HUMAN_REVIEW_REQUIRED` |
 | Historical travel guidance uses relative sky/horizon cues | Sections 52–53, local PDF pp. 80–82 | Any UFUQ route is a separately reviewed pedagogical construction | `PROJECT_DECISION_REQUIRED` |
-| No studied pointer is specifically Najdi | Studied sections 31–32 and 52–53 | Block `NAJDI_TRADITION` | `HUMAN_REVIEW_REQUIRED` |
+| Specifically Najdi use was not found in the bounded review | Studied sections 31–32 and 52–53 | Attestation `NOT_FOUND_IN_REVIEWED_SCOPE`; geographic basis `UNKNOWN`; no historical disproof | `HUMAN_REVIEW_REQUIRED` |
 | Edition-stable citation is absent | Local title/contents and inventory status | Block learner-facing approval | `SOURCE_REQUIRED` |

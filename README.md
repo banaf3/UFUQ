@@ -1,7 +1,7 @@
 # UFUQ
 
 UFUQ is a planned browser-based 3D celestial simulator and intelligent tutoring system
-for learning how to identify Banat Na'sh and Dhat al-Kursi, locate Al-Jady/Polaris,
+for learning how to follow source-attested, human-reviewed celestial guidance,
 estimate True North, and derive the Qibla direction.
 
 ## Current status
@@ -52,10 +52,11 @@ Phase 0 creates only the repository layout and tooling. Phase 1 is a replaceable
 astronomy/data technical spike. Scientific or cultural values are not guessed merely to
 start implementation.
 
-Lesson content is data-driven rather than fixed to Banat Na'sh. Versioned sky patterns,
-guidance relationships, and lesson routes can represent reviewed helper-pattern paths,
-Banat Na'sh or Dhat al-Kursi paths to Al-Jady, and the subsequent True North and Qibla
-steps. Exact helper patterns and cultural mappings remain provisional.
+Lesson content is data-driven. Versioned sky patterns, guidance relationships, and
+lesson routes can represent one or more source-attested, human-reviewed helper-pattern
+paths, selected celestial cues, and subsequent True North and Qibla steps. Historical
+names, modern star mappings, membership, geometry, routes, and instructional
+suitability are not predetermined.
 
 ## Scaffold validation
 

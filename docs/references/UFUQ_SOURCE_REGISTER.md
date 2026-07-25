@@ -41,9 +41,9 @@ Priority values are `REQUIRED_NOW`, `SUPPORTING_NOW`, `REQUIRED_LATER`, `OPTIONA
 
 | Source ID | Citation and pointer | Class | Priority | Availability | Permitted UFUQ use and limit |
 |---|---|---|---|---|---|
-| IBN-QUTAYBA-ANWA | Ibn Qutaybah, *Kitāb al-Anwāʾ fī Mawāsim al-ʿArab*; local title/author signals; [ISMI work/edition record](https://ismi.mpiwg-berlin.mpg.de/text/116262) | PRIMARY_HISTORICAL_SOURCE | REQUIRED_LATER | Local text-bearing derivative; `EDITION_UNVERIFIED`, `INCOMPLETE`, and `PROVENANCE_UNVERIFIED` | Evidence for claims classified `OLD_ARABIAN` only when tied to exact Arabic and an approved edition. It does not make every item `NAJDI_TRADITION`; local page numbers are not edition-stable. |
+| IBN-QUTAYBA-ANWA | Ibn Qutaybah, *Kitāb al-Anwāʾ fī Mawāsim al-ʿArab*; local title/author signals; [ISMI work/edition record](https://ismi.mpiwg-berlin.mpg.de/text/116262) | PRIMARY_HISTORICAL_SOURCE | REQUIRED_LATER | Local text-bearing derivative; `EDITION_UNVERIFIED`, `INCOMPLETE`, and `PROVENANCE_UNVERIFIED` | Claim-specific primary historical attestation only when tied to exact Arabic and an approved edition. It does not establish a modern identification, exact lesson geometry, lesson approval, or specifically Najdi use; local page numbers are not edition-stable. |
 | KUNITZSCH-1961 | Kunitzsch, P. (1961), *Untersuchungen zur Sternnomenklatur der Araber*, Harrassowitz; bibliographic extent and contents; [German National Library partner record](https://www.deutsche-digitale-bibliothek.de/item/BGRHZDF6I4UHVHI6XBMND2OJZBY2FDVT) | SECONDARY_SCHOLARLY_SOURCE | REQUIRED_LATER | Local restricted OCR PDF; bibliographic identity verified, acquisition provenance unverified | Philological classification and conflict checking. It is not by itself evidence of specifically Najdi usage. Verify OCR-derived quotations against the page image. |
-| HAFEZ-2010 | Hafez, I. (2010), *ʿAbd al-Raḥmān al-Ṣūfī and His Book of the Fixed Stars: A Journey of Re-discovery*, PhD thesis, DOI `10.25903/6xsf-aa64`; repository record and thesis sections; [JCU record](https://researchonline.jcu.edu.au/28854/) | SECONDARY_SCHOLARLY_SOURCE | REQUIRED_LATER | Local restricted PDF; identity verified, acquisition provenance unverified | `GRECO_ARABIC_SCHOLARLY` historical crosswalk and al-Ṣūfī context. It is not a Najdi authority. |
+| HAFEZ-2010 | Hafez, I. (2010), *ʿAbd al-Raḥmān al-Ṣūfī and His Book of the Fixed Stars: A Journey of Re-discovery*, PhD thesis, DOI `10.25903/6xsf-aa64`; repository record and thesis sections; [JCU record](https://researchonline.jcu.edu.au/28854/) | SECONDARY_SCHOLARLY_SOURCE | REQUIRED_LATER | Local restricted PDF; identity verified, acquisition provenance unverified | Secondary Greco-Arabic/al-Ṣūfī historical crosswalk and context. Its proposed modern identifications are not wording in a primary source, regional authority, or lesson approval. |
 | KING-1993 | King, D. A. (1993), *Astronomy in the Service of Islam*, Variorum, ISBN 0-86078-357-X; contents and historical studies; [publisher record](https://www.routledge.com/Astronomy-in-the-Service-of-Islam/King/p/book/9780860783572) | SECONDARY_SCHOLARLY_SOURCE | HISTORICAL_CONTEXT_ONLY | Local restricted OCR PDF; identity verified, acquisition provenance unverified | Islamic-astronomy history and context. It is neither a production geodesic specification nor a specifically Najdi authority. |
 | KING-1999 | King, D. A. (1999), *World-Maps for Finding the Direction and Distance to Mecca*, Brill, ISBN 90-04-11367-3; front matter and historical analysis; [publisher front matter](https://brill.com/display/book/9789004450738/front-1.pdf) | SECONDARY_SCHOLARLY_SOURCE | HISTORICAL_CONTEXT_ONLY | Local restricted OCR PDF; identity verified, acquisition provenance unverified | Historical qibla/cartography context only. Do not extract a production algorithm or destination coordinate from a historical map. |
 
@@ -70,6 +70,7 @@ These tracked documents state UFUQ decisions; they are not external authorities.
 | UFUQ-PHASES | `docs/PHASES.md`, phase outcomes and gates | PROJECT_DECISION | REQUIRED_NOW | Work sequencing |
 | UFUQ-TEST | `docs/TEST_PLAN.md`, suite activation and evidence | PROJECT_DECISION | REQUIRED_NOW | Validation contract |
 | UFUQ-STATUS | `docs/STATUS.md`, current readiness gates | PROJECT_DECISION | REQUIRED_NOW | Current state, not scientific evidence |
+| UFUQ-HISTORICAL-SKY-SCOPE | `docs/references/syntheses/arabian-sky-evidence-synthesis.md`, scope and independent evidence dimensions | PROJECT_DECISION | REQUIRED_NOW | Source-led historical-sky research process, separated claim facets, bounded-absence semantics, and lesson-review gate; not historical evidence |
 | UFUQ-STRUCTURE-MIGRATION | `docs/STRUCTURE_MIGRATION.md`, post-migration assertions | PROJECT_DECISION | SUPPORTING_NOW | Historical structure evidence |
 | UFUQ-BKT-SPEC | `docs/TUTORING_BKT_SPEC.md`, BKT/observation/policy decisions and blockers | PROJECT_DECISION | REQUIRED_LATER | Phase 3 contract; external sources remain missing |
 | UFUQ-ADR-003 | `docs/adr/003-astronomical-coordinate-conventions.md`, decision and validation | PROJECT_DECISION | REQUIRED_NOW | Coordinate-convention decision record |
@@ -91,10 +92,12 @@ These tracked documents state UFUQ decisions; they are not external authorities.
    corrections must be tracked separately and not silently merged.
 6. FAIR provides guidance. Do not claim formal FAIR compliance.
 7. Kunitzsch, Ibn Qutaybah, Hafez, and King do not by themselves establish specifically
-   Najdi usage.
-8. Hafez/al-Ṣūfī is a Greco-Arabic and historical crosswalk, not a Najdi authority.
-9. Ibn Qutaybah supports `OLD_ARABIAN` evidence but does not make every item
-   `NAJDI_TRADITION`.
+   Najdi usage. The reviewed-scope limitation is not historical disproof.
+8. Hafez/al-Ṣūfī supplies secondary Greco-Arabic historical crosswalks, not primary
+   source wording, regional authority, or lesson approval.
+9. Ibn Qutaybah may support claim-specific historical attestation at verified passages;
+   it does not automatically establish geographic scope, modern identity, exact
+   geometry, or instructional use.
 10. *Software Architecture in Practice* is a review guardrail. It must not cause
     architecture redesign without a demonstrated quality-attribute or dependency
     problem.

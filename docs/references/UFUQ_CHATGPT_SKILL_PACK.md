@@ -93,24 +93,32 @@ historical context only.
 **Output:** geodetic inputs, conventions, per-case comparisons, classified evidence,
 stop condition, and scoped verdict.
 
-## Najdi and Arabian sky evidence
+## Historical Arabic and Arabian sky evidence
 
-**Trigger:** Arabic names, translations, pattern membership, historical/regional
-classification, cultural guidance routes, and human cultural review.
+**Activation:** explicit invocation only:
+`$ufuq-historical-arabic-sky-evidence`.
 
-**Do not trigger:** numerical catalogue rows, astronomy calculations, modern Qibla
-geodesy, or non-cultural synthetic route tests.
+**Use for:** source-led investigation or review of historical Arabic/Arabian names,
+referents, groupings, directional or seasonal concepts, source traditions, geography,
+modern identifications, conflicts, and evidence for a later lesson-approval review.
 
-**Procedure:** classify every atomic claim as `OLD_ARABIAN`, `NAJDI_TRADITION`,
-`GRECO_ARABIC_SCHOLARLY`, `CROSS_REGIONAL_ARABIAN`, or `MODERN_PEDAGOGICAL`. Record
-exact Arabic, transliteration, translation, edition/page/verse/folio, period,
-geographical scope, modern catalogue-ID evidence, conflicts, evidence status, and human
-review. Never classify `NAJDI_TRADITION` without explicit Najdi evidence. No automated
-output approves cultural content.
+**Do not use for:** Hipparcos parsing, proper motion, Astropy comparison, coordinate or
+scene validation, numerical catalogue rows, modern Qibla geodesy, neutral star
+rendering, generic pattern-line rendering, or non-cultural synthetic route tests.
 
-**Output:** atomic claim record, classification, textual/regional evidence, modern
-identification, conflicts, separate evidence/human-review statuses, allowed use, and
-stop condition.
+**Procedure:** define one atomic facet and distinguish primary wording, secondary
+interpretation, Codex inference, and project decision. Record attestation
+(`ATTESTED`, `UNVERIFIED`, `NOT_FOUND_IN_REVIEWED_SCOPE`), referent type, modern
+identification (`EXPLICIT_IN_SOURCE`, `SCHOLARLY_PROPOSED`, `MODERN_CROSSWALK`,
+`DISPUTED`, `UNRESOLVED`), geographic basis (`EXPLICIT_IN_SOURCE`,
+`SCHOLARLY_INFERENCE`, `PROJECT_HYPOTHESIS`, `UNKNOWN`), and review status separately.
+Keep name occurrence, referent, tradition, geography, modern objects, exact membership,
+line drawing, directional use, and lesson approval independent. Bounded absence is not
+historical disproof; Codex cannot set `APPROVED_FOR_LESSON`.
+
+**Output:** atomic evidence record with exact source pointer, source/interpretation/
+project layers, independent evidence dimensions, aliases and conflicts, what is and is
+not supported, allowed use, follow-up, and stop condition.
 
 ## Cross-skill boundaries
 

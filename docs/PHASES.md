@@ -47,6 +47,15 @@ comparison harness under `tests/reference`; deterministic serialization/checksum
 experiment. The reference suite becomes mandatory as soon as the first comparison is
 introduced.
 
+Phase 1 catalogue records and fixtures use neutral HIP identifiers. Historical names,
+cultural memberships, and pattern edges are outside the technical spike and remain
+separate from numerical source rows. Do not invoke
+`ufuq-historical-arabic-sky-evidence` for Hipparcos parsing, proper-motion
+investigation, Astropy comparison, coordinate transformation, scene-coordinate
+validation, neutral star rendering, or generic pattern-line rendering. A later
+evidence-backed overlay may reference stable HIP identifiers without changing the
+astronomical source record.
+
 **Do not claim:** an approved catalogue, approved cultural content, production
 astrometry, final tolerance, or learner-facing correctness.
 
@@ -56,11 +65,14 @@ contracts.
 
 ## Phase 2: minimal celestial-guidance vertical slice
 
-**Goal:** deliver one validated local multi-step journey from an approved sky-pattern
-route to Al-Jady/Polaris through server-issued scenario, 3D presentation, raw learner
-response, server scoring, and feedback. The route may use a reviewed helper pattern and
-Banat Na'sh or Dhat al-Kursi; it is selected from data rather than hardcoded. Persistence
-and BKT adaptation are not required yet.
+**Goal:** deliver one validated local multi-step journey using one or more
+source-attested and human-reviewed helper patterns through server-issued scenario, 3D
+presentation, raw learner response, server scoring, and feedback. The route and
+patterns are selected from evidence-backed data rather than hardcoded. Historical
+names, modern star mappings, membership, pattern geometry, and instructional
+suitability are not predetermined. Persistence and BKT adaptation are not required yet.
+
+Phase 2 may use only content approved through the historical-evidence review process.
 
 **Entry decisions:** IMP-008, IMP-009, IMP-011, and IMP-012 must be resolved for the
 selected slice; IMP-018 already fixes the generic structure. Only the patterns,

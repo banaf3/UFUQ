@@ -97,10 +97,12 @@ flowchart LR
 
 If required Earth-orientation data is missing or outside its valid range, the system must fail explicitly or enter a separately labelled, bounded approximation mode approved under AST-003. Runtime scenarios persist the EOP dataset/hash, extrapolation status, and approximation mode. Do not quietly change algorithms between browser, server, fixture generation, and evaluation.
 
-Polaris/Al-Jady is an instructional cue near the north celestial pole; it is not identical to True North. The system must maintain distinct targets and knowledge components for locating the star and estimating the terrestrial direction.
+A selected, evidence-reviewed celestial cue near the north celestial pole is not
+identical to True North. The system must maintain distinct targets and knowledge
+components for locating the selected cue and estimating the terrestrial direction.
 
 KC-04 scores a terrestrial True-North bearing/direction defined by the approved task,
-not the elevated line of sight to Polaris. KC-05 scores the approved Qibla bearing
+not the elevated line of sight to the selected celestial cue. KC-05 scores the approved Qibla bearing
 relative to that True-North convention. EDU-002 and AST-007 must define how each task
 captures these responses without allowing a visual cue or context-star selection rule to
 make the answer trivial.

@@ -8,9 +8,9 @@ task isolates one skill.
 
 | ID | Knowledge component | Evidence example |
 |---|---|---|
-| KC-01 | Identify Banat Na'sh | Select the approved pattern/member relation |
-| KC-02 | Recognise Dhat al-Kursi | Select the approved pattern/member relation |
-| KC-03 | Locate Al-Jady/Polaris | Select the approved star using the intended celestial cues |
+| KC-01 | Recognise a selected reviewed sky pattern | Select the approved pattern/member relation |
+| KC-02 | Locate a selected reviewed celestial target | Select the approved target using the intended celestial cues |
+| KC-03 | Follow a selected guidance relationship | Use the approved relationship from its source to its target |
 | KC-04 | Estimate True North | Submit a north direction within the approved task tolerance |
 | KC-05 | Derive Qibla from True North | Submit the location-specific Qibla bearing within tolerance |
 
@@ -18,12 +18,12 @@ One scored task has one primary KC. A multi-step lesson is represented as severa
 
 The ordered lesson is supplied by a versioned `LessonRoute`, whose steps reference
 generic `GuidanceRelationship` records between `SkyPattern`, star, and direction nodes.
-A route may use reviewed helper patterns, Banat Na'sh, or Dhat al-Kursi before Al-Jady,
-then continue to True North and Qibla. The `tutoring-core` BKT, observations, and
-adaptive-policy modules consume the route's prerequisite/KC/scaffold references; they
-do not hardcode a Banat Na'sh-first sequence. Exact routes, helper patterns,
-relationships, and cue configurations remain subject to their content and BKT review
-gates.
+A route may use one or more source-attested, human-reviewed helper patterns and
+selected targets before continuing from a reviewed celestial cue to True North and
+Qibla. The `tutoring-core` BKT, observations, and adaptive-policy modules consume the
+route's prerequisite/KC/scaffold references; they do not hardcode a Banat Na'sh-first
+sequence. Exact routes, helper patterns, relationships, and cue configurations remain
+subject to their content and BKT review gates.
 
 ## Model and parameters
 

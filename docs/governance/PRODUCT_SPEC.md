@@ -19,14 +19,19 @@ UFUQ teaches a learner to reason from visible celestial patterns to True North a
 
 A learner should be able to:
 
-1. identify Banat Na'sh;
-2. recognise Dhat al-Kursi;
-3. locate Al-Jady/Polaris from the intended pattern relationships;
+1. recognise a selected source-attested and human-reviewed sky pattern;
+2. locate a selected reviewed celestial target through approved relationships;
+3. relate the selected celestial cue to True North;
 4. estimate True North from the celestial evidence;
 5. derive the Qibla bearing from True North for an approved location;
 6. demonstrate these skills without instructional cues after guided practice.
 
-Outcomes 1–5 are **CONFIRMED** separate knowledge components. Outcome 6 is a **CLARIFIED** interpretation of the report's independent-recall evaluation; the evidence rule remains BKT-003.
+The five-component structure for outcomes 1–5 is **CONFIRMED**. The concrete historical
+content assigned to outcomes 1–3 is a **PROJECT DECISION**, not historical evidence,
+and requires the AST-002 historical-evidence review. Historical names, modern star
+mappings, membership, geometry, routes, and instructional suitability are not
+predetermined. Outcome 6 is a **CLARIFIED** interpretation of the report's
+independent-recall evaluation; the evidence rule remains BKT-003.
 
 ## MVP scope
 

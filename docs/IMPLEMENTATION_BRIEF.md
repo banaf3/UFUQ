@@ -3,10 +3,11 @@
 ## Objective
 
 Build UFUQ as a browser-based 3D astronomy tutor that teaches multi-step celestial
-guidance. A route may begin with a reviewed helper sky pattern, continue through Banat
-Na'sh or Dhat al-Kursi to Al-Jady/Polaris, then connect Al-Jady to True North and True
-North to Qibla. The implementation must not hardcode one named pattern as the universal
-lesson flow. It should first prove the scientific/data path and then add assessment,
+guidance. A route may use one or more source-attested, human-reviewed helper sky
+patterns and selected, reviewed celestial targets before connecting a celestial cue to
+True North and True North to Qibla. The implementation must select evidence-backed
+route content from data and must not hardcode one named pattern as the universal lesson
+flow. It should first prove the scientific/data path and then add assessment,
 adaptation, persistence, accounts, full lessons, and formal evaluation.
 
 ## Start here

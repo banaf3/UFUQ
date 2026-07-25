@@ -71,9 +71,9 @@ when no matching test exists; neither uses `passWithNoTests`.
 - Scenario selection accepts a route only when every star required by its selected
   pattern and relationship steps exists in the approved scenario; missing any required
   star excludes that route deterministically.
-- Composition tests support helper-pattern to Banat Na'sh or Dhat al-Kursi, either
-  reviewed pattern to Al-Jady, Al-Jady to True North, and True North to Qibla without
-  special-case branches for a named pattern.
+- Composition tests support one or more approved helper patterns, reviewed
+  pattern/star relationships, a reviewed celestial cue to True North, and True North
+  to Qibla without special-case branches for a named pattern.
 - One browser journey reproduces the selected approved route outcome and records the
   route/content versions.
 

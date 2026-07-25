@@ -24,7 +24,8 @@ Do not trigger it for:
   without coordinate transformation; use `ufuq-catalogue-provenance`;
 - Qibla inverse geodesics or destination-coordinate approval; use
   `ufuq-qibla-geodesy`;
-- cultural pattern names, membership, or routes; use `ufuq-najdi-arabian-sky`;
+- historical or cultural pattern names, membership, or routes; explicitly invoke
+  `ufuq-historical-arabic-sky-evidence`;
 - visual scene layout that makes no astronomical correctness claim.
 
 ## Required project files

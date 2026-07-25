@@ -165,15 +165,16 @@ until their applicable cultural/scientific/educational reviews are recorded.
 
 The model supports composition such as:
 
-- a reviewed helper `SkyPattern` guiding toward Banat Na'sh;
-- a reviewed helper `SkyPattern` guiding toward Dhat al-Kursi;
-- Banat Na'sh or Dhat al-Kursi guiding toward Al-Jady;
-- Al-Jady guiding toward the True North direction; and
+- one or more source-attested, human-reviewed helper `SkyPattern` records guiding
+  toward a selected, reviewed pattern or star;
+- a selected, reviewed celestial cue guiding toward the True North direction; and
 - True North supporting derivation of the scenario-specific Qibla direction.
 
-These are permitted graph shapes, not approved concrete cultural records. A lesson may
-start at any route step allowed by its prerequisites and scenario; no application
-component assumes that Banat Na'sh is always first.
+These are permitted graph shapes, not approved concrete cultural records. Historical
+names, modern star mappings, membership, geometry, and instructional suitability are
+selected only through the historical-evidence review process. A lesson may start at
+any route step allowed by its prerequisites and scenario; no application component
+assumes that Banat Na'sh is always first.
 
 For each candidate `LessonRoute`, the server resolves the selected alternative into an
 ordered relationship chain and computes the complete required-star set from every

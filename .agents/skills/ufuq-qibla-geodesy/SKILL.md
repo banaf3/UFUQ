@@ -21,8 +21,8 @@ Do not trigger it for:
 
 - general equatorial-to-horizontal astronomy; use `ufuq-astronomy-validation`;
 - catalogue parsing or data artifacts; use `ufuq-catalogue-provenance`;
-- historical qibla practice, Arabic terminology, or Najdi cultural approval; use
-  `ufuq-najdi-arabian-sky`;
+- historical Qibla practice, Arabic terminology, or cultural evidence; explicitly
+  invoke `ufuq-historical-arabic-sky-evidence`;
 - UI compass styling with no direction-correctness claim.
 
 ## Required project files
@@ -62,7 +62,7 @@ Historical sources never override a modern geodetic specification.
    forward-azimuth convention, normalization range, and clockwise-from-True-North
    semantics.
 5. Distinguish geographic True North from magnetic north and from the elevated
-   line-of-sight to Al-Jady/Polaris.
+   line-of-sight to any selected celestial cue.
 6. Define coincident, polar, near-antipodal, antipodal, non-finite, and out-of-range
    behavior before testing.
 7. Create independent numerical cases covering Malaysian observers, wrap, both

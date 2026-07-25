@@ -36,9 +36,13 @@ five project-scoped skills with mandatory-rule traceability.
 This work does not approve I/311, a production astronomy pipeline, a schema validator,
 a Kaaba coordinate/datum, a numerical tolerance, a cultural mapping, or a
 learner-facing route. The pinned Astropy/PyERFA/IERS-data environment and official
-Astropy documentation remain Phase 1 source gaps. Najdi/regional evidence, a stable
-edition for the studied Ibn Qutaybah claims, exact membership/route evidence, and human
-Arabic/cultural review remain required before learner-facing cultural claims.
+Astropy documentation remain Phase 1 source gaps. Historical-sky research is
+source-led and uses independent attestation, referent, modern-identification,
+geographic-basis, and review dimensions. Specifically Najdi evidence remains a gap if
+that regional claim is proposed; this bounded absence is not historical disproof. A
+stable edition for the studied Ibn Qutaybah claims, exact membership/route evidence,
+and human Arabic/cultural review remain required before learner-facing cultural
+claims.
 
 The official ESA 1997 Volume 1 guide now establishes the original catalogue's
 `mu_alpha_star` convention and J1991.25(TT) definition. The later I/311 `pmRA` mapping
@@ -46,6 +50,8 @@ is classified `STRONG_SUPPORT_BUT_SPIKE_CONFIRMATION_REQUIRED`; this clarificati
 future spike cases but does not activate Phase 1.
 
 The detailed evidence boundaries are in `references/PDF_KNOWLEDGE_COVERAGE.md`.
+The renamed `ufuq-historical-arabic-sky-evidence` skill is explicit-invocation only and
+does not participate in the neutral Phase 1 Hipparcos/astronomy spike.
 Phase 1 has not begun.
 
 ## Validated Phase 0 structure
@@ -117,8 +123,9 @@ are approved.
   implement-or-omit effects, supported range, failure policy, independent oracle,
   error budget, and tolerances.
 - **IMP-011 / AST-002:** reviewed `SkyPattern` and `GuidanceRelationship` records for
-  one complete route to Al-Jady, including stable IDs, labels, membership, segments,
-  instructional geometry/explanation, and review/verification status.
+  one complete source-attested, human-reviewed route, including stable IDs, labels,
+  modern star mappings, membership, segments, instructional geometry/explanation, and
+  review/verification status.
 - **IMP-012 / AST-007 and AST-006:** one sourced observer/time scenario, expected
   result, answer representation, and justified learner/scientific tolerance.
 

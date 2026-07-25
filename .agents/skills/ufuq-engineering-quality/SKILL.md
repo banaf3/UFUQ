@@ -23,7 +23,8 @@ Do not trigger it for:
 - choosing an astronomical frame, time scale, catalogue field, tolerance, or reference
   fixture; use `ufuq-astronomy-validation` or `ufuq-catalogue-provenance`;
 - deriving Qibla or selecting target coordinates; use `ufuq-qibla-geodesy`;
-- classifying Arabic, Arabian, or Najdi claims; use `ufuq-najdi-arabian-sky`;
+- reviewing historical Arabic or Arabian sky claims; explicitly invoke
+  `ufuq-historical-arabic-sky-evidence`;
 - ordinary edits whose correctness is already covered by a narrow existing test.
 
 ## Required project files

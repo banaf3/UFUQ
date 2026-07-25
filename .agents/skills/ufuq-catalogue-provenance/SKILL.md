@@ -21,8 +21,8 @@ Do not trigger it for:
 
 - coordinate, time, observer, or horizon calculations after rows are loaded; use
   `ufuq-astronomy-validation`;
-- approval of Arabic names, pattern membership, or cultural routes; use
-  `ufuq-najdi-arabian-sky`;
+- historical Arabic names, pattern membership, or cultural-route evidence; explicitly
+  invoke `ufuq-historical-arabic-sky-evidence`;
 - Qibla inverse geodesics; use `ufuq-qibla-geodesy`;
 - unrelated API DTO, database-row, or React-prop design.
 

@@ -72,16 +72,17 @@ mapping. This is a Greco-Arabic scholarly source, not a Najdi authority.
 
 ### Atomic cultural evidence records
 
-| Exact Arabic | Transliteration / literal translation | Location and source layer | Stated membership / proposed ID | Classification and status |
+| Exact Arabic | Transliteration / literal translation | Location and source layer | Stated membership / proposed ID | Independent evidence facets and limits |
 |---|---|---|---|---|
-| `بنات نعش الصغرى` | Hafez: *Banāt Naʿsh al-Ṣughrā*; provisional “little daughters of the bier/coffin” | Al-Ṣūfī translation, Ursa Minor chapter, thesis pp. 111–116/PDF pp. 124–129; summary Table 18, thesis p. 314/PDF p. 327 | Seven stars, four as `نعش`, three as `بنات`; Table 18 lists HR 424, 6789, 6322, 5903, 6116, 5563, 5735 | `GRECO_ARABIC_SCHOLARLY` crosswalk informed by reported older tradition; `PARTIAL`; `HUMAN_REVIEW_REQUIRED` |
-| `الجدي` | Hafez: *al-Juday*; provisional “kid/goat” | Ursa Minor translation, PDF p. 125; Tables 18 and 24, thesis pp. 314, 322/PDF pp. 327, 335 | Hafez maps it to HR 424 / Polaris | `GRECO_ARABIC_SCHOLARLY`; mapping proposed, not approved |
-| `بنات نعش الكبرى` | *Banāt Naʿsh al-kubrā*; provisional “great daughters of the bier/coffin” | Ursa Major translation, PDF p. 133; Table 19, thesis p. 314/PDF p. 327 | Table 19 lists HR 5191, 5054, 4905, 4301, 4295, 4660, 4554; Tables 19/26 distinguish four-star and three-star portions | `GRECO_ARABIC_SCHOLARLY`; crosswalk `PARTIAL`; no route approved |
-| `سرير بنات نعش` | *Sarīr Banāt Naʿsh*; provisional “bed of the daughters of Naʿsh” | Ursa Major translation, PDF p. 133; Table 19, thesis p. 314/PDF p. 327 | Table 19 associates it with HR 4301, 4295, 4660, 4554 | `GRECO_ARABIC_SCHOLARLY`; `HUMAN_REVIEW_REQUIRED` |
-| Exact Arabic unresolved | Hafez: *Dhāt al-Kursīy*; provisional “possessor of the chair/throne” | Cassiopeia translated catalogue heading, PDF p. 151 | Hafez presents it as the constellation label; no learner pattern/segments derived here | `GRECO_ARABIC_SCHOLARLY`; exact Arabic, scope, and mapping blocked |
+| `بنات نعش الصغرى` | Hafez: *Banāt Naʿsh al-Ṣughrā*; provisional “little daughters of the bier/coffin” | Al-Ṣūfī translation, Ursa Minor chapter, thesis pp. 111–116/PDF pp. 124–129; summary Table 18, thesis p. 314/PDF p. 327 | Seven stars, four as `نعش`, three as `بنات`; Table 18 lists HR 424, 6789, 6322, 5903, 6116, 5563, 5735 | Attestation in Hafez's translation `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; exact catalogue crosswalk remains provisional |
+| `الجدي` | Hafez: *al-Juday*; provisional “kid/goat” | Ursa Minor translation, PDF p. 125; Tables 18 and 24, thesis pp. 314, 322/PDF pp. 327, 335 | Hafez maps it to HR 424 / Polaris | Attestation in Hafez's translation `ATTESTED`; referent `STAR`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED` |
+| `بنات نعش الكبرى` | *Banāt Naʿsh al-kubrā*; provisional “great daughters of the bier/coffin” | Ursa Major translation, PDF p. 133; Table 19, thesis p. 314/PDF p. 327 | Table 19 lists HR 5191, 5054, 4905, 4301, 4295, 4660, 4554; Tables 19/26 distinguish four-star and three-star portions | Attestation in Hafez's translation `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; no route approved |
+| `سرير بنات نعش` | *Sarīr Banāt Naʿsh*; provisional “bed of the daughters of Naʿsh” | Ursa Major translation, PDF p. 133; Table 19, thesis p. 314/PDF p. 327 | Table 19 associates it with HR 4301, 4295, 4660, 4554 | Attestation in Hafez's translation `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED` |
+| Exact Arabic unresolved | Hafez: *Dhāt al-Kursīy*; provisional “possessor of the chair/throne” | Cassiopeia translated catalogue heading, PDF p. 151 | Hafez presents it as the constellation label; no learner pattern/segments derived here | Transliterated heading `ATTESTED` but exact Arabic `UNVERIFIED`; referent `CONSTELLATION`; modern identification `MODERN_CROSSWALK`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; exact membership and lesson use unresolved |
 
-Geographical scope is the textual Greco-Arabic scholarly tradition and the historical
-sources Hafez analyzes. None of these rows establishes a specifically Najdi use.
+The source tradition is textual Greco-Arabic scholarship and the historical material
+Hafez analyzes. Geographic basis remains `UNKNOWN`; specifically Najdi use is
+`NOT_FOUND_IN_REVIEWED_SCOPE` for these rows, which is not historical disproof.
 
 ## Equations and algorithms
 
@@ -114,7 +115,7 @@ No Hafez equation is authorized for UFUQ production.
 
 ## Implementation implications
 
-- `SOURCE_REQUIRED`: Use Hafez only as a `GRECO_ARABIC_SCHOLARLY` crosswalk and
+- `SOURCE_REQUIRED`: Use Hafez only as a secondary Greco-Arabic crosswalk and
   manuscript-analysis source.
 - `HUMAN_REVIEW_REQUIRED`: Verify exact Arabic, transliteration, translation, source
   witness/folio, and geographical scope for each atomic record.
@@ -124,9 +125,11 @@ No Hafez equation is authorized for UFUQ production.
   *al-gady/al-gudayy* and the approved Arabic witness.
 - `PROJECT_DECISION_REQUIRED`: Store historical classification, evidence confidence,
   and human-review status separately from pattern geometry and teaching routes.
-- `HUMAN_REVIEW_REQUIRED`: Do not classify any row as `NAJDI_TRADITION`.
+- `HUMAN_REVIEW_REQUIRED`: Specifically Najdi use is
+  `NOT_FOUND_IN_REVIEWED_SCOPE` for the inspected material and geographic basis remains
+  `UNKNOWN`.
 - `PROJECT_DECISION_REQUIRED`: Any line segments or instructional relationships are
-  `MODERN_PEDAGOGICAL` unless exact historical evidence separately supports them.
+  separate pedagogical constructions unless exact historical evidence supports them.
 
 ## Testing implications
 
@@ -137,10 +140,10 @@ No Hafez equation is authorized for UFUQ production.
 - Reject coordinates embedded in cultural curation.
 - Preserve alternate names/readings and source conflicts; test that normalization does
   not erase them.
-- Reject learner-facing content without human review and explicit non-Najdi or
-  independently supported Najdi classification.
-- Negative-test that an HR crosswalk alone cannot approve a line segment, route, or
-  `NAJDI_TRADITION` claim.
+- Block learner-facing content without human review and claim-level geographic
+  evidence where geography is asserted.
+- Negative-test that an HR crosswalk alone cannot approve a line segment, route,
+  lesson, or specifically Najdi claim.
 
 ## Limitations
 
@@ -152,7 +155,8 @@ No Hafez equation is authorized for UFUQ production.
   reading.
 - The thesis does not approve UFUQ's Arabic, transliteration, cultural interpretation,
   pattern segments, or pedagogical route.
-- No studied passage establishes specific Najdi geography.
+- Specifically Najdi geography is `NOT_FOUND_IN_REVIEWED_SCOPE` in the studied
+  passages; geographic basis remains `UNKNOWN`, without a claim of historical falsity.
 
 ## Conflicts and ambiguities
 
@@ -175,4 +179,4 @@ No Hafez equation is authorized for UFUQ production.
 | Greater group HR crosswalk is explicit | Table 19, thesis p. 314; Table 26, thesis p. 325 | Resolve via versioned catalogue crosswalk; no coordinates copied | `SOURCE_REQUIRED` |
 | `Sarīr Banāt Naʿsh` is associated with the four-star subset | Ursa Major translation, PDF p. 133; Table 19, thesis p. 314 | Separate subpattern claim requiring review | `HUMAN_REVIEW_REQUIRED` |
 | Cassiopeia is labelled *Dhāt al-Kursīy* in the translation | Catalogue heading, PDF p. 151 | Exact Arabic/membership evidence remains unresolved | `HUMAN_REVIEW_REQUIRED` |
-| Thesis is not specifically Najdi | Scope of studied chapters and §5.10 | Block `NAJDI_TRADITION` | `HUMAN_REVIEW_REQUIRED` |
+| Specifically Najdi use was not found in the bounded review | Scope of studied chapters and §5.10 | Attestation `NOT_FOUND_IN_REVIEWED_SCOPE`; geographic basis `UNKNOWN`; no historical disproof | `HUMAN_REVIEW_REQUIRED` |

@@ -73,13 +73,13 @@ The following short source terms are retained because translation is consequenti
 
 ### Atomic cultural evidence records
 
-| Name/pattern | Location | Source claim and proposed identification | Classification / status |
+| Name/pattern | Location | Source claim and proposed identification | Independent evidence facets and limits |
 |---|---|---|---|
-| *banāt naʿsh (al-kubrā)* | Entry 55, printed p. 48 (PDF p. 50) | Reports Ibn Qutayba's seven-star four-plus-three description and al-Ṣūfī's crosswalk to the Great Bear stars; OCR mangles some Greek letters | `OLD_ARABIAN` claim analysis; IDs `PARTIAL`; `HUMAN_REVIEW_REQUIRED` |
-| *banāt naʿsh al-ṣughrā* | Entry 56, printed p. 48 (PDF p. 50) | Reports an analogous seven-star lesser group, four in the quadrilateral and three in the tail | `OLD_ARABIAN` claim analysis; exact membership `PARTIAL` |
-| *al-gady/al-gudayy* | Entry 107a, printed pp. 62–63 (PDF pp. 64–65) | Associates the polar star with an older *al-gady* reading and records later diminutive usage; identification printed as α Ursae Minoris | Philological crosswalk; `HUMAN_REVIEW_REQUIRED` |
-| Cassiopeia's bright stars as *al-kaff* | Entries 136a–c, printed p. 72 (PDF p. 74) | Reports a hand-image associated with al-Thurayyā; later instrument use could apply the name to one star | `OLD_ARABIAN`/philological claim analysis; not evidence for *Dhāt al-Kursī* |
-| *kursī al-jawzāʾ* | Entries 148a–149, printed p. 75 (PDF p. 77) | Four-star groups below al-Jawzāʾ, crosswalked to Lepus/Orion/Eridanus material | Conflict-control record only; must not be mapped to Cassiopeia |
+| *banāt naʿsh (al-kubrā)* | Entry 55, printed p. 48 (PDF p. 50) | Reports Ibn Qutayba's seven-star four-plus-three description and al-Ṣūfī's crosswalk to the Great Bear stars; OCR mangles some Greek letters | Attestation in Kunitzsch's analysis `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; exact IDs remain unresolved |
+| *banāt naʿsh al-ṣughrā* | Entry 56, printed p. 48 (PDF p. 50) | Reports an analogous seven-star lesser group, four in the quadrilateral and three in the tail | Attestation in Kunitzsch's analysis `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; exact membership remains unresolved |
+| *al-gady/al-gudayy* | Entry 107a, printed pp. 62–63 (PDF pp. 64–65) | Associates the polar star with an older *al-gady* reading and records later diminutive usage; identification printed as α Ursae Minoris | Attestation in Kunitzsch's analysis `ATTESTED`; referent `STAR`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; language review required |
+| Cassiopeia's bright stars as *al-kaff* | Entries 136a–c, printed p. 72 (PDF p. 74) | Reports a hand-image associated with al-Thurayyā; later instrument use could apply the name to one star | Attestation in Kunitzsch's analysis `ATTESTED`; referent `UNRESOLVED`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; this is not evidence for *Dhāt al-Kursī* |
+| *kursī al-jawzāʾ* | Entries 148a–149, printed p. 75 (PDF p. 77) | Four-star groups below al-Jawzāʾ, crosswalked to Lepus/Orion/Eridanus material | Attestation in Kunitzsch's analysis `ATTESTED`; referent `ASTERISM`; modern identification `SCHOLARLY_PROPOSED`; geographic basis `UNKNOWN`; review `NOT_REVIEWED`; claim-specific conflict control, not Cassiopeia evidence |
 
 The OCR inspection did not provide page-image-verified Arabic script for these entries.
 Do not invent it from the transliteration. Exact Arabic is an unresolved required field.
@@ -126,8 +126,9 @@ No numerical algorithm from this source is suitable for UFUQ production.
   source forms and variants.
 - `PROJECT_DECISION_REQUIRED`: Keep cultural memberships separate from catalogue
   numerical rows.
-- `HUMAN_REVIEW_REQUIRED`: Do not classify any studied claim as
-  `NAJDI_TRADITION`; no explicit Najdi evidence was found.
+- `HUMAN_REVIEW_REQUIRED`: Specifically Najdi use is
+  `NOT_FOUND_IN_REVIEWED_SCOPE` in the studied entries and geographic basis remains
+  `UNKNOWN`; do not infer a regional classification.
 - `INFORMATIONAL_ONLY`: Kunitzsch is a philological classification source, not
   cultural approval.
 
@@ -139,7 +140,8 @@ No numerical algorithm from this source is suitable for UFUQ production.
   collapsed.
 - Add a negative fixture proving `kursī al-jawzāʾ` cannot satisfy a
   *Dhāt al-Kursī*/Cassiopeia claim.
-- Reject `NAJDI_TRADITION` without an independent Najdi source and human approval.
+- Block a specifically Najdi production claim without claim-level regional evidence and
+  human approval; do not treat the bounded absence as historical disproof.
 - Ensure cultural records store IDs/citations rather than copied coordinates.
 
 ## Limitations
@@ -148,7 +150,9 @@ No numerical algorithm from this source is suitable for UFUQ production.
   German words.
 - The work analyzes transmitted literature; it does not by itself establish living
   practice in a particular modern region.
-- No explicit Najdi evidence was found in the studied sections.
+- Specifically Najdi evidence is `NOT_FOUND_IN_REVIEWED_SCOPE` in the studied
+  sections; geographic basis remains `UNKNOWN` and the broader historical possibility
+  is unresolved.
 - Entry-level modern identifications predate current catalogue practices and need
   independent crosswalk evidence.
 - German-to-English paraphrases here are provisional, not approved translations.
@@ -174,4 +178,4 @@ No numerical algorithm from this source is suitable for UFUQ production.
 | Lesser group has analogous four-plus-three structure | Entry 56, printed p. 48 | No automatic modern membership approval | `HUMAN_REVIEW_REQUIRED` |
 | Polar-name reading has a historical variant | Entry 107a, printed pp. 62–63 | Preserve variants; obtain Arabic review | `HUMAN_REVIEW_REQUIRED` |
 | Cassiopeia *al-kaff* and Orion `kursī` are distinct claims | Entries 136a–c, p. 72; 148a–149, p. 75 | Negative mapping guard | `SOURCE_REQUIRED` |
-| Source is not specifically Najdi | Studied Part I and selected entries | Block `NAJDI_TRADITION` | `HUMAN_REVIEW_REQUIRED` |
+| Specifically Najdi use was not found in the bounded review | Studied Part I and selected entries | Attestation `NOT_FOUND_IN_REVIEWED_SCOPE`; geographic basis `UNKNOWN`; no historical disproof | `HUMAN_REVIEW_REQUIRED` |

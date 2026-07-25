@@ -32,11 +32,12 @@ ignore `data/raw/` by default, separate reviewed patterns/relationships/routes u
 licence. Canonical serialization explicitly writes UTF-8, LF, deterministic key/record
 ordering, and defined numeric formatting; it does not rely on Git or host defaults.
 
-The schema is not Banat Na'sh-specific. It permits reviewed helper patterns to lead to
-Banat Na'sh or Dhat al-Kursi, either pattern to lead to Al-Jady, and subsequent
-Al-Jady→True North→Qibla direction steps. The server may select a route only when all
-stars required by its resolved patterns/relationships are available in the approved
-scenario.
+The schema is not Banat Na'sh-specific. It permits one or more source-attested,
+human-reviewed helper patterns to lead through selected, reviewed pattern or star
+targets and onward through True North to Qibla. The server may select a route only when
+all stars required by its resolved patterns/relationships are available in the
+approved scenario. No historical name, modern star mapping, membership, geometry, or
+instructional suitability is predetermined.
 
 Hipparcos Main Catalogue/CDS I/239 is only a candidate. No source, row, helper pattern,
 Arabic spelling, transliteration, membership, guidance relationship, instructional

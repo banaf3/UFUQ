@@ -50,10 +50,11 @@ cultural claims in code.
   alternative paths, and references scaffold configuration. It composes relationships;
   it does not duplicate their geometry or authority evidence.
 
-The schemas permit helper pattern → Banat Na'sh or Dhat al-Kursi → Al-Jady → True North
-→ Qibla routes, including either named pattern as the Al-Jady guide. This expresses a
-generic capability only. No helper constellation, mapping, segment, explanation, or
-relationship is approved by this structural clarification.
+The schemas permit one or more source-attested, human-reviewed helper patterns to lead
+through selected, reviewed pattern or star targets to True North and then Qibla. This
+expresses a generic capability only. No historical name, modern star mapping,
+membership, segment, explanation, relationship, or instructional use is approved by
+this structural clarification.
 
 For each scenario, the server resolves a selected route alternative and derives the
 union of required catalogue-star IDs from all referenced patterns, star endpoints, and
