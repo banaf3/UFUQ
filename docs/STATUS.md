@@ -308,6 +308,26 @@ redistribution blockers; PCRV/XHIP are evidence bridges only. No row, generated
 artifact, parser, or runtime JSON was created. See
 `spikes/PHASE1_PRODUCTION_CATALOGUE_AUTHORITY.md`.
 
+### Milestone 2D.1C owner route scope
+
+The owner's preferred first route is a Cassiopeia-region helper to al-Jady to True North,
+with anwāʾ-literature star knowledge. Its research record is
+`spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`, which establishes three things:
+
+- The anwāʾ layer attests the hand image al-Kaff al-Khaḍīb and al-Jady's use for
+  direction and Qibla. *Dhāt al-Kursī* is a Greco-Arabic scholarly label, and the
+  helper-to-polar-star line is a modern teaching construction.
+- A geometric spike sensitivity check at 1–7°N shows the Cassiopeia candidates fully up
+  for about 44–50% of the sidereal day. The greater Banāt Naʿsh candidates are never up
+  at the same time, so together the two cover about 83–94%. The greater group is
+  therefore the alternative route. al-Jady stays only about 2–8° above the horizon.
+- Gaia DR3 matches only 2 of the primary route's 6 stars, so a Gaia-first catalogue
+  cannot supply the route. A Hipparcos 1997 bright-star source with an RV authority is
+  proposed for review.
+
+Owner decisions D-1 to D-4 and the reference acquisition list are in the same record.
+No content, row, or source is approved, and readiness is unchanged.
+
 ### Milestone 2A modern synthetic-only retry
 
 The earlier exact candidate set remains recorded as a failed experiment: Astropy 7.2.2

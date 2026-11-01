@@ -299,7 +299,12 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Current choice:** No concrete helper pattern or learner-facing mapping is selected.
   The first reviewed route may use Banat Na'sh or Dhat al-Kursi to reach Al-Jady;
   synthetic IDs may exercise generic interfaces in a technical spike but cannot ship as
-  content.
+  content. **Owner preference (2026-11-01):** research first the Cassiopeia-region
+  helper to al-Jady to True North, drawing star knowledge from the anwāʾ literature,
+  with greater Banāt Naʿsh as the complementary alternative route for the season when
+  Cassiopeia is below the horizon. This orders the research and approves no content.
+  The evidence layers, Malaysian-latitude availability, and catalogue coverage are in
+  `spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`.
 - **Status:** unresolved
 - **What code it affects:** Curated `SkyPattern`, `GuidanceRelationship`, and
   `LessonRoute` data; scene overlays; assessment targets; lesson/scaffold configuration;

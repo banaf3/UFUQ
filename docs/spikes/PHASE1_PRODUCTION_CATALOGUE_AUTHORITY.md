@@ -294,6 +294,18 @@ E. **derived-artifact rights interpretation:** reconcile the open/free-with-cred
    CC BY-NC 3.0 IGO statements for the exact normalized/derived artifact before public
    Git tracking or deployment.
 
+### Milestone 2D.1C route-scope input (2026-11-01)
+
+`PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md` supplies the minimal intended route for gate C.
+It contains the owner-preferred route, Cassiopeia candidates plus HIP 11767 (6 rows),
+and the complementary greater Banāt Naʿsh alternative (7 rows). Against the 2D.1B
+evidence, Gaia DR3 matches only HIP 3179 and 6686 of the primary route and HIP 59774
+and 65378 of the alternative. Stop rule 4 above therefore applies to most route stars,
+not only Polaris. Gate D widens accordingly: the route needs either an approved
+bright-star astrometric source with an RV authority (ESA Hipparcos 1997 is the
+proposed candidate), or the affected stars and routes become ineligible. This approves
+no source or row.
+
 ### Milestone 2E owns later
 
 - exact acquisition/query tooling and ignored raw-response storage;
