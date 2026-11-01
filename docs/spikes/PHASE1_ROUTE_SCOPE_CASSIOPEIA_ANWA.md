@@ -94,7 +94,9 @@ These are bright stars, the regime where Gaia DR3 crossmatches are incomplete. T
 route: four of its six minimal stars have no Gaia row, so the route would be
 ineligible under ScientificProfileV1's fail-closed rule.
 
-**Proposed plan revision (needs owner and astronomy review):** for the route's bright
+**Resolved 2026-11-01 by Milestone 2D.1D** (`PHASE1_ROUTE_CATALOGUE_DECISION.md`): ESA
+Hipparcos 1997 is selected as the single source with bounded RV omission, so no RV
+catalogue is needed. The original proposal follows. **Proposed plan revision:** for the route's bright
 stars, evaluate ESA Hipparcos 1997 (`hip_main`) as the primary astrometric source. Its
 explicit `J1991.25 (TT)` epoch avoids I/311's unresolved time scale. Pair it with one
 reviewed primary radial-velocity authority, and keep Gaia DR3 as a cross-check where a
@@ -125,14 +127,46 @@ These are review candidates. Membership of the historical patterns is still
 | 5 | Ibn Qutaybah, *Kitāb al-Anwāʾ*, ed. M. Ḥamīdullāh & Ch. Pellat (Hyderabad, 1956) | Edition-stable locators for §31 and §§52–53 | Library/buy |
 | 6 | Ibn ʿĀṣim al-Thaqafī, *al-Anwāʾ wa-al-Azmina wa-Maʿrifat Aʿyān al-Kawākib fī al-Nujūm*, ed. N. Ḥ. al-Qaysī & M. N. al-Dulaymī (Dār al-Jīl, Beirut, 1996) | Replaces the lost local text | Buy or re-obtain |
 
-## 7. Decisions still required
+## 7. Decisions
 
-| ID | Decision | Owner |
+The owner delegated these decisions to the agent on 2026-11-01. Each is a
+`PROJECT_DECISION` that fixes the implementation path. None of them is cultural,
+scientific, or educational approval.
+
+| ID | Decision | Resolution (2026-11-01) | Approval still required |
+| --- | --- | --- | --- |
+| D-1 | Display label for the Cassiopeia pattern | **Primary: al-Kaff al-Khaḍīb (الكف الخضيب), `OLD_ARABIAN`.** This is the anwāʾ-layer name the owner asked for. Secondary: *Dhāt al-Kursī*, shown as al-Ṣūfī's later `GRECO_ARABIC_SCHOLARLY` name for the same stars | Arabic/cultural review of forms and transliteration before learner release |
+| D-2 | Alternative route | **Accepted:** greater Banāt Naʿsh (بنات نعش) to al-Jady, selected by scenario availability under IMP-018 | None for implementation |
+| D-3 | Catalogue for route stars | **Resolved in `PHASE1_ROUTE_CATALOGUE_DECISION.md`:** ESA Hipparcos 1997 as the single source, with ScientificProfileV1 Amendment A1 bounded RV omission | Named astronomy review for scientific acceptance |
+| D-4 | Helper-to-al-Jady guidance line | **Accepted for implementation** as `MODERN_PEDAGOGICAL` content, with the historical guidance role of al-Jady cited separately | Educational review before learner release |
+
+## 7a. The Stellarium *Arabic (Ancient)* compilation
+
+The owner identified Stellarium's *Arabic (Ancient)* sky culture as the main ancient
+Arabic collection. Its author, Khalid al-Ajaji, compiled it from the same primary texts
+held in the private library: Ibn Qutaybah, al-Marzūqī, Ibn ʿĀṣim al-Thaqafī,
+*Kitāb al-ʿAyn*, al-Ṣūfī, Ibn Mājid (via Ferrand), and Kunitzsch. At the pinned
+commit its memberships coincide exactly with this route's candidates:
+
+| Compilation entry | HIP members | Route candidate set |
 | --- | --- | --- |
-| D-1 | Display label for the Cassiopeia pattern: *Dhāt al-Kursī*, *al-Kaff al-Khaḍīb*, or both with their layer classifications | Owner, then cultural review |
-| D-2 | Accept greater Banāt Naʿsh as the alternative route for the season when Cassiopeia is down | Owner |
-| D-3 | Replace the Gaia-first preference for route stars with a Hipparcos 1997 bright-star source plus an RV authority, or decide RV implement-or-omit under AST-003 | Owner plus astronomy review |
-| D-4 | Approve the modern helper-to-al-Jady guidance construction as `MODERN_PEDAGOGICAL` content | Educational review |
+| الكف الخضيب, "The henna tinted hand" | 746, 3179, 4427, 6686, 8886 | All 5 Cassiopeia candidates |
+| بنات نعش, "Daughters of Naʿsh" | 53910, 54061, 58001, 59774, 62956, 65378, 67301 | All 7 greater Banāt Naʿsh candidates |
+| الجدي, "The kid" (common name) | 11767 | al-Jady |
+| الفرقدان, "The two calves" | 72607, 75097 | The lesser group's pair |
+
+Treatment, superseding the earlier "comparison only" role:
+
+- It is the **primary navigation compilation for the `OLD_ARABIAN` layer**. Agents start
+  from it to find candidate names and memberships, then verify each claim in the cited
+  primary text, with a locator, before writing an evidence record.
+- It remains a modern compilation, not a primary witness. Membership claims cite both
+  the compilation and the primary-text locator.
+- Its licence is CC BY-ND 4.0. UFUQ must not import or transform its `lines` arrays into
+  tracked or runtime data, because that would be a derivative. UFUQ defines its own
+  line segments as `MODERN_PEDAGOGICAL` records. Star-membership facts may be recorded
+  with attribution. An optional owner action is to ask the author (contact in the
+  upstream description) for permission to adapt the figures for this academic project.
 
 ## 8. Tests this scope implies (later phases)
 

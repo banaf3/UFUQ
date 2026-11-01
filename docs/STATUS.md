@@ -328,6 +328,32 @@ with anwāʾ-literature star knowledge. Its research record is
 Owner decisions D-1 to D-4 and the reference acquisition list are in the same record.
 No content, row, or source is approved, and readiness is unchanged.
 
+### Milestone 2D.1D route-star catalogue decision
+
+On 2026-11-01 the owner delegated the decisions to the agent. D-1, D-2, and D-4 are
+resolved in the 2D.1C record:
+
+- **D-1:** the helper label is al-Kaff al-Khaḍīb, with *Dhāt al-Kursī* as the later
+  scholarly name.
+- **D-2:** greater Banāt Naʿsh is the alternative route.
+- **D-4:** the helper-to-al-Jady line is `MODERN_PEDAGOGICAL`.
+
+The Stellarium *Arabic (Ancient)* compilation, built from the same primary Arabic texts
+the owner supplied, is the primary navigation compilation for the old-Arabian layer. Its
+memberships coincide exactly with the 13 route candidates.
+
+**D-3:** `spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md` selects ESA Hipparcos 1997
+`hip_main` as the single astrometric source. The new hash-bound ESA TAP evidence
+(`data/manifests/hipparcos-esa-1997-hip-screen-v1/`) shows 19/19 candidates with
+complete five-parameter astrometry, errors, and correlations, and positive parallax.
+ScientificProfileV1 Amendment A1 adds a typed bounded radial-velocity omission (worst
+0.081 mas per km/s to 2040), which removes the RV-catalogue dependency. The rights are
+CC BY-NC 3.0 IGO with "Credit: ESA". `npm run data:verify` now verifies this evidence.
+
+Still open for 2D: component and quality records (HIP 54061 and 65378 are component
+solutions), the UMPSA Pekan observer record, the leap/EOP artifacts, and named
+scientific review. Readiness is unchanged.
+
 ### Milestone 2A modern synthetic-only retry
 
 The earlier exact candidate set remains recorded as a failed experiment: Astropy 7.2.2

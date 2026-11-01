@@ -121,6 +121,16 @@ Historical report/deviation/authority status remains in `governance/`.
   authority. No blanket Gaia/Hipparcos/PCRV/XHIP merge is approved. Cultural records
   reference `starId`, never copied coordinates or a permanently coupled external
   identifier; crossmatch and per-field authorities remain distinct.
+  **Milestone 2D.1D (2026-11-01, owner-delegated) supersedes the Gaia-first preference for
+  the V1 route stars.** ESA Hipparcos 1997 `hipparcos1.hip_main` (epoch J1991.25(TT),
+  CC BY-NC 3.0 IGO, "Credit: ESA") is the single astrometric source for the 13 route
+  stars. Hash-bound ESA TAP evidence shows complete five-parameter astrometry,
+  correlations, and positive parallax for all 19 candidates. Radial velocity uses the
+  ScientificProfileV1 Amendment A1 bounded-omission state (worst 0.081 mas per km/s to
+  2040), so no RV catalogue is merged. Noncommercial academic derived artifacts may be
+  tracked and deployed with credit. Gaia DR3 and DR4 serve only as cross-checks, and
+  I/311 stays the parser spike. Row component/quality records and scientific review
+  remain open. See `spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`.
 - **Status:** `CATALOGUE_AUTHORITY_BLOCKED` (Gaia DR3 is the preferred candidate;
   adapter A and immutable query gate B are closed; I/311 remains a local
   non-redistributing spike; production row authority/minimal allowlist, Polaris authority, and
@@ -304,7 +314,14 @@ Historical report/deviation/authority status remains in `governance/`.
   with greater Banāt Naʿsh as the complementary alternative route for the season when
   Cassiopeia is below the horizon. This orders the research and approves no content.
   The evidence layers, Malaysian-latitude availability, and catalogue coverage are in
-  `spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`.
+  `spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`. The owner-delegated implementation
+  decisions there are: helper label al-Kaff al-Khaḍīb (`OLD_ARABIAN`), with
+  *Dhāt al-Kursī* as the later scholarly name; greater Banāt Naʿsh as the alternative
+  route; and the helper-to-al-Jady line as `MODERN_PEDAGOGICAL`. The Stellarium
+  *Arabic (Ancient)* compilation is the primary navigation compilation for the
+  `OLD_ARABIAN` layer, verified claim by claim against its cited primary texts. Its
+  CC BY-ND 4.0 line figures are never imported. Cultural, Arabic, and educational review
+  are still required before learner release.
 - **Status:** unresolved
 - **What code it affects:** Curated `SkyPattern`, `GuidanceRelationship`, and
   `LessonRoute` data; scene overlays; assessment targets; lesson/scaffold configuration;

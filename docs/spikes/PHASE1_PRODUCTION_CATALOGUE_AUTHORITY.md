@@ -306,6 +306,22 @@ bright-star astrometric source with an RV authority (ESA Hipparcos 1997 is the
 proposed candidate), or the affected stars and routes become ineligible. This approves
 no source or row.
 
+### Milestone 2D.1D route-star catalogue decision (2026-11-01)
+
+`PHASE1_ROUTE_CATALOGUE_DECISION.md` selects ESA Hipparcos 1997 `hip_main` as the single
+astrometric source for the 13 route stars. The selection is owner-delegated and still
+needs scientific review. The hash-bound ESA TAP evidence covers 19/19 candidates with
+complete five-parameter astrometry and correlations.
+
+- **Gate D (Polaris fallback):** closed by this source, together with ScientificProfileV1
+  Amendment A1's bounded RV omission.
+- **Gate E (rights):** resolved for Hipparcos-derived artifacts in noncommercial
+  academic use under CC BY-NC 3.0 IGO with "Credit: ESA".
+- **Gaia DR3:** stays a cross-check and is no longer the preferred production source
+  for route stars.
+- **Gate C:** remains open for component and quality records (HIP 54061 and 65378 are
+  component solutions).
+
 ### Milestone 2E owns later
 
 - exact acquisition/query tooling and ignored raw-response storage;

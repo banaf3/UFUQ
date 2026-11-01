@@ -691,6 +691,28 @@ This makes perspective motion part of the required straight-line space-motion mo
 rather than an unbounded silent omission. A distant-source/no-RV branch is deferred to
 a later profile and would require its own omission evidence and review.
 
+**Amendment A1 (2026-11-01, Milestone 2D.1D): bounded radial-velocity omission.** The
+omission evidence this paragraph asks for now exists for the V1 route stars, so V1 adds
+one explicit typed state, `RADIAL_VELOCITY_OMITTED_WITH_BOUND`. A row may use it only
+when its record carries:
+
+- the omitted term: second-order perspective acceleration;
+- the per-row bound `|mu| * (v_r / d) * t^2`, evaluated over the activated UTC domain and
+  expressed per km/s of radial velocity;
+- the evidence identifier: `data/manifests/hipparcos-esa-1997-hip-screen-v1/`.
+
+For the 13 route stars over J1991.25 to 2040.0 the worst bound is 0.081 mas per km/s
+(HIP 746). That is below the catalogue's own formal propagated position uncertainty
+(25–56 mas) for any realistic stellar radial velocity. The computation uses the SOFA
+no-RV input only under this explicit state. Absence is still never silently
+represented as zero, and an untyped missing RV still makes the row ineligible.
+
+The bound enters the AST-006 ledger as a bounded model term. This is an owner-delegated
+`PROJECT_DECISION` that selects the implementation path. Scientific acceptance still
+requires the named astronomy review, and `APPROVED_GEOMETRIC_RESULT` remains
+unreachable until postimplementation acceptance. See
+`PHASE1_ROUTE_CATALOGUE_DECISION.md`.
+
 These requirements do not make I/311 permanent or block generic astronomy-core. If
 2D retains I/311, its unresolved epoch/derivative scale and absent RV make affected
 rows ineligible until an authoritative crossmatch/interpretation is approved. 2D may
@@ -726,7 +748,7 @@ uncertainty.
 | Proper motion in RA | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Source `mu_alpha_star`; explicit division by `cos(dec)` only for the SOFA coordinate-rate boundary; TDB Julian-year scale. | Missing/unknown derivative semantics or exact-pole singularity blocks the row. `A-002`,`A-006`,`B-002`,`F-003`,`F-004`. |
 | Proper motion in Dec | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Explicit Dec coordinate rate with approved units/scale. | Missing/unknown derivative semantics blocks the row. `A-002`,`A-006`,`B-002`. |
 | Parallax/topocentric parallax | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Positive approved parallax/equivalent distance enters `pmsafe`/`atciq`-derived observer-aware propagation. | Zero/negative/missing/unapproved distance makes row ineligible; no infinite-distance substitute. `A-003`,`B-008`. |
-| Radial velocity/perspective effects | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Approved finite RV, positive receding, enters full space motion. | Missing/unapproved RV makes row ineligible; no `0 km/s` substitute. `A-004`,`B-002`. |
+| Radial velocity/perspective effects | `UNAVAILABLE_INPUT_FAILS_CLOSED`, or `RADIAL_VELOCITY_OMITTED_WITH_BOUND` under Amendment A1 | Approved finite RV, positive receding, enters full space motion; or the explicit A1 omission state with its per-row bound. | Untyped missing/unapproved RV makes row ineligible; no implicit `0 km/s` substitute. `A-004`,`B-002`. |
 | Frame bias | `INCLUDED_V1` | SOFA `pnm06a`/CIO-family BPN semantics. | Model/implementation uncertainty remains unbounded for later validation. `B-003`,`B-009`. |
 | IAU 2006 precession | `INCLUDED_V1` | IAU 2006 precession through SOFA `pnm06a` semantics. | No omission; model/implementation term remains unbounded. `B-004`,`B-009`. |
 | IAU 2000A nutation | `INCLUDED_V1` | IAU 2000A nutation plus the matching transformation used with IAU 2006 precession; never called “IAU 2006A nutation.” | No omission; model/implementation term remains unbounded. `B-004`,`B-009`. |
@@ -834,7 +856,7 @@ observer contract is documented above and is no longer an open row.
 | I/311 proper-motion derivative time scale | `B BLOCKS_2D_DATA_AUTHORITY` | Blocks I/311 motion eligibility; the resolved 365.25-day unit does not supply the scale. |
 | Source-neutral proper-motion adapter, polar guard, missing-state and warning ownership | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: explicit `mu_alpha_star` adapter, exact-pole rejection, no arbitrary near-pole epsilon, raw-status preservation, and fail-closed nonzero-status policy are normative. |
 | Radial-velocity source/crossmatch and selected-row evidence | `B BLOCKS_2D_DATA_AUTHORITY` | 2D must supply an authoritative value or mark the row ineligible. |
-| Radial-velocity/perspective missing-state branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: an approved finite RV is mandatory for each V1 row; absence makes the row ineligible and is never `0 km/s`. |
+| Radial-velocity/perspective missing-state branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: an approved finite RV is mandatory for each V1 row unless the row carries the Amendment A1 `RADIAL_VELOCITY_OMITTED_WITH_BOUND` state with its evidence; untyped absence makes the row ineligible and is never `0 km/s`. |
 | Parallax/distance row quality, uncertainty and covariance | `B BLOCKS_2D_DATA_AUTHORITY` | Controls selected-row eligibility in 2D. |
 | Parallax/distance admissibility and unavailable branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: every V1 row needs a positive approved parallax/equivalent-distance state; zero/negative/missing/unapproved values make the row ineligible. |
 | Transformation route, TypeScript mapping and effect ownership | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved as the decomposed SOFA `2023-10-11`-derived pure-TypeScript route, model-CIP-only EOP input set, explicit effect matrix, and pending-validation lifecycle. |

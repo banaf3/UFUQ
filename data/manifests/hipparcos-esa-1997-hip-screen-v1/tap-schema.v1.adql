@@ -1,0 +1,4 @@
+SELECT column_name, datatype, unit, ucd, description
+FROM TAP_SCHEMA.columns
+WHERE table_name = 'hipparcos1.hip_main'
+ORDER BY column_name

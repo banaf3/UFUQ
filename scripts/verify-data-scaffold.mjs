@@ -5,7 +5,19 @@ import { join, resolve } from 'node:path';
 
 const repositoryRoot = resolve(import.meta.dirname, '..');
 const scaffoldDirectories = new Map([
-  ['data/manifests', new Set(['README.md', 'gaia-dr3-hip-screen-v1'])],
+  [
+    'data/manifests',
+    new Set(['README.md', 'gaia-dr3-hip-screen-v1', 'hipparcos-esa-1997-hip-screen-v1']),
+  ],
+  [
+    'data/manifests/hipparcos-esa-1997-hip-screen-v1',
+    new Set([
+      'README.md',
+      'acquisition-manifest.v1.json',
+      'hip-main-source.v1.adql',
+      'tap-schema.v1.adql',
+    ]),
+  ],
   [
     'data/manifests/gaia-dr3-hip-screen-v1',
     new Set([
@@ -172,6 +184,103 @@ if (gaiaManifest) {
   }
 }
 
+// Milestone 2D.1D: ESA Hipparcos 1997 bounded query evidence (same contract style).
+let localHipparcosResponseStatus = 'absent; original response bytes were not verified';
+const hipparcosDirectory = 'data/manifests/hipparcos-esa-1997-hip-screen-v1';
+let hipparcosManifest;
+try {
+  hipparcosManifest = JSON.parse(
+    readFileSync(join(repositoryRoot, hipparcosDirectory, 'acquisition-manifest.v1.json'), 'utf8'),
+  );
+} catch (error) {
+  errors.push(`Cannot parse Hipparcos 1997 query evidence manifest: ${error.message}`);
+}
+
+if (hipparcosManifest) {
+  const expectedHipIds = [
+    746, 3179, 4427, 6686, 8886, 11767, 53910, 54061, 58001, 59774, 62956, 65378, 67301, 72607,
+    75097, 77055, 79822, 82080, 85822,
+  ];
+  const expectedQueryPaths = [
+    `${hipparcosDirectory}/hip-main-source.v1.adql`,
+    `${hipparcosDirectory}/tap-schema.v1.adql`,
+  ];
+  if (
+    hipparcosManifest.manifestType !== 'UFUQ_HIPPARCOS1997_TAP_QUERY_EVIDENCE_MANIFEST' ||
+    hipparcosManifest.schemaVersion !== 1 ||
+    hipparcosManifest.authorityStatus !== 'QUERY_EVIDENCE_VERIFIED' ||
+    hipparcosManifest.rowScientificApproval !== 'NONE'
+  ) {
+    errors.push('Hipparcos 1997 query evidence manifest violates the V1 evidence contract');
+  }
+  if (
+    hipparcosManifest.release?.table !== 'hipparcos1.hip_main' ||
+    hipparcosManifest.release?.catalogueEpoch !== 'J1991.25(TT)' ||
+    hipparcosManifest.service?.syncUrl !==
+      'https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap/sync'
+  ) {
+    errors.push('Hipparcos 1997 query evidence is not pinned to the ESA hip_main TAP boundary');
+  }
+  if (
+    JSON.stringify(hipparcosManifest.queryConstruction?.candidateHipIds) !==
+    JSON.stringify(expectedHipIds)
+  ) {
+    errors.push('Hipparcos 1997 query evidence candidate HIP set or ordering changed');
+  }
+  const queries = hipparcosManifest.queryConstruction?.queries ?? [];
+  if (JSON.stringify(queries.map((query) => query.path)) !== JSON.stringify(expectedQueryPaths)) {
+    errors.push('Hipparcos 1997 query evidence must contain exactly the two approved query files');
+  }
+  for (const query of queries) {
+    const absolutePath = join(repositoryRoot, query.path);
+    if (!query.path.startsWith(`${hipparcosDirectory}/`) || !existsSync(absolutePath)) {
+      errors.push(`Missing or escaping tracked Hipparcos 1997 query: ${query.path}`);
+      continue;
+    }
+    if (statSync(absolutePath).size !== query.byteLength || sha256(absolutePath) !== query.sha256) {
+      errors.push(`Tracked Hipparcos 1997 query identity mismatch: ${query.path}`);
+    }
+  }
+  const structural = hipparcosManifest.structuralResults ?? {};
+  if (
+    structural.candidateCount !== 19 ||
+    structural.responseRowCount !== 19 ||
+    structural.routeStarRowsPresent !== 13
+  ) {
+    errors.push('Hipparcos 1997 structural inventory changed without a new version');
+  }
+  const rawFiles = hipparcosManifest.rawEvidence?.files ?? [];
+  if (rawFiles.length !== 5 || rawFiles.some((file) => !file.path.startsWith('data/raw/'))) {
+    errors.push('Hipparcos 1997 raw evidence must be the five-file ignored data/raw set');
+  }
+  const present = rawFiles.filter((file) => existsSync(join(repositoryRoot, file.path))).length;
+  if (present > 0 && present !== rawFiles.length) {
+    errors.push(`Local Hipparcos 1997 evidence is incomplete: ${present}/${rawFiles.length} files`);
+  }
+  if (rawFiles.length > 0 && present === rawFiles.length) {
+    localHipparcosResponseStatus = 'complete and byte/hash verified';
+    for (const file of rawFiles) {
+      const absolutePath = join(repositoryRoot, file.path);
+      if (statSync(absolutePath).size !== file.byteLength || sha256(absolutePath) !== file.sha256) {
+        errors.push(`Local Hipparcos 1997 response identity mismatch: ${file.path}`);
+      }
+    }
+    const csvFile = rawFiles.find((file) => file.path.endsWith('/hip-main-source.csv'));
+    const header = csvFile
+      ? readFileSync(join(repositoryRoot, csvFile.path), 'utf8').split(/\r?\n/, 1)[0].split(',')
+      : [];
+    const columns = hipparcosManifest.responseColumns ?? {};
+    const missing = (columns.requiredAstrometryColumns ?? []).filter(
+      (column) => !header.includes(column),
+    );
+    if (header.length !== columns.hipMainSourceColumnCount || missing.length > 0) {
+      errors.push(
+        `Hipparcos 1997 response columns do not match the manifest: ${missing.join(', ')}`,
+      );
+    }
+  }
+}
+
 if (!existsSync(join(repositoryRoot, rawDirectory))) {
   errors.push(`Missing scaffold directory: ${rawDirectory}`);
 } else {
@@ -212,6 +321,6 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Data boundary verified: the Gaia query manifest and tracked query hashes are intact; local Gaia response set ${localGaiaResponseStatus}; curation and generated data remain placeholders; local raw data is ignored and untracked.`,
+    `Data boundary verified: the Gaia and Hipparcos 1997 query manifests and tracked query hashes are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; curation and generated data remain placeholders; local raw data is ignored and untracked.`,
   );
 }

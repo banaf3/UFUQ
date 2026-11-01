@@ -1,0 +1,175 @@
+{
+  "manifestType": "UFUQ_HIPPARCOS1997_TAP_QUERY_EVIDENCE_MANIFEST",
+  "schemaVersion": 1,
+  "manifestId": "hipparcos-esa-1997-hip-screen-v1-20261101T102758Z",
+  "authorityStatus": "QUERY_EVIDENCE_VERIFIED",
+  "rowScientificApproval": "NONE",
+  "scope": "Milestone 2D.1D immutable bounded query evidence for the ESA Hipparcos 1997 main catalogue",
+  "release": {
+    "publisher": "ESA",
+    "catalogue": "The Hipparcos and Tycho Catalogues (ESA 1997), Hipparcos Main Catalogue",
+    "citation": "ESA (1997), The Hipparcos and Tycho Catalogues, ESA SP-1200",
+    "schema": "hipparcos1",
+    "table": "hipparcos1.hip_main",
+    "catalogueEpoch": "J1991.25(TT)",
+    "catalogueEpochSource": "ESA SP-1200 Vol. 1 section 1.2.6; see docs/references/studies/hipparcos-esa-1997-field-semantics.study.md",
+    "officialCataloguePage": "https://www.cosmos.esa.int/web/hipparcos/catalogues"
+  },
+  "service": {
+    "identity": "ESA ESASky Legacy TAP service (named on the official Hipparcos catalogue page)",
+    "baseUrl": "https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap",
+    "syncUrl": "https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap/sync",
+    "tapStandardId": "ivo://ivoa.net/std/TAP",
+    "availabilityAtAcquisition": "AVAILABLE"
+  },
+  "queryConstruction": {
+    "querySetId": "HIPPARCOS1997_HIP_SCREEN_V1",
+    "querySetVersion": 1,
+    "httpMethod": "POST",
+    "requestParameters": [
+      "REQUEST=doQuery",
+      "LANG=ADQL",
+      "FORMAT=csv",
+      "QUERY=<tracked file bytes>"
+    ],
+    "responseFormat": "CSV",
+    "candidateHipIds": [
+      746, 3179, 4427, 6686, 8886, 11767, 53910, 54061, 58001, 59774, 62956, 65378, 67301, 72607,
+      75097, 77055, 79822, 82080, 85822
+    ],
+    "queries": [
+      {
+        "path": "data/manifests/hipparcos-esa-1997-hip-screen-v1/hip-main-source.v1.adql",
+        "byteLength": 228,
+        "sha256": "7c1af9113212a7824e44c44b3aa134f62151614d2debd10bf155db9d1c19ae7c"
+      },
+      {
+        "path": "data/manifests/hipparcos-esa-1997-hip-screen-v1/tap-schema.v1.adql",
+        "byteLength": 139,
+        "sha256": "e44a4593db8fc7616374eba204022451d21a5e8c4848ac2495a764e85c475f53"
+      }
+    ]
+  },
+  "acquisition": {
+    "startedUtc": "2026-11-01T10:27:58.114217700Z",
+    "completedUtc": "2026-11-01T10:28:04.824231100Z",
+    "tool": "curl",
+    "toolVersion": "8.23.0 (x86_64-w64-mingw32) Schannel",
+    "operatingSystem": "Microsoft Windows 11 (10.0.26200)",
+    "authentication": "ANONYMOUS",
+    "networkSource": "OFFICIAL_ESA_ESASKY_LEGACY_TAP",
+    "httpStatuses": { "hip-main-source": 200, "tap-schema": 200 }
+  },
+  "rawEvidence": {
+    "repositoryPolicy": "IGNORED_LOCAL_ONLY_UNTIL_DERIVED_ARTIFACT_POLICY_APPLIED",
+    "directory": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z",
+    "files": [
+      {
+        "path": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z/hip-main-source.csv",
+        "byteLength": 7946,
+        "sha256": "f737c3d536b25c313b92da0146ecfc0e25d9007d34e01f2a9f75520cefcbb66d"
+      },
+      {
+        "path": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z/hip-main-source.headers.txt",
+        "byteLength": 670,
+        "sha256": "791ef35c640361dce6e44d156340a0c2e6e95b98dd50119b97090c68a9babf14"
+      },
+      {
+        "path": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z/tap-schema.csv",
+        "byteLength": 5307,
+        "sha256": "dc67af76b7fb55fe05c81883ba6c2fb2e8cacb87d1ce546174f8ea36c1aab669"
+      },
+      {
+        "path": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z/tap-schema.headers.txt",
+        "byteLength": 670,
+        "sha256": "3c5a9bf59dfccbbecf0e8195418dba8aa621aae8cff697a18fe10655284dc877"
+      },
+      {
+        "path": "data/raw/hipparcos-esa-1997/2d1d-hip-main-screen-v1-20261101T102758Z/acquisition-window.txt",
+        "byteLength": 62,
+        "sha256": "021b832a60012b4a1317ab6dc803a534113f30ed29c42a70e8d362203308a4a3"
+      }
+    ]
+  },
+  "responseColumns": {
+    "hipMainSourceColumnCount": 76,
+    "tapSchemaColumnRows": 76,
+    "requiredAstrometryColumns": [
+      "HIP",
+      "RAdeg",
+      "DEdeg",
+      "Plx",
+      "pmRA",
+      "pmDE",
+      "e_RAdeg",
+      "e_DEdeg",
+      "e_Plx",
+      "e_pmRA",
+      "e_pmDE",
+      "DE:RA",
+      "Plx:RA",
+      "Plx:DE",
+      "pmRA:RA",
+      "pmRA:DE",
+      "pmRA:Plx",
+      "pmDE:RA",
+      "pmDE:DE",
+      "pmDE:Plx",
+      "pmDE:pmRA",
+      "MultFlag",
+      "Source",
+      "Qual",
+      "m_HIP",
+      "Ncomp"
+    ]
+  },
+  "structuralResults": {
+    "candidateCount": 19,
+    "responseRowCount": 19,
+    "duplicateHipCount": 0,
+    "routeStarRowsPresent": 13,
+    "rowsWithCompleteFiveParameterAstrometryAndErrors": 19,
+    "rowsWithAllTenCorrelations": 19,
+    "rowsWithPositiveRawParallax": 19,
+    "multFlagCounts": { "blank": 16, "C": 2, "V": 1 },
+    "componentSolutionHipIds": [54061, 65378],
+    "variabilityInducedMoverHipIds": [82080],
+    "acceleration_orbital_or_stochastic_solutions": 0,
+    "hip11767Rows": 1,
+    "classificationBoundary": [
+      "Structural presence and completeness only",
+      "No physical-component, quality, or row approval",
+      "No coordinate or measured value is tracked",
+      "Route membership is cultural evidence, not catalogue evidence",
+      "Counts are reproducible only from the hash-identified raw bytes"
+    ]
+  },
+  "radialVelocityOmissionBound": {
+    "status": "COMPUTED_FOR_REVIEW",
+    "term": "second-order perspective acceleration omitted when no RV is supplied",
+    "formula": "|mu| * (v_r / d) * t^2, with v_r/d = (v_r / 4.740470446) * plx_mas / 206264806.247 per year",
+    "propagationIntervalYears": 48.75,
+    "interval": "J1991.25 to 2040.0 (illustrative; the bound scales with t^2)",
+    "worstRouteStarBoundMasPerKmPerS": 0.081,
+    "worstRouteStarHip": 746,
+    "formalPropagatedPositionUncertaintyAt2040MasRange": [25.3, 55.6]
+  },
+  "rights": {
+    "licence": "CC BY-NC 3.0 IGO",
+    "creditLine": "Credit: ESA",
+    "licenceSource": "https://www.cosmos.esa.int/web/hipparcos/catalogues (retrieved 2026-11-01)",
+    "localAnalysisAllowed": true,
+    "attributionRequired": true,
+    "noncommercialAcademicDerivedUse": "PERMITTED_BY_LICENCE_WITH_CREDIT",
+    "rawAndQueryDerivedMaterial": "IGNORED_LOCAL_ONLY",
+    "trackedMaterial": "QUERY_TEXT_HASHES_NON_ROW_METADATA_AND_STRUCTURAL_COUNTS_ONLY"
+  },
+  "reproducibility": {
+    "rawBytesAreAuthority": true,
+    "liveServiceIsNotImmutableAuthority": true,
+    "laterRequeryEquivalentOnlyIfAllRelevantResponseHashesMatch": true,
+    "changedResponseCreatesNewEvidenceVersion": true,
+    "overwriteRecordedEvidence": false,
+    "freshCheckoutCanVerifyOriginalRawBytesWithoutAuthorizedCopy": false
+  }
+}
