@@ -33,6 +33,13 @@ deployment NO. Production TypeScript still contains no astronomy calculation.
 
 ## Next justified step
 
+Work continues on branch `spike/source-data-deployment-authority`; its
+`docs/HANDOFF.md` is the current handoff (owner decisions D-1 to D-4, the catalogue
+decision, and gate C were completed there on 2026-11-01). Check it out before starting.
+
+## Superseded next steps (kept until Milestone 2D merges)
+
+
 1. Owner decisions D-1 to D-4 from the 2D.1C record: pattern display label, the
    alternative route, the bright-star catalogue source or RV policy, and the modern
    guidance line.
