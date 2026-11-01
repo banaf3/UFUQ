@@ -371,6 +371,29 @@ mapping, commands, corrections, and independent post-migration verdict are in
 `STRUCTURE_MIGRATION.md`. `SCAFFOLD_AUDIT.md` is a historical audit of the original
 13-workspace working tree and is not the current status.
 
+## Agent workflow layer — 2026-11-01
+
+The development clone had drifted 28 commits behind `origin/main` with uncommitted work
+on the pre-consolidation layout. That work is preserved on
+`backup/local-worktree-2026-11-01` and is superseded; only its Claude-specific files
+were ported, adapted to the eight-workspace layout. Its earlier TypeScript horizontal-
+coordinate experiment was **not** ported, because production astronomy code follows
+Milestones 2D and 2E in the approved order.
+
+Added: `CLAUDE.md`, `docs/AGENT_WORKFLOW.md` (owner standing instructions, Git
+authority, session protocol), `docs/HANDOFF.md` (the short per-session progress file),
+`docs/CLAUDE_START_PROMPT.md`, `docs/REPORT_REFERENCE_WORKFLOW.md`, Claude Code wrappers
+for the five canonical `.agents/skills`, the `ufuq-reference` report skill, and
+`tests/tooling/agent-instructions.test.ts` (wrapper/canonical parity, documented-path
+existence, and the destructive-command rule). `AGENTS.md` now records the owner's
+authorization for focused report research and a destructive-command safety rule.
+
+The safety rule follows an incident in the same session: `git clean -fdX` with pathspecs
+deleted every Git-ignored file. The private library was rebuilt from a snapshot, the
+owner's originals, public re-downloads, and agent logs. 22 of 24 source checksums
+verify, and two sources await owner re-acquisition. No tracked file or commit was
+affected. Readiness gates are unchanged.
+
 ## Authorized next work
 
 Phase 1 Milestones 1, 2A, 2B, and the Milestone 2C specification gate are ready to be
