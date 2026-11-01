@@ -198,6 +198,20 @@ Faculty `ObserverPreset` data and provenance before real ProfileV1 execution; a 
 survey-control record is optional rather than mandatory. Unresolved redistribution
 authority does not become permission to track or deploy I/311-derived rows.
 
+**Milestone 2D outcome (2026-11-01):** `MILESTONE_2D_READY_TO_CLOSE_FOR_IMPLEMENTATION`.
+Every data selection now exists with hash-bound evidence that `npm run data:verify`
+enforces:
+
+- the route-star catalogue: ESA Hipparcos 1997 with Amendment A1 (2D.1D), plus its row
+  records (2D.1E);
+- the IERS leap transport, the coherent Bulletin B 453–461 final EOP series, and the
+  IERS Conventions (2010) v1.0.0 restoration routines (2D.2);
+- the candidate UMPSA Pekan Faculty observer preset (2D.3).
+
+Each selection is `REVIEW_REQUIRED`. Named approval gates real ProfileV1 execution, not
+the 2E implementation. Confirmation of the IERS EOP redistribution terms gates
+deployment of a generated bundle. See `spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`.
+
 Milestone 2D.1 audits production star-catalogue authority. Its 2026-08-16 result is
 `CATALOGUE_AUTHORITY_BLOCKED`: ESA Gaia DR3 version 1.1
 `gaiadr3.gaia_source` is the preferred single-source-first candidate and its

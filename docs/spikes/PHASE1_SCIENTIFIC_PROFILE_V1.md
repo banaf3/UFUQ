@@ -377,6 +377,17 @@ execution; final publication latency limits the activation endpoint rather than
 silently enabling predictions. Exact artifacts, values, dates and hashes remain 2D/2E
 activation data.
 
+**Milestone 2D.2 record (2026-11-01):** `PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`
+selects:
+
+- the IERS NTP leap transport `leap-seconds.3992312697`, with publisher SHA-1 verified
+  and Bulletin C 52–72 consistent;
+- the coherent ITRF2014-consistent Bulletin B 453–461 final series. A solution boundary
+  at issue 462 is excluded, as this policy requires;
+- the IERS Conventions (2010) v1.0.0 restoration routines.
+
+This policy is unchanged. Approval is `REVIEW_REQUIRED`.
+
 ### ObserverPreset contract and data handoff
 
 Official UMPSA material establishes the selected site identity: the Faculty of
@@ -452,6 +463,17 @@ does not establish scientific adequacy. A JUPEM survey-control record is **optio
 not mandatory: it is useful only when it represents the intended point or supports a
 documented transformation to it. This public-web audit did not establish a Faculty-
 specific control record; that is not evidence none exists.
+
+**Milestone 2D.3 record (2026-11-01):** `PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md` records
+a candidate preset under this contract:
+
+- the OpenStreetMap Faculty point feature, in WGS 84 as documented by OSM;
+- an ellipsoidal height derived from Copernicus DEM plus EGM2008, with the conversion
+  recorded;
+- a derived conditional horizontal bound, with vertical accuracy `UNKNOWN_UNBOUNDED`;
+- the owner-supplied campus point as a cross-check, not relabelled as the Faculty point.
+
+Approval is `REVIEW_REQUIRED`.
 
 Exact coordinates remain necessary for replay and provenance. Away from a singular or
 classification boundary, nearby points within the campus produce correspondingly local

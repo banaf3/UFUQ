@@ -7,7 +7,18 @@ const repositoryRoot = resolve(import.meta.dirname, '..');
 const scaffoldDirectories = new Map([
   [
     'data/manifests',
-    new Set(['README.md', 'gaia-dr3-hip-screen-v1', 'hipparcos-esa-1997-hip-screen-v1']),
+    new Set([
+      'README.md',
+      'gaia-dr3-hip-screen-v1',
+      'hipparcos-esa-1997-hip-screen-v1',
+      'iers-leap-eop-v1',
+      'observer-umpsa-pekan-v1',
+    ]),
+  ],
+  ['data/manifests/iers-leap-eop-v1', new Set(['README.md', 'acquisition-manifest.v1.json'])],
+  [
+    'data/manifests/observer-umpsa-pekan-v1',
+    new Set(['README.md', 'acquisition-manifest.v1.json']),
   ],
   [
     'data/manifests/hipparcos-esa-1997-hip-screen-v1',
@@ -281,6 +292,114 @@ if (hipparcosManifest) {
   }
 }
 
+// Shared all-or-nothing raw-set check for the Milestone 2D.2/2D.3 evidence manifests.
+function verifyRawSet(label, files, expectedCount, directoryPrefix) {
+  if (
+    files.length !== expectedCount ||
+    files.some((file) => !file.path?.startsWith(`${directoryPrefix}/`))
+  ) {
+    errors.push(`${label} raw evidence must be the ${expectedCount}-file ignored set`);
+    return 'invalid';
+  }
+  const present = files.filter((file) => existsSync(join(repositoryRoot, file.path))).length;
+  if (present === 0) return 'absent; original bytes were not verified';
+  if (present !== files.length) {
+    errors.push(`Local ${label} evidence is incomplete: ${present}/${files.length} files`);
+    return 'incomplete';
+  }
+  for (const file of files) {
+    const absolutePath = join(repositoryRoot, file.path);
+    if (statSync(absolutePath).size !== file.byteLength || sha256(absolutePath) !== file.sha256) {
+      errors.push(`Local ${label} evidence identity mismatch: ${file.path}`);
+    }
+  }
+  return 'complete and byte/hash verified';
+}
+
+function readManifest(directory, label) {
+  try {
+    return JSON.parse(
+      readFileSync(join(repositoryRoot, directory, 'acquisition-manifest.v1.json'), 'utf8'),
+    );
+  } catch (error) {
+    errors.push(`Cannot parse ${label} manifest: ${error.message}`);
+    return undefined;
+  }
+}
+
+// Milestone 2D.2: IERS leap/EOP/restoration source evidence.
+let localLeapEopStatus = 'absent; original bytes were not verified';
+const leapEopManifest = readManifest('data/manifests/iers-leap-eop-v1', 'IERS leap/EOP evidence');
+if (leapEopManifest) {
+  const expectedIssues = [453, 454, 455, 456, 457, 458, 459, 460, 461];
+  if (
+    leapEopManifest.manifestType !== 'UFUQ_LEAP_EOP_SOURCE_EVIDENCE_MANIFEST' ||
+    leapEopManifest.schemaVersion !== 1 ||
+    leapEopManifest.authorityStatus !== 'SOURCE_EVIDENCE_VERIFIED' ||
+    leapEopManifest.scientificApproval !== 'REVIEW_REQUIRED'
+  ) {
+    errors.push('IERS leap/EOP manifest violates the V1 evidence contract');
+  }
+  const selection = leapEopManifest.selection ?? {};
+  if (
+    selection.leapTransport?.file !== 'leap-seconds.3992312697' ||
+    selection.leapTransport?.publisherIntegrity !== 'VERIFIED' ||
+    selection.leapTransport?.bulletinCConsistency !== 'CONSISTENT' ||
+    JSON.stringify(selection.eopSeries?.bulletinBIssues) !== JSON.stringify(expectedIssues) ||
+    selection.eopSeries?.sourceQuality !== 'FINAL' ||
+    selection.restorationSource?.package !== 'iersconventions_v1_0_0.tar.gz'
+  ) {
+    errors.push('IERS leap/EOP selection changed without a new manifest version');
+  }
+  localLeapEopStatus = verifyRawSet(
+    'IERS leap/EOP',
+    leapEopManifest.rawEvidence?.files ?? [],
+    45,
+    'data/raw/iers-leap-eop',
+  );
+  if (localLeapEopStatus.startsWith('complete')) {
+    const { parseNtpLeapList } = await import('./evidence/screen-iers-leap-eop-v1.mjs');
+    const transport = leapEopManifest.rawEvidence.files.find((file) =>
+      file.path.endsWith('/leap-seconds.3992312697'),
+    );
+    const parsed = parseNtpLeapList(readFileSync(join(repositoryRoot, transport.path), 'latin1'));
+    if (parsed.publisherIntegrity !== 'VERIFIED') {
+      errors.push('Selected leap transport fails its publisher SHA-1 integrity code');
+    }
+  }
+}
+
+// Milestone 2D.3: observer-preset candidate evidence.
+let localObserverStatus = 'absent; original bytes were not verified';
+const observerManifest = readManifest(
+  'data/manifests/observer-umpsa-pekan-v1',
+  'observer-preset evidence',
+);
+if (observerManifest) {
+  const preset = observerManifest.candidatePreset ?? {};
+  if (
+    observerManifest.manifestType !== 'UFUQ_OBSERVER_PRESET_EVIDENCE_MANIFEST' ||
+    observerManifest.schemaVersion !== 1 ||
+    observerManifest.scientificApproval !== 'REVIEW_REQUIRED' ||
+    preset.presetId !== 'umpsa-pekan-faculty-of-computing' ||
+    preset.referenceSystem?.id !== 'WGS 84' ||
+    preset.height?.kind !== 'ELLIPSOIDAL' ||
+    preset.coordinateAccuracy?.vertical?.state !== 'UNKNOWN_UNBOUNDED' ||
+    preset.scientificApproval?.state !== 'REVIEW_REQUIRED'
+  ) {
+    errors.push('Observer-preset manifest violates the V1 ObserverPreset evidence contract');
+  }
+  if (/"(user|uid)"\s*:/.test(JSON.stringify(observerManifest))) {
+    errors.push('Observer-preset manifest must not track contributor identities');
+  }
+  localObserverStatus = verifyRawSet(
+    'observer-preset',
+    observerManifest.rawEvidence?.files ?? [],
+    5,
+    'data/raw/observer-umpsa-pekan',
+  );
+}
+
 if (!existsSync(join(repositoryRoot, rawDirectory))) {
   errors.push(`Missing scaffold directory: ${rawDirectory}`);
 } else {
@@ -321,6 +440,6 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Data boundary verified: the Gaia and Hipparcos 1997 query manifests and tracked query hashes are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; curation and generated data remain placeholders; local raw data is ignored and untracked.`,
+    `Data boundary verified: the Gaia, Hipparcos 1997, IERS leap/EOP, and observer-preset manifests are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; local IERS leap/EOP set ${localLeapEopStatus}; local observer-preset set ${localObserverStatus}; curation and generated data remain placeholders; local raw data is ignored and untracked.`,
   );
 }

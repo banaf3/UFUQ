@@ -278,7 +278,12 @@ Historical report/deviation/authority status remains in `governance/`.
   - **2D/2E ACTIVATION:** select and approve exact official EOP/leap bytes, Bulletin C
     consistency, per-field final support, exact IERS interpolation/restoration source
     configuration, bundle hashes, observer/source artifacts and supported-time bounds
-    before any real ProfileV1 execution.
+    before any real ProfileV1 execution. **2D.2 (2026-11-01)** has selected the sources:
+    the IERS NTP leap transport `leap-seconds.3992312697`, the coherent
+    ITRF2014-consistent Bulletin B 453–461 final series, and the IERS Conventions (2010)
+    v1.0.0 restoration routines, with hash-bound evidence
+    (`spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`). Named review of the bundle and
+    the 2E activation of the supported-time bounds remain.
   - **POST_IMPLEMENTATION:** compare the TypeScript implementation with pinned
     reference fixtures across the approved domain, record residuals and statuses,
     populate `F-001`/`F-005` and other applicable ledger evidence, activate
@@ -357,7 +362,13 @@ Historical report/deviation/authority status remains in `governance/`.
   `umpsa-pekan-faculty-of-computing` for V1 and may be implemented without numerical
   coordinates. Milestone 2D owns its exact reference point, coordinates, Earth model,
   typed height, accuracy, provenance, version and approval artifact before real V1
-  execution. No production scenario or numeric tolerance is selected. The observer/time
+  execution. **2D.3 (2026-11-01)** records the candidate: the OpenStreetMap Faculty point
+  at 3.5466545° N, 103.4273953° E (WGS 84), with an ellipsoidal height of 9.0325 m from
+  Copernicus DEM plus EGM2008. Its horizontal accuracy is a derived bound of at most
+  2279 m, and its vertical accuracy is unknown. The owner's campus point is a
+  cross-check. Approval is `REVIEW_REQUIRED`
+  (`data/manifests/observer-umpsa-pekan-v1/`). No production scenario or numeric
+  tolerance is selected. The observer/time
   input remains separate from learner-answer and scoring policy; a missing final
   scientific tolerance blocks later acceptance, not implementation start.
 - **Status:** unresolved
