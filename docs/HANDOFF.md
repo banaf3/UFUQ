@@ -5,48 +5,58 @@ belongs in `docs/STATUS.md` and Git). Updated 2026-11-01.
 
 ## Current phase
 
-**Phase 1: astronomy and data technical spike.** Milestones 1, 2A, 2B, and the 2C
-scientific behaviour contract are closed on `main`. **Milestone 2D (data, source, and
-deployment authority) is in progress** on branch `spike/source-data-deployment-authority`
-(not yet merged). Its 2D.1 decision is `CATALOGUE_AUTHORITY_BLOCKED`.
+**Phase 1: astronomy and data technical spike, Milestone 2D (data, source, and deployment
+authority).** The work is on branch `spike/source-data-deployment-authority`, which is
+pushed and merges into `main` when 2D closes.
+
+- **2D.1 catalogue authority:** decided for the V1 route stars. ESA Hipparcos 1997
+  `hip_main` is the single astrometric source, with ScientificProfileV1 Amendment A1
+  bounded RV omission (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`).
+- **2D.1C route scope:** helper al-Kaff al-Khaḍīb, then al-Jady, then True North;
+  alternative route greater Banāt Naʿsh (`docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`).
+- **Still open in 2D:** row component/quality records (gate C), the UMPSA Pekan observer
+  record, the final IERS leap/EOP artifacts, and named scientific review.
 
 Readiness: scaffolding YES; validated vertical slice NO; participant study NO;
 deployment NO. Production TypeScript still contains no astronomy calculation.
 
 ## Last completed increments (2026-11-01)
 
-1. Branch `chore/claude-code-workflow`: realigned the stale clone to `origin/main` and
-   added the agent instruction layer (`CLAUDE.md`, `docs/AGENT_WORKFLOW.md`, this file,
-   Claude skill wrappers, the report skill, and a guard test). The old worktree is kept
-   on `backup/local-worktree-2026-11-01`, which is not for merge.
-2. Branch `spike/source-data-deployment-authority`, commit "scope 2D.1 minimal route to
-   owner Cassiopeia helper" (Milestone 2D.1C, record `PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`
-   in `docs/spikes/` on that branch):
-   - The anwāʾ layer attests al-Kaff al-Khaḍīb (the hand) and al-Jady's
-     direction/Qibla use. *Dhāt al-Kursī* is the Greco-Arabic label.
-   - In Malaysia, Cassiopeia and greater Banāt Naʿsh alternate across the pole, so the
-     latter is the alternative route.
-   - Gaia DR3 covers only 2 of the 6 primary route stars. A Hipparcos 1997 bright-star
-     source with an RV authority is proposed for review.
-3. The private library was rebuilt after an agent-caused `git clean` incident: 22 of 24
-   source checksums verify (`local-reference/RECOVERY_2026-11-01.local.md`).
+1. The agent workflow layer was merged into `main` (`CLAUDE.md`,
+   `docs/AGENT_WORKFLOW.md`, skills, guard test).
+2. 2D.1C route scope, and 2D.1D catalogue decision with hash-bound ESA TAP evidence in
+   `data/manifests/hipparcos-esa-1997-hip-screen-v1/`, enforced by `npm run data:verify`.
+3. The Stellarium *Arabic (Ancient)* compilation is now the primary navigation
+   compilation for the old-Arabian layer. Its memberships match all 13 route
+   candidates.
+4. The Arabic source search tool
+   `.agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs` searches the four
+   Arabic texts with Arabic-aware normalization. It is tested synthetically in
+   `tests/tooling/`.
+5. Private library: 23 of 24 checksums verify; the owner's new Ibn ʿĀṣim text is filed.
 
 ## Next justified step
 
-1. Owner decisions D-1 to D-4 from the 2D.1C record: pattern display label, the
-   alternative route, the bright-star catalogue source or RV policy, and the modern
-   guidance line.
-2. Then continue 2D.1 gate C/D row review for the 13 route stars, acquire the UMPSA
-   Pekan observer record and the leap/EOP artifacts, and close 2D before 2E parsers.
+1. **Gate C row records** for the 13 route stars: component identity for HIP 54061 and
+   65378 (`MultFlag=C`) and the Polaris photocentre note, plus quality fields. Record
+   this in a 2D.1E row-review document from the local hash-verified raw response.
+2. **Leap/EOP artifacts:** select and hash the exact final IERS products under the 2C.6
+   policy (final-only `UT1-UTC`, `xp`, `yp`; leap-second file consistent with Bulletin
+   C), with a manifest and a `data:verify` check.
+3. **Observer record:** needs the owner (see below). Then close 2D, merge it, and start
+   2E (the `hip_main` parser, EOP/leap parsers, deterministic artifacts).
 
 ## Open owner actions
 
-- Download `SSHT-0046_Lo_res.pdf` from the Smithsonian repository in a browser; the
-  path and expected hash are in the recovery record.
-- Re-obtain the Ibn ʿĀṣim al-Thaqafī text or its printed edition.
-- Consider buying Tibbetts 1971 (Ibn Mājid translation) and Kunitzsch & Smart 2006; the
-  full list is in §6 of the 2D.1C record.
-- Install uv 0.11.32 to run the Python oracle on this machine.
-- The Gaia DR3 response bytes from 2D.1B were acquired on another machine.
-- Approve pushes and pull requests for both branches (see the last session's Git
-  recommendation).
+- **Observer coordinates (critical for real ProfileV1 execution):** provide an
+  authoritative latitude, longitude, height, and datum for the UMPSA Pekan Faculty of
+  Computing reference point, for example from a GNSS survey, a JUPEM record, or an
+  official university source.
+- Download `SSHT-0046_Lo_res.pdf` (Savage-Smith & Belloli 1985) from the Smithsonian
+  repository in a browser.
+- Delete the merged branches (the permission system blocks the agent):
+  `git branch -d spike/phase-01-astronomy-data chore/claude-code-workflow` and
+  `git push origin --delete spike/scientific-behaviour-contract`.
+- Optional: ask Khalid al-Ajaji (contact in the Stellarium description) for permission
+  to adapt the *Arabic (Ancient)* line figures; buy Tibbetts 1971 and Kunitzsch & Smart
+  2006; install uv 0.11.32 to run the Python oracle.

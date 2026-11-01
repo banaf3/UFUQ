@@ -21,6 +21,12 @@ data/source authority, then 2E parsers and deterministic data, then the first bo
 TypeScript astronomy implementation. Do not start production astronomy code ahead of
 that order. Installed Three.js/R3F dependencies do not mean a 3D lesson exists.
 
+Within 2D, the V1 route-star catalogue is decided: ESA Hipparcos 1997 `hip_main` with
+bounded RV omission (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The first
+route's helper is al-Kaff al-Khaḍīb leading to al-Jady, with greater Banāt Naʿsh as the
+alternative. Search the owner's Arabic sources with
+`.agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs`.
+
 ## Repository map
 
 | Path                                                          | Role                                                                                                    |

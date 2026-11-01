@@ -12,6 +12,7 @@ canonical instructions here, so the two cannot drift.
 
 Private evidence lives in `local-reference/cultural-astronomy/`. Read its `AGENTS.md`,
 `SOURCE_CATALOG.md`, `EVIDENCE_PROTOCOL.md`, and `RIGHTS_AND_LICENSES.md` before opening
-any source, then read only the sources the question needs. The owner's intended first
-route (Dhāt al-Kursī helper to al-Jady, with anwāʾ-literature star knowledge) is a
-preference, not approval; see `docs/AGENT_WORKFLOW.md`.
+any source, then read only the sources the question needs. Search the Arabic texts with
+the canonical skill's `scripts/arabic_sources.mjs`. The first route's helper is
+al-Kaff al-Khaḍīb (the Cassiopeia-region "henna tinted hand"), leading to al-Jady.
+That is an implementation decision, not cultural approval; see `docs/AGENT_WORKFLOW.md`.

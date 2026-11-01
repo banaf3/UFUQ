@@ -21,12 +21,16 @@ changes them here.
 3. **The report is the system document.** `local-reference/CB23011_FYP_REPORTv2.pdf`
    defines the system and may be extended. Use `docs/REPORT_REFERENCE_WORKFLOW.md`
    for report research and promotion of new requirements.
-4. **Cultural direction.** The owner's intended first learner route uses the
-   Cassiopeia-region chair pattern (Dhāt al-Kursī) as the helper that leads to al-Jady
-   (Polaris) and then to True North, with star knowledge drawn from the anwāʾ
-   literature the owner supplied. This is an owner preference. Every name, membership,
-   line segment, relationship, and historical classification still needs source
-   evidence and review under `IMP-011` (see `.agents/skills/ufuq-najdi-arabian-sky/`).
+4. **Cultural direction.** The owner's first learner route uses the Cassiopeia-region
+   helper that leads to al-Jady (Polaris) and then to True North, with star knowledge
+   drawn from the anwāʾ literature. The anwāʾ-layer name for that helper is al-Kaff
+   al-Khaḍīb (the henna tinted hand); *Dhāt al-Kursī* is al-Ṣūfī's later name for the
+   same stars. Greater Banāt Naʿsh is the alternative route for the season when
+   Cassiopeia is down. The Stellarium *Arabic (Ancient)* compilation is the main
+   navigation source for this layer and is checked against the owner's primary Arabic
+   texts. These are owner-delegated implementation decisions. Every name, membership,
+   line segment, and relationship still needs source evidence and review under
+   `IMP-011` (see `.agents/skills/ufuq-najdi-arabian-sky/`).
 5. **References.** Use the local library in `local-reference/` first. When evidence is
    missing, research public sources. If the needed source is not freely and lawfully
    available, name the exact reference (author, title, edition, ISBN/DOI where known)
@@ -42,15 +46,25 @@ changes them here.
 8. **Plans may change** when solid sources justify it. Record the evidence and the
    reason in the owning decision document; never change a plan silently.
 9. **Finish with the current phase** written in `docs/HANDOFF.md` and in the final
-   message.
+   message, together with a checklist of what was done and what was not.
+10. **Delegated decisions.** The owner delegates technical choices to the agent,
+    including catalogue and library selection, when they are backed by current, solid
+    sources. Make them, record the evidence and reasoning in the owning decision
+    document, and keep working. Stop for the owner only for a genuinely critical
+    action (credentials, purchases, physical-world data such as a survey, or approvals
+    only a named human reviewer can give) or at a major milestone boundary.
+11. **Git is delegated.** The owner authorizes the agent to commit, push, and merge
+    finished work into `main` following the repository's merge-commit convention.
+    Destructive operations (branch deletion, force pushes, history rewrites) are still
+    proposed to the owner, and the permission system blocks them.
 
 ## Git authority and conventions
 
 | Action | Authority |
 | --- | --- |
 | Fetch, status, log, diff, read-only inspection | Always allowed |
-| Local branch creation/switch and local commits | Only when the owner authorizes it for the session; otherwise propose the commands |
-| Push, merge into `main`, pull request, branch deletion, history rewrite | Always needs explicit owner approval |
+| Local branch creation/switch, commits, push, merge of finished work into `main` | Delegated to the agent (owner instruction of 2026-11-01); use explicit paths and the merge-commit convention |
+| Branch deletion, force push, history rewrite, remote branch deletion | Propose to the owner; the permission system blocks them |
 
 - Commit author: `Abdullah Ba Nafea <abu.hd3@gmail.com>`. No Git identity is configured
   on the development machine, so pass it per command:
