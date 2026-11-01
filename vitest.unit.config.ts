@@ -8,6 +8,7 @@ export default defineConfig({
       'packages/**/*.test.ts',
       'packages/**/*.test.tsx',
       'tools/catalogue/**/*.test.ts',
+      'tests/tooling/**/*.test.ts',
     ],
     passWithNoTests: false,
     restoreMocks: true,

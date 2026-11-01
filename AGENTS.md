@@ -30,7 +30,35 @@ schedule. Use `.agent/PLANS.md` only when the current work meets its planning tr
 
 ## Restricted material
 
-`local-reference/` is private and Git-ignored. Never commit, upload, move, copy, quote, or summarize its report into tracked files beyond the already approved paraphrased requirements. Never add the PDF or extracted text to a prompt, issue, artifact, fixture, log, or generated documentation.
+`local-reference/` is private and Git-ignored. The owner's report
+`local-reference/CB23011_FYP_REPORTv2.pdf` is the system's founding document and may be
+extended. When the owner requests report-based research, comparison, or extension,
+agents may read the relevant pages as task context. This authorization includes the
+model processing those pages; it does not make the report public or authorize uploading
+it to search engines, third-party converters, repositories, or sharing tools. Ordinary
+coding tasks use the approved paraphrased requirements instead.
+
+Keep the source PDF unchanged. Keep new report-derived notes, excerpts, page images,
+and source fingerprints under ignored `local-reference/.workbench/`; do not put them in
+tracked files, agent memory, issues, fixtures, application logs, or build artifacts.
+Tracked documentation may retain neutral section anchors and already approved
+paraphrases. Propose newly derived requirements privately for owner review before
+promoting them. Public-source research and generic workflow/tooling may be tracked. Do
+not put private report text into web queries. See `docs/REPORT_REFERENCE_WORKFLOW.md`.
+
+The private source library is `local-reference/cultural-astronomy/` (start with its
+`AGENTS.md` and `SOURCE_CATALOG.md`) plus the standards/catalogue folders indexed by
+`local-reference/REFERENCE_INVENTORY.local.md`. Its files are the owner's purchased or
+downloaded originals and cannot be restored from Git.
+
+## Destructive-command safety
+
+Every Git-ignored path may hold irreplaceable private data (`local-reference/`,
+`data/raw/`, `.workbench/`, Python environments). Never run `git clean -x`/`-X` (with
+or without pathspecs), `git reset --hard`, `git checkout -- .`, `git stash drop`, or a
+recursive delete of a parent directory. Remove generated output only by listing it
+first and deleting explicitly named build folders such as `packages/<name>/dist`.
+Before any deletion or overwrite, look at the target and confirm it is generated.
 
 ## Dependency rules
 
@@ -97,6 +125,14 @@ Najdi/Arabian-sky evidence work, identify the affected domain and read the corre
 `docs/references/UFUQ_SOURCE_REGISTER.md`, and distinguish source-supported facts,
 project decisions, provisional choices, and unresolved questions. Load only the
 matching skill; combine skills only when the task genuinely crosses their boundaries.
+Claude Code discovers the same skills through thin wrappers in `.claude/skills/`; the
+`.agents/skills/` files remain canonical.
+
+## Session workflow
+
+Follow `docs/AGENT_WORKFLOW.md` for the session protocol, owner standing instructions,
+Git checkpoint rules, and handoff. Read `docs/HANDOFF.md` first; it states the current
+phase, the last completed increment, and the next justified step.
 
 ## Definition of done
 
