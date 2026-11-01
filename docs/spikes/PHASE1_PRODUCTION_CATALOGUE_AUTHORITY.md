@@ -319,8 +319,10 @@ complete five-parameter astrometry and correlations.
   academic use under CC BY-NC 3.0 IGO with "Credit: ESA".
 - **Gaia DR3:** stays a cross-check and is no longer the preferred production source
   for route stars.
-- **Gate C:** remains open for component and quality records (HIP 54061 and 65378 are
-  component solutions).
+- **Gate C:** row records complete for implementation (2D.1E,
+  `PHASE1_ROUTE_CATALOGUE_DECISION.md` §4a). HIP 54061 and 65378 are component
+  solutions whose astrometry refers to component A; the other 11 rows are
+  single-entry solutions. Scientific row acceptance remains with the named reviewer.
 
 ### Milestone 2E owns later
 

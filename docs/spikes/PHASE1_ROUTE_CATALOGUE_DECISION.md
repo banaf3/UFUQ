@@ -69,6 +69,38 @@ astrometry of higher quality than Gaia EDR3.
 | All 13 | Quality fields (`F1`, `F2`, `Qual`, `Source`) and variability flags | Record per row; variability does not affect geometric direction |
 | 82080 | `MultFlag=V` | Not a route star; no action |
 
+### 4a. Gate C row record (Milestone 2D.1E, 2026-11-01)
+
+This record was read from the hash-verified local `hip-main-source.csv`. It contains
+categorical identity and solution flags only, with no coordinates or measured values.
+Data: ESA (1997), *The Hipparcos and Tycho Catalogues*, ESA SP-1200 (Credit: ESA;
+CC BY-NC 3.0 IGO).
+
+| Route set | HIP | Ncomp | MultFlag (H59) | AstroRef (H10) | m_HIP (H62) | CCDM historical flag (H56) | HvarType (H52) | Disposition |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| al-Kaff al-Khaḍīb | 746 | 1 | — | — | — | I | P | Single-entry solution; use as published |
+| al-Kaff al-Khaḍīb | 3179 | 1 | — | — | — | I | M | Single-entry solution; use as published |
+| al-Kaff al-Khaḍīb | 4427 | 1 | — | — | — | I | U | Single-entry solution; variability does not affect direction |
+| al-Kaff al-Khaḍīb | 6686 | 1 | — | — | — | I | — | Single-entry solution; use as published |
+| al-Kaff al-Khaḍīb | 8886 | 1 | — | — | — | — | M | Single-entry solution; use as published |
+| al-Jady | 11767 | 1 | — | — | — | I | P | Single-entry photocentre of the bright unresolved pair; Polaris B never substitutes |
+| Banāt Naʿsh | 53910 | 1 | — | — | — | — | — | Single-entry solution; use as published |
+| Banāt Naʿsh | 54061 | 2 | C | A | AB | I | D | Component solution; **astrometry refers to component A**, the naked-eye star. Another Hipparcos entry lies within 10″ (`Proxy=H`) and must never substitute |
+| Banāt Naʿsh | 58001 | 1 | — | — | — | — | M | Single-entry solution; use as published |
+| Banāt Naʿsh | 59774 | 1 | — | — | — | I | C | Single-entry solution; use as published |
+| Banāt Naʿsh | 62956 | 1 | — | — | — | — | P | Single-entry solution; use as published |
+| Banāt Naʿsh | 65378 | 2 | C | A | AC | I | D | Component solution; **astrometry refers to component A** (Mizar A); other components and Alcor are separate objects |
+| Banāt Naʿsh | 67301 | 1 | — | — | — | — | M | Single-entry solution; use as published |
+
+All 13 rows have the astrometric source flag (H60) blank and are Survey stars. Both
+component solutions have solution quality `Qual=A`. No route row uses an acceleration,
+orbital, variability-induced, or stochastic solution.
+
+Disposition: `ROW_RECORDS_COMPLETE_FOR_IMPLEMENTATION`. The 2E parser must preserve H10,
+H59, H62, and the CCDM fields, and must fail if a route row's `AstroRef` or `MultFlag`
+differs from this record. Scientific row acceptance (fit statistics `F1`/`F2`, and the
+component choice) remains with the named astronomy reviewer.
+
 ## 5. Consequences for Milestone 2E
 
 - The parser targets the ESA `hip_main` CSV response, preserving all 76 columns
@@ -83,7 +115,6 @@ astrometry of higher quality than Gaia EDR3.
 
 ## 6. Still open for Milestone 2D
 
-- The physical-component and quality record for every route row (gate C items above).
 - The concrete UMPSA Pekan Faculty `ObserverPreset` record: coordinates, datum, height,
   accuracy, and provenance. This requires an authoritative survey or official record
   and is not invented here.

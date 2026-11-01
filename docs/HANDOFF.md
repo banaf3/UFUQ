@@ -14,8 +14,10 @@ pushed and merges into `main` when 2D closes.
   bounded RV omission (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`).
 - **2D.1C route scope:** helper al-Kaff al-Khaḍīb, then al-Jady, then True North;
   alternative route greater Banāt Naʿsh (`docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`).
-- **Still open in 2D:** row component/quality records (gate C), the UMPSA Pekan observer
-  record, the final IERS leap/EOP artifacts, and named scientific review.
+- **2D.1E gate C:** row records are complete for implementation; both component
+  solutions refer to component A.
+- **Still open in 2D:** the UMPSA Pekan observer record, the final IERS leap/EOP
+  artifacts, and named scientific review.
 
 Readiness: scaffolding YES; validated vertical slice NO; participant study NO;
 deployment NO. Production TypeScript still contains no astronomy calculation.
@@ -37,14 +39,13 @@ deployment NO. Production TypeScript still contains no astronomy calculation.
 
 ## Next justified step
 
-1. **Gate C row records** for the 13 route stars: component identity for HIP 54061 and
-   65378 (`MultFlag=C`) and the Polaris photocentre note, plus quality fields. Record
-   this in a 2D.1E row-review document from the local hash-verified raw response.
-2. **Leap/EOP artifacts:** select and hash the exact final IERS products under the 2C.6
-   policy (final-only `UT1-UTC`, `xp`, `yp`; leap-second file consistent with Bulletin
-   C), with a manifest and a `data:verify` check.
-3. **Observer record:** needs the owner (see below). Then close 2D, merge it, and start
-   2E (the `hip_main` parser, EOP/leap parsers, deterministic artifacts).
+1. **Leap/EOP artifacts (agent can do next):** select and hash the exact final IERS
+   products under the 2C.6 policy (final-only `UT1-UTC`, `xp`, `yp`; a leap-second file
+   consistent with Bulletin C), with a manifest and a `data:verify` check, following
+   the 2D.1B/2D.1D evidence pattern.
+2. **Observer record:** needs the owner (see below). Then close 2D, merge it into
+   `main`, and start 2E (the `hip_main` parser, EOP/leap parsers, deterministic
+   artifacts).
 
 ## Open owner actions
 

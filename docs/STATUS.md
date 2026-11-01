@@ -350,8 +350,12 @@ ScientificProfileV1 Amendment A1 adds a typed bounded radial-velocity omission (
 0.081 mas per km/s to 2040), which removes the RV-catalogue dependency. The rights are
 CC BY-NC 3.0 IGO with "Credit: ESA". `npm run data:verify` now verifies this evidence.
 
-Still open for 2D: component and quality records (HIP 54061 and 65378 are component
-solutions), the UMPSA Pekan observer record, the leap/EOP artifacts, and named
+Milestone 2D.1E then completed the gate C row records for implementation (§4a of the
+decision). HIP 54061 and 65378 are component solutions with `AstroRef=A`, the naked-eye
+component. The remaining 11 route rows are single-entry solutions, none of them
+acceleration, orbital, or stochastic.
+
+Still open for 2D: the UMPSA Pekan observer record, the leap/EOP artifacts, and named
 scientific review. Readiness is unchanged.
 
 ### Milestone 2A modern synthetic-only retry
