@@ -23,8 +23,8 @@
     "lint": "eslint apps packages tools tests --ext .ts,.tsx",
     "test": "vitest run",
     "test:e2e": "npm run build && node scripts/run-e2e.mjs",
-    "test:integration": "vitest run tests/integration --passWithNoTests",
-    "test:reference": "vitest run tests/reference --passWithNoTests",
+    "test:integration": "vitest run --config vitest.integration.config.ts --passWithNoTests",
+    "test:reference": "vitest run --config vitest.reference.config.ts --passWithNoTests",
     "typecheck": "tsc -b --pretty false && tsc --noEmit -p tsconfig.tests.json --pretty false"
   },
   "devDependencies": {

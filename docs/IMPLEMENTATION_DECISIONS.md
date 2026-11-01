@@ -40,6 +40,18 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Validation required:** Automated forbidden-import and browser-bundle tests plus
   isolated compilation/unit tests for pure packages.
 
+  The scaffold checks declared dependencies and actual static TypeScript imports,
+  re-exports, import types, and literal module loads. Cross-workspace relative paths,
+  undeclared dependencies, non-exported package subpaths, production Node imports in
+  pure packages, and server-only packages in the browser dependency closure fail.
+  Non-literal module loads fail explicitly. Regression tests use isolated synthetic
+  workspaces. This is source/dependency enforcement, not a completed bundle-content
+  audit for future authoritative entry points.
+
+  Export-map checks reject a missing root entry and apply the most specific wildcard
+  before deciding whether a null target is private. They are not a complete Node
+  conditional-export resolver; compiler/build/runtime checks remain required.
+
 ## IMP-004 — Server authority and contracts
 
 - **Decision:** Location of authoritative assessment/adaptation behavior.
@@ -62,6 +74,14 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Validation required:** Pin exact versions in Phase 0; verify clean `npm ci`, build,
   type-check, and workspace script execution before adding behavior.
 
+  TypeScript incremental caches and `dist-types/` declarations are local generated
+  output, excluded from Git. Workspace names, public exports and project-reference
+  paths remain stable during scaffold tooling corrections.
+  Python virtual environments/caches are excluded from Git and source-quality tools.
+  `.gitattributes` fixes text line endings across Windows and CI. Existing clones with
+  old incremental caches but missing outputs can rebuild once with
+  `npx --no-install tsc -b --force`; a fresh checkout contains no tracked build cache.
+
 ## IMP-006 — Automated test tooling
 
 - **Decision:** Test runners used by the implementation workflow.
@@ -72,6 +92,16 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Validation required:** Phase 0 self-tests prove test discovery, deterministic seed
   reporting, failure exit codes, and separation of unit, reference, integration, and E2E
   suites.
+
+  Unit/tooling, reference and integration suites use separate Vitest configs. The
+  latter two scripts currently permit empty suites because domain/reference/database
+  behavior does not exist yet; synthetic discovery probes prove a real failing test
+  in each configured location is discovered and returns a failure exit code.
+
+  Colocated unit tests use `.test.ts`/`.test.tsx`. Workspace production compilers exclude
+  them; `tsconfig.tests.json` still checks them. The contracts implementation import ban
+  excludes these tests so they can use Vitest. Browser `.spec.ts` files belong under
+  `tests/e2e/`. Regression checks verify both compiler discovery and the lint distinction.
 
 ## IMP-007 — Repository package layout
 

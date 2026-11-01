@@ -20,6 +20,14 @@ BKT policy, persistence, accounts, participant instrumentation, or deployment.
 and browser smoke test prove discovery; forbidden imports fail; no placeholder is
 presented as domain truth.
 
+Scaffold maintenance preserves package names, exports and project references. It
+includes isolated tooling regressions, separate test-suite discovery, and excluding
+generated build files from Git. Empty `data/curation/patterns`, `relationships` and
+`routes` folders are permitted organizational scaffolding; their contents remain
+blocked by the no-data gate until the applicable data phase introduces validation.
+Production builds exclude colocated unit tests; their separate compiler and lint
+configuration remain part of the scaffold's regression coverage.
+
 ## Phase 1: astronomy and data technical spike
 
 **Goal:** retire uncertainty about catalogue acquisition, typed coordinate flow,

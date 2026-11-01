@@ -30,7 +30,21 @@ schedule. Use `.agent/PLANS.md` only when the current work meets its planning tr
 
 ## Restricted material
 
-`local-reference/` is private and Git-ignored. Never commit, upload, move, copy, quote, or summarize its report into tracked files beyond the already approved paraphrased requirements. Never add the PDF or extracted text to a prompt, issue, artifact, fixture, log, or generated documentation.
+`local-reference/` is private and Git-ignored. When the user requests report-based
+research, comparison, or extension, agents may read the relevant pages of
+`local-reference/CB23011_FYP_REPORTv2.pdf` as task context. This authorization includes
+the model processing those pages; it does not make the report public or authorize
+uploading it to search engines, third-party converters, repositories, or sharing tools.
+Ordinary coding tasks use the approved paraphrased requirements instead.
+
+Keep the source PDF unchanged. Keep new report-derived notes, excerpts, page images,
+and source fingerprints under ignored `local-reference/.workbench/`; do not put them
+in tracked files, agent memory, issues, fixtures, application logs, or build artifacts.
+Tracked documentation may retain neutral section anchors and already approved
+paraphrases. Propose newly derived requirements privately for user review before
+promoting them. Public-source research and generic workflow/tooling may be tracked.
+Do not put private report text into web queries. See
+`docs/REPORT_REFERENCE_WORKFLOW.md` for the research and promotion workflow.
 
 ## Dependency rules
 

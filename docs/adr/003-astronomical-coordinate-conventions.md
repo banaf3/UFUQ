@@ -22,8 +22,13 @@ Fixed now:
 - angular answers use robust vector separation or wrapped circular distance;
 - every policy and tolerance is versioned and server scoring is authoritative.
 
-Before implementation, approve one coherent catalogue-reference-to-observation pipeline
-and runtime algorithm/library. AST-003 must explicitly implement or omit with a
+Phase 1 may compare replaceable algorithms and libraries using explicitly provisional
+inputs under `../PHASES.md` and IMP-009. That exploration does not resolve this ADR's
+production blockers or approve a scientific tolerance.
+
+Before implementing the validated Phase 2 slice, approve one coherent
+catalogue-reference-to-observation pipeline and runtime algorithm/library. AST-003
+must explicitly implement or omit with a
 quantified bound proper motion, parallax, radial velocity/perspective acceleration,
 aberration, light deflection, precession/nutation, topocentric effects, polar motion,
 EOP/time handling, datum/elevation and supported range. Also approve

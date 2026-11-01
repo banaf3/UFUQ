@@ -9,6 +9,11 @@ local-reference/
 # Generated dependencies and output
 node_modules/
 dist/
+dist-types/
+*.tsbuildinfo
+.venv/
+__pycache__/
+*.py[cod]
 coverage/
 playwright-report/
 test-results/

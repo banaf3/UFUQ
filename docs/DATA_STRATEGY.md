@@ -54,7 +54,12 @@ Before retrieval, create a machine-readable source manifest containing:
 - retrieval timestamp in UTC, retrieval tool/version, source citation, licence URL/text identifier, and redistribution determination;
 - raw byte SHA-256, normalized table SHA-256, expected row count, and approved reviewer/date.
 
-AST-001 is unresolved. Hipparcos Main Catalogue via ESA and CDS/VizieR I/239 is a candidate, not a selected fact. Do not add catalogue rows until the catalogue metadata and redistribution terms are manually approved.
+AST-001 is unresolved. Hipparcos Main Catalogue via ESA and CDS/VizieR I/239 is a
+candidate, not a selected fact. Production catalogue rows require approved metadata
+and redistribution terms. The Phase 1 technical spike permitted by `PHASES.md` and
+IMP-008 may use synthetic or explicitly labelled candidate inputs with verified access
+rights. Keep them isolated from approved runtime artifacts; candidate status grants no
+redistribution permission and does not resolve AST-001.
 
 ## Acquisition and transformation
 
@@ -74,10 +79,15 @@ flowchart LR
 
 The command verifies transport/result bytes before transformation, fails on source drift unless an explicit update workflow is in progress, and emits a deterministic result for the same inputs/tool version. Coordinates come only from the numerical source—not websites, label files, screenshots, or report diagrams.
 
-Phase 1 uses a minimal production-shaped instance of this same path: approved manifest,
-permitted immutable input, normalization, required curation join, schema validation,
-canonical serialization, and hash. Phase 2 expands rows and policies; it does not replace
-a hand-made Phase 1 fixture with a different provenance mechanism.
+Phase 1 prototypes these boundaries with synthetic or permitted candidate inputs,
+explicit provisional manifests, schema experiments, canonical serialization, and
+hashes. It does not require approved cultural records or a selected production
+catalogue. A prototype must remain replaceable and must not bypass the current data
+gate without introducing the applicable validation with its implementation.
+
+Phase 2 requires the approved manifest, permitted immutable source input, reviewed
+curation join, validation, and deterministic artifact for its selected slice. Technical
+spike fixtures do not become approved data merely because the prototype runs.
 
 ## Raw snapshot policy
 

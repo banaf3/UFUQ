@@ -62,7 +62,9 @@ purpose.
 
 ## Restricted report
 
-`local-reference/CB23011_FYP_REPORTv2.pdf` is a restricted local reference. The entire
-`local-reference/` directory is ignored by Git. Do not copy, commit, upload, quote, or
-reproduce the report in tracked content. Existing reviewed documentation contains only
-approved paraphrased requirements.
+`local-reference/CB23011_FYP_REPORTv2.pdf` is the private project report. The entire
+`local-reference/` directory is ignored by Git. Agents may read relevant pages when
+you request report research; the source and derived private notes stay out of Git,
+public uploads, and application artifacts. Existing reviewed documentation contains
+approved paraphrased requirements. See [Report reference workflow](docs/REPORT_REFERENCE_WORKFLOW.md)
+for Claude Code usage, reference verification, and proposed extensions.

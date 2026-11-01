@@ -1,5 +1,85 @@
 # UFUQ scaffold audit
 
+## Structure re-review — 2026-11-01
+
+**Verdict:** the current modular-monolith tree is suitable for the Phase 1 technical
+spike. Keep the existing package names and boundaries. No framework replacement,
+workspace merger, service split, or additional monorepo orchestrator is justified by
+the inspected implementation.
+
+The primary review and an independent read-only agent applied
+`../.claude/skills/ufuq-architecture-review/SKILL.md`. The agent inspected actual source,
+exports, dependency/reference graphs, compiler/lint/test configuration, CI, and Git
+tracking, then independently checked the corrections. Private report material was not
+needed or read for this review.
+
+### Findings and disposition
+
+- **Corrected, medium:** the import checker accepted a root omitted from a subpath-only
+  export map and ignored more-specific private wildcard exports. Regression probes now
+  cover omitted/empty root maps, wildcard priority independent of declaration order,
+  suffix specificity, and a more-specific public exception. Existing exports were not
+  changed. This checker remains a static guard, not a complete conditional-export resolver.
+- **Corrected, medium:** the contracts import ban also rejected normal Vitest imports
+  in colocated tests. It now applies to implementation files, with a regression proving
+  both permitted test imports and retained production restrictions.
+- **Corrected, low:** workspace production configurations admitted colocated unit tests.
+  All 13 now exclude `.test.ts`/`.test.tsx`; a synthetic compiler-discovery probe proves
+  those tests still enter the separate test compiler. `.spec.ts` remains the E2E naming
+  convention. One initial probe used the same basename for TS and TSX; TypeScript's
+  extension priority hid one input. Distinct probe names corrected the test itself.
+- **Clarified:** `ARCHITECTURE.md` now shows all current package/tool boundaries and
+  test partitions. Empty facades are modest maintenance overhead, not evidence that
+  their intended behavior exists. Do not add more empty boundaries without a caller.
+
+No current ambient Node/network-global leak was found: an independent in-memory
+compiler probe rejected `process.env` and `fetch` in astronomy-core. Intra-API layer
+enforcement, independent scientific oracles, runtime schema validation, and final
+browser-bundle exclusions must be introduced with their owning implementation phases.
+The empty reference harness does not yet establish scientific independence.
+
+### Current primary-source comparison
+
+Sources consulted on 2026-11-01 support the mechanisms used here, not a certification
+of UFUQ or a universal folder hierarchy:
+
+- [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspaces/): one root can
+  manage and link local packages. The current workspace layout uses this directly.
+- [TypeScript project references](https://www.typescriptlang.org/docs/handbook/project-references.html):
+  referenced projects and `tsc -b` support ordered incremental builds. UFUQ's manifests
+  and reference graph align across all 13 workspaces.
+- [Node package exports](https://nodejs.org/api/packages.html): public entries and
+  private subpaths require explicit export-map discipline; this informed the fixes.
+- [React's build-from-scratch guidance](https://react.dev/learn/build-a-react-app-from-scratch):
+  Vite is a supported option with routing/data-loading tradeoffs. Keeping it for this
+  browser 3D tutor and separate API is a project judgment, not a claim React universally
+  recommends this arrangement over frameworks.
+- [Vitest include configuration](https://vitest.dev/config/include.html) and
+  [test projects](https://vitest.dev/guide/projects): explicit discovery/configuration
+  is supported; adopting a different orchestration format is unnecessary here.
+- [R3F performance guidance](https://r3f.docs.pmnd.rs/advanced/pitfalls): isolating
+  frame-loop changes from React state and sharing/instancing scene resources is aligned
+  with the intended scene adapter. That adapter is not yet implemented.
+
+### Validation and limits
+
+On Node 22.16.0/npm 10.9.2, this review reran `check`, `data:verify`, `test` (35 tests),
+`test:reference`, `test:integration`, and `test:e2e` including the build (1 Chromium test).
+Reference/integration remain honestly empty. Runtime public-entry imports passed for
+all 12 importable workspaces. Workspace names, exports, dependencies, and TypeScript
+reference paths match HEAD. The lockfile and CI workflow are tracked, resolving the
+historical untracked-file finding below; the new corrections still need a Git checkpoint.
+No commit or hosted CI run was performed, and no fresh dependency installation was
+necessary for this review. The preceding install's 23 advisories remain a separate
+unresolved dependency review, not evidence against the directory layout.
+
+Skill frontmatter parsed with the installed Prettier YAML parser; metadata, naming,
+formatting, and independent use were checked. The bundled Python skill validator could
+not run because PyYAML is absent; no new validation dependency was installed.
+Scientific, participant, and deployment readiness remain unchanged.
+
+## Historical scaffold audit — 2026-07-22
+
 **Audit date:** 2026-07-22  
 **Scope:** Repository scaffold and tooling only; the astronomy/data technical spike was
 not started.

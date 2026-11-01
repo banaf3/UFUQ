@@ -9,6 +9,7 @@ export default tseslint.config(
   {
     ignores: [
       '**/node_modules/**',
+      '**/.venv/**',
       '**/dist/**',
       '**/dist-types/**',
       'coverage/**',
@@ -53,6 +54,7 @@ export default tseslint.config(
   },
   {
     files: ['packages/contracts/src/**/*.{ts,tsx}'],
+    ignores: ['**/*.test.{ts,tsx}'],
     rules: {
       'no-restricted-imports': ['error', { patterns: ['*'] }],
     },

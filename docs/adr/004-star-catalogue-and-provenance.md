@@ -11,9 +11,12 @@ The report requires a small preprocessed static JSON star dataset and authentic 
 
 ## Decision
 
-Use the five-class separation and deterministic pipeline in `../DATA_STRATEGY.md` from
-Phase 1 onward. Acquire numerical data from one approved catalogue/table/version using
-a pinned script/query and manifest, including exact subset/uncertainty/quality rules.
+Use the five-class separation and deterministic pipeline boundaries in
+`../DATA_STRATEGY.md`. Phase 1 may prototype them with synthetic or permitted candidate
+inputs under `../PHASES.md` and IMP-008; it does not resolve this ADR's source/content
+approval blockers. For the validated Phase 2 slice, acquire numerical data from one
+approved catalogue/table/version using a pinned script/query and manifest, including
+exact subset/uncertainty/quality rules.
 Join separately reviewed generic `SkyPattern` records, `GuidanceRelationship` edges,
 and `LessonRoute`/educational metadata by stable IDs. `SkyPattern` owns names/labels,
 member catalogue IDs, segments, and cultural status; `GuidanceRelationship` owns a

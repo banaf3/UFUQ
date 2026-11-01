@@ -5,6 +5,7 @@
     "outDir": "dist"
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"],
   "references": [
     { "path": "../../packages/catalogue-schema" },
     { "path": "../../packages/star-data" }

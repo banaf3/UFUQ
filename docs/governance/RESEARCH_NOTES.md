@@ -66,4 +66,25 @@
 
 ## Restricted report inspection
 
+### Reference workflow follow-up — 2026-11-01
+
+At the owner's request, focused report research is now supported by
+`../REPORT_REFERENCE_WORKFLOW.md` and `.claude/skills/ufuq-reference/`. New
+report-derived notes and source fingerprints stay in the ignored local workbench;
+no new report requirement or scientific/cultural value is approved by this workflow.
+
+Current [Claude PDF-read documentation](https://code.claude.com/docs/en/tools-reference#read-tool-behavior),
+[project skills](https://code.claude.com/docs/en/skills),
+[memory controls](https://code.claude.com/docs/en/memory), and
+[data usage](https://code.claude.com/docs/en/data-usage) informed the tooling. Local
+execution and Git exclusion do not prevent model-service processing or normal session
+transcripts. The supplied invocation-specific settings disable auto memory only.
+
+The workflow guide records public astronomy reference candidates and their inspection
+limits. In particular, archive retrieval failures and abstract-only paper review are
+explicit; no catalogue source, star cross-identification, cultural edge, coordinate,
+or tolerance was selected. This addition does not revalidate the historical links above.
+
+### Historical inspection
+
 The local report was parsed only into a temporary path outside the repository. Its objective, scope, formal requirements, use cases, data entities, equations, provisional BKT values, and evaluation targets were compared across sections. The extraction was reliable enough to avoid guessing missing sections. No report text, image, or extracted artifact is included here; its SHA-256 was used only for local identity checking and is intentionally not recorded in tracked documentation.

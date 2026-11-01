@@ -21,6 +21,25 @@ constants.
 
 Keep reference fixture generation structurally independent from runtime TypeScript astronomy. Every fixture and result records software/data/policy/tolerance version. Missing tolerance fails validation. Coverage is diagnostic; pure decision/formula modules target complete branches but reference agreement is the correctness oracle.
 
+For the Phase 1 technical spike, a comparison may report measured differences and
+limitations before an acceptance tolerance is approved, as specified in
+`../TEST_PLAN.md`. Such a run is exploratory evidence, not a scientific acceptance
+pass. This distinction does not relax Phase 2 acceptance or invent a default tolerance.
+
+## Scaffold suite implementation clarification (2026-11-01)
+
+The unit/tooling, reference, and integration Vitest configs have disjoint include
+patterns. Synthetic tests in isolated temporary repositories prove discovery and
+failure propagation for each config; reference/integration may still honestly have
+no applicable domain tests in Phase 0. Tooling regressions also verify source-import
+boundaries and the no-data gate. These changes do not select scientific tolerances,
+provide an independent astronomy oracle, or establish MySQL transaction evidence.
+
+Colocated unit tests use `.test.ts`/`.test.tsx` and are excluded from workspace production
+compilation, with separate root test compilation. Contract test imports are permitted
+without permitting imports in contract implementation files. Tooling probes check these
+distinctions and public-export exclusions; none changes domain acceptance criteria.
+
 ## Consequences
 
 - Results are defensible and traceable to distinct claims.

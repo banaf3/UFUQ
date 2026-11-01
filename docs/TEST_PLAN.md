@@ -33,6 +33,26 @@ before that behavior exists.
 - Browser bundle cannot import server scorer/target/tolerance entry points.
 - No application/domain feature acceptance is asserted.
 
+Tooling regression tests live in `tests/tooling/` and run with the unit suite.
+They exercise real CLI checks against isolated synthetic repositories: valid public
+imports, undeclared/deep/relative import failures, Node-I/O restrictions, browser
+dependency closure, type-only implementation rules, and data-record rejection even
+inside permitted empty curation folders. They never use the private report.
+
+Export checks also cover omitted root exports and private wildcard precedence. Config
+probes verify that colocated `.test.ts`/`.test.tsx` files stay outside production compiler
+entry lists while remaining in the test compiler, and that contract tests can import
+Vitest while contract implementation imports remain restricted. Colocated `.spec`
+files are not part of the unit naming convention; browser `.spec.ts` files live in E2E.
+
+`vitest.config.ts` discovers unit `.test.ts`/`.test.tsx` files and tooling tests;
+`vitest.reference.config.ts` discovers only `tests/reference/**/*.test.{ts,tsx}`;
+`vitest.integration.config.ts` discovers only `tests/integration/**/*.test.{ts,tsx}`.
+Captured failing synthetic probes verify discovery and nonzero exit codes in all
+three configs, without pretending to cover astronomy or MySQL. Browser `.spec.ts`
+files remain in Playwright. The reference/integration scripts retain their explicit
+Phase 0 empty-suite allowance; a failing discovered test is never excused by it.
+
 ## Phase 1 tests
 
 - Source-adapter and schema prototypes use synthetic or clearly labelled candidate data.
@@ -43,6 +63,9 @@ before that behavior exists.
 - Candidate transformations are compared with an independently implemented/pinned
   reference harness; differences are recorded, not hidden behind an invented tolerance.
 - The spike can be removed or replaced without changing public contracts.
+- Implemented so far: hand-derived unit cases and a synthetic formulation-level cross-check
+  of the horizontal transform. The pinned Astropy/USNO oracle, catalogue adapter, schemas,
+  checksums and time/sidereal/space-motion candidates are not yet covered.
 
 ## Phase 2 tests
 
@@ -116,3 +139,16 @@ before that behavior exists.
   result and keep production readiness false until resolved.
 - Do not weaken a gate. Narrow the implemented claim or keep the affected readiness
   gate at `NO`.
+
+## Local report research tooling
+
+The optional helper at `.claude/skills/ufuq-reference/scripts/report_reference.py`
+is separate from the application and scientific-reference suites. When changing it,
+verify local source identity, operation from a different working directory, bounded
+selected-page reads, searches that emit only page numbers/counts, invalid/out-of-range
+page rejection, and unchanged source bytes. Keep test excerpts/results private; do not
+make the restricted PDF a CI fixture or require it for a clean-clone application gate.
+Check the skill/session configuration and documentation references separately.
+
+Passing these checks proves navigation behavior, not astronomy correctness, source
+authority, cultural approval, or educational effectiveness.

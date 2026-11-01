@@ -58,12 +58,12 @@ not default coding context. Load it only for the governance-triggered work liste
 
 ## What can start now
 
-Phase 0 repository scaffolding can start immediately. It creates folders, workspace and
-TypeScript configuration, lint/type/test runners, package-boundary checks, empty public
-entry points, and CI-ready scripts. It does not implement domain behavior or select
-scientific/cultural values.
+Phase 0 repository scaffolding is delivered; consult `STATUS.md` and inspect the actual
+implementation before deciding what remains. Preserve the existing workspace,
+boundaries, and test runners rather than repeating the scaffold. Repair a concrete
+blocking defect if verification finds one.
 
-After the scaffold passes, Phase 1 may run a replaceable astronomy/data technical spike.
+Phase 1 may now run a replaceable astronomy/data technical spike.
 It may compare libraries, schemas, catalogue acquisition methods, coordinate types, and
 reference-test mechanics without claiming that a candidate is approved production
 truth.

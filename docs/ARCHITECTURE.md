@@ -18,7 +18,7 @@ Unless a section explicitly says otherwise, implementation-detail conclusions in
 
 Microservices, event brokers, and a distributed cache are intentionally absent. Add them only in a future ADR backed by measured need.
 
-## Proposed repository layout
+## Current scaffold layout and intended responsibilities
 
 ```text
 apps/
@@ -30,22 +30,39 @@ packages/
   assessment-core/        task answer types and pure scoring
   bkt-core/               pure BKT update and constraints
   adaptive-policy/        pure scaffold state machine
+  tutoring-core/          pure assessment/BKT/policy facade
   contracts/              versioned API DTOs and validation schemas
+  star-data/              generic sky-pattern, relationship and route types
   catalogue-schema/       source/curation/runtime schemas
 data/
   sources/                manifests and permitted immutable snapshots
   curation/               reviewed cultural/educational records
   generated/              deterministic deployable JSON, if licence permits
-tools/catalogue/           acquisition, transform, verify commands
+tools/
+  catalogue/              acquisition/transform/verify command entry
+  catalogue-pipeline/     deterministic transformation boundary
+  astronomy-reference/    independent oracle comparison tooling
+scripts/                  repository checks and browser-test orchestration
 tests/
+  tooling/                repository guard and runner regression tests
   reference/              independent astronomy fixtures/generator metadata
+  integration/            future API/MySQL transaction tests
   e2e/                    browser journeys and visual baselines
   performance/            frozen scene and benchmark definitions
 docs/                     specifications, decisions, evidence indexes
+.claude/skills/            scoped reference and architecture review workflows
 ```
 
-This layout is approved for the empty Phase 0 scaffold. Domain behavior remains subject
-to the phase-specific choices in `IMPLEMENTATION_DECISIONS.md`.
+These are current source directories with intended responsibilities, not a claim that
+the listed domain behavior exists. Most package/tool entries are empty or type-only.
+This layout is approved for the Phase 0 scaffold. Domain behavior remains subject to
+the phase-specific choices in `IMPLEMENTATION_DECISIONS.md`. Private local references,
+scratch material, dependencies, and generated output are outside this source tree.
+
+The scaffold also retains `tutoring-core`, `star-data`, and the reference/pipeline tool
+boundaries documented in `packages/README.md` and `tools/README.md`. Empty boundaries
+do not establish domain behavior. Keep their existing package names and public entry
+paths stable until a justified implementation change needs a different structure.
 
 ## Logical layers and allowed dependencies
 
@@ -84,6 +101,12 @@ Rules:
 5. Contracts carry units, coordinate frame, time, and version fields explicitly. No unlabelled numeric tuple crosses a boundary.
 6. The browser may calculate positions for presentation, but server recalculation is authoritative for scoring.
 7. The browser does not import authoritative scorer, target-resolution, or tolerance-resolution entry points from `assessment-core`. Raw answer DTOs live in `contracts`; bundle/import tests enforce this boundary.
+
+The current boundary CLI validates workspace manifests and static source module
+references, public exported subpaths, and the browser's workspace dependency closure.
+Computed module loads are rejected because their target cannot be checked statically.
+A full build-artifact exclusion audit still belongs to the phase that implements the
+authoritative entry points; source checks alone do not establish that later claim.
 
 ## Responsibilities
 

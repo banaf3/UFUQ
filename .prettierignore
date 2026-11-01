@@ -3,6 +3,8 @@
 docs/
 local-reference/
 node_modules/
+.venv/
+__pycache__/
 dist/
 dist-types/
 coverage/
