@@ -98,14 +98,43 @@ Historical report/deviation/authority status remains in `governance/`.
   That spike preserves every source field and solution/multiplicity/quality record,
   fails on missing/duplicate/invalid rows or supplements, maps its source-supported
   `pmRA` directly to the starred-alpha normalized field, and keeps all raw/derived rows
-  local while rights remain unresolved. Milestone 2D must separately select the
-  production catalogue/release, minimal numerical ProfileV1 allowlist, rights, row
-  eligibility, and stable UFUQ `starId`/source-release crosswalk. I/311 is neither
-  automatically retained nor migrated away here. Cultural records reference `starId`,
-  never copied coordinates or a permanently coupled external identifier.
-- **Status:** provisional (local non-redistributing I/311 spike contract approved;
-  production source/release, acquisition, deployment, allowlist, row authority, and
-  crosswalk unresolved under Milestone 2D)
+  local while rights remain unresolved. Milestone 2D.1 now prefers fixed ESA Gaia DR3
+  version 1.1 `gaiadr3.gaia_source` as the single-source-first production candidate.
+  It is not active or row-approved. Milestone 2D.1B retains exact fixed-release ADQL,
+  service/table identities, ignored response bytes, acquisition metadata, per-file
+  hashes, schema metadata, and a query manifest. Those bytes verify 8/19 technical HIP
+  matches, five rows with both RV/error fields, and no `HIP 11767` match. Named
+  reviewers must still establish physical components, positive-parallax/systematics,
+  applicable five-/six-parameter covariance, separate RV uncertainty, the explicit
+  `UNKNOWN_NOT_PROVIDED` astrometry-RV cross-covariance omission, finite suitable RV,
+  source quality, and immutable provenance. Milestone 2D.1A approves the analytic
+  `GAIA_DR3_TCB_TO_TDB_COMPATIBLE_V1` adapter: native and normalized states remain
+  distinct; the same epoch event is converted with IAU B3; proper motions, parallax,
+  uncertainties and covariance receive the pinned compatible-system mapping; and the
+  spectroscopic-RV measure is preserved without scaling pending a component-specific
+  propagation-proxy approval. Gaia derived-output deployment and public Git tracking
+  remain `RIGHTS_INTERPRETATION_REQUIRED`; local analysis with attribution may
+  continue while raw/query-derived material stays ignored and local. ESA Hipparcos
+  1997 is only a
+  possible bright-star astrometry fallback and
+  supplies no general RV; Polaris additionally needs one approved primary systemic-RV
+  authority. No blanket Gaia/Hipparcos/PCRV/XHIP merge is approved. Cultural records
+  reference `starId`, never copied coordinates or a permanently coupled external
+  identifier; crossmatch and per-field authorities remain distinct.
+  **Milestone 2D.1D (2026-11-01, owner-delegated) supersedes the Gaia-first preference for
+  the V1 route stars.** ESA Hipparcos 1997 `hipparcos1.hip_main` (epoch J1991.25(TT),
+  CC BY-NC 3.0 IGO, "Credit: ESA") is the single astrometric source for the 13 route
+  stars. Hash-bound ESA TAP evidence shows complete five-parameter astrometry,
+  correlations, and positive parallax for all 19 candidates. Radial velocity uses the
+  ScientificProfileV1 Amendment A1 bounded-omission state (worst 0.081 mas per km/s to
+  2040), so no RV catalogue is merged. Noncommercial academic derived artifacts may be
+  tracked and deployed with credit. Gaia DR3 and DR4 serve only as cross-checks, and
+  I/311 stays the parser spike. Row component/quality records and scientific review
+  remain open. See `spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`.
+- **Status:** `CATALOGUE_AUTHORITY_BLOCKED` (Gaia DR3 is the preferred candidate;
+  adapter A and immutable query gate B are closed; I/311 remains a local
+  non-redistributing spike; production row authority/minimal allowlist, Polaris authority, and
+  derived-artifact rights remain open under Milestone 2D.1)
 - **What code it affects:** Catalogue acquisition adapter, transform/schema fields,
   generated artifact, scientific fixtures.
 - **Validation required:** For the source selected by 2D: transport/hash verification,
@@ -113,6 +142,13 @@ Historical report/deviation/authority status remains in `governance/`.
   selection, byte-identical rebuild, provenance/licence manifest, crosswalk integrity,
   and scientific row review. The existing fixed-width/supplement/HIP checks apply only
   if 2D retains I/311. Falak/cultural review remains separate before learner-facing use.
+  For Gaia DR3, retain both official Hipparcos-2 crossmatch tables and all required
+  `gaia_source` scientific, covariance, RV, variability/non-single-star and quality
+  evidence plus applicable linked NSS/variability/RV records; reject an ambiguous or
+  component-mismatched row, preserve 64-bit source IDs as strings, and never replace
+  missing RV or covariance with zero. Verify the compatible adapter's exact constants,
+  epoch-event conversion, field/Jacobian maps, one-time application, fail-closed
+  evidence, and native/normalized provenance before it can generate an active row.
 
 ## IMP-009 — Astronomy transformation pipeline
 
@@ -242,7 +278,12 @@ Historical report/deviation/authority status remains in `governance/`.
   - **2D/2E ACTIVATION:** select and approve exact official EOP/leap bytes, Bulletin C
     consistency, per-field final support, exact IERS interpolation/restoration source
     configuration, bundle hashes, observer/source artifacts and supported-time bounds
-    before any real ProfileV1 execution.
+    before any real ProfileV1 execution. **2D.2 (2026-11-01)** has selected the sources:
+    the IERS NTP leap transport `leap-seconds.3992312697`, the coherent
+    ITRF2014-consistent Bulletin B 453–461 final series, and the IERS Conventions (2010)
+    v1.0.0 restoration routines, with hash-bound evidence
+    (`spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`). Named review of the bundle and
+    the 2E activation of the supported-time bounds remain.
   - **POST_IMPLEMENTATION:** compare the TypeScript implementation with pinned
     reference fixtures across the approved domain, record residuals and statuses,
     populate `F-001`/`F-005` and other applicable ledger evidence, activate
@@ -273,7 +314,19 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Current choice:** No concrete helper pattern or learner-facing mapping is selected.
   The first reviewed route may use Banat Na'sh or Dhat al-Kursi to reach Al-Jady;
   synthetic IDs may exercise generic interfaces in a technical spike but cannot ship as
-  content.
+  content. **Owner preference (2026-11-01):** research first the Cassiopeia-region
+  helper to al-Jady to True North, drawing star knowledge from the anwāʾ literature,
+  with greater Banāt Naʿsh as the complementary alternative route for the season when
+  Cassiopeia is below the horizon. This orders the research and approves no content.
+  The evidence layers, Malaysian-latitude availability, and catalogue coverage are in
+  `spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`. The owner-delegated implementation
+  decisions there are: helper label al-Kaff al-Khaḍīb (`OLD_ARABIAN`), with
+  *Dhāt al-Kursī* as the later scholarly name; greater Banāt Naʿsh as the alternative
+  route; and the helper-to-al-Jady line as `MODERN_PEDAGOGICAL`. The Stellarium
+  *Arabic (Ancient)* compilation is the primary navigation compilation for the
+  `OLD_ARABIAN` layer, verified claim by claim against its cited primary texts. Its
+  CC BY-ND 4.0 line figures are never imported. Cultural, Arabic, and educational review
+  are still required before learner release.
 - **Status:** unresolved
 - **What code it affects:** Curated `SkyPattern`, `GuidanceRelationship`, and
   `LessonRoute` data; scene overlays; assessment targets; lesson/scaffold configuration;
@@ -309,7 +362,13 @@ Historical report/deviation/authority status remains in `governance/`.
   `umpsa-pekan-faculty-of-computing` for V1 and may be implemented without numerical
   coordinates. Milestone 2D owns its exact reference point, coordinates, Earth model,
   typed height, accuracy, provenance, version and approval artifact before real V1
-  execution. No production scenario or numeric tolerance is selected. The observer/time
+  execution. **2D.3 (2026-11-01)** records the candidate: the OpenStreetMap Faculty point
+  at 3.5466545° N, 103.4273953° E (WGS 84), with an ellipsoidal height of 9.0325 m from
+  Copernicus DEM plus EGM2008. Its horizontal accuracy is a derived bound of at most
+  2279 m, and its vertical accuracy is unknown. The owner's campus point is a
+  cross-check. Approval is `REVIEW_REQUIRED`
+  (`data/manifests/observer-umpsa-pekan-v1/`). No production scenario or numeric
+  tolerance is selected. The observer/time
   input remains separate from learner-answer and scoring policy; a missing final
   scientific tolerance blocks later acceptance, not implementation start.
 - **Status:** unresolved

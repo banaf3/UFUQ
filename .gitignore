@@ -1,6 +1,9 @@
 # Restricted project references containing personal information
 local-reference/
 
+# Local IDE settings
+.idea/
+
 # Local secrets
 .env
 .env.*

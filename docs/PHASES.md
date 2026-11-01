@@ -198,6 +198,44 @@ Faculty `ObserverPreset` data and provenance before real ProfileV1 execution; a 
 survey-control record is optional rather than mandatory. Unresolved redistribution
 authority does not become permission to track or deploy I/311-derived rows.
 
+**Milestone 2D outcome (2026-11-01):** `MILESTONE_2D_READY_TO_CLOSE_FOR_IMPLEMENTATION`.
+Every data selection now exists with hash-bound evidence that `npm run data:verify`
+enforces:
+
+- the route-star catalogue: ESA Hipparcos 1997 with Amendment A1 (2D.1D), plus its row
+  records (2D.1E);
+- the IERS leap transport, the coherent Bulletin B 453–461 final EOP series, and the
+  IERS Conventions (2010) v1.0.0 restoration routines (2D.2);
+- the candidate UMPSA Pekan Faculty observer preset (2D.3).
+
+Each selection is `REVIEW_REQUIRED`. Named approval gates real ProfileV1 execution, not
+the 2E implementation. Confirmation of the IERS EOP redistribution terms gates
+deployment of a generated bundle. See `spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`.
+
+Milestone 2D.1 audits production star-catalogue authority. Its 2026-08-16 result is
+`CATALOGUE_AUTHORITY_BLOCKED`: ESA Gaia DR3 version 1.1
+`gaiadr3.gaia_source` is the preferred single-source-first candidate and its
+rights evidence preserves both the open/free-with-credit documentation and the DOI
+record's CC BY-NC 3.0 IGO distribution metadata without choosing their exact
+derived-artifact application by assumption. Local analysis with attribution is
+allowed; generated-output deployment and public Git tracking are
+`RIGHTS_INTERPRETATION_REQUIRED`, noncommercial FYP use is only a candidate pending
+exact licence application, and commercial reuse is not approved. Milestone 2D.1B's
+exact fixed-release ADQL and hash-bound ignored official TAP responses verify 8/19
+technical matches, five rows with both RV/error fields, and no Polaris crossmatch, but
+approve no row. Component/systematics/quality review, applicable
+astrometric covariance, separate RV uncertainty, the explicit unknown joint-covariance
+omission, an exact Polaris fallback, and derived-artifact rights interpretation still
+block activation. Milestone 2D.1A closes the analytic TCB-to-TDB adapter and 2D.1B
+closes immutable query/response authority. The adapter preserves
+the native Gaia state and uses IAU-compatible epoch, parameter, parallax/distance,
+covariance, and spectroscopic-RV-type dispositions without approving a row or RV proxy.
+ESA Hipparcos 1997 may
+provide fallback astrometry but has no general RV;
+I/311 is not promoted; PCRV/XHIP are not mixed speculatively. The 19 HIP IDs remain a
+technical query/review set, not cultural or learner-route authority. The detailed gate
+is recorded in `spikes/PHASE1_PRODUCTION_CATALOGUE_AUTHORITY.md`.
+
 Milestone 2E implements the local read-only catalogue parser, leap/EOP parsers and
 independent normalized field records, leap-aware four-point interpolation plus the
 pinned IERS Conventions 2010 restoration configuration, runtime validation,

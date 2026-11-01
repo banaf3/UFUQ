@@ -1,6 +1,6 @@
 # Implementation status
 
-**Assessment date:** 2026-08-13
+**Assessment date:** 2026-08-16
 
 The consolidated Phase 0 repository scaffold is validated. It contains health-only web
 and API applications, eight npm workspaces, pure empty/type-placeholder production
@@ -15,7 +15,7 @@ persistence/authentication behavior, dashboard, or deployment configuration.
 | Gate | Result | Basis |
 |---|---|---|
 | Repository scaffolding | YES | The consolidated eight-workspace TypeScript monorepo, non-npm oracle boundary, strict compiler/build setup, test discovery, dependency enforcement, lockfile, and CI are validated. |
-| Validated celestial-guidance vertical slice | NO | The source-neutral production route and final-only leap/EOP policy are specified but unimplemented. Exact 2D source/observer/leap/EOP artifact authority, production/reference evidence and numerical acceptance, cultural membership/route approval, scenario, and scoring tolerances remain open at their respective lifecycle gates. |
+| Validated celestial-guidance vertical slice | NO | The source-neutral production route and final-only leap/EOP policy are specified but unimplemented. As of 2026-11-01, Milestone 2D has selected every data source with hash-bound evidence: ESA Hipparcos 1997 for the route stars (Amendment A1), the IERS leap transport, Bulletin B 453–461 final EOP, the IERS Conventions 2010 v1.0.0 restoration routines, and a candidate UMPSA Pekan observer preset. All are `REVIEW_REQUIRED`. Parsers and deterministic data (2E), the production implementation, production/reference evidence and numerical acceptance, cultural membership/route approval, scenario, and scoring tolerances remain open at their respective lifecycle gates. |
 | Participant study | NO | Participant protocol, ethics applicability/approval, instruments, recruitment, privacy, consent, data handling, and study-ready software remain unresolved or unimplemented. |
 | Deployment | NO | Hosting/operations target, production account policy, security/privacy release profile, performance/accessibility baselines, monitoring, and backup/restore evidence remain unresolved or unimplemented. |
 
@@ -276,6 +276,117 @@ raw/derived redistribution remains unresolved. The HIP list is a retrieval and r
 candidate only; all Arabic forms, memberships, pattern edges, relationships, teaching
 roles, and row-level scientific suitability still require the recorded human reviews.
 
+### Milestone 2D.1 production catalogue authority
+
+The decision is `CATALOGUE_AUTHORITY_BLOCKED`. ESA Gaia DR3 version 1.1,
+`gaiadr3.gaia_source`, is the preferred single-source-first candidate because its
+official schema supplies ICRS astrometry at `J2016.0` in TCB, starred-alpha and
+declination motion, parallax, uncertainty/correlation and quality fields, and subset
+radial velocity. ESA's credit page says Gaia data are open/free to use with credit,
+while the DOI dataset record separately declares CC BY-NC 3.0 IGO distribution terms.
+UFUQ does not choose their exact application to a derived artifact by assumption:
+local analysis and attribution are established, derived-output deployment and public
+Git tracking require a rights interpretation, noncommercial FYP use remains a
+candidate pending exact licence application, and commercial reuse is not approved.
+Raw/query-derived material remains ignored and local. This evidence selects the next
+candidate audit; it does not approve any source row.
+
+Milestone 2D.1B retains exact fixed-release ADQL, service/table identities, ignored raw
+response bytes, acquisition metadata, per-file hashes, schema metadata, and a query
+manifest. Those bytes verify 8/19 technical HIP matches; all eight have positive raw
+parallax, five have both RV/error fields, and `HIP 11767` has no crossmatch. This is
+`QUERY_EVIDENCE_VERIFIED`, not row approval. Astronomy/data review must still resolve
+physical components, parallax systematics,
+applicable astrometric covariance, separate RV uncertainty, the explicitly unknown
+astrometry-RV cross-covariance omission, finite scientifically suitable RV, and the
+component-specific propagation-proxy role. The analytic scale-aware TCB-to-TDB
+parameter/covariance adapter is approved under Milestone 2D.1A; it approves no row.
+ESA Hipparcos 1997 is the smallest
+Polaris astrometry fallback candidate but lacks RV; one primary systemic-RV authority
+and crosswalk remain unapproved. I/311 retains its epoch-scale, RV, row, and
+redistribution blockers; PCRV/XHIP are evidence bridges only. No row, generated
+artifact, parser, or runtime JSON was created. See
+`spikes/PHASE1_PRODUCTION_CATALOGUE_AUTHORITY.md`.
+
+### Milestone 2D.1C owner route scope
+
+The owner's preferred first route is a Cassiopeia-region helper to al-Jady to True North,
+with anwāʾ-literature star knowledge. Its research record is
+`spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`, which establishes three things:
+
+- The anwāʾ layer attests the hand image al-Kaff al-Khaḍīb and al-Jady's use for
+  direction and Qibla. *Dhāt al-Kursī* is a Greco-Arabic scholarly label, and the
+  helper-to-polar-star line is a modern teaching construction.
+- A geometric spike sensitivity check at 1–7°N shows the Cassiopeia candidates fully up
+  for about 44–50% of the sidereal day. The greater Banāt Naʿsh candidates are never up
+  at the same time, so together the two cover about 83–94%. The greater group is
+  therefore the alternative route. al-Jady stays only about 2–8° above the horizon.
+- Gaia DR3 matches only 2 of the primary route's 6 stars, so a Gaia-first catalogue
+  cannot supply the route. A Hipparcos 1997 bright-star source with an RV authority is
+  proposed for review.
+
+Owner decisions D-1 to D-4 and the reference acquisition list are in the same record.
+No content, row, or source is approved, and readiness is unchanged.
+
+### Milestone 2D.1D route-star catalogue decision
+
+On 2026-11-01 the owner delegated the decisions to the agent. D-1, D-2, and D-4 are
+resolved in the 2D.1C record:
+
+- **D-1:** the helper label is al-Kaff al-Khaḍīb, with *Dhāt al-Kursī* as the later
+  scholarly name.
+- **D-2:** greater Banāt Naʿsh is the alternative route.
+- **D-4:** the helper-to-al-Jady line is `MODERN_PEDAGOGICAL`.
+
+The Stellarium *Arabic (Ancient)* compilation, built from the same primary Arabic texts
+the owner supplied, is the primary navigation compilation for the old-Arabian layer. Its
+memberships coincide exactly with the 13 route candidates.
+
+**D-3:** `spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md` selects ESA Hipparcos 1997
+`hip_main` as the single astrometric source. The new hash-bound ESA TAP evidence
+(`data/manifests/hipparcos-esa-1997-hip-screen-v1/`) shows 19/19 candidates with
+complete five-parameter astrometry, errors, and correlations, and positive parallax.
+ScientificProfileV1 Amendment A1 adds a typed bounded radial-velocity omission (worst
+0.081 mas per km/s to 2040), which removes the RV-catalogue dependency. The rights are
+CC BY-NC 3.0 IGO with "Credit: ESA". `npm run data:verify` now verifies this evidence.
+
+Milestone 2D.1E then completed the gate C row records for implementation (§4a of the
+decision). HIP 54061 and 65378 are component solutions with `AstroRef=A`, the naked-eye
+component. The remaining 11 route rows are single-entry solutions, none of them
+acceleration, orbital, or stochastic.
+
+Still open for 2D at that point: the UMPSA Pekan observer record, the leap/EOP
+artifacts, and named scientific review.
+
+### Milestones 2D.2 and 2D.3 leap/EOP and observer data authority
+
+`spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md` (2026-11-01) records both selections, with
+hash-bound evidence in `data/manifests/iers-leap-eop-v1/` and
+`data/manifests/observer-umpsa-pekan-v1/`. Both are reproducible with
+`scripts/evidence/` and enforced by `npm run data:verify`.
+
+- **Leap:** the IERS NTP file `leap-seconds.3992312697` is the transport. Its publisher
+  SHA-1 verifies, and the IANA tzdb 2026f copy is byte-identical. Its 28 transitions
+  match IERS `Leap_Second.dat`, and Bulletin C 52–72 is consistent with them. It expires
+  on 2027-06-28 and is in the public domain.
+- **EOP:** the source is Bulletin B Section 1 final values. The screen found a solution
+  boundary at issue 462, where the series moves from ITRF2014 to ITRF2020. V1 uses the
+  coherent ITRF2014-consistent issues 453–461: 273 contiguous final days, 2025-09-02 to
+  2026-06-01. The four-point preview is `[2025-09-03T00:00:00Z, 2026-05-31T00:00:00Z)`
+  and is not activated.
+- **Restoration:** the routines are pinned from the official IERS Conventions (2010)
+  v1.0.0 package, under the IERS Conventions Software License.
+- **Observer:** the candidate `umpsa-pekan-faculty-of-computing` is the OSM Faculty
+  point at 3.5466545° N, 103.4273953° E (WGS 84), with an ellipsoidal height of 9.0325 m
+  derived from Copernicus DEM plus EGM2008. Its horizontal accuracy is a derived bound of
+  at most 2279 m, and its vertical accuracy is unknown. The owner-supplied campus point
+  lies inside the same campus polygon, 907 m away.
+
+Every selection is `REVIEW_REQUIRED`. Milestone 2D is
+`MILESTONE_2D_READY_TO_CLOSE_FOR_IMPLEMENTATION`. Real ProfileV1 execution still needs
+named review, and deployment of an EOP bundle still needs confirmation of the IERS
+redistribution terms.
+
 ### Milestone 2A modern synthetic-only retry
 
 The earlier exact candidate set remains recorded as a failed experiment: Astropy 7.2.2
@@ -401,8 +512,15 @@ closed in the proposed documentation commit. No 2C semantic blocker remains. Ano
 synthetic batch, production/reference evidence and AST-006 numerical approval are not
 prerequisites to starting the bounded implementation; they retain their later gates.
 
-After profile approval, Milestone 2D selects the actual catalogue/release and minimal
-star allowlist, records acquisition/licensing/row/crosswalk authority, selects and
+**Update 2026-11-01:** Milestone 2D's selections are complete for implementation
+(2D.1D, 2D.1E, 2D.2, and 2D.3 above). The authorized next work is Milestone 2E. The
+historical paragraph below is kept for traceability. Its Gaia-first wording is
+superseded by 2D.1D.
+
+After profile approval, Milestone 2D.1 has identified Gaia DR3 version 1.1 as the
+preferred single-source-first candidate, but must still acquire the bounded official
+query and approve its physical-component, row, minimal-route, licensing, and crosswalk
+authority before activating any catalogue. Milestone 2D also selects and
 approves exact final operational leap/EOP artifacts, Bulletin C consistency, per-field
 support/hashes and exact interpolation/restoration configuration, and acquires/approves the concrete UMPSA Pekan
 Faculty observer record. It must not inherit I/311 as a permanent source merely because
@@ -421,10 +539,11 @@ boundary. Neither is a circular prerequisite to implementation.
 
 ## Decisions that block the validated vertical slice
 
-- **IMP-008 / AST-001 (`BLOCKS_2D_DATA_AUTHORITY`):** select the real catalogue/release
-  and minimal allowlist; resolve acquisition, raw/derived handling, deployment rights,
-  stable internal-star/source crosswalks, and row-level scientific eligibility. The
-  local I/311 spike contract does not select a permanent source.
+- **IMP-008 / AST-001 (`REVIEW_REQUIRED` for real execution):** 2D.1D selects ESA
+  Hipparcos 1997 `hip_main` with Amendment A1, and 2D.1E completes the row records.
+  Named astronomy review of the decision, of A1, and of the fit statistics and component
+  choice remains. Gaia is a cross-check only; the local I/311 spike contract does not
+  select a permanent source.
 - **IMP-009 / AST-003 (`BLOCKS_2D_DATA_AUTHORITY` for real execution):** the route,
   final-only leap/EOP quality/interpolation/offline/update policy, required row/EOP
   field interface, generic one-preset and UTC/time-domain semantics, geometric-only
@@ -436,8 +555,9 @@ boundary. Neither is a circular prerequisite to implementation.
   one complete route to Al-Jady, including stable IDs, labels, membership, segments,
   instructional geometry/explanation, and review/verification status.
 - **IMP-012 / AST-007:** the observer contract/site identity and time-domain semantics
-  are fixed by 2C. The sourced observer record and concrete profile activation bounds
-  are `BLOCKS_2D_DATA_AUTHORITY` / 2D-2E activation work. Expected learner answers and
+  are fixed by 2C. 2D.3 records the candidate observer preset (`REVIEW_REQUIRED`), and
+  2D.2 the leap/EOP sources. The concrete profile activation bounds are 2E activation
+  work. Expected learner answers and
   learner/scoring tolerances remain
   downstream; scientific tolerance remains postimplementation.
 

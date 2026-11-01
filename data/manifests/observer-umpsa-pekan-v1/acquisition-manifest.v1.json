@@ -1,0 +1,150 @@
+{
+  "manifestType": "UFUQ_OBSERVER_PRESET_EVIDENCE_MANIFEST",
+  "schemaVersion": 1,
+  "manifestId": "observer-umpsa-pekan-v1-20261101T155454Z",
+  "authorityStatus": "CANDIDATE_EVIDENCE_VERIFIED",
+  "scientificApproval": "REVIEW_REQUIRED",
+  "scope": "Milestone 2D.3 candidate ObserverPreset record for ScientificProfileV1, built from public reproducible sources and cross-checked against the owner-supplied campus point",
+  "candidatePreset": {
+    "schemaVersion": 1,
+    "presetId": "umpsa-pekan-faculty-of-computing",
+    "displayLabel": "UMPSA Pekan — Faculty of Computing",
+    "siteIdentity": "Faculty of Computing, UMPSA Pekan Campus, Pahang, Malaysia",
+    "referencePointDescription": "The OpenStreetMap point feature 'FK Fakulti Komputeran UMPSA' (node 12825444378, version 3). It is a contributor-mapped point for the Faculty, not a surveyed monument, and not the campus centroid.",
+    "geodeticLatitude": { "value": 3.5466545, "unit": "deg", "sense": "GEODETIC_NORTH_POSITIVE" },
+    "geodeticLongitude": {
+      "value": 103.4273953,
+      "unit": "deg",
+      "sense": "EAST_POSITIVE",
+      "sourceRepresentation": "decimal degrees, 7 decimal places",
+      "normalizationApplied": "NONE"
+    },
+    "referenceSystem": {
+      "kind": "GEODETIC_DATUM",
+      "id": "WGS 84",
+      "realization": "NOT_STATED_BY_SOURCE",
+      "basis": "OpenStreetMap documents node latitude/longitude in WGS 84 (https://wiki.openstreetmap.org/wiki/Node, retrieved 2026-11-01)"
+    },
+    "referenceEllipsoidId": "WGS 84",
+    "coordinateReferenceEpoch": {
+      "state": "NOT_DECLARED_BY_SOURCE",
+      "proposedDisposition": "NOT_REQUIRED_PENDING_REVIEW",
+      "basis": "Plate motion of order centimetres per year is orders of magnitude below the derived horizontal bound; the reviewer decides whether that suffices"
+    },
+    "height": {
+      "kind": "ELLIPSOIDAL",
+      "value": 9.0325,
+      "unit": "m",
+      "ellipsoid": "WGS 84"
+    },
+    "heightConversion": {
+      "input": {
+        "kind": "ORTHOMETRIC",
+        "value": 6.0,
+        "unit": "m",
+        "verticalDatum": "EGM2008 (Copernicus DEM vertical reference)",
+        "source": "Open-Meteo elevation API, Copernicus DEM 2021 release GLO-90 (90 m); a surface model that can include buildings and canopy"
+      },
+      "model": "EGM2008 geoid undulation from GeographicLib GeoidEval 2.5.2",
+      "undulation": { "value": 3.0325, "unit": "m" },
+      "relation": "h = H + N",
+      "output": "ELLIPSOIDAL",
+      "uncertainty": "UNKNOWN_UNBOUNDED for the Faculty point; the DEM product states < 4 m absolute vertical accuracy (LE90) for terrain, which does not bound a surface-model cell over buildings"
+    },
+    "coordinateAccuracy": {
+      "state": "DERIVED",
+      "horizontal": {
+        "upperBoundMetres": 2279,
+        "meaning": "Maximum distance from the reference point to any point of the OpenStreetMap campus polygon (way 1147355347, version 3). It bounds the reference-point error if the Faculty lies inside that polygon, as official UMPSA material states the Faculty is at the Pekan campus.",
+        "method": "Farthest polygon vertex by spherical haversine on the IUGG mean radius",
+        "confidence": "Conditional bound, not a statistical interval"
+      },
+      "vertical": { "state": "UNKNOWN_UNBOUNDED" }
+    },
+    "provenance": {
+      "referencePoint": "OpenStreetMap API 0.6 node 12825444378 version 3, changeset 181077159, timestamp 2026-04-09T04:11:31Z",
+      "siteExtent": "OpenStreetMap API 0.6 way 1147355347 version 3, timestamp 2024-09-26T08:56:55Z, 33 vertices, closed ring",
+      "orthometricHeight": "https://api.open-meteo.com/v1/elevation (Copernicus DEM GLO-90, doi:10.5270/ESA-c5d3d65)",
+      "geoidUndulation": "https://geographiclib.sourceforge.io/cgi-bin/GeoidEval (version 2.5.2)",
+      "acquisitionDate": "2026-11-01",
+      "licences": {
+        "openStreetMap": "ODbL 1.0; attribution '© OpenStreetMap contributors'",
+        "copernicusDem": "Free licence; attribution to the Copernicus programme and DOI citation requested by Open-Meteo",
+        "openMeteoApi": "Free API used for one noncommercial evidence request; licence page not retrievable on 2026-11-01",
+        "geographicLib": "Public calculation service; the undulation is a model output"
+      }
+    },
+    "dataVersionId": "umpsa-pekan-faculty-of-computing-v1-candidate-20261101",
+    "artifactAvailability": "AVAILABLE_LOCAL_RAW_EVIDENCE",
+    "validationStatus": "STRUCTURE_UNIT_RANGE_AND_REFERENCE_SYSTEM_SCREENED",
+    "scientificApproval": {
+      "state": "REVIEW_REQUIRED",
+      "scope": "Pending-validation implementation input for ScientificProfileV1",
+      "reviewer": null,
+      "decisionDate": null,
+      "decisionReference": null
+    }
+  },
+  "crossChecks": {
+    "ownerSuppliedCampusPoint": {
+      "label": "Kampus Pekan (Main/Pekan Campus)",
+      "lat": 3.53959,
+      "lon": 103.43148,
+      "suppliedOn": "2026-11-01",
+      "statedDatum": "NONE",
+      "statedHeight": "NONE",
+      "statedSource": "NONE",
+      "insideCampusPolygon": true,
+      "distanceToReferencePointMetres": 907,
+      "role": "Independent corroboration that the reference point and the campus polygon identify the UMPSA Pekan campus; not used as the Faculty point"
+    },
+    "referencePointInsideCampusPolygon": true,
+    "campusPolygonDiameterMetres": 2859
+  },
+  "sensitivity": {
+    "status": "COMPUTED_FOR_REVIEW_NOT_A_TOLERANCE",
+    "localVerticalTiltArcminPerKmHorizontal": 0.54,
+    "worstCaseLocalVerticalTiltArcminAtHorizontalBound": 1.23,
+    "diurnalAberrationChangeArcsecPer100mHeight": 5.02e-6,
+    "note": "Stars are at infinite distance in the geometric route, so the observer position enters only through the local horizon frame and diurnal aberration"
+  },
+  "rawEvidence": {
+    "repositoryPolicy": "IGNORED_LOCAL_ONLY",
+    "directory": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z",
+    "files": [
+      {
+        "path": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z/osm-node.xml",
+        "byteLength": 907,
+        "sha256": "c1796d71b89d6fa121051fa0fbd141db7dd8d015ac3e4728184ce54e965c4836"
+      },
+      {
+        "path": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z/osm-campus-way-full.xml",
+        "byteLength": 7438,
+        "sha256": "86d3c618500dac5930ed88dfb4657d33957711b448e6abfaae60ac2558199fb4"
+      },
+      {
+        "path": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z/open-meteo-elevation.json",
+        "byteLength": 19,
+        "sha256": "3186b1beede450e6af9bc885381bb0558156d1f92dbe76c291821603c22fae5b"
+      },
+      {
+        "path": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z/geographiclib-geoideval.html",
+        "byteLength": 5202,
+        "sha256": "7d548a420145f7b46f7448e8dad035551aef93bcbcf11d1c10ca2e5a2fc7de83"
+      },
+      {
+        "path": "data/raw/observer-umpsa-pekan/2d3-observer-umpsa-pekan-v1-20261101T155454Z/acquisition-log.json",
+        "byteLength": 2102,
+        "sha256": "f704a18b73a1be95575325222d0d4b614b845fecd4090ea138abef6e5474f189"
+      }
+    ]
+  },
+  "reproducibility": {
+    "acquireScript": "scripts/evidence/acquire-observer-umpsa-pekan-v1.mjs",
+    "screenScript": "scripts/evidence/screen-observer-umpsa-pekan-v1.mjs",
+    "rawBytesAreAuthority": true,
+    "liveServicesAreNotImmutableAuthority": true,
+    "changedResponseCreatesNewEvidenceVersion": true,
+    "contributorUserNamesTracked": false
+  }
+}

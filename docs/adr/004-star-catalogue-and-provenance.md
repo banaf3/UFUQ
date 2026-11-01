@@ -1,6 +1,6 @@
 # ADR-004: Star catalogue, cultural curation, and provenance
 
-- **Status:** Parser contract accepted for Phase 1 / Milestone 2E after Milestone 2D source/deployment-authority resolution; release and cultural gates remain blocked
+- **Status:** Parser contract accepted; Milestone 2D.1 prefers Gaia DR3 but production catalogue/row authority remains blocked; release and cultural gates remain blocked
 - **Classification:** CONFIRMED/CLARIFIED; source and mappings are MANUAL DOMAIN DECISIONS
 - **Date:** 2026-07-20
 - **Blockers:** AST-001, AST-002
@@ -70,6 +70,33 @@ two Hipparcos spike pipelines. This history does not prevent a reviewed Gaia or 
 release from coexisting with or replacing astrometric records through the internal
 `starId` crosswalk.
 
+**Milestone 2D.1 authority audit (2026-08-16):** fixed-release Gaia DR3 version 1.1,
+table `gaiadr3.gaia_source`, is the preferred single-source-first production candidate.
+Its official schema supplies ICRS astrometry at a TCB-typed Julian `J2016.0`,
+`mu_alpha_star`, declination motion, parallax, formal errors/correlations, quality
+evidence, and subset radial velocity. ESA's credit page says open/free with credit and
+the DOI record separately declares CC BY-NC 3.0 IGO distribution metadata. Their exact
+application to a UFUQ derived artifact is not inferred: local analysis and attribution
+are established, but derived-output deployment and public Git tracking remain
+`RIGHTS_INTERPRETATION_REQUIRED`, noncommercial FYP use is only a candidate pending
+exact licence application, and commercial reuse is not approved. This is not an active
+catalogue approval. Milestone 2D.1B retains exact fixed-release ADQL, service/table
+identities, ignored raw response bytes, acquisition metadata, per-file hashes, schema
+metadata, and a query manifest. The immutable evidence verifies 8/19 technical matches,
+five rows with both RV/error fields, and no `HIP 11767` match, but approves no row. Row
+review must still prove physical-component identity, applicable five-/six-
+parameter covariance, explicit unknown astrometry-RV cross-covariance disposition,
+positive-parallax systematics, finite scientifically suitable RV/proxy approval, and
+quality. Milestone 2D.1A approves the scale-aware
+`GAIA_DR3_TCB_TO_TDB_COMPATIBLE_V1` parameter/covariance mapping while preserving the
+native TCB evidence; it does not approve a row or make Gaia's spectroscopic RV an
+automatic kinematic/systemic value. Gaia's crossmatch is identity evidence rather than
+automatic eligibility. ESA Hipparcos 1997 is the smallest Polaris
+astrometry fallback candidate but has no general RV; one primary systemic-RV authority
+and field-specific crosswalk remain open. I/311 remains production-ineligible on its
+unresolved epoch/derivative scale, RV, row, and redistribution evidence. See
+`../spikes/PHASE1_PRODUCTION_CATALOGUE_AUTHORITY.md`.
+
 ## Consequences
 
 - Scientific source updates do not overwrite cultural judgement, and cultural edits cannot alter coordinates.
@@ -83,6 +110,9 @@ release from coexisting with or replacing astrometric records through the intern
   one catalogue's identifier namespace.
 - Identifier crosswalks do not establish historical membership, pattern edges,
   directional use, or lesson approval.
+- Multiple source records and crossmatches retain independent per-field authority;
+  proximity, release recency, or a populated field never promotes another source,
+  component, or field.
 - Manual expert and licence gates are real schedule dependencies.
 - Numerical and cultural schemas remain logically separate without the manifest,
   reference, and build overhead of separate npm packages.

@@ -53,6 +53,53 @@ Authority depends on the classification claimed:
 
 No source moves upward in this order because it uses Arabic or discusses Arabia.
 
+Additional `OLD_ARABIAN` primary texts in the private library (owner-supplied,
+2026-11-01) rank with Ibn Qutaybah claim by claim. All are noisy OCR text layers, so
+verify every quotation against a scan or edition before approval:
+
+- al-Marzūqī, *al-Azmina wa-al-Amkina*;
+- Ibn ʿĀṣim al-Thaqafī, *al-Anwāʾ wa-al-Azmina* (ed. al-Qaysī & al-Dulaymī);
+- al-Farāhīdī, *Kitāb al-ʿAyn* (lexical evidence).
+
+The Stellarium *Arabic (Ancient)* sky culture (Khalid al-Ajaji, CC BY-ND 4.0) is the
+**primary navigation compilation** for the `OLD_ARABIAN` layer. It is compiled from these
+same primary texts. Start from it to find candidate names and memberships, then cite
+both the compilation and a primary-text locator. Never import or transform its `lines`
+arrays into UFUQ data, because that would be an ND derivative. UFUQ line segments are
+its own `MODERN_PEDAGOGICAL` records.
+
+## Searching the Arabic texts
+
+`scripts/arabic_sources.mjs` (Node, no dependencies) navigates the private library:
+
+```text
+node .agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs list
+node .agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs search "<Arabic term>" [--source ibn-qutayba|al-marzuqi|ibn-asim|kitab-al-ayn] [--context 1] [--end yes]
+node .agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs stellarium "<Arabic or English name | HIP number>"
+```
+
+- The tool folds presentation forms, harakat, tatweel, and alef/yāʾ/tāʾ marbūṭa
+  variants.
+- It restores logical order for the Ibn Qutaybah extract, whose text layer is stored in
+  visual order.
+- `--end yes` stops a stem matching a longer word.
+- In Git Bash, pass Arabic arguments from a UTF-8 script file rather than the command
+  line, because the shell can garble them.
+- Output is for private sessions only: never paste it into tracked files, fixtures,
+  memory, or web queries. A match is a navigation pointer, not evidence.
+
+Known disambiguation: الجدي names both the polar star (al-Jady, linked with Banāt Naʿsh)
+and the zodiac sign Capricorn (برج الجدي, رأس الجدي, سعد الذابح contexts). Classify each
+hit explicitly.
+
+Current route decisions (owner-delegated, 2026-11-01) are recorded in
+`docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`:
+
+- The helper label is al-Kaff al-Khaḍīb (`OLD_ARABIAN`), with *Dhāt al-Kursī* as the
+  later `GRECO_ARABIC_SCHOLARLY` name.
+- The alternative route is greater Banāt Naʿsh.
+- The helper-to-al-Jady line is `MODERN_PEDAGOGICAL`.
+
 ## Mandatory workflow
 
 1. State one atomic claim: exact name, membership edge, line segment, cultural

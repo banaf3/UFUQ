@@ -48,8 +48,8 @@ supplies their available options. Library defaults never become profile policy.
 | Profile identity | Every request and result carries `ScientificProfileV1` plus the exact algorithm/model/ephemeris, source-artifact, observer-preset, leap, EOP, and policy identities, versions, and hashes. | `PROJECT_DECISION`; normative. This audit fixes the model/route family; implementation manifests and 2D/2E artifacts supply their exact source/build/data hashes before execution. |
 | Observer | Exactly one preset ID is accepted: `umpsa-pekan-faculty-of-computing`, identifying **Faculty of Computing, UMPSA Pekan Campus, Pahang, Malaysia**. The generic `ObserverPreset` contract below fixes coordinate, Earth-model, height, accuracy, provenance, version, approval, and fail-closed semantics. Any other preset or arbitrary coordinate is outside V1; internal astronomy types remain observer-generic. | Contract semantics and site identity are the 2C project decision. Exact values and the approved immutable record are a 2D data handoff before real V1 execution. |
 | Time input | The astronomy boundary accepts only explicit canonical UTC text `YYYY-MM-DDTHH:mm:ssZ`, at whole-second resolution, with uppercase `T`/`Z` and no fractional part, offset, local time, Unix timestamp, bare JD, or current-time default. Second `60` is a conditional token that becomes a validated instant only for `23:59:60Z` on an exact date confirmed by the approved leap artifact. | `PROJECT_DECISION`; normative grammar/state contract. RFC 3339 and SOFA supply broader syntax/conversion facts but do not choose UFUQ's subset, precision, or dates. |
-| Catalogue/data | The runtime artifact contains only the minimal approved numerical ProfileV1 star allowlist selected in 2D. Cultural records reference stable internal `starId` values; a versioned crosswalk maps each `starId` to one or more source-release identifiers. A catalogue may be replaced or coexist without copying coordinates into cultural records. I/311 is the Phase 1 spike source, not the permanent catalogue by default. | Source/release, rights, row eligibility, allowlist, and artifact authority belong to 2D. |
-| Normalized astrometry | Every eligible row supplies a source-neutral typed ICRS state with right ascension, declination, an approved source epoch representation/scale, proper-motion derivative convention and duration unit, explicit `mu_alpha_star` and Dec components, a positive approved parallax or equivalent distance converted with provenance, an approved radial velocity, uncertainties/covariance, quality state, units, and provenance. `UNSPECIFIED` epoch/derivative scale, zero/negative/missing/unapproved parallax, missing/unapproved radial velocity, implicit zero, or a library default is V1-ineligible. | The source-neutral eligibility semantics are a normative `PROJECT_DECISION`; concrete source values/quality/crossmatches belong to 2D. |
+| Catalogue/data | The runtime artifact contains only the minimal approved numerical ProfileV1 star allowlist selected in 2D. Cultural records reference stable internal `starId` values; a versioned crosswalk maps each `starId` to component-scoped source-release records and independent per-field authorities. I/311 is the Phase 1 spike source, not the permanent catalogue. The 2D.1 audit prefers Gaia DR3 version 1.1; exact fixed-release ADQL and hash-bound ignored official TAP responses verify 8/19 technical matches, five rows with both RV/error fields and no Polaris crossmatch. The analytic TCB-to-TDB adapter and immutable query gate are closed; no row is approved pending component/systematics/quality/RV-proxy review, an exact Polaris fallback and exact derived-artifact rights interpretation. | Source/release, rights, row eligibility, allowlist, and artifact authority belong to 2D; current result `CATALOGUE_AUTHORITY_BLOCKED`. |
+| Normalized astrometry | Every eligible row supplies a source-neutral typed ICRS state with right ascension, declination, an approved normalized source-epoch instant/scale plus distinct native-epoch evidence, proper-motion derivative convention and duration unit, explicit `mu_alpha_star` and Dec components, a positive approved parallax or equivalent distance converted with provenance, an approved propagation radial velocity, uncertainties/covariance, quality state, units, compatible-system identity, normalization evidence, and provenance. `UNSPECIFIED` or relabelled epoch/derivative scale, mixed compatible systems, zero/negative/missing/unapproved parallax, missing/unapproved radial velocity, implicit zero, or a library default is V1-ineligible. | The source-neutral eligibility semantics are a normative `PROJECT_DECISION`; concrete source values/quality/crossmatches belong to 2D. |
 | Propagation/model route | The normative typed dependency graph is `CatalogueIcrsState` -> target-epoch `PropagatedIcrsAstrometry`; typed time/observer/leap/EOP/model inputs -> `EarthOrientationContext`; both feed `ObserverAwareCirsDirection`, then `GeometricHorizontalDirection`. The propagation target is the SOFA J2000.0 epoch interface (`JD(TDB) 2451545.0`), not a frame conversion or a claim about a source epoch. | Normative `PROJECT_DECISION`: a UFUQ-owned pure-TypeScript subset derived from pinned SOFA `2023-10-11`, with explicit status/data injection and licence attribution. Implementation output remains pending validation. |
 | Earth orientation | V1 requires approved leap state plus independently approved `FINAL` `UT1-UTC`, `xp`, and `yp` field states. It selects four-point Lagrange interpolation based on Gazette 13's published example, continuous `UT1-TAI` handling across leaps, and exactly-once IERS Conventions 2010 subdaily restoration; it also requires immutable offline bundles and fail-closed quality/support rules. The route consumes the resulting instantaneous fields. It uses model CIP/CIO from IAU 2006 precession with IAU 2000A nutation and the matching transformation; observed `dX`,`dY` offsets and LOD are not requested, not supplied as zero, and not hidden library inputs. | `PROJECT_DECISION`; normative for implementation entry. Exact artifact families/releases/bytes/hashes and exact official interpolation/restoration source configuration are 2D data authority before real execution. |
 | Output | The only V1 astronomy success state is geometric: north-zero/eastward-positive azimuth when defined, signed geometric altitude, normalized ENU direction, azimuth state, provenance, warnings, and upstream statuses. `BELOW_GEOMETRIC_HORIZON` remains a classification attached to that valid direction. | `PROJECT_DECISION`; normative. Scientific acceptance remains postimplementation. |
@@ -377,6 +377,17 @@ execution; final publication latency limits the activation endpoint rather than
 silently enabling predictions. Exact artifacts, values, dates and hashes remain 2D/2E
 activation data.
 
+**Milestone 2D.2 record (2026-11-01):** `PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`
+selects:
+
+- the IERS NTP leap transport `leap-seconds.3992312697`, with publisher SHA-1 verified
+  and Bulletin C 52–72 consistent;
+- the coherent ITRF2014-consistent Bulletin B 453–461 final series. A solution boundary
+  at issue 462 is excluded, as this policy requires;
+- the IERS Conventions (2010) v1.0.0 restoration routines.
+
+This policy is unchanged. Approval is `REVIEW_REQUIRED`.
+
 ### ObserverPreset contract and data handoff
 
 Official UMPSA material establishes the selected site identity: the Faculty of
@@ -452,6 +463,17 @@ does not establish scientific adequacy. A JUPEM survey-control record is **optio
 not mandatory: it is useful only when it represents the intended point or supports a
 documented transformation to it. This public-web audit did not establish a Faculty-
 specific control record; that is not evidence none exists.
+
+**Milestone 2D.3 record (2026-11-01):** `PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md` records
+a candidate preset under this contract:
+
+- the OpenStreetMap Faculty point feature, in WGS 84 as documented by OSM;
+- an ellipsoidal height derived from Copernicus DEM plus EGM2008, with the conversion
+  recorded;
+- a derived conditional horizontal bound, with vertical accuracy `UNKNOWN_UNBOUNDED`;
+- the owner-supplied campus point as a cross-check, not relabelled as the Faculty point.
+
+Approval is `REVIEW_REQUIRED`.
 
 Exact coordinates remain necessary for replay and provenance. Away from a singular or
 classification boundary, nearby points within the campus produce correspondingly local
@@ -691,6 +713,28 @@ This makes perspective motion part of the required straight-line space-motion mo
 rather than an unbounded silent omission. A distant-source/no-RV branch is deferred to
 a later profile and would require its own omission evidence and review.
 
+**Amendment A1 (2026-11-01, Milestone 2D.1D): bounded radial-velocity omission.** The
+omission evidence this paragraph asks for now exists for the V1 route stars, so V1 adds
+one explicit typed state, `RADIAL_VELOCITY_OMITTED_WITH_BOUND`. A row may use it only
+when its record carries:
+
+- the omitted term: second-order perspective acceleration;
+- the per-row bound `|mu| * (v_r / d) * t^2`, evaluated over the activated UTC domain and
+  expressed per km/s of radial velocity;
+- the evidence identifier: `data/manifests/hipparcos-esa-1997-hip-screen-v1/`.
+
+For the 13 route stars over J1991.25 to 2040.0 the worst bound is 0.081 mas per km/s
+(HIP 746). That is below the catalogue's own formal propagated position uncertainty
+(25–56 mas) for any realistic stellar radial velocity. The computation uses the SOFA
+no-RV input only under this explicit state. Absence is still never silently
+represented as zero, and an untyped missing RV still makes the row ineligible.
+
+The bound enters the AST-006 ledger as a bounded model term. This is an owner-delegated
+`PROJECT_DECISION` that selects the implementation path. Scientific acceptance still
+requires the named astronomy review, and `APPROVED_GEOMETRIC_RESULT` remains
+unreachable until postimplementation acceptance. See
+`PHASE1_ROUTE_CATALOGUE_DECISION.md`.
+
 These requirements do not make I/311 permanent or block generic astronomy-core. If
 2D retains I/311, its unresolved epoch/derivative scale and absent RV make affected
 rows ineligible until an authoritative crossmatch/interpretation is approved. 2D may
@@ -726,7 +770,7 @@ uncertainty.
 | Proper motion in RA | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Source `mu_alpha_star`; explicit division by `cos(dec)` only for the SOFA coordinate-rate boundary; TDB Julian-year scale. | Missing/unknown derivative semantics or exact-pole singularity blocks the row. `A-002`,`A-006`,`B-002`,`F-003`,`F-004`. |
 | Proper motion in Dec | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Explicit Dec coordinate rate with approved units/scale. | Missing/unknown derivative semantics blocks the row. `A-002`,`A-006`,`B-002`. |
 | Parallax/topocentric parallax | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Positive approved parallax/equivalent distance enters `pmsafe`/`atciq`-derived observer-aware propagation. | Zero/negative/missing/unapproved distance makes row ineligible; no infinite-distance substitute. `A-003`,`B-008`. |
-| Radial velocity/perspective effects | `UNAVAILABLE_INPUT_FAILS_CLOSED` | Approved finite RV, positive receding, enters full space motion. | Missing/unapproved RV makes row ineligible; no `0 km/s` substitute. `A-004`,`B-002`. |
+| Radial velocity/perspective effects | `UNAVAILABLE_INPUT_FAILS_CLOSED`, or `RADIAL_VELOCITY_OMITTED_WITH_BOUND` under Amendment A1 | Approved finite RV, positive receding, enters full space motion; or the explicit A1 omission state with its per-row bound. | Untyped missing/unapproved RV makes row ineligible; no implicit `0 km/s` substitute. `A-004`,`B-002`. |
 | Frame bias | `INCLUDED_V1` | SOFA `pnm06a`/CIO-family BPN semantics. | Model/implementation uncertainty remains unbounded for later validation. `B-003`,`B-009`. |
 | IAU 2006 precession | `INCLUDED_V1` | IAU 2006 precession through SOFA `pnm06a` semantics. | No omission; model/implementation term remains unbounded. `B-004`,`B-009`. |
 | IAU 2000A nutation | `INCLUDED_V1` | IAU 2000A nutation plus the matching transformation used with IAU 2006 precession; never called “IAU 2006A nutation.” | No omission; model/implementation term remains unbounded. `B-004`,`B-009`. |
@@ -834,7 +878,7 @@ observer contract is documented above and is no longer an open row.
 | I/311 proper-motion derivative time scale | `B BLOCKS_2D_DATA_AUTHORITY` | Blocks I/311 motion eligibility; the resolved 365.25-day unit does not supply the scale. |
 | Source-neutral proper-motion adapter, polar guard, missing-state and warning ownership | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: explicit `mu_alpha_star` adapter, exact-pole rejection, no arbitrary near-pole epsilon, raw-status preservation, and fail-closed nonzero-status policy are normative. |
 | Radial-velocity source/crossmatch and selected-row evidence | `B BLOCKS_2D_DATA_AUTHORITY` | 2D must supply an authoritative value or mark the row ineligible. |
-| Radial-velocity/perspective missing-state branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: an approved finite RV is mandatory for each V1 row; absence makes the row ineligible and is never `0 km/s`. |
+| Radial-velocity/perspective missing-state branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: an approved finite RV is mandatory for each V1 row unless the row carries the Amendment A1 `RADIAL_VELOCITY_OMITTED_WITH_BOUND` state with its evidence; untyped absence makes the row ineligible and is never `0 km/s`. |
 | Parallax/distance row quality, uncertainty and covariance | `B BLOCKS_2D_DATA_AUTHORITY` | Controls selected-row eligibility in 2D. |
 | Parallax/distance admissibility and unavailable branch | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved: every V1 row needs a positive approved parallax/equivalent-distance state; zero/negative/missing/unapproved values make the row ineligible. |
 | Transformation route, TypeScript mapping and effect ownership | `F NOT_REQUIRED_FOR_PROFILE_V1` | Resolved as the decomposed SOFA `2023-10-11`-derived pure-TypeScript route, model-CIP-only EOP input set, explicit effect matrix, and pending-validation lifecycle. |
@@ -1042,11 +1086,18 @@ is claimed here.
 
 ## Catalogue and cultural boundaries
 
-Milestone 2D selects the actual catalogue/release, acquisition and deployment rights,
-row quality/uncertainty, minimal star allowlist, crosswalk, and artifact provenance.
-I/311 remains a studied spike candidate only. A future reviewed Gaia release can
-coexist with or replace individual astrometric records through the internal `starId`
-crosswalk without changing cultural claims or copying coordinates into them.
+Milestone 2D selects and activates the actual catalogue/release, acquisition and
+deployment rights, row quality/uncertainty, minimal star allowlist, crosswalk, and
+artifact provenance. Its 2D.1 release-level audit prefers fixed Gaia DR3 version 1.1,
+but its bounded immutable official TAP evidence approves no source row. Row review,
+component identity, parallax systematics, applicable covariance, component-specific RV
+proxy/systemic suitability, quality, and the Polaris fallback remain open. The
+scale-aware TCB-to-TDB parameter/covariance map is closed by Milestone 2D.1A without
+approving any row.
+I/311 remains a studied spike only.
+Reviewed source records may coexist or be replaced through the internal `starId` and
+per-field authority model without changing cultural claims or copying coordinates into
+them.
 
 Missing Najdi/regional evidence does not block astronomy-core. No content may be
 labelled `NAJDI_TRADITION` without claim-level regional evidence and named human
@@ -1069,14 +1120,16 @@ eligibility remain separate E-category gates.
 | IERS Bulletin A/B/C and `finals2000A` documentation | `OFFICIAL_WEB_SUFFICIENT` | Defines products/fields/quality roles. UFUQ's final-only decision is a project policy; exact bytes and dates remain 2D. |
 | IANA versioned leap artifacts | `OFFICIAL_WEB_SUFFICIENT` | Eligible machine-transport family with publisher validity metadata; IERS Bulletin C remains event authority and 2D selects exact bytes. |
 | CDS I/311 ReadMe/Appendix G/unit standard and ESA I/311 epoch page | `ALREADY_AVAILABLE_AND_SUFFICIENT` | Sufficient for known fields and Julian representation, not time scale, rights, row suitability, or permanent source selection. |
-| ESA Gaia release documentation/archive | `OFFICIAL_WEB_SUFFICIENT` | Sufficient for 2D candidate evaluation; no Gaia release or subset is selected here. |
+| ESA Gaia DR3 release documentation/archive and bounded TAP evidence | `ALREADY_AVAILABLE_AND_SUFFICIENT` for release and immutable query semantics | Exact fixed-release ADQL and hash-bound ignored responses verify 8/19 matches, five rows with both RV/error fields and no Polaris crossmatch. They do not approve a row or derived-artifact rights; scientific review and rights interpretation remain 2D work. |
+| Exact Gaia TCB-to-TDB stellar-parameter/covariance adapter | `ALREADY_AVAILABLE_AND_SUFFICIENT` | IAU/Gaia/Klioner/Lindegren-Dravins and pinned SOFA evidence support `GAIA_DR3_TCB_TO_TDB_COMPATIBLE_V1`; implementation/residual validation remains later. |
+| Polaris fallback and row-specific RV proxy | `HUMAN_REVIEW_REQUIRED` | Named astronomy/data review must approve the physical component and exact field authorities. No new PDF is needed for the generic adapter. |
 | Official UMPSA Faculty/Pekan site-identity pages | `OFFICIAL_WEB_SUFFICIENT` | Establish the selected Faculty-at-Pekan identity only; they supply no approved geodetic value or accuracy. |
 | JUPEM geodetic product/service documentation | `OFFICIAL_WEB_SUFFICIENT` | Establishes available GPS-control, coordinate-transformation, geoid and GNSS/RINEX services. It does not prove a Faculty-specific control record exists or make survey control mandatory. |
 | Exact UMPSA observer-preset data record | `USER_ACTION_REQUIRED_BEFORE_2D` | Required before 2D can approve the concrete preset and before real V1 execution, not before 2C closes or generic astronomy-core is written. |
 | JUPEM survey-control record for the Faculty site | `NOT_NEEDED` | Optional evidence if site-matched and proportionate; no control monument is a profile requirement. |
 | Future `Riyadh, Saudi Arabia` preset record | `REQUIRED_LATER` | Uses the same generic contract in a later multi-location profile; no coordinates are needed now. |
-| I/311 epoch/derivative-scale authority | `USER_ACTION_REQUIRED_BEFORE_2D` | Conditional before 2D can approve propagated I/311 data; it does not prevent 2D from starting or evaluating another source. |
-| I/311 raw/derived deployment permission | `USER_ACTION_REQUIRED_BEFORE_2D` | Conditional before 2D can approve deployment of I/311-derived records; it does not prevent 2D from starting. |
+| I/311 epoch/derivative-scale authority | `REQUIRED_LATER` only if I/311 is reconsidered | The 2D.1 preferred path does not select I/311, so no clarification is needed for Gaia evaluation. |
+| I/311 raw/derived deployment permission | `REQUIRED_LATER` only if I/311 is reconsidered | The 2D.1 preferred path does not deploy I/311-derived records. |
 | Per-row catalogue acquisition, quality, uncertainty, and covariance evidence | `HUMAN_REVIEW_REQUIRED` | 2D scientific/data review; no new general astronomy book required. |
 | Exact production leap/EOP artifacts and activation record | `REQUIRED_LATER` | 2D selects/acquires official bytes, hashes, exact interpolation/restoration configuration and review evidence before real execution. No user download is needed to close 2C or start generic implementation. |
 | USNO NOVAS 3.1 software and official guides | `REQUIRED_LATER` | Candidate stronger independent oracle after production exists. |
@@ -1088,12 +1141,11 @@ eligibility remain separate E-category gates.
 | WCAG 2.2 / WAI-ARIA APG | `OFFICIAL_WEB_SUFFICIENT` | Later UI/accessibility work, not a 2C science resource. |
 | Restricted local FYP report | `NOT_NEEDED` | It is not external scientific authority and remains private. |
 
-**Immediate user-action answer:** no. The first site identity, production route and
-leap/EOP semantic policy are selected, and the 2C contract can close without numerical
-observer data, production data downloads, or an installed third-party astronomy
-package. No coordinate/EOP/leap download, new astronomy standards PDF, positional-
-astronomy manual, replacement SOFA/IERS document, npm package, Riyadh record, or NOVAS
-package is needed now.
+**Current lifecycle update:** no user action was needed to close 2C. Milestone 2D.1 has
+completed and retained the bounded official Gaia DR3 query evidence and now requires
+scientific row review and the remaining approved 2D artifacts; it does not require a
+bulk catalogue, new astronomy PDF/manual, installed third-party astronomy package,
+Riyadh record, or NOVAS package.
 
 ### USER_ACTION_REQUIRED_BEFORE_2D: exact UMPSA observer record
 
@@ -1123,7 +1175,7 @@ package is needed now.
   retained with its source identity, acquisition date, version, and hash where
   appropriate.
 
-### USER_ACTION_REQUIRED_BEFORE_2D: I/311 time-scale clarification
+### REQUIRED_LATER only if I/311 is reconsidered: time-scale clarification
 
 This action is conditional before 2D can approve propagated I/311 data; it does not
 prevent 2D from beginning or choosing another source.
@@ -1148,7 +1200,7 @@ prevent 2D from beginning or choosing another source.
 - **Web substitution:** only an official I/311-applicable statement; original-1997 TT
   wording is not sufficient.
 
-### USER_ACTION_REQUIRED_BEFORE_2D: I/311 deployment rights
+### REQUIRED_LATER only if I/311 is reconsidered: deployment rights
 
 This action is conditional before 2D can approve deployment of I/311-derived data; it
 does not prevent 2D from beginning or choosing another source.
