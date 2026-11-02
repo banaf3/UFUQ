@@ -18,6 +18,7 @@ export class ViewController {
   private velocity = { azimuth: 0, altitude: 0 };
   private dragging = false;
   private size = { width: 1, height: 1 };
+  private requestFrameFn: () => void = () => undefined;
 
   constructor(initial: ViewState) {
     this.current = initial;
@@ -42,6 +43,16 @@ export class ViewController {
 
   get settled(): boolean {
     return this.current === this.goal;
+  }
+
+  /** Binds this canvas's own frame request (R3F invalidate of its root only). */
+  bindRequestFrame(request: () => void): void {
+    this.requestFrameFn = request;
+  }
+
+  /** Asks this canvas, and no other, to render a frame. */
+  requestFrame(): void {
+    this.requestFrameFn();
   }
 
   setSize(width: number, height: number): void {

@@ -12,7 +12,7 @@
  *
  * Per-frame view state lives in a ref and never re-renders React (ADR-002).
  */
-import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   forwardRef,
   useCallback,
@@ -269,6 +269,11 @@ function SkyLayers({
   const starMaterial = useRef<ShaderMaterial>(null);
   const geometry = useStarGeometry(stars);
   const { size, gl } = useThree();
+  const invalidateRoot = useThree((state) => state.invalidate);
+  useEffect(() => {
+    controller.bindRequestFrame(() => invalidateRoot());
+    invalidateRoot();
+  }, [controller, invalidateRoot]);
   const backgroundUniforms = useMemo(() => sharedUniforms(), []);
   const starUniforms = useMemo(
     () => ({
@@ -283,11 +288,11 @@ function SkyLayers({
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => {
     controller.setSize(size.width, size.height);
-    invalidate();
+    controller.requestFrame();
   }, [size.width, size.height, controller]);
   useEffect(() => {
-    invalidate();
-  }, [showGround, limitingMagnitude, stars]);
+    controller.requestFrame();
+  }, [showGround, limitingMagnitude, stars, controller]);
 
   useFrame((_, delta) => {
     const moving = controller.step(Math.min(delta, 0.05));
@@ -315,7 +320,7 @@ function SkyLayers({
     );
     drawOverlay();
     onFrameView(view);
-    if (moving) invalidate();
+    if (moving) controller.requestFrame();
   });
 
   return (
@@ -381,7 +386,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
     const setTarget = useCallback(
       (change: Partial<ViewState>, animate = true) => {
         controller.setTarget(change, animate);
-        invalidate();
+        controller.requestFrame();
       },
       [controller],
     );
@@ -394,10 +399,13 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         setView: setTarget,
         zoomBy: (factor) => setTarget({ fov: controller.target.fov * factor }),
         panBy: (deltaAzimuth, deltaAltitude) =>
-          setTarget({
-            azimuth: controller.target.azimuth + deltaAzimuth,
-            altitude: controller.target.altitude + deltaAltitude,
-          }),
+          setTarget(
+            {
+              azimuth: controller.target.azimuth + deltaAzimuth,
+              altitude: controller.target.altitude + deltaAltitude,
+            },
+            false,
+          ),
       }),
       [setTarget, controller],
     );
@@ -532,8 +540,8 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
     );
 
     useEffect(() => {
-      invalidate();
-    }, [props.lines, props.labels, props.highlighted, props.showCardinals]);
+      controller.requestFrame();
+    }, [props.lines, props.labels, props.highlighted, props.showCardinals, controller]);
 
     // Wheel zoom needs a non-passive listener to prevent page scrolling.
     useEffect(() => {
@@ -543,7 +551,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         event.preventDefault();
         const factor = Math.exp(Math.max(-200, Math.min(200, event.deltaY)) * 0.0015);
         controller.zoomBy(factor);
-        invalidate();
+        controller.requestFrame();
       };
       element.addEventListener('wheel', onWheel, { passive: false });
       return () => element.removeEventListener('wheel', onWheel);
@@ -611,7 +619,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         if (gesture.current.pinchDistance > 0) {
           controller.zoomTo(gesture.current.pinchFov * (gesture.current.pinchDistance / distance));
           gesture.current.moved = true;
-          invalidate();
+          controller.requestFrame();
         }
         return;
       }
@@ -626,7 +634,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       const dt = Math.max(1, now - gesture.current.lastTime) / 1000;
       gesture.current.lastTime = now;
       controller.dragBy(dx, dy, dt);
-      invalidate();
+      controller.requestFrame();
     };
 
     const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -634,7 +642,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       if (pointers.current.size > 0) return;
       controller.endDrag(performance.now() - gesture.current.lastTime <= 80);
       if (!gesture.current.moved) pick(event.clientX, event.clientY);
-      invalidate();
+      controller.requestFrame();
     };
 
     const onDoubleClick = (event: ReactMouseEvent<HTMLDivElement>) => {
