@@ -317,6 +317,29 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Validation required:** Cardinal-direction, horizon/zenith, camera, and raycast tests
   independent of screenshots. **2026-11-02:** implemented in
   `apps/web/src/scene/mapping.ts` with those tests in `mapping.test.ts`.
+  **2026-11-02 (sky explorer):** the planetarium renderer projects ENU directions through
+  a view frame equivalent to this mapping (camera at the origin) with five zenithal
+  projections (Calabretta & Greisen 2002), and picks stars in screen space with the same
+  projector, because a Raycaster cannot follow non-linear projections. Projection,
+  orientation and scaling tests are in `apps/web/src/sky/sky-math.test.ts`
+  (`docs/SKY_EXPLORER.md`).
+
+## IMP-020 — Display-only background star field
+
+- **Decision:** How stars other than the route stars are positioned for the sky explorer
+  and as lesson backgrounds.
+- **Current choice:** `SkyDisplayPolicyV1`: the ScientificProfileV1 stage-9 route inside
+  the same gated evaluation, accepting SOFA's minimum-parallax override (status 1) for
+  non-positive Hipparcos parallaxes and the coarse h/m/s position for stars without an
+  astrometric solution, each flagged. Results are display only and never targets. The
+  field is every Hipparcos star with V <= 6.5 plus the figure stars
+  (`sky-field-hipparcos1997-v1`, `REVIEW_REQUIRED`).
+- **Status:** provisional (owner/reviewer approval of the field artifact pending)
+- **What code it affects:** `astronomy-core/src/profile/sky-display.ts`,
+  `apps/api/src/sky`, lesson star fields, `tools/catalogue/src/generate/sky.ts`.
+- **Validation required:** Equality with the ProfileV1 route for ordinary stars, the
+  flagged cases, approval gating and byte-reproducible generation
+  (`packages/astronomy-core/tests/sky-display.test.ts`, `docs/SKY_EXPLORER.md`).
 
 ## IMP-011 — Reviewed sky-pattern and guidance content
 

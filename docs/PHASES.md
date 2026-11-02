@@ -310,6 +310,9 @@ star makes the route ineligible; the browser never owns route eligibility, targe
 tolerance, or correctness; boundary and raycast tests pass; the slice is explicitly
 limited to its approved content and scenario.
 
+**Addendum (2026-11-02, sky explorer):** the slice now opens on the full naked-eye sky
+(report UC-102) and lessons run over it; see `SKY_EXPLORER.md`.
+
 ## Phase 3: assessments and BKT adaptation
 
 **Outcome (2026-11-02):** `ADAPTIVE_TUTORING_IMPLEMENTED_PENDING_APPROVAL`. Every

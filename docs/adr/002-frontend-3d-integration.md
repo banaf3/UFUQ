@@ -29,6 +29,16 @@ Raycasting returns typed raw evidence keyed by stable catalogue/task ID. Hidden 
 - Store frame-loop values in React component state: excessive rerender risk.
 - CSS/2D-only sky or external viewer: does not satisfy the 3D interaction contribution.
 
+## Implementation note (2026-11-02, sky explorer)
+
+R3F still hosts the scene. The planetarium renderer uses custom shaders on an R3F
+canvas: a full-screen background shader that inverse-projects every pixel, and one
+point buffer with the forward projection. Lines and labels are drawn on a 2D overlay
+canvas in the same frame, for correct Arabic text shaping. Picking is screen space with
+the same projector, because Three's `Raycaster` cannot follow the non-linear zenithal
+projections. Per-frame view state lives in a `ViewController` object, outside React state.
+See `docs/SKY_EXPLORER.md`.
+
 ## Validation
 
 Fixed-camera raycast tests, deterministic scientific/scaffold screenshots, exact primary

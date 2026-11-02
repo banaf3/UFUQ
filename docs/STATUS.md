@@ -11,6 +11,13 @@ content record is `REVIEW_REQUIRED`, so strict ProfileV1 execution fails closed 
 named reviewers approve. See `spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md` and
 `PHASE2_VERTICAL_SLICE.md`. The paragraph below is the historical Phase 0 summary.
 
+**Update 2026-11-02 (sky explorer):** the first page is now the whole naked-eye sky
+(8,875 Hipparcos stars) for a scenario or a chosen instant, with the 88 IAU figures, the
+curated Arabic patterns, IAU star names (Arabic-origin names with their Arabic script),
+five projections and mouse/touch/keyboard navigation; lessons start from the top bar and
+run over the same sky (`SKY_EXPLORER.md`, IMP-020). The new real artifacts are
+`REVIEW_REQUIRED`.
+
 **Update 2026-11-02 (Phase 3):** pure BKT, observation semantics, the adaptive scaffold
 policy, issued cue snapshots, the select-every-member assessment type, `lesson.v2`, a
 development fixture identity and an exact-rational BKT reference comparison are
