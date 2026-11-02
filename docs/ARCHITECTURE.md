@@ -97,7 +97,8 @@ Rules:
    boundaries. They do not own domain entities, database rows, React props, cultural
    source records, or application services.
 9. Runtime applications/packages never import tools. `tools/catalogue` may import only
-   `catalogue-schema`; the code-independent Python reference tool never imports
+   `catalogue-schema` and, since Phase 3, the pure `tutoring-core` validators for the
+   learning-configuration artifact; the code-independent Python reference tool never imports
    production astronomy and communicates only through versioned JSON fixtures consumed
    by reference tests. Its shared ERFA/SOFA lineage is recorded separately.
 

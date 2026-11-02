@@ -26,6 +26,14 @@ a named reviewer writes an approval record (`data/approvals/README.md`). Never c
 an `APPROVED` record yourself. Use the `SYNTHETIC_TECHNICAL_FIXTURE` dataset for tests
 and the opt-in `REVIEW_PREVIEW` scope only for reviewer inspection.
 
+**Phase 3 (2026-11-02) is implemented on the synthetic fixture**
+(`docs/PHASE3_ASSESSMENT_AND_BKT.md`). `packages/tutoring-core` holds pure BKT,
+observation semantics and the scaffold policy. Learning values travel in the
+`UFUQ_LEARNING_CONFIGURATION` artifact (`data/curation/tutoring/`). The real one is
+`NON_ADAPTIVE` until BKT-001..BKT-005 are approved; never fill a policy value yourself.
+The API speaks `lesson.v2` at `/api/v2` and needs the opt-in development identity
+(`UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1`) to create lessons before Phase 4 authentication.
+
 The V1 route-star catalogue is ESA Hipparcos 1997 `hip_main` with bounded RV omission
 (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap, EOP, restoration and
 observer sources are in `docs/spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`. IERS
@@ -35,18 +43,19 @@ is al-Kaff al-Khaḍīb leading to al-Jady, with greater Banāt Naʿsh as the al
 
 ## Repository map
 
-| Path                                                          | Role                                                                                                    |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `apps/web`                                                    | React/Vite UI and future R3F/Three.js scene adapter                                                     |
-| `apps/api`                                                    | Express HTTP adapter and future application/persistence work                                            |
-| `packages/astronomy-core`, `assessment-core`, `tutoring-core` | Pure TypeScript domains. BKT, observations, and adaptive policy are modules inside `tutoring-core/src/` |
-| `packages/contracts`, `catalogue-schema`                      | Versioned DTOs and framework-free schemas/validators                                                    |
-| `tools/catalogue`                                             | Catalogue entry and pipeline modules (npm workspace)                                                    |
-| `tools/astronomy-reference`                                   | Independent locked Python/Astropy oracle; not an npm workspace; must never import production code       |
-| `data/`                                                       | `raw/` is ignored local bytes; manifests, curation, and generated data are guarded placeholders         |
-| `docs/spikes/`                                                | Phase 1 milestone records (catalogue authority, scientific behaviour contract, ProfileV1, error budget) |
-| `docs/references/`                                            | Tracked source dossiers and syntheses derived from the local library                                    |
-| `.agents/skills/`                                             | Canonical domain skills; `.claude/skills/` holds thin Claude wrappers plus `ufuq-reference`             |
+| Path                                                          | Role                                                                                                           |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `apps/web`                                                    | React/Vite UI and future R3F/Three.js scene adapter                                                            |
+| `apps/api`                                                    | Express HTTP adapter and future application/persistence work                                                   |
+| `packages/astronomy-core`, `assessment-core`, `tutoring-core` | Pure TypeScript domains. BKT, observations, and adaptive policy are modules inside `tutoring-core/src/`        |
+| `packages/contracts`, `catalogue-schema`                      | Versioned DTOs and framework-free schemas/validators                                                           |
+| `tools/catalogue`                                             | Catalogue entry and pipeline modules (npm workspace)                                                           |
+| `tools/astronomy-reference`                                   | Independent locked Python/Astropy oracle; not an npm workspace; must never import production code              |
+| `tools/bkt-reference`                                         | Exact-rational BKT oracle (CPython standard library only); not an npm workspace; never imports production code |
+| `data/`                                                       | `raw/` is ignored local bytes; manifests, curation, and generated data are guarded placeholders                |
+| `docs/spikes/`                                                | Phase 1 milestone records (catalogue authority, scientific behaviour contract, ProfileV1, error budget)        |
+| `docs/references/`                                            | Tracked source dossiers and syntheses derived from the local library                                           |
+| `.agents/skills/`                                             | Canonical domain skills; `.claude/skills/` holds thin Claude wrappers plus `ufuq-reference`                    |
 
 `scripts/check-boundaries.mjs` enforces the dependency allowlist and the acyclic
 graph. Add a justified edge together with its check; never disable the gate.
@@ -57,22 +66,25 @@ Run from the repository root with Node 22.16.0 and npm 10.9.2 (`.nvmrc`). In
 PowerShell use `npm.cmd`/`npx.cmd` if the execution policy blocks the wrappers.
 All commands below passed on 2026-11-02 except `test:integration` (inactive until Phase 4).
 
-| Purpose                                     | Command                                                                                                            |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Clean install                               | `npm ci`                                                                                                           |
-| Format, lint, types, boundaries, data guard | `npm run check`                                                                                                    |
-| Unit tests                                  | `npm run test`                                                                                                     |
-| Build                                       | `npm run build`                                                                                                    |
-| Public export resolution                    | `npm run exports:check`                                                                                            |
-| Browser smoke (owns the 4173/4174 servers)  | `npm run test:e2e`                                                                                                 |
-| Install Chromium if absent                  | `npx --no-install playwright install chromium`                                                                     |
-| Production/reference comparison (active)    | `npm run test:reference`                                                                                           |
-| Integration suite (inactive until Phase 4)  | `npm run test:integration` (fails closed when empty)                                                               |
-| Regenerate data / verify rebuild            | `npm run data:generate` / `npm run data:generate -- --check` (needs local `data/raw`)                              |
-| Reviewer preview of the real sky            | `npm run preview:review` (labelled unreviewed; never learner content)                                              |
-| Pending approvals                           | `npm run approvals:status`                                                                                         |
-| Web dev server                              | `npm run dev -w @ufuq/web`                                                                                         |
-| Python oracle                               | see `tools/astronomy-reference/README.md` (uv 0.11.32 at `%USERPROFILE%\.local\uv-0.11.32\uv.exe`, CPython 3.14.6) |
+| Purpose                                     | Command                                                                                                                    |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Clean install                               | `npm ci`                                                                                                                   |
+| Format, lint, types, boundaries, data guard | `npm run check`                                                                                                            |
+| Unit tests                                  | `npm run test`                                                                                                             |
+| Build                                       | `npm run build`                                                                                                            |
+| Public export resolution                    | `npm run exports:check`                                                                                                    |
+| Browser smoke (owns the 4173/4174 servers)  | `npm run test:e2e`                                                                                                         |
+| Install Chromium if absent                  | `npx --no-install playwright install chromium`                                                                             |
+| Production/reference comparison (active)    | `npm run test:reference`                                                                                                   |
+| Integration suite (inactive until Phase 4)  | `npm run test:integration` (fails closed when empty)                                                                       |
+| Regenerate data / verify rebuild            | `npm run data:generate` / `npm run data:generate -- --check` (needs local `data/raw`)                                      |
+| Reviewer preview of the real sky            | `npm run preview:review` (labelled unreviewed; never learner content)                                                      |
+| Pending approvals                           | `npm run approvals:status`                                                                                                 |
+| BKT sensitivity evidence (after a build)    | `npm run evidence:bkt-sensitivity` (`-- --check` in CI)                                                                    |
+| BKT exact-rational oracle                   | `python -I tools/bkt-reference/bkt_reference.py --check` and `python -I -m unittest discover -s tools/bkt-reference/tests` |
+| API with the development identity           | `UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1 node apps/api/dist/server.js` (`test:e2e` and `preview:review` set it)                 |
+| Web dev server                              | `npm run dev -w @ufuq/web`                                                                                                 |
+| Python oracle                               | see `tools/astronomy-reference/README.md` (uv 0.11.32 at `%USERPROFILE%\.local\uv-0.11.32\uv.exe`, CPython 3.14.6)         |
 
 ## Context to open for the task
 
@@ -84,7 +96,7 @@ All commands below passed on 2026-11-02 except `test:integration` (inactive unti
 | Qibla                                       | skill `ufuq-qibla-geodesy`                                                                                                                    |
 | Engineering quality, tests, structure       | `docs/TEST_PLAN.md`, skill `ufuq-engineering-quality`                                                                                         |
 | Browser scene                               | `docs/ASTRONOMY_SPEC.md`, ADR-002                                                                                                             |
-| Assessment, BKT                             | `docs/TUTORING_BKT_SPEC.md`, ADR-005                                                                                                          |
+| Assessment, BKT                             | `docs/TUTORING_BKT_SPEC.md`, ADR-005, `docs/PHASE3_ASSESSMENT_AND_BKT.md`                                                                     |
 | Persistence                                 | ADR-006                                                                                                                                       |
 | Report research                             | `/ufuq-reference <topic>`, `docs/REPORT_REFERENCE_WORKFLOW.md`                                                                                |
 

@@ -312,6 +312,14 @@ limited to its approved content and scenario.
 
 ## Phase 3: assessments and BKT adaptation
 
+**Outcome (2026-11-02):** `ADAPTIVE_TUTORING_IMPLEMENTED_PENDING_APPROVAL`. Every
+technical exit criterion is met on the synthetic fixture (independent BKT sequences,
+scoring boundaries, one fixture per policy transition, assistance semantics, sensitivity
+evidence, local journeys). The entry decisions (observation taxonomy, parameters,
+thresholds, cues, task-to-KC mapping and evaluation isolation) are implemented as
+validated configuration with fail-closed defaults but remain unapproved, so real-data
+lessons are `NON_ADAPTIVE`. See `PHASE3_ASSESSMENT_AND_BKT.md`.
+
 **Goal:** expand task types and add pure, versioned BKT plus adaptive scaffolding.
 
 **Read additionally:** `TUTORING_BKT_SPEC.md`, ADR-005, and the relevant assessment

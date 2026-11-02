@@ -392,6 +392,11 @@ Historical report/deviation/authority status remains in `governance/`.
   **2026-11-02:** three scenario presets (`REVIEW_REQUIRED`) are curated; star-identity
   steps are scored exactly; the direction step is `MEASURED_NO_TOLERANCE` until a
   tolerance policy is approved and supplied to `measureDirectionAnswer`.
+  **2026-11-02 (Phase 3):** a tolerance lives on the reviewed `DirectionTarget` record
+  (`learnerTolerance`, inclusive boundary). It is null in real content, and the validator
+  refuses a real tolerance without approved review. The synthetic fixture carries an
+  invented 10° technical tolerance to exercise the graded path. Set answers
+  (`SELECT_ALL_PATTERN_MEMBERS`) are scored by exact set equality, with no partial credit.
 - **Status:** unresolved
 - **What code it affects:** Scenario/route fixture, route-selection use case,
   assessment-core scoring, API validation, browser interaction, reference tests.
@@ -410,13 +415,24 @@ Historical report/deviation/authority status remains in `governance/`.
   parameter interface.
 - **Validation required:** Independently calculated sequences, edge/property tests, and
   deterministic numeric behavior; production parameters are handled separately.
+- **Implemented 2026-11-02:** `tutoring-core/src/bkt`. It is compared in
+  `test:reference` with the exact-rational `tools/bkt-reference` oracle (136 cases,
+  largest residual 6.47e-14) under a per-value first-order forward-error bound (12u per
+  posterior, 8u per transition, u = 2^-53, propagated through the update derivative).
+  The bound verifies the implementation; it is not a calibration or educational
+  tolerance.
 
 ## IMP-014 — BKT parameters and adaptive cues
 
 - **Decision:** Production parameters, observation eligibility, threshold, cue content,
   and GUIDED/FADING/INDEPENDENT transition policy.
 - **Current choice:** Interfaces and typed decision states may be scaffolded; production
-  values and cue semantics are unresolved.
+  values and cue semantics are unresolved. **2026-11-02:** the interfaces, validators
+  and typed decisions are implemented. Production values travel in the versioned
+  `UFUQ_LEARNING_CONFIGURATION` artifact (`data/curation/tutoring/`). It holds only the
+  report example parameters (`REPORT_EXAMPLE_NOT_CALIBRATED`) and lists every null policy
+  with its owning decision; real lessons therefore run `NON_ADAPTIVE`. The synthetic
+  fixture's adaptive policies are invented technical values, not proposals.
 - **Status:** unresolved
 - **What code it affects:** BKT configuration, the `tutoring-core/src/adaptive-policy`
   module, lesson cues, mastery display, and model-policy tests.
@@ -442,6 +458,10 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Decision:** How pre-authentication phases exercise API workflows.
 - **Current choice:** A local fixture identity adapter may be used for non-production
   technical work and must be excluded fail-closed from production artifacts.
+  **2026-11-02:** `apps/api/src/learners/development-learners.ts` is an in-memory
+  register with no personal data. It is composed only with `enableDevelopmentIdentity`
+  (`UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1`, set by `test:e2e` and `preview:review`).
+  Without it, lesson creation fails closed with `DEVELOPMENT_IDENTITY_DISABLED`.
 - **Status:** provisional
 - **What code it affects:** API composition root, development configuration, build
   guards, early E2E fixtures.
@@ -477,4 +497,6 @@ Historical report/deviation/authority status remains in `governance/`.
   DTOs, framework-free package checks, and one documented dependency decision before a
   validator library is added. **2026-11-02:** hand-written framework-free validators
   (`validateArtifactEnvelope`, `validateLessonContent`, lesson request parsers); no
-  validator library added.
+  validator library added. **2026-11-02:** `lesson.v2` parsers (learner, session purpose,
+  set answers, bounded untrusted telemetry) and `tutoring-core`'s configuration
+  validators, still without a library.

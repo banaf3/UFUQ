@@ -25,6 +25,7 @@ jobs:
       - run: npm run data:verify
       - run: npm run test
       - run: npm run test:reference
+      - run: npm run evidence:bkt-sensitivity -- --check
       - run: npm run build
       - run: npm run exports:check
       - run: npx --no-install playwright install --with-deps chromium

@@ -1,5 +1,9 @@
 # Tutoring and Bayesian Knowledge Tracing specification
 
+**Implementation (2026-11-02):** `packages/tutoring-core` implements this specification's
+model, decision kinds, invariants and validation plan. Production values remain manual
+decisions. See `PHASE3_ASSESSMENT_AND_BKT.md` and `evidence/BKT_SENSITIVITY.md`.
+
 ## Knowledge components
 
 The following separate learner skill states are **CONFIRMED**. “Separate” describes
