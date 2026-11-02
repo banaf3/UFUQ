@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { canonicalJson, sha256Hex } from './canonical-json.js';
 import { generateLessonContent, generateSyntheticTechnicalDataset } from './generate/content.js';
 import { generateLearningConfiguration } from './generate/learning-configuration.js';
+import { generateSkyArtifacts } from './generate/sky.js';
 import {
   generateEopBundle,
   generateLeapState,
@@ -48,12 +49,15 @@ const observer = generateObserver(root);
 const domain = generateSupportedTimeDomain(root, eop, leap, stars, observer);
 const content = generateLessonContent(root, stars);
 const learning = generateLearningConfiguration(root);
+const sky = generateSkyArtifacts(root);
 emit('data/generated/route-stars-hipparcos1997-v1.json', stars);
 emit('data/generated/leap-seconds-iers-v1.json', leap);
 emit('data/generated/observer-umpsa-pekan-v1.json', observer);
 emit('data/generated/time-domain-profile-v1.json', domain);
 emit('data/generated/lesson-content-v1.json', content);
 emit('data/generated/learning-configuration-v1.json', learning);
+emit('data/generated/sky-field-hipparcos1997-v1.json', sky.field);
+emit('data/generated/sky-culture-iau-v1.json', sky.culture);
 emit('data/generated/local-only/eop-bulletinb-453-461-v1.json', eop, false);
 for (const artifact of generateSyntheticTechnicalDataset(root)) {
   emit(`data/generated/synthetic/${artifact.artifactId}.json`, artifact);

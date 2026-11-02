@@ -56,6 +56,24 @@
     },
     {
       "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "sky-field-hipparcos1997-v1",
+      "byteLength": 1627134,
+      "path": "data/generated/sky-field-hipparcos1997-v1.json",
+      "payloadSha256": "b53c600fecee5d9de0015ec40fae04369bfd6d724514bab7af3a06214854545e",
+      "sha256": "4b22a8940176c754f7223d426e3600e2a19518baae378828b4ae61188f5dd6ac",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "sky-culture-iau-v1",
+      "byteLength": 271800,
+      "path": "data/generated/sky-culture-iau-v1.json",
+      "payloadSha256": "5d9ea2cafff05569a3f3e01a0144a26a5978b5f7b636bbd62d35c6e9db9b1005",
+      "sha256": "a316cbed1dadf8f008693ece83f62272f40a703e57f6cf52d3746833d64bfd24",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
       "artifactId": "eop-bulletinb-453-461-v1",
       "byteLength": 290601,
       "path": "data/generated/local-only/eop-bulletinb-453-461-v1.json",
@@ -124,6 +142,24 @@
       "path": "data/generated/synthetic/synthetic-learning-configuration-v1.json",
       "payloadSha256": "32d82a9a7fc95ff77a1838ad7573dcc010de7fd78ae2cc358ab9fdf946d6be0e",
       "sha256": "1a1bd54d55d77eb0f99aeab2f9c6b93e503c7a75a60074099935074b390d07e7",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-sky-field-v1",
+      "byteLength": 71337,
+      "path": "data/generated/synthetic/synthetic-sky-field-v1.json",
+      "payloadSha256": "4b17e5a176a4377ab37b6dbae9be04420af94296f1e6b0ff540a9580a431c729",
+      "sha256": "ea7811dc1889bf8810cde597216105a0d41dfafc033c5fca69b1bc5e8d2416e3",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-sky-culture-v1",
+      "byteLength": 1754,
+      "path": "data/generated/synthetic/synthetic-sky-culture-v1.json",
+      "payloadSha256": "fba9d4f7208afe295c217d0a96dafef0fb0e6ce8b40f91546f6f59855e475739",
+      "sha256": "d23fc3eb4164a7bf9b57c45d10d59d2200d6137cdc0bdd746f67b93a515b72b8",
       "tracked": true
     }
   ],

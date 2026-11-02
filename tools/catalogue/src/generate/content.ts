@@ -15,6 +15,7 @@ import {
   sha256Hex,
 } from '../canonical-json.js';
 import { generateSyntheticLearningConfiguration } from './learning-configuration.js';
+import { generateSyntheticSkyArtifacts } from './sky.js';
 import { loadApproval } from './profile-v1-data.js';
 
 function readCuration<T>(root: string, path: string): T {
@@ -551,5 +552,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     domain,
     contentEnvelope,
     generateSyntheticLearningConfiguration(SYNTHETIC),
+    generateSyntheticSkyArtifacts(SYNTHETIC).field,
+    generateSyntheticSkyArtifacts(SYNTHETIC).culture,
   ];
 }
