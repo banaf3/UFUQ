@@ -43,10 +43,18 @@ interface Selection {
   readonly customUtc: string;
 }
 
-const describeError = (caught: unknown) =>
-  caught instanceof ApiError
+/** A 404 without a JSON body means the running API predates this web build. */
+const STALE_API_MESSAGE =
+  'The running API server is older than this web app (it has no sky endpoint). Stop the preview (Ctrl+C in its terminal) and start it again with npm run preview:review.';
+
+const describeError = (caught: unknown) => {
+  if (caught instanceof ApiError && caught.status === 404 && caught.body === null) {
+    return STALE_API_MESSAGE;
+  }
+  return caught instanceof ApiError
     ? `${caught.body?.outcome ?? caught.body?.error ?? 'Error'}: ${caught.message}`
     : 'The sky could not be loaded.';
+};
 
 /** "YYYY-MM-DDTHH:mm" (datetime-local, read as UTC) to canonical whole-second UTC. */
 const canonicalUtc = (value: string) => `${value}:00Z`;
@@ -126,6 +134,11 @@ export function ExplorerPage({
               if (failures.length > 0) setNotice(`Showing ${dataset.title}. ${failures.join(' ')}`);
               return;
             } catch (caught) {
+              // An outdated API cannot serve any dataset: say so once, plainly.
+              if (describeError(caught) === STALE_API_MESSAGE) {
+                setError(STALE_API_MESSAGE);
+                return;
+              }
               failures.push(
                 `${dataset.title} (${scope}) is unavailable: ${describeError(caught)}.`,
               );
