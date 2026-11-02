@@ -11,7 +11,7 @@ import {
   type Material,
 } from 'three';
 
-import type { SkyOverlayV1, SkyStarV1 } from '@ufuq/contracts';
+import type { SkyOverlayV2, SkyStarV2 } from '@ufuq/contracts';
 
 import {
   enuToScene,
@@ -24,8 +24,8 @@ import {
 } from './mapping.js';
 
 export interface SkySceneProps {
-  readonly stars: readonly SkyStarV1[];
-  readonly overlays: readonly SkyOverlayV1[];
+  readonly stars: readonly SkyStarV2[];
+  readonly overlays: readonly SkyOverlayV2[];
   readonly headingRadians: number;
   readonly pitchRadians: number;
   readonly focusedHandle: string | null;
@@ -210,6 +210,14 @@ export function SkyScene(props: SkySceneProps) {
             .slice(1)
             .flatMap((handle, i) => arcPoints(handles[i] as string, handle));
           return <Polyline key={`g${index}`} points={points} color="#7fe3ff" dashed />;
+        }
+        if (overlay.kind === 'GUIDE_ARC_PARTIAL') {
+          const star = byHandle.get(overlay.fromHandle);
+          if (!star) return null;
+          const points = greatCirclePoints(star.enu, overlay.endEnu).map((p) =>
+            enuToScene(p, SKY_RADIUS * 0.98),
+          );
+          return <Polyline key={`p${index}`} points={points} color="#7fe3ff" dashed />;
         }
         if (overlay.kind === 'VERTICAL_TO_HORIZON') {
           const star = byHandle.get(overlay.fromHandle);

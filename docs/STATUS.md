@@ -1,6 +1,6 @@
 # Implementation status
 
-**Assessment date:** 2026-11-02 (Phase 1 implementation and the Phase 2 vertical slice; earlier sections keep their own dates)
+**Assessment date:** 2026-11-02 (Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates)
 
 **Update 2026-11-02:** Phase 1 is complete for implementation and the Phase 2 vertical
 slice runs end to end. ScientificProfileV1 is implemented in pure TypeScript
@@ -10,6 +10,13 @@ byte-reproducible artifacts, `test:reference` is active (104 cases agree with Py
 content record is `REVIEW_REQUIRED`, so strict ProfileV1 execution fails closed until
 named reviewers approve. See `spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md` and
 `PHASE2_VERTICAL_SLICE.md`. The paragraph below is the historical Phase 0 summary.
+
+**Update 2026-11-02 (Phase 3):** pure BKT, observation semantics, the adaptive scaffold
+policy, issued cue snapshots, the select-every-member assessment type, `lesson.v2`, a
+development fixture identity and an exact-rational BKT reference comparison are
+implemented. Adaptive behaviour runs only on the synthetic fixture; the real learning
+configuration is `NON_ADAPTIVE` until BKT-001..BKT-005, EDU-002 and IMP-012 are
+approved. See `PHASE3_ASSESSMENT_AND_BKT.md`.
 
 The consolidated Phase 0 repository scaffold is validated. It contains health-only web
 and API applications, eight npm workspaces, pure empty/type-placeholder production
@@ -418,6 +425,25 @@ redistribution terms.
   exports:check` (13); `npm run test:e2e` (4); oracle unittests (41). GitHub CI passed
   on commit `04cf80e`.
 
+### Phase 3 assessments and BKT adaptation (2026-11-02)
+
+- **Implemented:** `tutoring-core` (BKT arithmetic with typed OBSERVATION /
+  TRANSITION_ONLY / NO_MODEL_UPDATE records, a total observation-rule table, the
+  scaffold rule engine, cue classification, deterministic replay), assessment type
+  `SELECT_ALL_PATTERN_MEMBERS`, the `UFUQ_LEARNING_CONFIGURATION` artifact, `lesson.v2`
+  at `/api/v2`, and the IMP-016 development identity (opt-in).
+- **Evidence:** the BKT production/reference comparison (136 cases against an exact
+  `fractions` oracle, largest residual 6.47e-14, at most 0.125 of its per-value
+  forward-error bound); 162-row sensitivity evidence reproduced in CI; adaptive browser
+  journeys on the synthetic fixture.
+- **Not approved:** BKT-001..BKT-005, EDU-002 (the proposed step-to-KC mapping) and the
+  IMP-012 learner tolerance. Real-data lessons record an explicit
+  `OBSERVATION_POLICY_UNRESOLVED` no-op per attempt.
+- **Gates run 2026-11-02:** `npm run check`; `npm run test` (182); `npm run
+  test:reference` (146); `npm run evidence:bkt-sensitivity -- --check`; `npm run
+  build` plus the bundle guard; `npm run exports:check` (13); BKT oracle unittests (8);
+  `npm run test:e2e` (4, on ports 4183/4184 beside an owner preview).
+
 ### Milestone 2A modern synthetic-only retry
 
 The earlier exact candidate set remains recorded as a failed experiment: Astropy 7.2.2
@@ -542,6 +568,12 @@ Phase 1 Milestones 1, 2A, 2B, and the Milestone 2C specification gate are ready 
 closed in the proposed documentation commit. No 2C semantic blocker remains. Another
 synthetic batch, production/reference evidence and AST-006 numerical approval are not
 prerequisites to starting the bounded implementation; they retain their later gates.
+
+**Update 2026-11-02 (Phase 3):** Phase 3 is implemented on the synthetic fixture
+(`PHASE3_ASSESSMENT_AND_BKT.md`). The authorized next work is named approval of the
+learning decisions (BKT-001..BKT-005, EDU-002, IMP-012) and of the Phase 1/2 artifacts;
+the agent's next technical step is Phase 4 (persistence and authentication), which needs
+the frozen MySQL profile (IMP-015) before its acceptance claims.
 
 **Update 2026-11-02:** 2E, the first implementation, the reference comparison and the
 Phase 2 slice are done (see the section above). The authorized next work is named review

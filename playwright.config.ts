@@ -8,7 +8,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: process.env.UFUQ_E2E_BASE_URL ?? 'http://127.0.0.1:4173',
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
   },

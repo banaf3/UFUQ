@@ -240,6 +240,17 @@ button.secondary {
   border-color: var(--accent);
 }
 
+.star-list button.chosen {
+  background: rgba(255, 210, 122, 0.18);
+  border-color: #ffd27a;
+}
+
+.support {
+  margin: 0.4rem 0 0;
+  color: #cfe3f5;
+  font-size: 0.85rem;
+}
+
 .hint {
   margin: 0;
   color: #9fb3c8;

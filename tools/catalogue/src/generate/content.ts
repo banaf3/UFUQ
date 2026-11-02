@@ -14,6 +14,7 @@ import {
   envelope,
   sha256Hex,
 } from '../canonical-json.js';
+import { generateSyntheticLearningConfiguration } from './learning-configuration.js';
 import { loadApproval } from './profile-v1-data.js';
 
 function readCuration<T>(root: string, path: string): T {
@@ -313,13 +314,20 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     ids.slice(1).map((id, i) => ({ fromStarId: ids[i] as string, toStarId: id }));
   const step = (
     stepId: string,
-    taskKind: 'IDENTIFY_PATTERN_MEMBER' | 'IDENTIFY_TARGET_STAR' | 'INDICATE_DIRECTION',
+    taskKind:
+      | 'IDENTIFY_PATTERN_MEMBER'
+      | 'SELECT_ALL_PATTERN_MEMBERS'
+      | 'IDENTIFY_TARGET_STAR'
+      | 'INDICATE_DIRECTION',
+    knowledgeComponentId: 'KC-01' | 'KC-02' | 'KC-03' | 'KC-04',
     patternId: string | null,
     guidanceRelationshipId: string | null,
     prompt: string,
   ) => ({
     stepId,
     taskKind,
+    // Technical KC slots for the synthetic routes; not a cultural or educational mapping.
+    knowledgeComponentId,
     patternId,
     directionId: taskKind === 'INDICATE_DIRECTION' ? 'direction-true-north' : null,
     guidanceRelationshipId,
@@ -375,6 +383,13 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         contentVersion: '1',
         labels: [label('True North (synthetic fixture)')],
         definition: { kind: 'TERRESTRIAL_TRUE_NORTH', azimuthRadians: 0 },
+        // Invented technical tolerance (10 degrees) so the graded direction path can be
+        // tested. It is not a learner tolerance; IMP-012 remains unresolved.
+        learnerTolerance: {
+          policyId: 'synthetic-direction-tolerance',
+          maximumDifferenceRadians: Math.PI / 18,
+          approvalReference: 'SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)',
+        },
         review: review(),
       },
     ],
@@ -439,6 +454,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
           step(
             'step-1',
             'IDENTIFY_PATTERN_MEMBER',
+            'KC-02',
             'synthetic-pattern-helper-a',
             null,
             'Select a star of synthetic helper A.',
@@ -446,6 +462,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
           step(
             'step-2',
             'IDENTIFY_TARGET_STAR',
+            'KC-03',
             'synthetic-pattern-target',
             'synthetic-guide-a',
             'Select the synthetic target star.',
@@ -453,6 +470,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
           step(
             'step-3',
             'INDICATE_DIRECTION',
+            'KC-04',
             null,
             'synthetic-guide-north',
             'Face True North and confirm.',
@@ -470,14 +488,16 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         steps: [
           step(
             'step-1',
-            'IDENTIFY_PATTERN_MEMBER',
+            'SELECT_ALL_PATTERN_MEMBERS',
+            'KC-01',
             'synthetic-pattern-helper-b',
             null,
-            'Select a star of synthetic helper B.',
+            'Select every star of synthetic helper B, then submit the selection.',
           ),
           step(
             'step-2',
             'IDENTIFY_TARGET_STAR',
+            'KC-03',
             'synthetic-pattern-target',
             'synthetic-guide-b',
             'Select the synthetic target star.',
@@ -485,6 +505,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
           step(
             'step-3',
             'INDICATE_DIRECTION',
+            'KC-04',
             null,
             'synthetic-guide-north',
             'Face True North and confirm.',
@@ -522,5 +543,13 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     content,
     SYNTHETIC,
   );
-  return [stars, leap, eop, observer, domain, contentEnvelope];
+  return [
+    stars,
+    leap,
+    eop,
+    observer,
+    domain,
+    contentEnvelope,
+    generateSyntheticLearningConfiguration(SYNTHETIC),
+  ];
 }

@@ -44,6 +44,13 @@ Use proposed `GUIDED`, `FADING`, and `INDEPENDENT` semantics (DEV-004). A manual
 - Claim threshold crossing proves independent learning.
 - Dynamically infer “slip rate” from a single wrong answer without a different approved model.
 
+## Implementation note (2026-11-02)
+
+The decision is implemented in `packages/tutoring-core` (see
+`docs/PHASE3_ASSESSMENT_AND_BKT.md`). The status stays blocked: the manual learning
+decisions are unapproved, so only the synthetic fixture runs adaptively and real lessons
+record explicit no-op decisions.
+
 ## Validation
 
 Examples/sequences against an independently justified numeric tolerance,

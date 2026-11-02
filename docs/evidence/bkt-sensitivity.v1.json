@@ -1,0 +1,5223 @@
+{
+  "evidenceType": "UFUQ_BKT_SENSITIVITY",
+  "schemaVersion": 1,
+  "generator": "scripts/evidence/bkt-sensitivity.mjs v1",
+  "model": "STANDARD_BKT_FOUR_PARAMETER v1 (packages/tutoring-core)",
+  "status": "CANDIDATE_GRID_NOT_APPROVED",
+  "method": "Exact enumeration; false mastery enumerates all 2^n outcomes of a learner who never masters and answers correctly with probability G. No random sampling.",
+  "grid": {
+    "initialMastery": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "learn": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "guess": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "slip": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "threshold": [
+      0.85,
+      0.95
+    ]
+  },
+  "thresholdComparison": "AT_OR_ABOVE",
+  "maximumAttempts": 20,
+  "assistedAttempts": 3,
+  "rows": [
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.991522062469,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00289,
+      "falseMasteryWithin10": 0.0077714407,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.991522062469,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.990074380644,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00289,
+      "falseMasteryWithin10": 0.0080115733,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.990074380644,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.02233,
+      "falseMasteryWithin10": 0.0405364186,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.986029727931,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0037,
+      "falseMasteryWithin10": 0.0101557081,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.986029727931,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0536077312,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.939469026549,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.00288,
+      "falseMasteryWithin10": 0.010668544,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.939469026549,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0579331072,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.930031622973,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.00288,
+      "falseMasteryWithin10": 0.0115794944,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.930031622973,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0591389696,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.904774318946,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.00288,
+      "falseMasteryWithin10": 0.01237248,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.904774318946,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0449513145,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.831311655097,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 5,
+      "falseMasteryWithin5": 0.00243,
+      "falseMasteryWithin10": 0.0121387977,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.831311655097,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 5
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0508440888,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.80926028921,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 5,
+      "falseMasteryWithin5": 0.00243,
+      "falseMasteryWithin10": 0.0139677129,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.80926028921,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 5
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0563534577,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.754454691436,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 5,
+      "falseMasteryWithin5": 0.00243,
+      "falseMasteryWithin10": 0.0125341101,
+      "correctAfterTwoErrorsToThreshold": 6,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.754454691436,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.2283625,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 5
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.993119648484,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00451,
+      "falseMasteryWithin10": 0.0132892417,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.993119648484,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080488972,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.991964285714,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00451,
+      "falseMasteryWithin10": 0.0138876049,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.991964285714,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.0857620477,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.988753278365,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00613,
+      "falseMasteryWithin10": 0.0193083031,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.988753278365,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0602399744,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.952667673648,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0208,
+      "falseMasteryWithin10": 0.0524411904,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.952667673648,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03232,
+      "falseMasteryWithin10": 0.0895214592,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.945454545455,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0144,
+      "falseMasteryWithin10": 0.0471589888,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.945454545455,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03232,
+      "falseMasteryWithin10": 0.0972809216,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.926222871922,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.00416,
+      "falseMasteryWithin10": 0.0301196288,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.926222871922,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0648,
+      "falseMasteryWithin10": 0.1551905541,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.870424647164,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0433926882,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.870424647164,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0648,
+      "falseMasteryWithin10": 0.1589745987,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.853614457831,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0446679279,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.853614457831,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01944,
+      "falseMasteryWithin10": 0.124869114,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.811535719985,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 5,
+      "falseMasteryWithin5": 0.00243,
+      "falseMasteryWithin10": 0.0299707209,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.811535719985,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3439,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 5
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.0523,
+      "falseMasteryWithin10": 0.1268955811,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.995566097194,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.028,
+      "falseMasteryWithin10": 0.071743159,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.995566097194,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.0523,
+      "falseMasteryWithin10": 0.1268955811,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.994842868654,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02881,
+      "falseMasteryWithin10": 0.0727712677,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.994842868654,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.06688,
+      "falseMasteryWithin10": 0.1658502064,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.992850049652,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02962,
+      "falseMasteryWithin10": 0.0782155855,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.992850049652,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.104,
+      "falseMasteryWithin10": 0.247515648,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.971269021686,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0581690368,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.971269021686,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.10912,
+      "falseMasteryWithin10": 0.2530993152,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.967042162858,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0775414784,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.967042162858,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.11424,
+      "falseMasteryWithin10": 0.2798380032,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.955828220859,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0272,
+      "falseMasteryWithin10": 0.0947643392,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.955828220859,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.09693,
+      "falseMasteryWithin10": 0.2753844426,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.923359195252,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0459,
+      "falseMasteryWithin10": 0.139381101,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.923359195252,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.09693,
+      "falseMasteryWithin10": 0.2853678006,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.913513513514,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.03267,
+      "falseMasteryWithin10": 0.1330178679,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.913513513514,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.12339,
+      "falseMasteryWithin10": 0.3519321642,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.888595988539,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.1,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01944,
+      "falseMasteryWithin10": 0.12214638,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.888595988539,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5392,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.1,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996106557377,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01261,
+      "falseMasteryWithin10": 0.0174397303,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996106557377,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.0802586809,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.995430501519,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01261,
+      "falseMasteryWithin10": 0.0176372164,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.995430501519,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03043,
+      "falseMasteryWithin10": 0.048189169,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.993528390542,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00532,
+      "falseMasteryWithin10": 0.0118031752,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.993528390542,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.0528,
+      "falseMasteryWithin10": 0.0835183616,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.970485436893,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.00928,
+      "falseMasteryWithin10": 0.0168354816,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.970485436893,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.0528,
+      "falseMasteryWithin10": 0.087607808,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.965581091931,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01056,
+      "falseMasteryWithin10": 0.018795008,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.965581091931,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0272,
+      "falseMasteryWithin10": 0.0664527872,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.952081877882,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01184,
+      "falseMasteryWithin10": 0.021154304,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.952081877882,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03267,
+      "falseMasteryWithin10": 0.0633445866,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.909683098592,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0180879318,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.909683098592,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03834,
+      "falseMasteryWithin10": 0.0724490757,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.896012734991,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0208467837,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.896012734991,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.04401,
+      "falseMasteryWithin10": 0.0828871488,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.860030987832,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 5,
+      "falseMasteryWithin5": 0.00243,
+      "falseMasteryWithin10": 0.0162264708,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.860030987832,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3141,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 5
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996760485927,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01342,
+      "falseMasteryWithin10": 0.0220717963,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996760485927,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.081138511,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996202531646,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01423,
+      "falseMasteryWithin10": 0.0233000155,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996202531646,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.04501,
+      "falseMasteryWithin10": 0.0938399509,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.994636945487,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01504,
+      "falseMasteryWithin10": 0.029057293,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.994636945487,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05792,
+      "falseMasteryWithin10": 0.096127488,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975930043594,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0208,
+      "falseMasteryWithin10": 0.052447744,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975930043594,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.06304,
+      "falseMasteryWithin10": 0.1187767296,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.971984435798,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0544203776,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.971984435798,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.04256,
+      "falseMasteryWithin10": 0.1062986752,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.96116142781,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01184,
+      "falseMasteryWithin10": 0.0372237312,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.96116142781,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0648,
+      "falseMasteryWithin10": 0.155615634,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.927364648249,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0446262534,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.927364648249,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.07047,
+      "falseMasteryWithin10": 0.1626113934,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.916494845361,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.047160063,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.916494845361,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.07047,
+      "falseMasteryWithin10": 0.1706240106,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.887878097408,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0406004967,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.887878097408,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4168,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05959,
+      "falseMasteryWithin10": 0.13375117,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997817131468,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997817131468,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05959,
+      "falseMasteryWithin10": 0.13375117,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.99744676607,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.0804948769,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.99744676607,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.06688,
+      "falseMasteryWithin10": 0.1658502064,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996412556054,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.0863997769,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996412556054,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13472,
+      "falseMasteryWithin10": 0.273336832,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.984345125767,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0581952512,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.984345125767,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13472,
+      "falseMasteryWithin10": 0.2744902656,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.981838336363,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.081316352,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.981838336363,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13984,
+      "falseMasteryWithin10": 0.3008095232,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03232,
+      "falseMasteryWithin10": 0.1004266496,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.09693,
+      "falseMasteryWithin10": 0.2808752895,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.953835942946,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0648,
+      "falseMasteryWithin10": 0.1557906669,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.953835942946,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.11016,
+      "falseMasteryWithin10": 0.2943982017,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.947052740434,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0459,
+      "falseMasteryWithin10": 0.1453155498,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.947052740434,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.13662,
+      "falseMasteryWithin10": 0.369720693,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.929180327869,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.2,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.02511,
+      "falseMasteryWithin10": 0.1318315338,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.929180327869,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.5904,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.2,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997703332758,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01261,
+      "falseMasteryWithin10": 0.0175184623,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.052941176471,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997703332758,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.080961364,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997302228206,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01261,
+      "falseMasteryWithin10": 0.0176667409,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.05625,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997302228206,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.04501,
+      "falseMasteryWithin10": 0.0615814822,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996170912878,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01504,
+      "falseMasteryWithin10": 0.0211270123,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.064285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996170912878,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.0528,
+      "falseMasteryWithin10": 0.0835183616,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.98220735786,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01184,
+      "falseMasteryWithin10": 0.0189654016,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.98220735786,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05792,
+      "falseMasteryWithin10": 0.0933487616,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.979180993925,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01184,
+      "falseMasteryWithin10": 0.0203416576,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.057142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.979180993925,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05792,
+      "falseMasteryWithin10": 0.0953934848,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.970759083545,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01184,
+      "falseMasteryWithin10": 0.0228058112,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.066666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.970759083545,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03834,
+      "falseMasteryWithin10": 0.0682899606,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.943457723193,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0197215722,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.053846153846,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.943457723193,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.04401,
+      "falseMasteryWithin10": 0.0779278833,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.934383370688,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0236639799,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.058333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.934383370688,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.04401,
+      "falseMasteryWithin10": 0.0851042322,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.909861073448,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.05,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.0081,
+      "falseMasteryWithin10": 0.0270479493,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.07,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.909861073448,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.3998375,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998072124384,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01342,
+      "falseMasteryWithin10": 0.0220777012,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.105882352941,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998072124384,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.04501,
+      "falseMasteryWithin10": 0.0882066763,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997737068966,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01504,
+      "falseMasteryWithin10": 0.0240086035,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.1125,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997737068966,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.04501,
+      "falseMasteryWithin10": 0.093893095,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996793611099,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.01585,
+      "falseMasteryWithin10": 0.0302796073,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.128571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.996793611099,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05792,
+      "falseMasteryWithin10": 0.096127488,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.985250246136,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0535815168,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.106666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.985250246136,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.06304,
+      "falseMasteryWithin10": 0.1188815872,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.982763337893,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0552592384,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.114285714286,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.982763337893,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.07328,
+      "falseMasteryWithin10": 0.1337713664,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975859785231,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.01696,
+      "falseMasteryWithin10": 0.0431744,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.133333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.975859785231,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.1278,
+      "falseMasteryWithin10": 0.2121089688,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.953587291,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03267,
+      "falseMasteryWithin10": 0.0626944644,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.107692307692,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.953587291,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.07047,
+      "falseMasteryWithin10": 0.1666565982,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.946204933586,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0491687739,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.116666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.946204933586,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.07047,
+      "falseMasteryWithin10": 0.1778262903,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.926274981941,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.1,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 4,
+      "falseMasteryWithin5": 0.01377,
+      "falseMasteryWithin10": 0.0462793419,
+      "correctAfterTwoErrorsToThreshold": 5,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.14,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.926274981941,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.4897,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 4
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05959,
+      "falseMasteryWithin10": 0.13375117,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998679242849,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03691,
+      "falseMasteryWithin10": 0.080252776,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.211764705882,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998679242849,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.05959,
+      "falseMasteryWithin10": 0.13375117,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998451809103,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.081138511,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.225,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.998451809103,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.07417,
+      "falseMasteryWithin10": 0.1715897692,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997813354159,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.1,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.03772,
+      "falseMasteryWithin10": 0.086984362,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.257142857143,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.997813354159,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13472,
+      "falseMasteryWithin10": 0.273336832,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.990124086146,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.02208,
+      "falseMasteryWithin10": 0.0583263232,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.213333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.990124086146,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13472,
+      "falseMasteryWithin10": 0.275433984,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.988484955582,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03232,
+      "falseMasteryWithin10": 0.0906486784,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.228571428571,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.988484955582,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.13984,
+      "falseMasteryWithin10": 0.303745536,
+      "correctAfterTwoErrorsToThreshold": 2,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.983954154728,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.2,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.03744,
+      "falseMasteryWithin10": 0.1051452416,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.266666666667,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.983954154728,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.21159,
+      "falseMasteryWithin10": 0.3674820006,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.969453533024,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.05
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.0648,
+      "falseMasteryWithin10": 0.155865681,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.215384615385,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.969453533024,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.21159,
+      "falseMasteryWithin10": 0.3697963245,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.964668769716,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.1
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.07047,
+      "falseMasteryWithin10": 0.1678234842,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 0,
+      "incorrectEvidenceLowerFixedPoint": 0.233333333333,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.964668769716,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.85,
+      "correctObservationsToThreshold": 2,
+      "falseMasteryWithin5": 0.18072,
+      "falseMasteryWithin10": 0.4009111236,
+      "correctAfterTwoErrorsToThreshold": 3,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.951770334928,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 1
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        }
+      }
+    },
+    {
+      "parameters": {
+        "initialMastery": 0.3,
+        "learn": 0.2,
+        "guess": 0.3,
+        "slip": 0.2
+      },
+      "threshold": 0.95,
+      "correctObservationsToThreshold": 3,
+      "falseMasteryWithin5": 0.04401,
+      "falseMasteryWithin10": 0.1500025419,
+      "correctAfterTwoErrorsToThreshold": 4,
+      "thresholdCrossingsCausedByTransition": 1,
+      "incorrectEvidenceLowerFixedPoint": 0.28,
+      "assistedEvidence": {
+        "ASSISTED_AS_OBSERVATION": {
+          "masteryAfterAssisted": 0.951770334928,
+          "meetsThresholdWithoutIndependentEvidence": true,
+          "independentCorrectToThreshold": 0
+        },
+        "ASSISTED_TRANSITION_ONLY": {
+          "masteryAfterAssisted": 0.6416,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 2
+        },
+        "ASSISTED_NO_UPDATE": {
+          "masteryAfterAssisted": 0.3,
+          "meetsThresholdWithoutIndependentEvidence": false,
+          "independentCorrectToThreshold": 3
+        }
+      }
+    }
+  ]
+}

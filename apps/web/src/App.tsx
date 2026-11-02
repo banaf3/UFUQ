@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import type { DatasetSummaryV1, LessonExecutionScope, LessonSessionV1 } from '@ufuq/contracts';
+import type { DatasetSummaryV2, LessonExecutionScope, LessonSessionV2 } from '@ufuq/contracts';
 
-import { ApiError, createLesson, listDatasets } from './api.js';
+import { ApiError, createDevelopmentLearner, createLesson, listDatasets } from './api.js';
 import { LessonView } from './lesson/LessonView.js';
 
 const SCOPE_LABEL: Record<LessonExecutionScope, string> = {
@@ -12,11 +12,14 @@ const SCOPE_LABEL: Record<LessonExecutionScope, string> = {
 };
 
 export function App() {
-  const [datasets, setDatasets] = useState<readonly DatasetSummaryV1[]>([]);
+  const [datasets, setDatasets] = useState<readonly DatasetSummaryV2[]>([]);
+  // IMP-016: one in-memory development learner per tab, so support adapts across lessons.
+  const [learnerId, setLearnerId] = useState<string | null>(null);
+  const [identityEnabled, setIdentityEnabled] = useState(true);
   const [datasetId, setDatasetId] = useState('');
   const [scenarioId, setScenarioId] = useState('');
   const [scope, setScope] = useState<LessonExecutionScope | ''>('');
-  const [lesson, setLesson] = useState<LessonSessionV1 | null>(null);
+  const [lesson, setLesson] = useState<LessonSessionV2 | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -24,6 +27,12 @@ export function App() {
     listDatasets()
       .then((response) => {
         setDatasets(response.datasets);
+        setIdentityEnabled(response.developmentIdentityEnabled);
+        if (response.developmentIdentityEnabled) {
+          createDevelopmentLearner()
+            .then((learner) => setLearnerId(learner.learnerId))
+            .catch(() => setError('A development learner could not be created.'));
+        }
         const first = response.datasets[0];
         if (first) {
           setDatasetId(first.datasetId);
@@ -43,11 +52,11 @@ export function App() {
   };
 
   const start = async () => {
-    if (!dataset || !scenarioId || !scope) return;
+    if (!dataset || !scenarioId || !scope || !learnerId) return;
     setLoading(true);
     setError(null);
     try {
-      setLesson(await createLesson(dataset.datasetId, scenarioId, scope));
+      setLesson(await createLesson(dataset.datasetId, scenarioId, scope, learnerId));
     } catch (caught) {
       setError(
         caught instanceof ApiError
@@ -108,6 +117,12 @@ export function App() {
             <p className="notice" role="note">
               {dataset.notice}
             </p>
+            <p className="hint">
+              Learning mode: <strong>{dataset.learningMode}</strong>
+              {dataset.learningMode === 'NON_ADAPTIVE'
+                ? ' (fixed presentation until BKT-001..BKT-005 are approved)'
+                : ''}
+            </p>
             <details>
               <summary>Data approval states</summary>
               <ul>
@@ -123,11 +138,17 @@ export function App() {
         <button
           type="button"
           className="primary"
-          disabled={!dataset || loading}
+          disabled={!dataset || loading || !learnerId}
           onClick={() => void start()}
         >
           {loading ? 'Computing the sky…' : 'Start lesson'}
         </button>
+        {!identityEnabled && (
+          <p className="notice" role="note">
+            Lessons need a learner identity. Accounts arrive in Phase 4; for local work start the
+            API with UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1 (development fixture identity, IMP-016).
+          </p>
+        )}
         {error && (
           <p className="error" role="alert">
             {error}

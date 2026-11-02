@@ -15,7 +15,7 @@ The Phase 0 scaffold should expose these stable intentions through package scrip
 | `check` | formatting/lint, TypeScript, package boundaries, and browser-bundle exclusions |
 | `data:verify` | schema, provenance manifest, canonical serialization, referential integrity, and hashes |
 | `test` | unit/contract/property tests discovered only by `vitest.unit.config.ts` |
-| `test:reference` | production/reference astronomy and separately justified independent-oracle or BKT comparisons discovered only by `vitest.reference.config.ts`. **Active and in CI since 2026-11-02** (`tests/reference/profile-v1-reference.test.ts`) |
+| `test:reference` | production/reference astronomy and separately justified independent-oracle or BKT comparisons discovered only by `vitest.reference.config.ts`. **Active and in CI since 2026-11-02** (`tests/reference/profile-v1-reference.test.ts`; BKT since Phase 3: `tests/reference/bkt-reference.test.ts`) |
 | `test:integration` | API plus real-MySQL tests discovered only by `vitest.integration.config.ts` |
 | `test:e2e` | focused browser journeys, interaction boundaries, and accessibility checks |
 
@@ -211,6 +211,13 @@ once that implementation exists.
   route/content versions.
 
 ## Phase 3 tests
+
+**Implemented 2026-11-02** (`PHASE3_ASSESSMENT_AND_BKT.md`): `packages/tutoring-core/tests`,
+`packages/assessment-core/tests`, `apps/api/src/app.test.ts`,
+`tests/reference/bkt-reference.test.ts` (exact-rational oracle in
+`tools/bkt-reference`), `npm run evidence:bkt-sensitivity -- --check` (CI) and
+`tests/e2e/lesson-journey.spec.ts`. Property runs record their seed (20261102),
+generator (mulberry32; CPython `random.Random` for the oracle) and case counts.
 
 - Standard BKT examples are independently recalculated.
 - Parameter boundaries, observation/no-update/transition-only cases, and seeded

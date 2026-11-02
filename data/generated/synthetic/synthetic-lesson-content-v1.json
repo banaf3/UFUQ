@@ -29,6 +29,11 @@
             "transliteration": null
           }
         ],
+        "learnerTolerance": {
+          "approvalReference": "SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)",
+          "maximumDifferenceRadians": 0.17453292519943295,
+          "policyId": "synthetic-direction-tolerance"
+        },
         "review": {
           "decisionDate": "2026-11-02",
           "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
@@ -304,6 +309,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": null,
+            "knowledgeComponentId": "KC-02",
             "patternId": "synthetic-pattern-helper-a",
             "prompt": "Select a star of synthetic helper A.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
@@ -314,6 +320,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": "synthetic-guide-a",
+            "knowledgeComponentId": "KC-03",
             "patternId": "synthetic-pattern-target",
             "prompt": "Select the synthetic target star.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
@@ -324,6 +331,7 @@
           {
             "directionId": "direction-true-north",
             "guidanceRelationshipId": "synthetic-guide-north",
+            "knowledgeComponentId": "KC-04",
             "patternId": null,
             "prompt": "Face True North and confirm.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
@@ -363,16 +371,18 @@
           {
             "directionId": null,
             "guidanceRelationshipId": null,
+            "knowledgeComponentId": "KC-01",
             "patternId": "synthetic-pattern-helper-b",
-            "prompt": "Select a star of synthetic helper B.",
+            "prompt": "Select every star of synthetic helper B, then submit the selection.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
             "stepId": "step-1",
             "successFeedback": "Accepted (synthetic technical fixture).",
-            "taskKind": "IDENTIFY_PATTERN_MEMBER"
+            "taskKind": "SELECT_ALL_PATTERN_MEMBERS"
           },
           {
             "directionId": null,
             "guidanceRelationshipId": "synthetic-guide-b",
+            "knowledgeComponentId": "KC-03",
             "patternId": "synthetic-pattern-target",
             "prompt": "Select the synthetic target star.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
@@ -383,6 +393,7 @@
           {
             "directionId": "direction-true-north",
             "guidanceRelationshipId": "synthetic-guide-north",
+            "knowledgeComponentId": "KC-04",
             "patternId": null,
             "prompt": "Face True North and confirm.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
@@ -431,6 +442,6 @@
       "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709"
     }
   },
-  "payloadSha256": "ff13c01cb3a1f165ab73b7d9c60749f443b789f0e578e46fec669ccc77cd65dc",
+  "payloadSha256": "d2009356288e1592592b33376f45b59d118aa6d478eba83b31a08cc1eb9a1e33",
   "schemaVersion": 1
 }

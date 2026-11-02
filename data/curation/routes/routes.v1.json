@@ -2,6 +2,7 @@
   "curationType": "UFUQ_LESSON_ROUTE_CURATION",
   "schemaVersion": 1,
   "note": "Routes are selected by the server from data: a route is eligible only when every required star has a valid pending-or-approved geometric direction that is not below the geometric horizon. Priority encodes the owner's route preference (2D.1C D-2); no pattern is hard-coded as the entry point.",
+  "knowledgeComponentMappingNote": "Each step credits one primary knowledge component (TUTORING_BKT_SPEC.md: one scored task, one KC). PROPOSED for EDU-002 review with the route: Banat Na'sh to KC-01; al-Kaff al-Khadib, the Cassiopeia figure whose Greco-Arabic name Dhat al-Kursi is recorded in the same pattern record, to KC-02; al-Jady to KC-03; True North to KC-04. KC-05 (Qibla) has no task yet.",
   "routes": [
     {
       "stableId": "route-kaff-to-jady-to-north",
@@ -20,6 +21,7 @@
         {
           "stepId": "step-1-find-helper",
           "taskKind": "IDENTIFY_PATTERN_MEMBER",
+          "knowledgeComponentId": "KC-02",
           "patternId": "pattern-al-kaff-al-khadib",
           "directionId": null,
           "guidanceRelationshipId": null,
@@ -30,6 +32,7 @@
         {
           "stepId": "step-2-find-jady",
           "taskKind": "IDENTIFY_TARGET_STAR",
+          "knowledgeComponentId": "KC-03",
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-kaff-to-jady",
@@ -40,6 +43,7 @@
         {
           "stepId": "step-3-face-north",
           "taskKind": "INDICATE_DIRECTION",
+          "knowledgeComponentId": "KC-04",
           "patternId": null,
           "directionId": "direction-true-north",
           "guidanceRelationshipId": "guide-jady-to-true-north",
@@ -77,6 +81,7 @@
         {
           "stepId": "step-1-find-helper",
           "taskKind": "IDENTIFY_PATTERN_MEMBER",
+          "knowledgeComponentId": "KC-01",
           "patternId": "pattern-banat-nash-al-kubra",
           "directionId": null,
           "guidanceRelationshipId": null,
@@ -87,6 +92,7 @@
         {
           "stepId": "step-2-find-jady",
           "taskKind": "IDENTIFY_TARGET_STAR",
+          "knowledgeComponentId": "KC-03",
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-banat-to-jady",
@@ -97,6 +103,7 @@
         {
           "stepId": "step-3-face-north",
           "taskKind": "INDICATE_DIRECTION",
+          "knowledgeComponentId": "KC-04",
           "patternId": null,
           "directionId": "direction-true-north",
           "guidanceRelationshipId": "guide-jady-to-true-north",

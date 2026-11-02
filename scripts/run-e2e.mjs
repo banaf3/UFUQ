@@ -7,13 +7,18 @@ const servers = [];
 const startupTimeoutMs = Number.parseInt(process.env.UFUQ_E2E_STARTUP_TIMEOUT_MS ?? '30000', 10);
 const playwrightTimeoutMs = Number.parseInt(process.env.UFUQ_E2E_PROCESS_TIMEOUT_MS ?? '90000', 10);
 const terminationGraceMs = 5_000;
+// Defaults match CI; override both to run beside another server (e.g. preview:review).
+const webPort = process.env.UFUQ_E2E_WEB_PORT ?? '4173';
+const apiPort = process.env.UFUQ_E2E_API_PORT ?? '4174';
+const webOrigin = `http://127.0.0.1:${webPort}`;
+const apiOrigin = `http://127.0.0.1:${apiPort}`;
 let playwrightProcess;
 let cleanupPromise;
 
-function start(script, arguments_) {
+function start(script, arguments_, extraEnvironment = {}) {
   const child = spawn(node, [join(repositoryRoot, script), ...arguments_], {
     cwd: repositoryRoot,
-    env: process.env,
+    env: { ...process.env, ...extraEnvironment },
     stdio: 'inherit',
     windowsHide: true,
   });
@@ -77,7 +82,7 @@ async function runPlaywright(arguments_) {
     [join(repositoryRoot, 'node_modules', '@playwright', 'test', 'cli.js'), 'test', ...arguments_],
     {
       cwd: repositoryRoot,
-      env: process.env,
+      env: { ...process.env, UFUQ_E2E_BASE_URL: webOrigin, UFUQ_E2E_API_URL: apiOrigin },
       stdio: 'inherit',
       windowsHide: true,
     },
@@ -136,17 +141,38 @@ const handleTermination = handleSignal(143);
 process.once('SIGINT', handleInterrupt);
 process.once('SIGTERM', handleTermination);
 
+/** True when something already answers on the URL (a server this runner does not own). */
+async function answers(url) {
+  try {
+    await fetch(url, { signal: AbortSignal.timeout(1_000) });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const occupied = [];
+for (const url of [`${apiOrigin}/health`, webOrigin]) {
+  if (await answers(url)) occupied.push(url);
+}
+if (occupied.length > 0) {
+  // Without this guard the journeys would silently test another server (for example a
+  // running preview:review with REVIEW_PREVIEW enabled) instead of the fresh build.
+  console.error(
+    `E2E needs ports ${webPort} and ${apiPort} for its own servers, but ${occupied.join(' and ')} already answer. Stop the other server (for example npm run preview:review), or set UFUQ_E2E_WEB_PORT and UFUQ_E2E_API_PORT to free ports.`,
+  );
+  process.exit(1);
+}
+
 try {
-  start('apps/api/dist/server.js', []);
-  start('node_modules/vite/bin/vite.js', [
-    'preview',
-    'apps/web',
-    '--host',
-    '127.0.0.1',
-    '--port',
-    '4173',
-  ]);
-  await Promise.all([waitFor('http://127.0.0.1:4174/health'), waitFor('http://127.0.0.1:4173')]);
+  // The browser journeys use the IMP-016 development fixture identity (local only).
+  start('apps/api/dist/server.js', [], { UFUQ_ENABLE_DEVELOPMENT_IDENTITY: '1', PORT: apiPort });
+  start(
+    'node_modules/vite/bin/vite.js',
+    ['preview', 'apps/web', '--host', '127.0.0.1', '--port', webPort, '--strictPort'],
+    { UFUQ_API_PORT: apiPort },
+  );
+  await Promise.all([waitFor(`${apiOrigin}/health`), waitFor(webOrigin)]);
   process.exitCode = await runPlaywright(process.argv.slice(2));
 } finally {
   await cleanup();

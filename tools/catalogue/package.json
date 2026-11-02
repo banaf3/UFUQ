@@ -15,6 +15,7 @@
     "build": "tsc -b --pretty false"
   },
   "dependencies": {
-    "@ufuq/catalogue-schema": "0.0.0"
+    "@ufuq/catalogue-schema": "0.0.0",
+    "@ufuq/tutoring-core": "0.0.0"
   }
 }

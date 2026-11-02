@@ -1,0 +1,270 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-learning-configuration-v1",
+  "artifactType": "UFUQ_LEARNING_CONFIGURATION",
+  "artifactVersion": "1",
+  "payload": {
+    "bktParameters": {
+      "guess": 0.2,
+      "initialMastery": 0.2,
+      "learn": 0.1,
+      "parameterSetId": "report-example-bkt",
+      "parameterSetVersion": "1",
+      "slip": 0.1,
+      "status": "REPORT_EXAMPLE_NOT_CALIBRATED"
+    },
+    "configurationScope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "configurationVersion": "synthetic-1",
+    "cueConfiguration": {
+      "configurationId": "synthetic-cue-configuration",
+      "configurationVersion": "1",
+      "cues": {
+        "KC-01": {
+          "FADING": [
+            "SHAPE_HINT_TEXT"
+          ],
+          "GUIDED": [
+            "TARGET_OUTLINE",
+            "SHAPE_HINT_TEXT"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-02": {
+          "FADING": [
+            "SHAPE_HINT_TEXT"
+          ],
+          "GUIDED": [
+            "TARGET_OUTLINE",
+            "SHAPE_HINT_TEXT"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-03": {
+          "FADING": [
+            "SOURCE_PATTERN_OUTLINE",
+            "GUIDE_LINE_PARTIAL"
+          ],
+          "GUIDED": [
+            "SOURCE_PATTERN_OUTLINE",
+            "GUIDE_LINE_FULL"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-04": {
+          "FADING": [
+            "SOURCE_STAR_LABEL"
+          ],
+          "GUIDED": [
+            "SOURCE_STAR_LABEL",
+            "GUIDE_LINE_FULL"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-05": {
+          "FADING": [],
+          "GUIDED": [],
+          "INDEPENDENT": []
+        }
+      },
+      "kind": "ADAPTIVE",
+      "status": "SYNTHETIC_TECHNICAL_FIXTURE"
+    },
+    "independentConfirmation": {
+      "policyId": "synthetic-independent-confirmation",
+      "policyVersion": "1",
+      "requiredConsecutiveIndependentCorrect": 2,
+      "status": "SYNTHETIC_TECHNICAL_FIXTURE"
+    },
+    "knowledgeComponents": [
+      {
+        "id": "KC-01",
+        "name": "Identify Banat Na'sh"
+      },
+      {
+        "id": "KC-02",
+        "name": "Recognise Dhat al-Kursi"
+      },
+      {
+        "id": "KC-03",
+        "name": "Locate Al-Jady/Polaris"
+      },
+      {
+        "id": "KC-04",
+        "name": "Estimate True North"
+      },
+      {
+        "id": "KC-05",
+        "name": "Derive Qibla from True North"
+      }
+    ],
+    "masteryThreshold": {
+      "comparison": "AT_OR_ABOVE",
+      "policyId": "synthetic-mastery-threshold",
+      "policyVersion": "1",
+      "status": "SYNTHETIC_TECHNICAL_FIXTURE",
+      "threshold": 0.85
+    },
+    "observationPolicy": {
+      "policyId": "synthetic-observation-policy",
+      "policyVersion": "1",
+      "rules": [
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "EVALUATION_SESSION_ISOLATED",
+          "ruleId": "synthetic-evaluation-isolated",
+          "when": {
+            "purposes": [
+              "PRE_TEST",
+              "POST_TEST",
+              "RECALL"
+            ]
+          }
+        },
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "NO_SCORABLE_RESPONSE",
+          "ruleId": "synthetic-not-scorable",
+          "when": {
+            "responses": [
+              "NO_RESPONSE",
+              "TIMEOUT",
+              "ABANDONED",
+              "INVALID"
+            ]
+          }
+        },
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "NO_BINARY_EVIDENCE",
+          "ruleId": "synthetic-unclassified",
+          "when": {
+            "responses": [
+              "SCORED_UNCLASSIFIED"
+            ]
+          }
+        },
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "RETRY_NOT_INDEPENDENT_EVIDENCE",
+          "ruleId": "synthetic-retry",
+          "when": {
+            "attemptKinds": [
+              "RETRY_AFTER_FEEDBACK",
+              "RETRY_AFTER_REVEAL"
+            ]
+          }
+        },
+        {
+          "decision": "TRANSITION_ONLY",
+          "reasonCode": "GUIDED_PRACTICE_TRANSITION_ONLY",
+          "ruleId": "synthetic-guided-transition-only",
+          "when": {
+            "scaffoldStates": [
+              "GUIDED"
+            ]
+          }
+        },
+        {
+          "decision": "OBSERVATION_FROM_SCORE",
+          "reasonCode": "SCORED_FIRST_ATTEMPT",
+          "ruleId": "synthetic-scored-first-attempt",
+          "when": {}
+        }
+      ],
+      "status": "SYNTHETIC_TECHNICAL_FIXTURE"
+    },
+    "scaffoldPolicy": {
+      "historyWindow": 3,
+      "initialState": "GUIDED",
+      "policyId": "synthetic-scaffold-policy",
+      "policyVersion": "1",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "TRAILING_FIRST_ATTEMPT_CORRECT_AT_LEAST",
+              "scaffoldStates": [
+                "GUIDED"
+              ]
+            }
+          ],
+          "from": "GUIDED",
+          "reasonCode": "FADE_AFTER_GUIDED_SUCCESS",
+          "ruleId": "synthetic-guided-to-fading",
+          "to": "FADING"
+        },
+        {
+          "conditions": [
+            {
+              "count": 2,
+              "kind": "INCORRECT_IN_WINDOW_AT_LEAST"
+            }
+          ],
+          "from": "FADING",
+          "reasonCode": "RESTORE_GUIDANCE_AFTER_STRUGGLE",
+          "ruleId": "synthetic-fading-to-guided",
+          "to": "GUIDED"
+        },
+        {
+          "conditions": [
+            {
+              "count": 2,
+              "kind": "TRAILING_FIRST_ATTEMPT_CORRECT_AT_LEAST",
+              "scaffoldStates": [
+                "FADING"
+              ]
+            },
+            {
+              "kind": "MASTERY_AT_LEAST",
+              "value": 0.85
+            }
+          ],
+          "from": "FADING",
+          "reasonCode": "INDEPENDENT_AFTER_FADING_SUCCESS",
+          "ruleId": "synthetic-fading-to-independent",
+          "to": "INDEPENDENT"
+        },
+        {
+          "conditions": [
+            {
+              "count": 2,
+              "kind": "INCORRECT_IN_WINDOW_AT_LEAST"
+            }
+          ],
+          "from": "INDEPENDENT",
+          "reasonCode": "RESTORE_FULL_GUIDANCE_AFTER_STRUGGLE",
+          "ruleId": "synthetic-independent-to-guided",
+          "to": "GUIDED"
+        },
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "INCORRECT_IN_WINDOW_AT_LEAST"
+            }
+          ],
+          "from": "INDEPENDENT",
+          "reasonCode": "RESTORE_PARTIAL_GUIDANCE_AFTER_ERROR",
+          "ruleId": "synthetic-independent-to-fading",
+          "to": "FADING"
+        }
+      ],
+      "status": "SYNTHETIC_TECHNICAL_FIXTURE",
+      "unchangedReasonCodes": {
+        "FADING": "FADING_RULE_NOT_MET",
+        "GUIDED": "GUIDED_RULE_NOT_MET",
+        "INDEPENDENT": "INDEPENDENT_NO_STRUGGLE"
+      }
+    },
+    "unresolved": []
+  },
+  "payloadSha256": "32d82a9a7fc95ff77a1838ad7573dcc010de7fd78ae2cc358ab9fdf946d6be0e",
+  "schemaVersion": 1
+}

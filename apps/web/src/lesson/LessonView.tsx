@@ -1,6 +1,12 @@
 import { useCallback, useMemo, useState, type KeyboardEvent } from 'react';
 
-import type { LessonSessionV1, SkyOverlayV1, StepAnswerV1, StepFeedbackV1 } from '@ufuq/contracts';
+import type {
+  LessonSessionV2,
+  LessonStepPromptV2,
+  SkyOverlayV2,
+  StepAnswerV2,
+  StepFeedbackV2,
+} from '@ufuq/contracts';
 
 import { ApiError, submitAnswer } from '../api.js';
 import { describeEnu, normalizeHeading } from '../scene/mapping.js';
@@ -11,18 +17,39 @@ const toDegrees = (radians: number) => (radians * 180) / Math.PI;
 const COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 const compassPoint = (degrees: number) => COMPASS[Math.round(degrees / 45) % 8];
 
-export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit: () => void }) {
+function supportText(step: LessonStepPromptV2): string {
+  if (step.support.mode === 'NON_ADAPTIVE')
+    return 'Fixed presentation: adaptive support is not configured yet (BKT-004 pending).';
+  return `Support level: ${step.support.scaffoldState ?? 'none'} (issued by the server).`;
+}
+
+function guideTexts(overlays: readonly SkyOverlayV2[]): { key: string; text: string }[] {
+  return overlays.flatMap((overlay) => {
+    if (overlay.kind === 'GUIDE_ARC' || overlay.kind === 'GUIDE_ARC_PARTIAL')
+      return [{ key: overlay.relationshipId, text: overlay.explanation }];
+    if (overlay.kind === 'VERTICAL_TO_HORIZON') {
+      const history = overlay.historicalContext ? ` History: ${overlay.historicalContext}` : '';
+      return [{ key: overlay.relationshipId, text: `${overlay.explanation}${history}` }];
+    }
+    return [];
+  });
+}
+
+export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit: () => void }) {
   const [heading, setHeading] = useState(Math.PI / 2);
   const [pitch, setPitch] = useState((12 * Math.PI) / 180);
-  const [overlays, setOverlays] = useState<SkyOverlayV1[]>(lesson.overlays.slice());
   const [step, setStep] = useState(lesson.currentStep);
-  const [feedback, setFeedback] = useState<StepFeedbackV1[]>([]);
+  const [summary, setSummary] = useState<readonly SkyOverlayV2[]>([]);
+  const [feedback, setFeedback] = useState<StepFeedbackV2[]>([]);
   const [focused, setFocused] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const directionStep = step?.taskKind === 'INDICATE_DIRECTION';
+  const selectAllStep = step?.taskKind === 'SELECT_ALL_PATTERN_MEMBERS';
+  // The scene shows only what the server issued for the current step.
+  const overlays = step ? step.overlays : summary;
   const visibleStars = useMemo(
     () =>
       lesson.stars
@@ -48,20 +75,28 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
   );
 
   const send = useCallback(
-    async (answer: StepAnswerV1) => {
+    async (answer: StepAnswerV2) => {
       if (!step || busy) return;
       setBusy(true);
       setError(null);
       try {
         const result = await submitAnswer(lesson.lessonId, step.stepId, answer);
         setFeedback((previous) => [result, ...previous]);
-        if (result.result === 'CORRECT' && answer.kind === 'STAR_SELECTION') {
-          setSelected((previous) => [...previous, answer.starHandle]);
-        }
-        setOverlays((previous) => [...previous, ...result.overlays]);
+        if (result.nextStep?.stepId !== step.stepId) setSelected([]);
+        if (result.completed) setSummary(result.overlays);
         setStep(result.nextStep);
       } catch (caught) {
-        setError(caught instanceof ApiError ? caught.message : 'The answer could not be sent.');
+        if (
+          caught instanceof ApiError &&
+          caught.body?.error === 'STALE_MASTERY_REVISION' &&
+          caught.body.reissuedStep
+        ) {
+          setStep(caught.body.reissuedStep);
+          setSelected([]);
+          setError('Your progress changed in another lesson, so this task was reissued.');
+        } else {
+          setError(caught instanceof ApiError ? caught.message : 'The answer could not be sent.');
+        }
       } finally {
         setBusy(false);
       }
@@ -81,8 +116,19 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
       Math.min((85 * Math.PI) / 180, Math.max((-5 * Math.PI) / 180, value + delta)),
     );
   const selectStar = (handle: string) => {
-    if (step && !directionStep) void send({ kind: 'STAR_SELECTION', starHandle: handle });
+    if (!step || directionStep) return;
+    if (selectAllStep) {
+      setSelected((previous) =>
+        previous.includes(handle) ? previous.filter((h) => h !== handle) : [...previous, handle],
+      );
+      return;
+    }
+    void send({ kind: 'STAR_SELECTION', starHandle: handle });
   };
+  const submitSelection = () => {
+    if (selected.length > 0) void send({ kind: 'STAR_SET_SELECTION', starHandles: selected });
+  };
+  const confirmDirection = () => void send({ kind: 'DIRECTION', azimuthRadians: heading });
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const actions: Record<string, () => void> = {
@@ -100,9 +146,9 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
       action();
     }
   };
-  const confirmDirection = () => void send({ kind: 'DIRECTION', azimuthRadians: heading });
   const focusedEntry = visibleStars.find((entry) => entry.star.handle === focused);
   const headingDegrees = toDegrees(heading);
+  const traces = feedback.flatMap((entry) => (entry.trace ? [{ entry, trace: entry.trace }] : []));
 
   return (
     <div className="lesson">
@@ -142,7 +188,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
             pitchRadians={pitch}
             focusedHandle={focused}
             selectedHandles={selected}
-            showCardinalLabels={!directionStep}
+            showCardinalLabels={!step?.hideCardinalLabels}
             onSelectStar={selectStar}
           />
           <div className="reticle" aria-hidden="true" />
@@ -160,6 +206,14 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
                 Step {step.stepNumber} of {step.stepCount}
               </p>
               <h2 id="step-title">{step.prompt}</h2>
+              <p className="support" data-testid="support-level">
+                {supportText(step)}
+              </p>
+              {step.hints.map((hint) => (
+                <p key={hint} className="hint">
+                  Hint: {hint}
+                </p>
+              ))}
             </section>
           ) : (
             <section>
@@ -191,17 +245,21 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
             <section className="star-list" aria-labelledby="star-list-title">
               <h3 id="star-list-title">Stars above the horizon</h3>
               <p className="hint">
-                Select a star in the sky, or use this list (keyboard and screen-reader friendly).
+                {selectAllStep
+                  ? 'Select every star of the pattern, then submit the selection.'
+                  : 'Select a star in the sky, or use this list (keyboard and screen-reader friendly).'}
               </p>
               <ol>
                 {visibleStars.map(({ star, altitudeDegrees, azimuthDegrees }, index) => {
                   const label = labelFor(star.handle);
+                  const chosen = selected.includes(star.handle);
                   return (
                     <li key={star.handle}>
                       <button
                         type="button"
-                        className={focused === star.handle ? 'focused' : ''}
+                        className={`${focused === star.handle ? 'focused' : ''}${chosen ? ' chosen' : ''}`}
                         disabled={busy}
+                        aria-pressed={selectAllStep ? chosen : undefined}
                         onFocus={() => setFocused(star.handle)}
                         onClick={() => selectStar(star.handle)}
                         aria-label={`Star ${index + 1}${label ? `, ${label}` : ''}: magnitude ${star.visualMagnitude?.toFixed(1) ?? 'unknown'}, altitude ${altitudeDegrees.toFixed(0)} degrees, azimuth ${azimuthDegrees?.toFixed(0) ?? 'undefined'} degrees`}
@@ -214,6 +272,16 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
                   );
                 })}
               </ol>
+              {selectAllStep && (
+                <button
+                  type="button"
+                  className="primary"
+                  disabled={busy || selected.length === 0}
+                  onClick={submitSelection}
+                >
+                  Submit selection ({selected.length} stars)
+                </button>
+              )}
               {focusedEntry && (
                 <p className="hint" aria-live="polite">
                   Focused: altitude {focusedEntry.altitudeDegrees.toFixed(0)}°, azimuth{' '}
@@ -253,27 +321,11 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
                 {entry.feedback}
               </p>
             ))}
-            {overlays
-              .filter(
-                (overlay) => overlay.kind === 'GUIDE_ARC' || overlay.kind === 'VERTICAL_TO_HORIZON',
-              )
-              .map((overlay) => (
-                <p
-                  key={
-                    overlay.kind === 'GUIDE_ARC' || overlay.kind === 'VERTICAL_TO_HORIZON'
-                      ? overlay.relationshipId
-                      : ''
-                  }
-                  className="guide"
-                >
-                  {overlay.kind === 'GUIDE_ARC' || overlay.kind === 'VERTICAL_TO_HORIZON'
-                    ? overlay.explanation
-                    : ''}
-                  {overlay.kind === 'VERTICAL_TO_HORIZON' && overlay.historicalContext
-                    ? ` History: ${overlay.historicalContext}`
-                    : ''}
-                </p>
-              ))}
+            {guideTexts(overlays).map((guide) => (
+              <p key={guide.key} className="guide">
+                {guide.text}
+              </p>
+            ))}
           </section>
 
           <details className="provenance">
@@ -282,10 +334,34 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV1; onExit
               <li>Profile: {lesson.provenance.profileId}</li>
               <li>Algorithm: {lesson.provenance.algorithmId}</li>
               <li>Content review state: {lesson.provenance.contentReviewState}</li>
+              <li>
+                Learning configuration: {lesson.provenance.learningConfiguration.artifactId} (
+                {lesson.provenance.learningConfiguration.approvalState},{' '}
+                {lesson.provenance.learningConfiguration.mode})
+              </li>
               {lesson.provenance.notices.slice(1).map((notice) => (
                 <li key={notice}>{notice}</li>
               ))}
             </ul>
+          </details>
+
+          <details className="provenance" data-testid="model-trace">
+            <summary>
+              Technical model trace (developers and reviewers; not learner feedback)
+            </summary>
+            <ol>
+              {traces.map(({ entry, trace }) => (
+                <li key={`${entry.stepId}-${entry.attempt}`}>
+                  {trace.knowledgeComponentId} · {trace.responseStatus} · {trace.attemptKind}:{' '}
+                  {trace.modelDecision} ({trace.modelReasonCode}), mastery{' '}
+                  {trace.masteryBefore.toFixed(4)} → {trace.masteryAfter.toFixed(4)}; scaffold{' '}
+                  {trace.scaffoldDecision}
+                  {trace.scaffoldFrom ? ` ${trace.scaffoldFrom} → ${trace.scaffoldTo}` : ''} (
+                  {trace.scaffoldReasonCode}); threshold {trace.masteryThresholdStatus};{' '}
+                  {trace.independentConfirmationStatus}
+                </li>
+              ))}
+            </ol>
           </details>
         </aside>
       </div>

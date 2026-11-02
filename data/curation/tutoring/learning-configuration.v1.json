@@ -1,0 +1,64 @@
+{
+  "curationType": "UFUQ_LEARNING_CONFIGURATION_CURATION",
+  "schemaVersion": 1,
+  "note": "Learning configuration for ScientificProfileV1 lessons. Only the report's reproducible example parameters exist; every learning policy is unresolved and named with its owning decision, so lessons run NON_ADAPTIVE with the fixed Phase 2 presentation and record an explicit NO_MODEL_UPDATE per attempt. A named reviewer approves this artifact through data/approvals once BKT-001..BKT-005 are decided.",
+  "configuration": {
+    "configurationVersion": "1",
+    "configurationScope": "SCIENTIFIC_PROFILE_V1",
+    "knowledgeComponents": [
+      { "id": "KC-01", "name": "Identify Banat Na'sh" },
+      { "id": "KC-02", "name": "Recognise Dhat al-Kursi" },
+      { "id": "KC-03", "name": "Locate Al-Jady/Polaris" },
+      { "id": "KC-04", "name": "Estimate True North" },
+      { "id": "KC-05", "name": "Derive Qibla from True North" }
+    ],
+    "bktParameters": {
+      "parameterSetId": "report-example-bkt",
+      "parameterSetVersion": "1",
+      "status": "REPORT_EXAMPLE_NOT_CALIBRATED",
+      "initialMastery": 0.2,
+      "learn": 0.1,
+      "guess": 0.2,
+      "slip": 0.1
+    },
+    "masteryThreshold": null,
+    "independentConfirmation": null,
+    "observationPolicy": null,
+    "scaffoldPolicy": null,
+    "cueConfiguration": {
+      "kind": "NON_ADAPTIVE_FIXED",
+      "configurationId": "phase2-fixed-presentation",
+      "configurationVersion": "1",
+      "status": "REVIEW_REQUIRED",
+      "cues": {
+        "KC-01": [],
+        "KC-02": [],
+        "KC-03": ["SOURCE_PATTERN_OUTLINE", "GUIDE_LINE_FULL"],
+        "KC-04": ["SOURCE_STAR_LABEL", "GUIDE_LINE_FULL"],
+        "KC-05": []
+      }
+    },
+    "unresolved": [
+      {
+        "field": "masteryThreshold",
+        "decisionId": "BKT-003",
+        "note": "The report example threshold is .85; its boundary rule, learner wording and rounding, and its relation to independent confirmation are unresolved."
+      },
+      {
+        "field": "independentConfirmation",
+        "decisionId": "BKT-003",
+        "note": "The immediate independent-success count, spacing, reset and expiry are unresolved."
+      },
+      {
+        "field": "observationPolicy",
+        "decisionId": "BKT-001",
+        "note": "The assisted-evidence option (DEV-006); invalid, no-response, timeout, abandonment, retry and duplicate handling; and session-purpose eligibility (BKT-005) are unresolved."
+      },
+      {
+        "field": "scaffoldPolicy",
+        "decisionId": "BKT-004",
+        "note": "The initial scaffold, fade and restore rules, history window, reason codes and learner-facing explanations are unresolved."
+      }
+    ]
+  }
+}

@@ -67,7 +67,19 @@ export interface DirectionTarget {
     /** North-zero, east-positive azimuth of the target direction (rad). */
     readonly azimuthRadians: 0;
   };
+  /**
+   * Learner answer tolerance for this direction (IMP-012). Null until approved: the answer
+   * is then measured, never graded. Synthetic content may carry a synthetic policy.
+   */
+  readonly learnerTolerance: DirectionTolerancePolicyRecord | null;
   readonly review: ContentReview;
+}
+
+export interface DirectionTolerancePolicyRecord {
+  readonly policyId: string;
+  /** Inclusive maximum wrapped azimuth difference (rad), in (0, pi]. */
+  readonly maximumDifferenceRadians: number;
+  readonly approvalReference: string;
 }
 
 export type GuidanceSource =
@@ -114,15 +126,34 @@ export interface GuidanceRelationship {
 }
 
 export type LessonTaskKind =
-  'IDENTIFY_PATTERN_MEMBER' | 'IDENTIFY_TARGET_STAR' | 'INDICATE_DIRECTION';
+  | 'IDENTIFY_PATTERN_MEMBER'
+  | 'SELECT_ALL_PATTERN_MEMBERS'
+  | 'IDENTIFY_TARGET_STAR'
+  | 'INDICATE_DIRECTION';
+
+/** Knowledge-component identifiers of TUTORING_BKT_SPEC.md (KC-01..KC-05). */
+export type KnowledgeComponentRef = 'KC-01' | 'KC-02' | 'KC-03' | 'KC-04' | 'KC-05';
+export const KNOWLEDGE_COMPONENT_REFS: readonly KnowledgeComponentRef[] = [
+  'KC-01',
+  'KC-02',
+  'KC-03',
+  'KC-04',
+  'KC-05',
+];
 
 export interface LessonRouteStep {
   readonly stepId: string;
   readonly taskKind: LessonTaskKind;
-  /** IDENTIFY_PATTERN_MEMBER: the helper pattern; IDENTIFY_TARGET_STAR: the target pattern. */
+  /**
+   * The step's one primary knowledge component (one scored task, one KC). The mapping is
+   * an EDU-002 decision and is reviewed with the route; null means the step is not scored
+   * for any KC.
+   */
+  readonly knowledgeComponentId: KnowledgeComponentRef | null;
+  /** Pattern tasks: the pattern to find; IDENTIFY_TARGET_STAR: the target pattern. */
   readonly patternId: string | null;
   readonly directionId: string | null;
-  /** The relationship whose guide is revealed after this step (null for the first step). */
+  /** The relationship that guides the learner to this step's target (null for the first step). */
   readonly guidanceRelationshipId: string | null;
   readonly prompt: string;
   readonly successFeedback: string;
@@ -307,7 +338,19 @@ export function validateLessonContent(
       if (!availableStarIds.has(starId))
         errors.push(`${route.stableId} required star ${starId} has no row.`);
     }
+    const knowledgeComponents = route.steps
+      .map((step) => step.knowledgeComponentId)
+      .filter((id): id is KnowledgeComponentRef => id !== null);
+    if (new Set(knowledgeComponents).size !== knowledgeComponents.length) {
+      errors.push(`${route.stableId} credits one knowledge component in two steps.`);
+    }
     for (const step of route.steps) {
+      if (
+        step.knowledgeComponentId !== null &&
+        !KNOWLEDGE_COMPONENT_REFS.includes(step.knowledgeComponentId)
+      ) {
+        errors.push(`${route.stableId}/${step.stepId} names an unknown knowledge component.`);
+      }
       if (step.taskKind === 'INDICATE_DIRECTION') {
         if (step.directionId === null || !directions.has(step.directionId)) {
           errors.push(`${route.stableId}/${step.stepId} needs a known direction.`);
@@ -329,6 +372,28 @@ export function validateLessonContent(
       if (!routes.has(alternative) || alternative === route.stableId) {
         errors.push(`${route.stableId} alternative ${alternative} is not another known route.`);
       }
+    }
+  }
+
+  for (const direction of content.directions) {
+    const tolerance = direction.learnerTolerance;
+    if (tolerance === null) continue;
+    if (
+      !Number.isFinite(tolerance.maximumDifferenceRadians) ||
+      tolerance.maximumDifferenceRadians <= 0 ||
+      tolerance.maximumDifferenceRadians > Math.PI
+    ) {
+      errors.push(`${direction.stableId} learner tolerance must be in (0, pi] radians.`);
+    }
+    if (!tolerance.policyId || !tolerance.approvalReference) {
+      errors.push(
+        `${direction.stableId} learner tolerance lacks an identifier or approval reference.`,
+      );
+    }
+    if (!synthetic && direction.review.state !== 'APPROVED') {
+      errors.push(
+        `${direction.stableId} carries a learner tolerance without approved review (IMP-012).`,
+      );
     }
   }
 

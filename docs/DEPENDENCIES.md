@@ -56,3 +56,15 @@ unvalidated version choice now.
   `contracts` and `catalogue-schema` (IMP-019).
 - The Python reference environment is unchanged (`uv.lock`); PyERFA now also serves the
   post-implementation ScientificProfileV1 reference.
+
+## Phase 3 notes (2026-11-02)
+
+- No npm dependency was added. BKT, observation semantics and the scaffold policy are
+  UFUQ-owned code in `packages/tutoring-core`; property tests use a seeded in-repo
+  generator (mulberry32) instead of a property-testing library.
+- `tools/catalogue` gained the internal edge to `@ufuq/tutoring-core` (validators only).
+- `tools/bkt-reference` uses only the CPython standard library (`fractions`, `decimal`,
+  `random`, `json`, `hashlib`), so it needs no lock file. It runs with the uv-managed
+  CPython 3.14.6 already pinned for the astronomy reference.
+- pyBKT (EDM 2021) is a candidate calibration tool for BKT-002 only if participant data
+  and ethics later permit; it is not a dependency.
