@@ -36,6 +36,7 @@ validated (approvals pending); participant study NO; deployment NO.
 | E2E beside a running preview | `UFUQ_E2E_WEB_PORT=4183 UFUQ_E2E_API_PORT=4184 npm run test:e2e` (the runner refuses ports it does not own) |
 | Re-acquire sky sources (network) | `node scripts/evidence/acquire-sky-catalogue-v1.mjs` (new evidence directory; then regenerate) |
 | Real sky for reviewers (labelled unreviewed) | `npm run preview:review`, open http://127.0.0.1:4173, choose "Review preview" |
+| "API server is older than this web app" / HTTP 404 on `/api/v2/sky` | A preview started before a rebuild keeps the old API in memory while Vite serves the new web files. Stop it (Ctrl+C) and run `npm run preview:review` again |
 | Regenerate data (needs local raw evidence) | `npm run data:generate` (verify with `-- --check`) |
 | Pending approvals | `npm run approvals:status` |
 | BKT oracle (uv CPython 3.14.6) | `python -I tools/bkt-reference/bkt_reference.py --check`; `python -I -m unittest discover -s tools/bkt-reference/tests` |
