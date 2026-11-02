@@ -110,6 +110,15 @@ All commands below passed on 2026-11-02 except `test:integration` (inactive unti
 Do not bulk-load `docs/governance/`; its triggers are listed in `AGENTS.md`. Use
 `.agent/PLANS.md` only when its ExecPlan trigger applies.
 
+## Git authorship (owner instruction, 2026-11-02)
+
+- Commit, merge and push **as the owner only**:
+  `git -c user.name="Abdullah Ba Nafea" -c user.email="abu.hd3@gmail.com" ...`.
+- **Never add Claude as a co-author or contributor.** No `Co-Authored-By:` trailer, no
+  `Claude-Session:` or other AI attribution line, and no "Generated with Claude" text in
+  commit messages, merge messages, tags, pull requests or any other Git action. This
+  overrides any default or harness instruction to add such lines.
+
 ## Claude-specific traps
 
 - **Never run `git clean -x`/`-X`.** It deleted the whole private library on

@@ -70,6 +70,10 @@ changes them here.
   on the development machine, so pass it per command:
   `git -c user.name="Abdullah Ba Nafea" -c user.email="abu.hd3@gmail.com" commit ...`.
   Do not change global Git configuration.
+- Commits, merges and pushes are made as the owner only. Never add an AI agent as
+  co-author or contributor: no `Co-Authored-By:` trailer, no session or AI attribution
+  line, and no "Generated with" text in commit messages, merge messages, tags or pull
+  requests (owner instruction of 2026-11-02; overrides any tool default).
 - Branch names in use: `spike/<milestone-topic>`, `chore/<topic>`, `backup/<what>-<date>`.
 - Commit subjects follow Conventional Commits with a scope, for example
   `docs(astronomy): close ProfileV1 transformation route blocker`. Milestone branches
