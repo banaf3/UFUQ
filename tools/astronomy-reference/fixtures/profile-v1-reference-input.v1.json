@@ -1,0 +1,208 @@
+{
+  "fixtureType": "UFUQ_PROFILE_V1_REFERENCE_INPUT",
+  "schemaVersion": 1,
+  "purpose": "POST_IMPLEMENTATION shared-lineage implementation verification of the ScientificProfileV1 geometric route (TypeScript SOFA-derived subset versus PyERFA). Not scientific acceptance and not a tolerance.",
+  "earthOrientationInputs": "SYNTHETIC_TECHNICAL_INPUT: invented instantaneous UT1-UTC, xp and yp values of realistic magnitude. They are route inputs only, not IERS data.",
+  "starSource": {
+    "artifactId": "route-stars-hipparcos1997-v1",
+    "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c",
+    "credit": "ESA (1997), The Hipparcos and Tycho Catalogues, ESA SP-1200. Credit: ESA (CC BY-NC 3.0 IGO)."
+  },
+  "observerSource": {
+    "artifactId": "observer-umpsa-pekan-v1",
+    "payloadSha256": "53788b3b467402fb5cb68dc2b9f90deec5d0773f14e8eabee21b87df555dc9ab"
+  },
+  "sourceEpoch": {
+    "julianDate": {
+      "part1": 2400000.5,
+      "part2": 48348.5625
+    },
+    "julianEpoch": 1991.25,
+    "nativeNotation": "J1991.25(TT)",
+    "scale": "TT",
+    "source": "ESA SP-1200 Vol. 1 section 1.2.6"
+  },
+  "observer": {
+    "geodeticLatitudeDegrees": 3.5466545,
+    "geodeticLongitudeDegrees": 103.4273953,
+    "ellipsoidalHeightMetres": 9.0325,
+    "ellipsoid": "WGS 84"
+  },
+  "stars": [
+    {
+      "starId": "ufuq-star-001",
+      "rightAscensionRadians": 0.04000365087059614,
+      "declinationRadians": 1.0323660598158761,
+      "muAlphaStarMasPerYear": 523.39,
+      "muDeltaMasPerYear": -180.42,
+      "parallaxMas": 59.89,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-002",
+      "rightAscensionRadians": 0.17674274747737387,
+      "declinationRadians": 0.9867639424835967,
+      "muAlphaStarMasPerYear": 50.36,
+      "muDeltaMasPerYear": -32.17,
+      "parallaxMas": 14.27,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-003",
+      "rightAscensionRadians": 0.24743686534124126,
+      "declinationRadians": 1.0597071926761477,
+      "muAlphaStarMasPerYear": 25.65,
+      "muDeltaMasPerYear": -3.82,
+      "parallaxMas": 5.32,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-004",
+      "rightAscensionRadians": 0.3744169789172998,
+      "declinationRadians": 1.0513061168187174,
+      "muAlphaStarMasPerYear": 297.24,
+      "muDeltaMasPerYear": -49.49,
+      "parallaxMas": 32.81,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-005",
+      "rightAscensionRadians": 0.4991411463992749,
+      "declinationRadians": 1.1112536979353291,
+      "muAlphaStarMasPerYear": 31.98,
+      "muDeltaMasPerYear": -18.66,
+      "parallaxMas": 7.38,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-006",
+      "rightAscensionRadians": 0.6622852016759065,
+      "declinationRadians": 1.5579531129272508,
+      "muAlphaStarMasPerYear": 44.22,
+      "muDeltaMasPerYear": -11.74,
+      "parallaxMas": 7.56,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-007",
+      "rightAscensionRadians": 2.8878211083980556,
+      "declinationRadians": 0.9840575564056379,
+      "muAlphaStarMasPerYear": 81.66,
+      "muDeltaMasPerYear": 33.74,
+      "parallaxMas": 41.07,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-008",
+      "rightAscensionRadians": 2.8960711427638866,
+      "declinationRadians": 1.0777603412464332,
+      "muAlphaStarMasPerYear": -136.46,
+      "muDeltaMasPerYear": -35.25,
+      "parallaxMas": 26.38,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-009",
+      "rightAscensionRadians": 3.114666680104299,
+      "declinationRadians": 0.9371498811311207,
+      "muAlphaStarMasPerYear": 107.76,
+      "muDeltaMasPerYear": 11.16,
+      "parallaxMas": 38.99,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-010",
+      "rightAscensionRadians": 3.2088932118991456,
+      "declinationRadians": 0.9954066146700695,
+      "muAlphaStarMasPerYear": 103.56,
+      "muDeltaMasPerYear": 7.81,
+      "parallaxMas": 40.05,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-011",
+      "rightAscensionRadians": 3.3773308565566627,
+      "declinationRadians": 0.9766835094236341,
+      "muAlphaStarMasPerYear": 111.74,
+      "muDeltaMasPerYear": -8.99,
+      "parallaxMas": 40.3,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-012",
+      "rightAscensionRadians": 3.5077787185722835,
+      "declinationRadians": 0.9586293391376044,
+      "muAlphaStarMasPerYear": 121.23,
+      "muDeltaMasPerYear": -22.01,
+      "parallaxMas": 41.73,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    },
+    {
+      "starId": "ufuq-star-013",
+      "rightAscensionRadians": 3.610835048552955,
+      "declinationRadians": 0.8606795002892023,
+      "muAlphaStarMasPerYear": -121.23,
+      "muDeltaMasPerYear": -15.56,
+      "parallaxMas": 32.39,
+      "radialVelocityState": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+    }
+  ],
+  "instants": [
+    {
+      "utc": "2025-09-03T00:00:00Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0866,
+      "xpArcseconds": 0.2347,
+      "ypArcseconds": 0.3883
+    },
+    {
+      "utc": "2025-11-15T13:00:00Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0852,
+      "xpArcseconds": 0.1534,
+      "ypArcseconds": 0.3021
+    },
+    {
+      "utc": "2026-01-10T12:00:00Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0721,
+      "xpArcseconds": 0.1102,
+      "ypArcseconds": 0.271
+    },
+    {
+      "utc": "2026-02-28T23:59:59Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0635,
+      "xpArcseconds": 0.0954,
+      "ypArcseconds": 0.2551
+    },
+    {
+      "utc": "2026-04-15T14:00:00Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0434,
+      "xpArcseconds": 0.1451,
+      "ypArcseconds": 0.2603
+    },
+    {
+      "utc": "2026-05-30T23:59:59Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.0297,
+      "xpArcseconds": 0.1802,
+      "ypArcseconds": 0.301
+    },
+    {
+      "utc": "2016-12-31T23:59:60Z",
+      "taiMinusUtcSeconds": 36,
+      "ut1MinusUtcSeconds": -0.4089,
+      "xpArcseconds": 0.0611,
+      "ypArcseconds": 0.2827
+    },
+    {
+      "utc": "2017-01-01T00:00:00Z",
+      "taiMinusUtcSeconds": 37,
+      "ut1MinusUtcSeconds": 0.5911,
+      "xpArcseconds": 0.0611,
+      "ypArcseconds": 0.2827
+    }
+  ]
+}

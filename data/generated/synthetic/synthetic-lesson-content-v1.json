@@ -1,0 +1,436 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-lesson-content-v1",
+  "artifactType": "UFUQ_LESSON_CONTENT",
+  "artifactVersion": "1",
+  "payload": {
+    "contentScope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "contentVersion": "synthetic-1",
+    "directions": [
+      {
+        "contentVersion": "1",
+        "definition": {
+          "azimuthRadians": 0,
+          "kind": "TERRESTRIAL_TRUE_NORTH"
+        },
+        "labels": [
+          {
+            "citations": [],
+            "gloss": "synthetic technical label",
+            "languageTag": "en",
+            "layer": "SYNTHETIC_TECHNICAL",
+            "script": "True North (synthetic fixture)",
+            "transliteration": null
+          }
+        ],
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "stableId": "direction-true-north"
+      }
+    ],
+    "patterns": [
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [],
+            "gloss": "synthetic technical label",
+            "languageTag": "en",
+            "layer": "SYNTHETIC_TECHNICAL",
+            "script": "Synthetic helper A",
+            "transliteration": null
+          }
+        ],
+        "lineSegmentLayer": "SYNTHETIC_TECHNICAL",
+        "lineSegments": [
+          {
+            "fromStarId": "synthetic-star-a1",
+            "toStarId": "synthetic-star-a2"
+          },
+          {
+            "fromStarId": "synthetic-star-a2",
+            "toStarId": "synthetic-star-a3"
+          },
+          {
+            "fromStarId": "synthetic-star-a3",
+            "toStarId": "synthetic-star-a4"
+          },
+          {
+            "fromStarId": "synthetic-star-a4",
+            "toStarId": "synthetic-star-a5"
+          }
+        ],
+        "memberStarIds": [
+          "synthetic-star-a1",
+          "synthetic-star-a2",
+          "synthetic-star-a3",
+          "synthetic-star-a4",
+          "synthetic-star-a5"
+        ],
+        "membershipCitations": [],
+        "patternKind": "ASTERISM",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "shapeHint": "Synthetic zigzag of five stars.",
+        "stableId": "synthetic-pattern-helper-a"
+      },
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [],
+            "gloss": "synthetic technical label",
+            "languageTag": "en",
+            "layer": "SYNTHETIC_TECHNICAL",
+            "script": "Synthetic helper B",
+            "transliteration": null
+          }
+        ],
+        "lineSegmentLayer": "SYNTHETIC_TECHNICAL",
+        "lineSegments": [
+          {
+            "fromStarId": "synthetic-star-b1",
+            "toStarId": "synthetic-star-b2"
+          },
+          {
+            "fromStarId": "synthetic-star-b2",
+            "toStarId": "synthetic-star-b3"
+          },
+          {
+            "fromStarId": "synthetic-star-b3",
+            "toStarId": "synthetic-star-b4"
+          },
+          {
+            "fromStarId": "synthetic-star-b4",
+            "toStarId": "synthetic-star-b5"
+          },
+          {
+            "fromStarId": "synthetic-star-b5",
+            "toStarId": "synthetic-star-b6"
+          },
+          {
+            "fromStarId": "synthetic-star-b6",
+            "toStarId": "synthetic-star-b7"
+          }
+        ],
+        "memberStarIds": [
+          "synthetic-star-b1",
+          "synthetic-star-b2",
+          "synthetic-star-b3",
+          "synthetic-star-b4",
+          "synthetic-star-b5",
+          "synthetic-star-b6",
+          "synthetic-star-b7"
+        ],
+        "membershipCitations": [],
+        "patternKind": "ASTERISM",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "shapeHint": "Synthetic curve of seven stars.",
+        "stableId": "synthetic-pattern-helper-b"
+      },
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [],
+            "gloss": "synthetic technical label",
+            "languageTag": "en",
+            "layer": "SYNTHETIC_TECHNICAL",
+            "script": "Synthetic target star",
+            "transliteration": null
+          }
+        ],
+        "lineSegmentLayer": "NONE",
+        "lineSegments": [],
+        "memberStarIds": [
+          "synthetic-star-target"
+        ],
+        "membershipCitations": [],
+        "patternKind": "SINGLE_STAR",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "shapeHint": "Synthetic star near the pole.",
+        "stableId": "synthetic-pattern-target"
+      }
+    ],
+    "relationships": [
+      {
+        "citations": [],
+        "explanation": "Synthetic guide line.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "synthetic-star-a3",
+          "kind": "GREAT_CIRCLE_ARC",
+          "toStarId": "synthetic-star-target"
+        },
+        "layer": "SYNTHETIC_TECHNICAL",
+        "relationshipType": "LEADS_TO_TARGET_STAR",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-helper-a"
+        },
+        "stableId": "synthetic-guide-a",
+        "target": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-target"
+        }
+      },
+      {
+        "citations": [],
+        "explanation": "Synthetic pointer line.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "synthetic-star-b1",
+          "kind": "POINTER_EXTENSION",
+          "throughStarId": "synthetic-star-b2",
+          "toStarId": "synthetic-star-target"
+        },
+        "layer": "SYNTHETIC_TECHNICAL",
+        "relationshipType": "LEADS_TO_TARGET_STAR",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-helper-b"
+        },
+        "stableId": "synthetic-guide-b",
+        "target": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-target"
+        }
+      },
+      {
+        "citations": [],
+        "explanation": "Synthetic vertical to the horizon.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "synthetic-star-target",
+          "kind": "VERTICAL_TO_HORIZON"
+        },
+        "layer": "SYNTHETIC_TECHNICAL",
+        "relationshipType": "LEADS_TO_DIRECTION",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-target"
+        },
+        "stableId": "synthetic-guide-north",
+        "target": {
+          "kind": "direction",
+          "stableId": "direction-true-north"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "allowedAlternativeRouteIds": [
+          "synthetic-route-b"
+        ],
+        "requiredStarIds": [
+          "synthetic-star-a1",
+          "synthetic-star-a2",
+          "synthetic-star-a3",
+          "synthetic-star-a4",
+          "synthetic-star-a5",
+          "synthetic-star-target"
+        ],
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "routeVersion": "1",
+        "selectionPriority": 1,
+        "stableId": "synthetic-route-a",
+        "steps": [
+          {
+            "directionId": null,
+            "guidanceRelationshipId": null,
+            "patternId": "synthetic-pattern-helper-a",
+            "prompt": "Select a star of synthetic helper A.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-1",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "IDENTIFY_PATTERN_MEMBER"
+          },
+          {
+            "directionId": null,
+            "guidanceRelationshipId": "synthetic-guide-a",
+            "patternId": "synthetic-pattern-target",
+            "prompt": "Select the synthetic target star.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-2",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "IDENTIFY_TARGET_STAR"
+          },
+          {
+            "directionId": "direction-true-north",
+            "guidanceRelationshipId": "synthetic-guide-north",
+            "patternId": null,
+            "prompt": "Face True North and confirm.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-3",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "INDICATE_DIRECTION"
+          }
+        ],
+        "title": "Synthetic route A"
+      },
+      {
+        "allowedAlternativeRouteIds": [
+          "synthetic-route-a"
+        ],
+        "requiredStarIds": [
+          "synthetic-star-b1",
+          "synthetic-star-b2",
+          "synthetic-star-b3",
+          "synthetic-star-b4",
+          "synthetic-star-b5",
+          "synthetic-star-b6",
+          "synthetic-star-b7",
+          "synthetic-star-target"
+        ],
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "routeVersion": "1",
+        "selectionPriority": 2,
+        "stableId": "synthetic-route-b",
+        "steps": [
+          {
+            "directionId": null,
+            "guidanceRelationshipId": null,
+            "patternId": "synthetic-pattern-helper-b",
+            "prompt": "Select a star of synthetic helper B.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-1",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "IDENTIFY_PATTERN_MEMBER"
+          },
+          {
+            "directionId": null,
+            "guidanceRelationshipId": "synthetic-guide-b",
+            "patternId": "synthetic-pattern-target",
+            "prompt": "Select the synthetic target star.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-2",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "IDENTIFY_TARGET_STAR"
+          },
+          {
+            "directionId": "direction-true-north",
+            "guidanceRelationshipId": "synthetic-guide-north",
+            "patternId": null,
+            "prompt": "Face True North and confirm.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-3",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "INDICATE_DIRECTION"
+          }
+        ],
+        "title": "Synthetic route B"
+      }
+    ],
+    "scenarios": [
+      {
+        "label": "Synthetic scenario A (route A)",
+        "observerPresetId": "synthetic-observer-tropical",
+        "purpose": "technical test",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "scenarioId": "synthetic-scenario-a",
+        "utc": "2026-11-15T13:00:00Z"
+      },
+      {
+        "label": "Synthetic scenario B (route B)",
+        "observerPresetId": "synthetic-observer-tropical",
+        "purpose": "technical test",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "scenarioId": "synthetic-scenario-b",
+        "utc": "2026-05-15T14:00:00Z"
+      }
+    ],
+    "starArtifact": {
+      "artifactId": "synthetic-stars-v1",
+      "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709"
+    }
+  },
+  "payloadSha256": "ff13c01cb3a1f165ab73b7d9c60749f443b789f0e578e46fec669ccc77cd65dc",
+  "schemaVersion": 1
+}

@@ -23,3 +23,6 @@ test-results/
 data/raw/*
 !data/raw/.gitignore
 !data/raw/README.md
+
+# Generated artifacts whose redistribution is unconfirmed (IERS Bulletin B values)
+data/generated/local-only/

@@ -35,6 +35,13 @@ export default tseslint.config(
   },
   ...tseslint.configs.recommended.map((config) => ({ ...config, files: typescriptFiles })),
   {
+    // SOFA- and IERS-derived constants and published test values are transcribed with
+    // their full source digits; JavaScript rounds them to the nearest double, exactly as
+    // the C/Fortran compilers do. Truncating them would hide the source correspondence.
+    files: ['packages/astronomy-core/{src,tests}/**/*.ts'],
+    rules: { 'no-loss-of-precision': 'off' },
+  },
+  {
     files: [
       'packages/{astronomy-core,assessment-core,tutoring-core,contracts,catalogue-schema}/src/**/*.{ts,tsx}',
     ],

@@ -1,0 +1,203 @@
+{
+  "curationType": "UFUQ_SKY_PATTERN_CURATION",
+  "schemaVersion": 1,
+  "note": "Human-curated source records. Locators are navigation pointers into the owner's private library and must be checked against page images before review. Line segments are UFUQ MODERN_PEDAGOGICAL teaching aids, never imported historical figures (Stellarium Arabic (Ancient) lines are CC BY-ND 4.0 and are not used).",
+  "patterns": [
+    {
+      "stableId": "pattern-al-kaff-al-khadib",
+      "contentVersion": "1",
+      "patternKind": "ASTERISM",
+      "labels": [
+        {
+          "languageTag": "ar",
+          "script": "الكف الخضيب",
+          "transliteration": "al-Kaff al-Khaḍīb",
+          "gloss": "the henna-dyed hand",
+          "layer": "OLD_ARABIAN",
+          "citations": [
+            {
+              "sourceId": "KUNITZSCH-1961",
+              "locator": "entries 136a-c, printed p. 72 (PDF p. 74)",
+              "supports": "Cassiopeia's bright stars seen as a hand linked to al-Thurayya"
+            },
+            {
+              "sourceId": "IBN-QUTAYBA-ANWA",
+              "locator": "local OCR text PDF p. 28 line 1293; PDF p. 34 lines 1573-1581",
+              "supports": "the name in the anwa literature"
+            },
+            {
+              "sourceId": "AL-MARZUQI-AZMINA",
+              "locator": "local OCR text lines 6438 and 22133",
+              "supports": "the name in a later azmina compilation"
+            }
+          ]
+        },
+        {
+          "languageTag": "ar-Latn",
+          "script": null,
+          "transliteration": "Dhāt al-Kursī",
+          "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
+          "layer": "GRECO_ARABIC_SCHOLARLY",
+          "citations": [
+            {
+              "sourceId": "HAFEZ-2010",
+              "locator": "al-Sufi catalogue heading, PDF p. 151",
+              "supports": "the chair figure name for Cassiopeia; exact Arabic form unresolved in the local texts, so no Arabic script is recorded"
+            }
+          ]
+        }
+      ],
+      "memberStarIds": [
+        "ufuq-star-001",
+        "ufuq-star-002",
+        "ufuq-star-003",
+        "ufuq-star-004",
+        "ufuq-star-005"
+      ],
+      "membershipCitations": [
+        {
+          "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+          "locator": "constellation entry 'The henna tinted hand' (HIP 746, 3179, 4427, 6686, 8886), pinned commit in local-reference",
+          "supports": "membership as compiled from the primary anwa texts (modern compilation)"
+        },
+        {
+          "sourceId": "KUNITZSCH-1961",
+          "locator": "entries 136a-c, printed p. 72",
+          "supports": "the hand formed by Cassiopeia's bright stars"
+        }
+      ],
+      "lineSegments": [
+        { "fromStarId": "ufuq-star-001", "toStarId": "ufuq-star-002" },
+        { "fromStarId": "ufuq-star-002", "toStarId": "ufuq-star-003" },
+        { "fromStarId": "ufuq-star-003", "toStarId": "ufuq-star-004" },
+        { "fromStarId": "ufuq-star-004", "toStarId": "ufuq-star-005" }
+      ],
+      "lineSegmentLayer": "MODERN_PEDAGOGICAL",
+      "shapeHint": "Five bright stars in a zigzag, like the letter W or M, high in the north.",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["CULTURAL", "ARABIC_LANGUAGE", "EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "pattern-banat-nash-al-kubra",
+      "contentVersion": "1",
+      "patternKind": "ASTERISM",
+      "labels": [
+        {
+          "languageTag": "ar",
+          "script": "بنات نعش الكبرى",
+          "transliteration": "Banāt Naʿsh al-Kubrā",
+          "gloss": "the greater daughters of the bier",
+          "layer": "OLD_ARABIAN",
+          "citations": [
+            {
+              "sourceId": "IBN-QUTAYBA-ANWA",
+              "locator": "local OCR text PDF p. 4 line 167; PDF p. 9 line 467; PDF p. 61 line 2793",
+              "supports": "the name of the greater group"
+            },
+            {
+              "sourceId": "AL-MARZUQI-AZMINA",
+              "locator": "local OCR text line 23577",
+              "supports": "the name in a later azmina compilation"
+            },
+            {
+              "sourceId": "IBN-ASIM-ANWA",
+              "locator": "local OCR text line 4575",
+              "supports": "the name in an Andalusi anwa text"
+            }
+          ]
+        }
+      ],
+      "memberStarIds": [
+        "ufuq-star-007",
+        "ufuq-star-008",
+        "ufuq-star-009",
+        "ufuq-star-010",
+        "ufuq-star-011",
+        "ufuq-star-012",
+        "ufuq-star-013"
+      ],
+      "membershipCitations": [
+        {
+          "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+          "locator": "constellation entry 'Daughters of Na'sh' (HIP 53910, 54061, 58001, 59774, 62956, 65378, 67301), pinned commit in local-reference",
+          "supports": "membership as compiled from the primary anwa texts (modern compilation)"
+        }
+      ],
+      "lineSegments": [
+        { "fromStarId": "ufuq-star-013", "toStarId": "ufuq-star-012" },
+        { "fromStarId": "ufuq-star-012", "toStarId": "ufuq-star-011" },
+        { "fromStarId": "ufuq-star-011", "toStarId": "ufuq-star-010" },
+        { "fromStarId": "ufuq-star-010", "toStarId": "ufuq-star-009" },
+        { "fromStarId": "ufuq-star-009", "toStarId": "ufuq-star-007" },
+        { "fromStarId": "ufuq-star-007", "toStarId": "ufuq-star-008" },
+        { "fromStarId": "ufuq-star-008", "toStarId": "ufuq-star-010" }
+      ],
+      "lineSegmentLayer": "MODERN_PEDAGOGICAL",
+      "shapeHint": "Seven bright stars: four make a box and three trail away from it in a curve.",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["CULTURAL", "ARABIC_LANGUAGE", "EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "pattern-al-jady",
+      "contentVersion": "1",
+      "patternKind": "SINGLE_STAR",
+      "labels": [
+        {
+          "languageTag": "ar",
+          "script": "الجدي",
+          "transliteration": "al-Jady",
+          "gloss": "the kid (young goat); the polar star. Reading variants al-gady, al-gudayy, al-Juday are preserved in the source",
+          "layer": "OLD_ARABIAN",
+          "citations": [
+            {
+              "sourceId": "KUNITZSCH-1961",
+              "locator": "entry 107a, printed pp. 62-63",
+              "supports": "al-Jady as the polar star and its reading variants"
+            },
+            {
+              "sourceId": "IBN-QUTAYBA-ANWA",
+              "locator": "section 31 (local PDF p. 68) and sections 52-53 (local PDF pp. 80-82)",
+              "supports": "al-Jady named in the anwa literature in its direction-finding role; the same word also names the zodiac sign Capricorn, so OCR hits elsewhere must be read in context"
+            }
+          ]
+        }
+      ],
+      "memberStarIds": ["ufuq-star-006"],
+      "membershipCitations": [
+        {
+          "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+          "locator": "star name 'The kid' for HIP 11767",
+          "supports": "identification of al-Jady with HIP 11767 (modern compilation)"
+        },
+        {
+          "sourceId": "HAFEZ-2010",
+          "locator": "Tables 18 and 24 (HR 424)",
+          "supports": "Greco-Arabic crosswalk of the polar star"
+        }
+      ],
+      "lineSegments": [],
+      "lineSegmentLayer": "NONE",
+      "shapeHint": "A single moderately bright star, low above the northern horizon in Malaysia.",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["CULTURAL", "ARABIC_LANGUAGE", "EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    }
+  ]
+}

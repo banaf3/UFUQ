@@ -1,0 +1,57 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-observer-v1",
+  "artifactType": "UFUQ_OBSERVER_PRESET",
+  "artifactVersion": "1",
+  "payload": {
+    "coordinateAccuracy": {
+      "horizontal": {
+        "reason": "synthetic",
+        "state": "UNKNOWN_UNBOUNDED"
+      },
+      "vertical": {
+        "reason": "synthetic",
+        "state": "UNKNOWN_UNBOUNDED"
+      }
+    },
+    "coordinateReferenceEpoch": {
+      "basis": "synthetic",
+      "state": "NOT_REQUIRED"
+    },
+    "dataVersionId": "synthetic-observer-v1",
+    "displayLabel": "Synthetic tropical observer (technical fixture)",
+    "geodeticLatitudeDegrees": 3.5,
+    "geodeticLongitudeDegrees": 103.4,
+    "height": {
+      "ellipsoidId": "WGS 84",
+      "kind": "ELLIPSOIDAL",
+      "valueMetres": 10
+    },
+    "presetId": "synthetic-observer-tropical",
+    "provenance": [
+      "synthetic"
+    ],
+    "referenceEllipsoid": {
+      "ellipsoidId": "WGS 84",
+      "equatorialRadiusMetres": 6378137,
+      "inverseFlattening": 298.257223563,
+      "source": "synthetic"
+    },
+    "referencePointDescription": "Invented point for software tests",
+    "referenceSystem": {
+      "identifier": "WGS 84",
+      "kind": "GEODETIC_DATUM",
+      "realization": null
+    },
+    "schemaVersion": 1,
+    "siteIdentity": "Synthetic technical site"
+  },
+  "payloadSha256": "570823cf7811b0dbbd1d84cf9e84b63d3c280d48dbadfb1deee914a71f297fac",
+  "schemaVersion": 1
+}

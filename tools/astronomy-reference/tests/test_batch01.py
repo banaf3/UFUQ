@@ -808,7 +808,12 @@ class Batch01ProtocolTests(unittest.TestCase):
             self.assertTrue(imports.isdisjoint(prohibited_roots), str(source))
             relative = source.relative_to(PROJECT_ROOT).as_posix()
             if "erfa" in imports:
-                self.assertEqual(relative, allowed_erfa_import)
+                # The post-implementation ProfileV1 reference (not part of Batch 01) is
+                # the only other approved ERFA importer.
+                self.assertIn(
+                    relative,
+                    {allowed_erfa_import, "src/ufuq_astronomy_reference/profile_v1_reference.py"},
+                )
 
         runner_tree = ast.parse(
             (PROJECT_ROOT / allowed_erfa_import).read_text(encoding="utf-8")

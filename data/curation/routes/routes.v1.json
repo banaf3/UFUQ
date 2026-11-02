@@ -1,0 +1,119 @@
+{
+  "curationType": "UFUQ_LESSON_ROUTE_CURATION",
+  "schemaVersion": 1,
+  "note": "Routes are selected by the server from data: a route is eligible only when every required star has a valid pending-or-approved geometric direction that is not below the geometric horizon. Priority encodes the owner's route preference (2D.1C D-2); no pattern is hard-coded as the entry point.",
+  "routes": [
+    {
+      "stableId": "route-kaff-to-jady-to-north",
+      "routeVersion": "1",
+      "title": "From al-Kaff al-Khaḍīb to al-Jady to True North",
+      "selectionPriority": 1,
+      "requiredStarIds": [
+        "ufuq-star-001",
+        "ufuq-star-002",
+        "ufuq-star-003",
+        "ufuq-star-004",
+        "ufuq-star-005",
+        "ufuq-star-006"
+      ],
+      "steps": [
+        {
+          "stepId": "step-1-find-helper",
+          "taskKind": "IDENTIFY_PATTERN_MEMBER",
+          "patternId": "pattern-al-kaff-al-khadib",
+          "directionId": null,
+          "guidanceRelationshipId": null,
+          "prompt": "Find al-Kaff al-Khaḍīb, the henna-dyed hand: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+          "successFeedback": "That star belongs to al-Kaff al-Khaḍīb. The hand is now outlined.",
+          "retryFeedback": "That star is not part of the hand. Look for five bright stars in a W shape."
+        },
+        {
+          "stepId": "step-2-find-jady",
+          "taskKind": "IDENTIFY_TARGET_STAR",
+          "patternId": "pattern-al-jady",
+          "directionId": null,
+          "guidanceRelationshipId": "guide-kaff-to-jady",
+          "prompt": "Follow the guide line from the middle of the hand towards the horizon and select al-Jady.",
+          "successFeedback": "That is al-Jady, the polar star.",
+          "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon."
+        },
+        {
+          "stepId": "step-3-face-north",
+          "taskKind": "INDICATE_DIRECTION",
+          "patternId": null,
+          "directionId": "direction-true-north",
+          "guidanceRelationshipId": "guide-jady-to-true-north",
+          "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
+          "successFeedback": "Your direction has been recorded and compared with True North.",
+          "retryFeedback": "Your direction has been recorded and compared with True North."
+        }
+      ],
+      "allowedAlternativeRouteIds": ["route-banat-to-jady-to-north"],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["CULTURAL", "EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "route-banat-to-jady-to-north",
+      "routeVersion": "1",
+      "title": "From Banāt Naʿsh to al-Jady to True North",
+      "selectionPriority": 2,
+      "requiredStarIds": [
+        "ufuq-star-006",
+        "ufuq-star-007",
+        "ufuq-star-008",
+        "ufuq-star-009",
+        "ufuq-star-010",
+        "ufuq-star-011",
+        "ufuq-star-012",
+        "ufuq-star-013"
+      ],
+      "steps": [
+        {
+          "stepId": "step-1-find-helper",
+          "taskKind": "IDENTIFY_PATTERN_MEMBER",
+          "patternId": "pattern-banat-nash-al-kubra",
+          "directionId": null,
+          "guidanceRelationshipId": null,
+          "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Select one of its stars.",
+          "successFeedback": "That star belongs to Banāt Naʿsh. The group is now outlined.",
+          "retryFeedback": "That star is not part of Banāt Naʿsh. Look for a box of four stars with a curved tail of three."
+        },
+        {
+          "stepId": "step-2-find-jady",
+          "taskKind": "IDENTIFY_TARGET_STAR",
+          "patternId": "pattern-al-jady",
+          "directionId": null,
+          "guidanceRelationshipId": "guide-banat-to-jady",
+          "prompt": "Follow the guide line through the two end stars of the box and select al-Jady.",
+          "successFeedback": "That is al-Jady, the polar star.",
+          "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon."
+        },
+        {
+          "stepId": "step-3-face-north",
+          "taskKind": "INDICATE_DIRECTION",
+          "patternId": null,
+          "directionId": "direction-true-north",
+          "guidanceRelationshipId": "guide-jady-to-true-north",
+          "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
+          "successFeedback": "Your direction has been recorded and compared with True North.",
+          "retryFeedback": "Your direction has been recorded and compared with True North."
+        }
+      ],
+      "allowedAlternativeRouteIds": ["route-kaff-to-jady-to-north"],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["CULTURAL", "EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    }
+  ]
+}

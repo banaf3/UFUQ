@@ -1,5 +1,12 @@
 # Generated runtime artifacts
 
+Since 2026-11-02 this directory holds the artifacts written by `npm run data:generate`
+(`tools/catalogue`) and listed with their hashes in `MANIFEST.v1.json`. Never hand-edit
+them: change the curation or raw evidence and regenerate. `synthetic/` is the visibly
+synthetic technical dataset. `local-only/` is ignored and holds the IERS Bulletin B
+EOP bundle, whose redistribution terms are unconfirmed. Approval states come from
+`data/approvals/`.
+
 This directory is reserved for deterministic runtime artifacts. No catalogue or
 cultural data is present in the scaffold. Generated artifacts are tracked only after
 licence, provenance, and release policy permits it.

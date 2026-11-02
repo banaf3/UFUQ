@@ -43,4 +43,16 @@ unvalidated version choice now.
 - Vitest and Supertest test the API health surface without opening a network port.
   Separate unit, reference, and integration Vitest configurations prevent inactive
   scientific/database suites from being reported as passed.
-- Playwright runs the real-browser web/API smoke test.
+- Playwright runs the real-browser web/API smoke test and, since 2026-11-02, the
+  synthetic lesson journey.
+- `@types/three` 0.185.4 (exact) supplies the Three.js declarations for the R3F scene
+  added in Phase 2. It is a type-only dev dependency matching `three` 0.185.x.
+
+## Phase 1/2 implementation notes (2026-11-02)
+
+- No astronomy library was added. `astronomy-core` is UFUQ-owned TypeScript derived
+  from IAU SOFA 2023-10-11 and IERS Conventions (2010) software, under their licences.
+- No runtime validation library was added; validators are framework-free code in
+  `contracts` and `catalogue-schema` (IMP-019).
+- The Python reference environment is unchanged (`uv.lock`); PyERFA now also serves the
+  post-implementation ScientificProfileV1 reference.

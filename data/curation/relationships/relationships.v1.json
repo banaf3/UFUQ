@@ -1,0 +1,135 @@
+{
+  "curationType": "UFUQ_GUIDANCE_CURATION",
+  "schemaVersion": 1,
+  "note": "Guide lines from a helper pattern to al-Jady are modern UFUQ teaching constructions (decision D-4, MODERN_PEDAGOGICAL); no local source attests them as historical methods. Only al-Jady's use for direction finding is historically attested, and it is cited separately as historical context, never as a modern Qibla or navigation algorithm.",
+  "directions": [
+    {
+      "stableId": "direction-true-north",
+      "contentVersion": "1",
+      "labels": [
+        {
+          "languageTag": "en",
+          "script": "True North",
+          "transliteration": null,
+          "gloss": "the direction of the geodetic north meridian at the observer (azimuth 0)",
+          "layer": "MODERN_ASTRONOMICAL",
+          "citations": [
+            {
+              "sourceId": "UFUQ-ASTRO-SPEC",
+              "locator": "ADR-003 fixed conventions: azimuth clockwise from True North",
+              "supports": "azimuth convention N = 0, E = 90 degrees"
+            }
+          ]
+        }
+      ],
+      "definition": { "kind": "TERRESTRIAL_TRUE_NORTH", "azimuthRadians": 0 },
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "stableId": "guide-kaff-to-jady",
+      "relationshipVersion": "1",
+      "source": { "kind": "pattern", "stableId": "pattern-al-kaff-al-khadib" },
+      "target": { "kind": "pattern", "stableId": "pattern-al-jady" },
+      "relationshipType": "LEADS_TO_TARGET_STAR",
+      "instruction": {
+        "kind": "GREAT_CIRCLE_ARC",
+        "fromStarId": "ufuq-star-003",
+        "toStarId": "ufuq-star-006"
+      },
+      "layer": "MODERN_PEDAGOGICAL",
+      "explanation": "UFUQ guide line (a modern teaching aid): from the middle star of the hand, follow the line down towards the northern horizon to reach al-Jady.",
+      "historicalContext": null,
+      "citations": [
+        {
+          "sourceId": "UFUQ-ROUTE-SCOPE-2D1C",
+          "locator": "section 7, decision D-4",
+          "supports": "the helper-to-al-Jady line is accepted only as MODERN_PEDAGOGICAL content"
+        }
+      ],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "guide-banat-to-jady",
+      "relationshipVersion": "1",
+      "source": { "kind": "pattern", "stableId": "pattern-banat-nash-al-kubra" },
+      "target": { "kind": "pattern", "stableId": "pattern-al-jady" },
+      "relationshipType": "LEADS_TO_TARGET_STAR",
+      "instruction": {
+        "kind": "POINTER_EXTENSION",
+        "fromStarId": "ufuq-star-007",
+        "throughStarId": "ufuq-star-008",
+        "toStarId": "ufuq-star-006"
+      },
+      "layer": "MODERN_PEDAGOGICAL",
+      "explanation": "UFUQ guide line (a modern teaching aid, the familiar 'pointer stars' method): continue the line through the two end stars of the box to reach al-Jady.",
+      "historicalContext": null,
+      "citations": [
+        {
+          "sourceId": "UFUQ-ROUTE-SCOPE-2D1C",
+          "locator": "section 7, decisions D-2 and D-4",
+          "supports": "greater Banat Nash as the alternative route; the guide line is MODERN_PEDAGOGICAL"
+        }
+      ],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "guide-jady-to-true-north",
+      "relationshipVersion": "1",
+      "source": { "kind": "pattern", "stableId": "pattern-al-jady" },
+      "target": { "kind": "direction", "stableId": "direction-true-north" },
+      "relationshipType": "LEADS_TO_DIRECTION",
+      "instruction": { "kind": "VERTICAL_TO_HORIZON", "fromStarId": "ufuq-star-006" },
+      "layer": "MODERN_ASTRONOMICAL",
+      "explanation": "al-Jady lies close to the north celestial pole, so the point on the horizon directly below it is close to True North. al-Jady is a star cue; True North is a direction on the ground, and they are not the same thing.",
+      "historicalContext": {
+        "text": "Arabic anwa literature records al-Jady being used to find direction.",
+        "layer": "HISTORICAL_CONTEXT_ONLY",
+        "citations": [
+          {
+            "sourceId": "IBN-QUTAYBA-ANWA",
+            "locator": "section 31 (local PDF p. 68) and sections 52-53 (local PDF pp. 80-82)",
+            "supports": "al-Jady used for direction finding and Qibla inference (historical context only)"
+          }
+        ]
+      },
+      "citations": [
+        {
+          "sourceId": "UFUQ-ASTRO-SPEC",
+          "locator": "ADR-003: Polaris remains a star cue distinct from terrestrial True North",
+          "supports": "the cue/target distinction"
+        }
+      ],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL", "SCIENTIFIC"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    }
+  ]
+}

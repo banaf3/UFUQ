@@ -1,0 +1,80 @@
+{
+  "approval": {
+    "decisionDate": null,
+    "decisionReference": null,
+    "reviewer": null,
+    "scope": "SCIENTIFIC_PROFILE_V1",
+    "state": "REVIEW_REQUIRED"
+  },
+  "artifactId": "observer-umpsa-pekan-v1",
+  "artifactType": "UFUQ_OBSERVER_PRESET",
+  "artifactVersion": "1",
+  "payload": {
+    "coordinateAccuracy": {
+      "horizontal": {
+        "boundMetres": 2279,
+        "meaning": "Maximum distance from the reference point to any point of the OpenStreetMap campus polygon (way 1147355347, version 3). It bounds the reference-point error if the Faculty lies inside that polygon, as official UMPSA material states the Faculty is at the Pekan campus.",
+        "method": "Farthest polygon vertex by spherical haversine on the IUGG mean radius",
+        "state": "DERIVED"
+      },
+      "vertical": {
+        "reason": "DEM surface-model cell; no vertical bound for the Faculty point",
+        "state": "UNKNOWN_UNBOUNDED"
+      }
+    },
+    "coordinateReferenceEpoch": {
+      "basis": "Proposed 2D.3 disposition, accepted only through this artifact's approval: Plate motion of order centimetres per year is orders of magnitude below the derived horizontal bound; the reviewer decides whether that suffices",
+      "state": "NOT_REQUIRED"
+    },
+    "dataVersionId": "observer-umpsa-pekan-v1-20261101T155454Z",
+    "displayLabel": "UMPSA Pekan — Faculty of Computing",
+    "geodeticLatitudeDegrees": 3.5466545,
+    "geodeticLongitudeDegrees": 103.4273953,
+    "height": {
+      "ellipsoidId": "WGS 84",
+      "kind": "ELLIPSOIDAL",
+      "valueMetres": 9.0325
+    },
+    "heightConversion": {
+      "input": {
+        "kind": "ORTHOMETRIC",
+        "source": "Open-Meteo elevation API, Copernicus DEM 2021 release GLO-90 (90 m); a surface model that can include buildings and canopy",
+        "unit": "m",
+        "value": 6,
+        "verticalDatum": "EGM2008 (Copernicus DEM vertical reference)"
+      },
+      "model": "EGM2008 geoid undulation from GeographicLib GeoidEval 2.5.2",
+      "output": "ELLIPSOIDAL",
+      "relation": "h = H + N",
+      "uncertainty": "UNKNOWN_UNBOUNDED for the Faculty point; the DEM product states < 4 m absolute vertical accuracy (LE90) for terrain, which does not bound a surface-model cell over buildings",
+      "undulation": {
+        "unit": "m",
+        "value": 3.0325
+      }
+    },
+    "presetId": "umpsa-pekan-faculty-of-computing",
+    "provenance": [
+      "OpenStreetMap API 0.6 node 12825444378 version 3, changeset 181077159, timestamp 2026-04-09T04:11:31Z",
+      "https://api.open-meteo.com/v1/elevation (Copernicus DEM GLO-90, doi:10.5270/ESA-c5d3d65)",
+      "https://geographiclib.sourceforge.io/cgi-bin/GeoidEval (version 2.5.2)",
+      "Data © OpenStreetMap contributors, ODbL 1.0",
+      "Evidence manifest observer-umpsa-pekan-v1-20261101T155454Z"
+    ],
+    "referenceEllipsoid": {
+      "ellipsoidId": "WGS 84",
+      "equatorialRadiusMetres": 6378137,
+      "inverseFlattening": 298.257223563,
+      "source": "WGS 84 defining parameters (NIMA TR8350.2), as in SOFA 2023-10-11 eform"
+    },
+    "referencePointDescription": "The OpenStreetMap point feature 'FK Fakulti Komputeran UMPSA' (node 12825444378, version 3). It is a contributor-mapped point for the Faculty, not a surveyed monument, and not the campus centroid.",
+    "referenceSystem": {
+      "identifier": "WGS 84",
+      "kind": "GEODETIC_DATUM",
+      "realization": null
+    },
+    "schemaVersion": 1,
+    "siteIdentity": "Faculty of Computing, UMPSA Pekan Campus, Pahang, Malaysia"
+  },
+  "payloadSha256": "53788b3b467402fb5cb68dc2b9f90deec5d0773f14e8eabee21b87df555dc9ab",
+  "schemaVersion": 1
+}

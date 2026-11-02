@@ -1,0 +1,52 @@
+{
+  "curationType": "UFUQ_SCENARIO_CURATION",
+  "schemaVersion": 1,
+  "note": "Scenario instants are project choices inside the activated SupportedTimeDomain, picked so that each route can be eligible. Local times are presentation labels (MYT = UTC+8, no daylight saving); only the canonical UTC text crosses the scientific boundary. They select no tolerance and approve no content.",
+  "scenarios": [
+    {
+      "scenarioId": "scenario-2025-11-15-evening",
+      "label": "15 November 2025, 21:00 MYT, UMPSA Pekan",
+      "utc": "2025-11-15T13:00:00Z",
+      "observerPresetId": "umpsa-pekan-faculty-of-computing",
+      "purpose": "Northern evening sky in late year, when the hand is high in the north",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "scenarioId": "scenario-2026-01-10-evening",
+      "label": "10 January 2026, 20:00 MYT, UMPSA Pekan",
+      "utc": "2026-01-10T12:00:00Z",
+      "observerPresetId": "umpsa-pekan-faculty-of-computing",
+      "purpose": "Early-year evening sky",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "scenarioId": "scenario-2026-04-15-night",
+      "label": "15 April 2026, 22:00 MYT, UMPSA Pekan",
+      "utc": "2026-04-15T14:00:00Z",
+      "observerPresetId": "umpsa-pekan-faculty-of-computing",
+      "purpose": "Northern night sky in spring, when the hand is low and Banat Nash is high",
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    }
+  ]
+}

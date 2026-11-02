@@ -1,0 +1,354 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-stars-v1",
+  "artifactType": "UFUQ_ROUTE_STAR_ASTROMETRY",
+  "artifactVersion": "1",
+  "payload": {
+    "epoch": {
+      "julianDate": {
+        "part1": 2400000.5,
+        "part2": 48348.5625
+      },
+      "julianEpoch": 1991.25,
+      "nativeNotation": "J1991.25(TT)",
+      "scale": "TT"
+    },
+    "note": "SYNTHETIC TECHNICAL FIXTURE: invented star positions for software tests. Not sky data.",
+    "profileId": "SyntheticTechnicalProfileV1",
+    "stars": [
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 58,
+          "declinationRadians": 1.0122909661567112,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 10,
+          "rightAscensionRadians": 0.17453292519943295,
+          "visualMagnitude": 2.3
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-a1"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 61,
+          "declinationRadians": 1.064650843716541,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 18,
+          "rightAscensionRadians": 0.3141592653589793,
+          "visualMagnitude": 2.2
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-a2"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 59,
+          "declinationRadians": 1.0297442586766543,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 24,
+          "rightAscensionRadians": 0.41887902047863906,
+          "visualMagnitude": 2.4
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-a3"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 62,
+          "declinationRadians": 1.0821041362364843,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 30,
+          "rightAscensionRadians": 0.5235987755982988,
+          "visualMagnitude": 2.7
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-a4"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 60,
+          "declinationRadians": 1.0471975511965976,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 38,
+          "rightAscensionRadians": 0.6632251157578452,
+          "visualMagnitude": 3.4
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-a5"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 89.2,
+          "declinationRadians": 1.556833692778942,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 40,
+          "rightAscensionRadians": 0.6981317007977318,
+          "visualMagnitude": 2
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-target"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 56,
+          "declinationRadians": 0.9773843811168246,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 165,
+          "rightAscensionRadians": 2.8797932657906435,
+          "visualMagnitude": 2.4
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b1"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 62,
+          "declinationRadians": 1.0821041362364843,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 166,
+          "rightAscensionRadians": 2.897246558310587,
+          "visualMagnitude": 1.8
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b2"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 54,
+          "declinationRadians": 0.9424777960769379,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 178,
+          "rightAscensionRadians": 3.106686068549907,
+          "visualMagnitude": 2.4
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b3"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 57,
+          "declinationRadians": 0.9948376736367678,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 184,
+          "rightAscensionRadians": 3.211405823669566,
+          "visualMagnitude": 3.3
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b4"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 56,
+          "declinationRadians": 0.9773843811168246,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 193,
+          "rightAscensionRadians": 3.368485456349056,
+          "visualMagnitude": 1.8
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b5"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 55,
+          "declinationRadians": 0.9599310885968813,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 201,
+          "rightAscensionRadians": 3.5081117965086026,
+          "visualMagnitude": 2.2
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b6"
+      },
+      {
+        "crosswalk": {
+          "henryDraper": null,
+          "hip": null,
+          "source": "SYNTHETIC"
+        },
+        "normalized": {
+          "declinationDegrees": 49,
+          "declinationRadians": 0.8552113334772214,
+          "muAlphaStarMasPerYear": 0,
+          "muDeltaMasPerYear": 0,
+          "parallaxMas": 10,
+          "rightAscensionDegrees": 207,
+          "rightAscensionRadians": 3.6128315516282616,
+          "visualMagnitude": 1.9
+        },
+        "radialVelocity": {
+          "boundHorizonJulianEpoch": 2040,
+          "boundMilliarcsecondsPerKmPerSecond": 0,
+          "evidenceId": "synthetic",
+          "omittedTerm": "SECOND_ORDER_PERSPECTIVE_ACCELERATION",
+          "state": "RADIAL_VELOCITY_OMITTED_WITH_BOUND"
+        },
+        "starId": "synthetic-star-b7"
+      }
+    ]
+  },
+  "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709",
+  "schemaVersion": 1
+}

@@ -1,0 +1,607 @@
+{
+  "approval": {
+    "decisionDate": null,
+    "decisionReference": null,
+    "reviewer": null,
+    "scope": "SCIENTIFIC_PROFILE_V1",
+    "state": "REVIEW_REQUIRED"
+  },
+  "artifactId": "lesson-content-v1",
+  "artifactType": "UFUQ_LESSON_CONTENT",
+  "artifactVersion": "1",
+  "payload": {
+    "contentScope": "SCIENTIFIC_PROFILE_V1",
+    "contentVersion": "1",
+    "directions": [
+      {
+        "contentVersion": "1",
+        "definition": {
+          "azimuthRadians": 0,
+          "kind": "TERRESTRIAL_TRUE_NORTH"
+        },
+        "labels": [
+          {
+            "citations": [
+              {
+                "locator": "ADR-003 fixed conventions: azimuth clockwise from True North",
+                "sourceId": "UFUQ-ASTRO-SPEC",
+                "supports": "azimuth convention N = 0, E = 90 degrees"
+              }
+            ],
+            "gloss": "the direction of the geodetic north meridian at the observer (azimuth 0)",
+            "languageTag": "en",
+            "layer": "MODERN_ASTRONOMICAL",
+            "script": "True North",
+            "transliteration": null
+          }
+        ],
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "stableId": "direction-true-north"
+      }
+    ],
+    "patterns": [
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [
+              {
+                "locator": "entries 136a-c, printed p. 72 (PDF p. 74)",
+                "sourceId": "KUNITZSCH-1961",
+                "supports": "Cassiopeia's bright stars seen as a hand linked to al-Thurayya"
+              },
+              {
+                "locator": "local OCR text PDF p. 28 line 1293; PDF p. 34 lines 1573-1581",
+                "sourceId": "IBN-QUTAYBA-ANWA",
+                "supports": "the name in the anwa literature"
+              },
+              {
+                "locator": "local OCR text lines 6438 and 22133",
+                "sourceId": "AL-MARZUQI-AZMINA",
+                "supports": "the name in a later azmina compilation"
+              }
+            ],
+            "gloss": "the henna-dyed hand",
+            "languageTag": "ar",
+            "layer": "OLD_ARABIAN",
+            "script": "الكف الخضيب",
+            "transliteration": "al-Kaff al-Khaḍīb"
+          },
+          {
+            "citations": [
+              {
+                "locator": "al-Sufi catalogue heading, PDF p. 151",
+                "sourceId": "HAFEZ-2010",
+                "supports": "the chair figure name for Cassiopeia; exact Arabic form unresolved in the local texts, so no Arabic script is recorded"
+              }
+            ],
+            "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
+            "languageTag": "ar-Latn",
+            "layer": "GRECO_ARABIC_SCHOLARLY",
+            "script": null,
+            "transliteration": "Dhāt al-Kursī"
+          }
+        ],
+        "lineSegmentLayer": "MODERN_PEDAGOGICAL",
+        "lineSegments": [
+          {
+            "fromStarId": "ufuq-star-001",
+            "toStarId": "ufuq-star-002"
+          },
+          {
+            "fromStarId": "ufuq-star-002",
+            "toStarId": "ufuq-star-003"
+          },
+          {
+            "fromStarId": "ufuq-star-003",
+            "toStarId": "ufuq-star-004"
+          },
+          {
+            "fromStarId": "ufuq-star-004",
+            "toStarId": "ufuq-star-005"
+          }
+        ],
+        "memberStarIds": [
+          "ufuq-star-001",
+          "ufuq-star-002",
+          "ufuq-star-003",
+          "ufuq-star-004",
+          "ufuq-star-005"
+        ],
+        "membershipCitations": [
+          {
+            "locator": "constellation entry 'The henna tinted hand' (HIP 746, 3179, 4427, 6686, 8886), pinned commit in local-reference",
+            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+            "supports": "membership as compiled from the primary anwa texts (modern compilation)"
+          },
+          {
+            "locator": "entries 136a-c, printed p. 72",
+            "sourceId": "KUNITZSCH-1961",
+            "supports": "the hand formed by Cassiopeia's bright stars"
+          }
+        ],
+        "patternKind": "ASTERISM",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "CULTURAL",
+            "ARABIC_LANGUAGE",
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "shapeHint": "Five bright stars in a zigzag, like the letter W or M, high in the north.",
+        "stableId": "pattern-al-kaff-al-khadib"
+      },
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [
+              {
+                "locator": "local OCR text PDF p. 4 line 167; PDF p. 9 line 467; PDF p. 61 line 2793",
+                "sourceId": "IBN-QUTAYBA-ANWA",
+                "supports": "the name of the greater group"
+              },
+              {
+                "locator": "local OCR text line 23577",
+                "sourceId": "AL-MARZUQI-AZMINA",
+                "supports": "the name in a later azmina compilation"
+              },
+              {
+                "locator": "local OCR text line 4575",
+                "sourceId": "IBN-ASIM-ANWA",
+                "supports": "the name in an Andalusi anwa text"
+              }
+            ],
+            "gloss": "the greater daughters of the bier",
+            "languageTag": "ar",
+            "layer": "OLD_ARABIAN",
+            "script": "بنات نعش الكبرى",
+            "transliteration": "Banāt Naʿsh al-Kubrā"
+          }
+        ],
+        "lineSegmentLayer": "MODERN_PEDAGOGICAL",
+        "lineSegments": [
+          {
+            "fromStarId": "ufuq-star-013",
+            "toStarId": "ufuq-star-012"
+          },
+          {
+            "fromStarId": "ufuq-star-012",
+            "toStarId": "ufuq-star-011"
+          },
+          {
+            "fromStarId": "ufuq-star-011",
+            "toStarId": "ufuq-star-010"
+          },
+          {
+            "fromStarId": "ufuq-star-010",
+            "toStarId": "ufuq-star-009"
+          },
+          {
+            "fromStarId": "ufuq-star-009",
+            "toStarId": "ufuq-star-007"
+          },
+          {
+            "fromStarId": "ufuq-star-007",
+            "toStarId": "ufuq-star-008"
+          },
+          {
+            "fromStarId": "ufuq-star-008",
+            "toStarId": "ufuq-star-010"
+          }
+        ],
+        "memberStarIds": [
+          "ufuq-star-007",
+          "ufuq-star-008",
+          "ufuq-star-009",
+          "ufuq-star-010",
+          "ufuq-star-011",
+          "ufuq-star-012",
+          "ufuq-star-013"
+        ],
+        "membershipCitations": [
+          {
+            "locator": "constellation entry 'Daughters of Na'sh' (HIP 53910, 54061, 58001, 59774, 62956, 65378, 67301), pinned commit in local-reference",
+            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+            "supports": "membership as compiled from the primary anwa texts (modern compilation)"
+          }
+        ],
+        "patternKind": "ASTERISM",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "CULTURAL",
+            "ARABIC_LANGUAGE",
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "shapeHint": "Seven bright stars: four make a box and three trail away from it in a curve.",
+        "stableId": "pattern-banat-nash-al-kubra"
+      },
+      {
+        "contentVersion": "1",
+        "labels": [
+          {
+            "citations": [
+              {
+                "locator": "entry 107a, printed pp. 62-63",
+                "sourceId": "KUNITZSCH-1961",
+                "supports": "al-Jady as the polar star and its reading variants"
+              },
+              {
+                "locator": "section 31 (local PDF p. 68) and sections 52-53 (local PDF pp. 80-82)",
+                "sourceId": "IBN-QUTAYBA-ANWA",
+                "supports": "al-Jady named in the anwa literature in its direction-finding role; the same word also names the zodiac sign Capricorn, so OCR hits elsewhere must be read in context"
+              }
+            ],
+            "gloss": "the kid (young goat); the polar star. Reading variants al-gady, al-gudayy, al-Juday are preserved in the source",
+            "languageTag": "ar",
+            "layer": "OLD_ARABIAN",
+            "script": "الجدي",
+            "transliteration": "al-Jady"
+          }
+        ],
+        "lineSegmentLayer": "NONE",
+        "lineSegments": [],
+        "memberStarIds": [
+          "ufuq-star-006"
+        ],
+        "membershipCitations": [
+          {
+            "locator": "star name 'The kid' for HIP 11767",
+            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
+            "supports": "identification of al-Jady with HIP 11767 (modern compilation)"
+          },
+          {
+            "locator": "Tables 18 and 24 (HR 424)",
+            "sourceId": "HAFEZ-2010",
+            "supports": "Greco-Arabic crosswalk of the polar star"
+          }
+        ],
+        "patternKind": "SINGLE_STAR",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "CULTURAL",
+            "ARABIC_LANGUAGE",
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "shapeHint": "A single moderately bright star, low above the northern horizon in Malaysia.",
+        "stableId": "pattern-al-jady"
+      }
+    ],
+    "relationships": [
+      {
+        "citations": [
+          {
+            "locator": "section 7, decision D-4",
+            "sourceId": "UFUQ-ROUTE-SCOPE-2D1C",
+            "supports": "the helper-to-al-Jady line is accepted only as MODERN_PEDAGOGICAL content"
+          }
+        ],
+        "explanation": "UFUQ guide line (a modern teaching aid): from the middle star of the hand, follow the line down towards the northern horizon to reach al-Jady.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "ufuq-star-003",
+          "kind": "GREAT_CIRCLE_ARC",
+          "toStarId": "ufuq-star-006"
+        },
+        "layer": "MODERN_PEDAGOGICAL",
+        "relationshipType": "LEADS_TO_TARGET_STAR",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "pattern-al-kaff-al-khadib"
+        },
+        "stableId": "guide-kaff-to-jady",
+        "target": {
+          "kind": "pattern",
+          "stableId": "pattern-al-jady"
+        }
+      },
+      {
+        "citations": [
+          {
+            "locator": "section 7, decisions D-2 and D-4",
+            "sourceId": "UFUQ-ROUTE-SCOPE-2D1C",
+            "supports": "greater Banat Nash as the alternative route; the guide line is MODERN_PEDAGOGICAL"
+          }
+        ],
+        "explanation": "UFUQ guide line (a modern teaching aid, the familiar 'pointer stars' method): continue the line through the two end stars of the box to reach al-Jady.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "ufuq-star-007",
+          "kind": "POINTER_EXTENSION",
+          "throughStarId": "ufuq-star-008",
+          "toStarId": "ufuq-star-006"
+        },
+        "layer": "MODERN_PEDAGOGICAL",
+        "relationshipType": "LEADS_TO_TARGET_STAR",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "pattern-banat-nash-al-kubra"
+        },
+        "stableId": "guide-banat-to-jady",
+        "target": {
+          "kind": "pattern",
+          "stableId": "pattern-al-jady"
+        }
+      },
+      {
+        "citations": [
+          {
+            "locator": "ADR-003: Polaris remains a star cue distinct from terrestrial True North",
+            "sourceId": "UFUQ-ASTRO-SPEC",
+            "supports": "the cue/target distinction"
+          }
+        ],
+        "explanation": "al-Jady lies close to the north celestial pole, so the point on the horizon directly below it is close to True North. al-Jady is a star cue; True North is a direction on the ground, and they are not the same thing.",
+        "historicalContext": {
+          "citations": [
+            {
+              "locator": "section 31 (local PDF p. 68) and sections 52-53 (local PDF pp. 80-82)",
+              "sourceId": "IBN-QUTAYBA-ANWA",
+              "supports": "al-Jady used for direction finding and Qibla inference (historical context only)"
+            }
+          ],
+          "layer": "HISTORICAL_CONTEXT_ONLY",
+          "text": "Arabic anwa literature records al-Jady being used to find direction."
+        },
+        "instruction": {
+          "fromStarId": "ufuq-star-006",
+          "kind": "VERTICAL_TO_HORIZON"
+        },
+        "layer": "MODERN_ASTRONOMICAL",
+        "relationshipType": "LEADS_TO_DIRECTION",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL",
+            "SCIENTIFIC"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "pattern-al-jady"
+        },
+        "stableId": "guide-jady-to-true-north",
+        "target": {
+          "kind": "direction",
+          "stableId": "direction-true-north"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "allowedAlternativeRouteIds": [
+          "route-banat-to-jady-to-north"
+        ],
+        "requiredStarIds": [
+          "ufuq-star-001",
+          "ufuq-star-002",
+          "ufuq-star-003",
+          "ufuq-star-004",
+          "ufuq-star-005",
+          "ufuq-star-006"
+        ],
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "CULTURAL",
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "routeVersion": "1",
+        "selectionPriority": 1,
+        "stableId": "route-kaff-to-jady-to-north",
+        "steps": [
+          {
+            "directionId": null,
+            "guidanceRelationshipId": null,
+            "patternId": "pattern-al-kaff-al-khadib",
+            "prompt": "Find al-Kaff al-Khaḍīb, the henna-dyed hand: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+            "retryFeedback": "That star is not part of the hand. Look for five bright stars in a W shape.",
+            "stepId": "step-1-find-helper",
+            "successFeedback": "That star belongs to al-Kaff al-Khaḍīb. The hand is now outlined.",
+            "taskKind": "IDENTIFY_PATTERN_MEMBER"
+          },
+          {
+            "directionId": null,
+            "guidanceRelationshipId": "guide-kaff-to-jady",
+            "patternId": "pattern-al-jady",
+            "prompt": "Follow the guide line from the middle of the hand towards the horizon and select al-Jady.",
+            "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
+            "stepId": "step-2-find-jady",
+            "successFeedback": "That is al-Jady, the polar star.",
+            "taskKind": "IDENTIFY_TARGET_STAR"
+          },
+          {
+            "directionId": "direction-true-north",
+            "guidanceRelationshipId": "guide-jady-to-true-north",
+            "patternId": null,
+            "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
+            "retryFeedback": "Your direction has been recorded and compared with True North.",
+            "stepId": "step-3-face-north",
+            "successFeedback": "Your direction has been recorded and compared with True North.",
+            "taskKind": "INDICATE_DIRECTION"
+          }
+        ],
+        "title": "From al-Kaff al-Khaḍīb to al-Jady to True North"
+      },
+      {
+        "allowedAlternativeRouteIds": [
+          "route-kaff-to-jady-to-north"
+        ],
+        "requiredStarIds": [
+          "ufuq-star-006",
+          "ufuq-star-007",
+          "ufuq-star-008",
+          "ufuq-star-009",
+          "ufuq-star-010",
+          "ufuq-star-011",
+          "ufuq-star-012",
+          "ufuq-star-013"
+        ],
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "CULTURAL",
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "routeVersion": "1",
+        "selectionPriority": 2,
+        "stableId": "route-banat-to-jady-to-north",
+        "steps": [
+          {
+            "directionId": null,
+            "guidanceRelationshipId": null,
+            "patternId": "pattern-banat-nash-al-kubra",
+            "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Select one of its stars.",
+            "retryFeedback": "That star is not part of Banāt Naʿsh. Look for a box of four stars with a curved tail of three.",
+            "stepId": "step-1-find-helper",
+            "successFeedback": "That star belongs to Banāt Naʿsh. The group is now outlined.",
+            "taskKind": "IDENTIFY_PATTERN_MEMBER"
+          },
+          {
+            "directionId": null,
+            "guidanceRelationshipId": "guide-banat-to-jady",
+            "patternId": "pattern-al-jady",
+            "prompt": "Follow the guide line through the two end stars of the box and select al-Jady.",
+            "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
+            "stepId": "step-2-find-jady",
+            "successFeedback": "That is al-Jady, the polar star.",
+            "taskKind": "IDENTIFY_TARGET_STAR"
+          },
+          {
+            "directionId": "direction-true-north",
+            "guidanceRelationshipId": "guide-jady-to-true-north",
+            "patternId": null,
+            "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
+            "retryFeedback": "Your direction has been recorded and compared with True North.",
+            "stepId": "step-3-face-north",
+            "successFeedback": "Your direction has been recorded and compared with True North.",
+            "taskKind": "INDICATE_DIRECTION"
+          }
+        ],
+        "title": "From Banāt Naʿsh to al-Jady to True North"
+      }
+    ],
+    "scenarios": [
+      {
+        "label": "15 November 2025, 21:00 MYT, UMPSA Pekan",
+        "observerPresetId": "umpsa-pekan-faculty-of-computing",
+        "purpose": "Northern evening sky in late year, when the hand is high in the north",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "scenarioId": "scenario-2025-11-15-evening",
+        "utc": "2025-11-15T13:00:00Z"
+      },
+      {
+        "label": "10 January 2026, 20:00 MYT, UMPSA Pekan",
+        "observerPresetId": "umpsa-pekan-faculty-of-computing",
+        "purpose": "Early-year evening sky",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "scenarioId": "scenario-2026-01-10-evening",
+        "utc": "2026-01-10T12:00:00Z"
+      },
+      {
+        "label": "15 April 2026, 22:00 MYT, UMPSA Pekan",
+        "observerPresetId": "umpsa-pekan-faculty-of-computing",
+        "purpose": "Northern night sky in spring, when the hand is low and Banat Nash is high",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "scenarioId": "scenario-2026-04-15-night",
+        "utc": "2026-04-15T14:00:00Z"
+      }
+    ],
+    "starArtifact": {
+      "artifactId": "route-stars-hipparcos1997-v1",
+      "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c"
+    }
+  },
+  "payloadSha256": "0b60dd39243860ebb2d8fdd729b4b3f64bbc20d1af62b8edff4915cd9d7af0bd",
+  "schemaVersion": 1
+}

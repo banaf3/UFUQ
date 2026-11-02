@@ -1,0 +1,87 @@
+{
+  "crosswalkType": "UFUQ_ROUTE_STAR_CROSSWALK",
+  "schemaVersion": 1,
+  "crosswalkId": "route-star-crosswalk-v1",
+  "basis": "docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md section 4a (gate C row record, 2D.1E) and docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md section 5",
+  "note": "starId values are UFUQ-owned, source-neutral identifiers. Cultural records reference starId, never the catalogue identifier. Gate C fields are the categorical expectations the parser must reproduce.",
+  "stars": [
+    {
+      "starId": "ufuq-star-001",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 746,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-002",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 3179,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-003",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 4427,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-004",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 6686,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-005",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 8886,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-006",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 11767,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-007",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 53910,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-008",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 54061,
+      "gateC": { "componentCount": 2, "astroRef": "A", "multFlag": "C", "mHip": "AB" }
+    },
+    {
+      "starId": "ufuq-star-009",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 58001,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-010",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 59774,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-011",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 62956,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    },
+    {
+      "starId": "ufuq-star-012",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 65378,
+      "gateC": { "componentCount": 2, "astroRef": "A", "multFlag": "C", "mHip": "AC" }
+    },
+    {
+      "starId": "ufuq-star-013",
+      "source": "ESA_HIPPARCOS_1997",
+      "hip": 67301,
+      "gateC": { "componentCount": 1, "astroRef": "", "multFlag": "", "mHip": "" }
+    }
+  ]
+}

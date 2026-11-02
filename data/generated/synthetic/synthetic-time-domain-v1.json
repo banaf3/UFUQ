@@ -1,0 +1,47 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-time-domain-v1",
+  "artifactType": "UFUQ_SUPPORTED_TIME_DOMAIN",
+  "artifactVersion": "1",
+  "payload": {
+    "contributingDomainIdentities": [
+      "synthetic"
+    ],
+    "derivationMethodAndVersion": "synthetic",
+    "domainVersion": "synthetic-time-domain-2026",
+    "earliest": {
+      "boundary": "INCLUSIVE",
+      "canonicalUtc": "2026-01-02T00:00:00Z"
+    },
+    "executionScope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "inputResolution": "WHOLE_SECOND",
+    "interpolationSupportRequirements": "Samples i-1..i+2",
+    "latest": {
+      "boundary": "EXCLUSIVE",
+      "canonicalUtc": "2026-12-30T00:00:00Z"
+    },
+    "profileId": "SyntheticTechnicalProfileV1",
+    "requiredArtifactManifestIdentities": [
+      "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709",
+      "8f984bd8b5caf47f8126ea1c215f67390e4ef2b4aaba67b9b38d963249f7542d",
+      "2808bd9529081c9f53db587300ae20af181d3f7758058611adc1f5c4d726fe37",
+      "570823cf7811b0dbbd1d84cf9e84b63d3c280d48dbadfb1deee914a71f297fac"
+    ],
+    "requiredFieldCoverage": [
+      "UT1_MINUS_UTC",
+      "XP",
+      "YP"
+    ],
+    "requiredLeapAndEopPolicyIdentities": [
+      "LAGRANGE_FOUR_POINT_V1 via continuous UT1-TAI"
+    ]
+  },
+  "payloadSha256": "44cf3e589b1733808fd46456375a3d53cd6e42acd3ef44e54a59178ecc8374f1",
+  "schemaVersion": 1
+}
