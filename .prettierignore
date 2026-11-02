@@ -23,3 +23,6 @@ packages/astronomy-core/src/astrometry/tables/
 data/generated/
 tools/astronomy-reference/fixtures/profile-v1-reference-input.v1.json
 tools/astronomy-reference/fixtures/profile-v1-reference-output.v1.json
+
+# Exact-rational BKT oracle output (one case per line, hash-pinned).
+tools/bkt-reference/fixtures/
