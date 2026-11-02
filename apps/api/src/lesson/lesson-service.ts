@@ -198,6 +198,13 @@ function labelsOf(labels: readonly CulturalLabel[]): OverlayLabelV2[] {
 
 const degrees = (radians: number) => ((radians * 180) / Math.PI).toFixed(1);
 
+/** Transport rounding (about 0.2 arcsec); the server keeps full precision for scoring. */
+const roundedEnu = (enu: readonly number[]): [number, number, number] => [
+  Math.round((enu[0] as number) * 1e6) / 1e6,
+  Math.round((enu[1] as number) * 1e6) / 1e6,
+  Math.round((enu[2] as number) * 1e6) / 1e6,
+];
+
 function traceOf(
   record: AttemptDecisionRecord,
   response: ResponseStatus,
@@ -270,6 +277,15 @@ export class LessonService {
         learningMode: d.learning.value
           ? learningModeOf(d.learning.value)
           : ('UNAVAILABLE' as const),
+        supportedDomain: d.domain.value
+          ? {
+              earliest: d.domain.value.earliest.canonicalUtc,
+              earliestBoundary: d.domain.value.earliest.boundary,
+              latest: d.domain.value.latest.canonicalUtc,
+              latestBoundary: d.domain.value.latest.boundary,
+            }
+          : null,
+        observerLabel: d.observer.value?.displayLabel ?? '',
         notice: registration.notice,
       };
     });
@@ -331,11 +347,13 @@ export class LessonService {
         utc: scenario.utc,
         observerPresetId: scenario.observerPresetId,
         starIds: starIds.length > 0 ? starIds : undefined,
+        includeDisplayField: true,
       },
       {
         ...(data.leap.value ? { leap: data.leap.value } : {}),
         ...(data.domain.value ? { domain: data.domain.value } : {}),
         ...(data.eop.value ? { eop: data.eop.value } : {}),
+        ...(data.skyField.value ? { displayField: data.skyField.value } : {}),
         observers: new Map(observer ? [[observer.presetId, observer]] : []),
         stars: data.stars.value ?? new Map(),
       },
@@ -346,6 +364,17 @@ export class LessonService {
     const directions = new Map<string, GeometricHorizontalDirection>();
     for (const star of evaluation.stars)
       if (star.kind === 'DIRECTION') directions.set(star.starId, star.direction);
+    // The display-only background sky (SkyDisplayPolicyV1) surrounds the route stars; it is
+    // never a target. Without an accepted field the lesson keeps the route stars only.
+    const routeHip = new Set([...data.routeStarByHip.keys()].map((hip) => `hip-${hip}`));
+    const background =
+      evaluation.display?.status === 'ACCEPTED'
+        ? evaluation.display.stars.filter((star) => !routeHip.has(star.starId))
+        : [];
+    const colorOf = new Map(
+      (data.skyField.value?.stars ?? []).map((star) => [star.starId, star.colorIndexBV]),
+    );
+    const hipOfRoute = new Map([...data.routeStarByHip.entries()].map(([hip, id]) => [id, hip]));
     const eligibility = evaluateRouteEligibility(content, directions, scope);
     const selected = eligibility.find((route) => route.eligible);
     if (!selected) {
@@ -379,7 +408,7 @@ export class LessonService {
     }
     const handleOf = new Map<string, string>();
     const starOf = new Map<string, string>();
-    for (const starId of [...directions.keys()].sort()) {
+    for (const starId of [...directions.keys(), ...background.map((star) => star.starId)].sort()) {
       let handle: string;
       do handle = `h-${randomBytes(6).toString('hex')}`;
       while (starOf.has(handle));
@@ -416,14 +445,22 @@ export class LessonService {
       observerLabel: observer?.displayLabel ?? '',
       routeTitle: route.title,
       // Stars are listed in a random-handle order so list position reveals nothing.
-      stars: [...directions.entries()]
-        .map(([starId, direction]) => ({
+      stars: [
+        ...[...directions.entries()].map(([starId, direction]) => ({
           handle: handleOf.get(starId) as string,
-          enu: [...direction.enu] as [number, number, number],
+          enu: roundedEnu(direction.enu),
           visualMagnitude: direction.visualMagnitude,
+          colorIndexBV: colorOf.get(`hip-${hipOfRoute.get(starId)}`) ?? null,
           belowGeometricHorizon: direction.horizonClassification === 'BELOW_GEOMETRIC_HORIZON',
-        }))
-        .sort((a, b) => a.handle.localeCompare(b.handle)),
+        })),
+        ...background.map((star) => ({
+          handle: handleOf.get(star.starId) as string,
+          enu: roundedEnu(star.enu),
+          visualMagnitude: star.visualMagnitude,
+          colorIndexBV: star.colorIndexBV,
+          belowGeometricHorizon: star.altitudeRadians < 0,
+        })),
+      ].sort((a, b) => a.handle.localeCompare(b.handle)),
       currentStep: session.issued?.prompt ?? null,
       provenance: {
         profileId: evaluation.profileId,
