@@ -577,9 +577,14 @@ class ExperimentProtocolTests(unittest.TestCase):
             )
             if "erfa" in imported_modules:
                 erfa_importers.append(python_file.relative_to(PROJECT_ROOT).as_posix())
+        # Batch 01 plus the post-implementation ProfileV1 reference (shared ERFA lineage,
+        # declared in its output) are the only ERFA importers.
         self.assertEqual(
-            erfa_importers,
-            ["src/ufuq_astronomy_reference/batch01.py"],
+            sorted(erfa_importers),
+            [
+                "src/ufuq_astronomy_reference/batch01.py",
+                "src/ufuq_astronomy_reference/profile_v1_reference.py",
+            ],
         )
 
         environment = read_json(PROJECT_ROOT / "environment-manifest.json")

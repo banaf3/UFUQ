@@ -329,44 +329,12 @@ export function evaluateProfile(
 
   // Stage 9: execute the route.
   const ut1 = ut1FromTai(tai, eop.value.ut1MinusTaiSeconds);
-  const ephemeris = earthPositionVelocity(tt.part1, tt.part2);
-  if (ephemeris.status !== 0) {
-    return fail('SCIENTIFIC_EXECUTION_FAILURE', 9, `epv00-derived status ${ephemeris.status}.`);
-  }
-  const rbpn = biasPrecessionNutationMatrix(tt.part1, tt.part2);
-  const { x, y } = cipCoordinatesFromMatrix(rbpn);
-  const s = cioLocatorIau2006(tt.part1, tt.part2, x, y);
-  const theta = earthRotationAngle(ut1.part1, ut1.part2);
-  const sp = tioLocator(tt.part1, tt.part2);
-  const ellipsoid = observer.referenceEllipsoid;
-  const contextResult = observerAstrometryContext({
-    date1: tt.part1,
-    date2: tt.part2,
-    ebpv: ephemeris.barycentric,
-    ehp: ephemeris.heliocentric[0],
-    x,
-    y,
-    s,
-    theta,
-    elong: observer.geodeticLongitudeDegrees * (Math.PI / 180),
-    phi: observer.geodeticLatitudeDegrees * (Math.PI / 180),
-    hm: observer.height.valueMetres,
-    ellipsoid: {
-      equatorialRadiusMetres: ellipsoid.equatorialRadiusMetres,
-      flattening: 1 / ellipsoid.inverseFlattening,
-    },
-    xp: eop.value.xp.value,
-    yp: eop.value.yp.value,
-    sp,
-  });
-  if (contextResult.status !== 0) {
-    return fail('SCIENTIFIC_EXECUTION_FAILURE', 9, 'Observer geodetic conversion failed.');
-  }
-  const context = contextResult.context;
+  const route = buildRouteContext(tt, ut1, eop.value.xp.value, eop.value.yp.value, observer);
+  if (!route.ok) return fail('SCIENTIFIC_EXECUTION_FAILURE', 9, route.detail);
   starResults = starResults.map((result): StarResult => {
     if (result.kind !== 'NOT_EXECUTED') return result;
     const star = artifacts.stars.get(result.starId) as CatalogueStarState;
-    return executeStar(star, context);
+    return executeStar(star, route.context);
   });
 
   return {
@@ -394,7 +362,64 @@ export function evaluateProfile(
   };
 }
 
-function executeStar(star: CatalogueStarState, context: ObserverAstrometryContext): StarResult {
+/** Observer geometry needed by the route (a validated ObserverPreset satisfies it). */
+export type RouteObserver = Pick<
+  ObserverPreset,
+  'geodeticLatitudeDegrees' | 'geodeticLongitudeDegrees' | 'height' | 'referenceEllipsoid'
+>;
+
+/**
+ * Stage 9 context: epv00-derived ephemeris, IAU 2006/2000A CIP/CIO, ERA, s' and the
+ * apco-derived observer context, from typed TT/UT1 states and instantaneous xp, yp (rad).
+ */
+export function buildRouteContext(
+  tt: TwoPartJulianDate<'TT'>,
+  ut1: TwoPartJulianDate<'UT1'>,
+  xp: number,
+  yp: number,
+  observer: RouteObserver,
+):
+  | { readonly ok: true; readonly context: ObserverAstrometryContext }
+  | { readonly ok: false; readonly detail: string } {
+  const ephemeris = earthPositionVelocity(tt.part1, tt.part2);
+  if (ephemeris.status !== 0)
+    return { ok: false, detail: `epv00-derived status ${ephemeris.status}.` };
+  const rbpn = biasPrecessionNutationMatrix(tt.part1, tt.part2);
+  const { x, y } = cipCoordinatesFromMatrix(rbpn);
+  const s = cioLocatorIau2006(tt.part1, tt.part2, x, y);
+  const theta = earthRotationAngle(ut1.part1, ut1.part2);
+  const sp = tioLocator(tt.part1, tt.part2);
+  const ellipsoid = observer.referenceEllipsoid;
+  const contextResult = observerAstrometryContext({
+    date1: tt.part1,
+    date2: tt.part2,
+    ebpv: ephemeris.barycentric,
+    ehp: ephemeris.heliocentric[0],
+    x,
+    y,
+    s,
+    theta,
+    elong: observer.geodeticLongitudeDegrees * (Math.PI / 180),
+    phi: observer.geodeticLatitudeDegrees * (Math.PI / 180),
+    hm: observer.height.valueMetres,
+    ellipsoid: {
+      equatorialRadiusMetres: ellipsoid.equatorialRadiusMetres,
+      flattening: 1 / ellipsoid.inverseFlattening,
+    },
+    xp,
+    yp,
+    sp,
+  });
+  if (contextResult.status !== 0)
+    return { ok: false, detail: 'Observer geodetic conversion failed.' };
+  return { ok: true, context: contextResult.context };
+}
+
+/** Stage 9 per-star route: pmsafe-derived propagation, atciq-derived CIRS, geometric atioq. */
+export function executeStar(
+  star: CatalogueStarState,
+  context: ObserverAstrometryContext,
+): StarResult {
   const failure = (detail: string): StarResult => ({
     kind: 'NON_RESULT',
     starId: star.starId,

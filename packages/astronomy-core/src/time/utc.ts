@@ -6,6 +6,11 @@
  * only when the supplied approved leap state confirms a positive leap second at the end
  * of that exact UTC date. No current time, local time, offset, fraction, Unix time, or
  * bare Julian Date is accepted (PHASE1_SCIENTIFIC_PROFILE_V1.md, UTC contract).
+ *
+ * UFUQ derived work: `taiFromUtc`, `julianDateToCalendar`, `ttFromTai` and `ut1FromTai`
+ * use computations derived from IAU SOFA 2023-10-11 (utctai, jd2cal, taitt, taiut1); not
+ * software provided by or endorsed by SOFA. Difference: TAI-UTC comes from the approved
+ * leap artifact, never from iauDat. See ../astrometry/SOFA_DERIVED_NOTICE.md.
  */
 import { DAYSEC, DJM0, TTMTAI } from '../astrometry/constants.js';
 import {
@@ -252,7 +257,80 @@ export function utcQuasiJulianDate(
 
 /** TAI from a validated UTC instant (equivalent to SOFA `iauUtctai` after 1972). */
 export function taiFromUtc(instant: ValidatedUtcInstant): TwoPartJulianDate<'TAI'> {
-  return twoPart('TAI', instant.mjd + (instant.secondsOfDay + instant.taiMinusUtcSeconds) / DAYSEC);
+  // Derived from SOFA iauUtctai with big1 true (u1 = DJM0, u2 = the UTC quasi-JD part2),
+  // using the approved leap state instead of iauDat. After 1972 TAI-UTC has no drift,
+  // so dat12 = dat0 and dlod = 0; dleap is this UTC day's leap step.
+  const u1 = DJM0;
+  const u2 = utcQuasiJulianDate(instant).part2;
+  const { fd: fraction } = julianDateToCalendar(u1, u2);
+  const dleap = instant.dayLengthSeconds - DAYSEC;
+  let fd = fraction * ((DAYSEC + dleap) / DAYSEC);
+  fd *= (DAYSEC + 0.0) / DAYSEC;
+  let a2 = DJM0 - u1;
+  a2 += instant.mjd;
+  a2 += fd + instant.taiMinusUtcSeconds / DAYSEC;
+  return twoPart('TAI', a2);
+}
+
+/**
+ * Derived from SOFA iauJd2cal: Gregorian calendar date and day fraction from a two-part
+ * Julian Date, with Klein compensated summation of the fractions.
+ */
+export function julianDateToCalendar(
+  dj1: number,
+  dj2: number,
+): { readonly year: number; readonly month: number; readonly day: number; readonly fd: number } {
+  const DBL_EPSILON = 2.220446049250313e-16;
+  const dnint = (a: number) =>
+    Math.abs(a) < 0.5 ? 0.0 : a < 0.0 ? Math.ceil(a - 0.5) : Math.floor(a + 0.5);
+  const dj = dj1 + dj2;
+  if (dj < -68569.5 || dj > 1e9) throw new RangeError('Julian Date outside the jd2cal range.');
+  let d = dnint(dj1);
+  const f1 = dj1 - d;
+  let jd = Math.trunc(d);
+  d = dnint(dj2);
+  const f2 = dj2 - d;
+  jd += Math.trunc(d);
+  let s = 0.5;
+  let cs = 0.0;
+  for (const x of [f1, f2]) {
+    const t = s + x;
+    cs += Math.abs(s) >= Math.abs(x) ? s - t + x : x - t + s;
+    s = t;
+    if (s >= 1.0) {
+      jd++;
+      s -= 1.0;
+    }
+  }
+  let f = s + cs;
+  cs = f - s;
+  if (f < 0.0) {
+    f = s + 1.0;
+    cs += 1.0 - f + s;
+    s = f;
+    f = s + cs;
+    cs = f - s;
+    jd--;
+  }
+  if (f - 1.0 >= -DBL_EPSILON / 4.0) {
+    const t = s - 1.0;
+    cs += s - t - 1.0;
+    s = t;
+    f = s + cs;
+    if (-DBL_EPSILON / 2.0 < f) {
+      jd++;
+      f = Math.max(f, 0.0);
+    }
+  }
+  let l = jd + 68569;
+  const n = Math.trunc((4 * l) / 146097);
+  l -= Math.trunc((146097 * n + 3) / 4);
+  const i = Math.trunc((4000 * (l + 1)) / 1461001);
+  l -= Math.trunc((1461 * i) / 4) - 31;
+  const k = Math.trunc((80 * l) / 2447);
+  const day = l - Math.trunc((2447 * k) / 80);
+  l = Math.trunc(k / 11);
+  return { year: 100 * (n - 49) + i + l, month: k + 2 - 12 * l, day, fd: f };
 }
 
 /** SOFA `iauTaitt` semantics: TT = TAI + 32.184 s. */

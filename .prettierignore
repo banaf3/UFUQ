@@ -21,3 +21,5 @@ tools/astronomy-reference/experiments/fixtures/batch-01/
 tools/astronomy-reference/experiments/results/batch-01/
 packages/astronomy-core/src/astrometry/tables/
 data/generated/
+tools/astronomy-reference/fixtures/profile-v1-reference-input.v1.json
+tools/astronomy-reference/fixtures/profile-v1-reference-output.v1.json
