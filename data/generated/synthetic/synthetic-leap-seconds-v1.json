@@ -1,0 +1,138 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-leap-seconds-v1",
+  "artifactType": "UFUQ_LEAP_SECOND_STATE",
+  "artifactVersion": "1",
+  "payload": {
+    "bulletinC": {
+      "consistency": "CONSISTENT"
+    },
+    "expiryMjd": 61584,
+    "note": "SYNTHETIC TECHNICAL FIXTURE copying the published TAI-UTC steps for tests.",
+    "transitions": [
+      {
+        "effectiveMjd": 41317,
+        "taiMinusUtcSeconds": 10
+      },
+      {
+        "effectiveMjd": 41499,
+        "taiMinusUtcSeconds": 11
+      },
+      {
+        "effectiveMjd": 41683,
+        "taiMinusUtcSeconds": 12
+      },
+      {
+        "effectiveMjd": 42048,
+        "taiMinusUtcSeconds": 13
+      },
+      {
+        "effectiveMjd": 42413,
+        "taiMinusUtcSeconds": 14
+      },
+      {
+        "effectiveMjd": 42778,
+        "taiMinusUtcSeconds": 15
+      },
+      {
+        "effectiveMjd": 43144,
+        "taiMinusUtcSeconds": 16
+      },
+      {
+        "effectiveMjd": 43509,
+        "taiMinusUtcSeconds": 17
+      },
+      {
+        "effectiveMjd": 43874,
+        "taiMinusUtcSeconds": 18
+      },
+      {
+        "effectiveMjd": 44239,
+        "taiMinusUtcSeconds": 19
+      },
+      {
+        "effectiveMjd": 44786,
+        "taiMinusUtcSeconds": 20
+      },
+      {
+        "effectiveMjd": 45151,
+        "taiMinusUtcSeconds": 21
+      },
+      {
+        "effectiveMjd": 45516,
+        "taiMinusUtcSeconds": 22
+      },
+      {
+        "effectiveMjd": 46247,
+        "taiMinusUtcSeconds": 23
+      },
+      {
+        "effectiveMjd": 47161,
+        "taiMinusUtcSeconds": 24
+      },
+      {
+        "effectiveMjd": 47892,
+        "taiMinusUtcSeconds": 25
+      },
+      {
+        "effectiveMjd": 48257,
+        "taiMinusUtcSeconds": 26
+      },
+      {
+        "effectiveMjd": 48804,
+        "taiMinusUtcSeconds": 27
+      },
+      {
+        "effectiveMjd": 49169,
+        "taiMinusUtcSeconds": 28
+      },
+      {
+        "effectiveMjd": 49534,
+        "taiMinusUtcSeconds": 29
+      },
+      {
+        "effectiveMjd": 50083,
+        "taiMinusUtcSeconds": 30
+      },
+      {
+        "effectiveMjd": 50630,
+        "taiMinusUtcSeconds": 31
+      },
+      {
+        "effectiveMjd": 51179,
+        "taiMinusUtcSeconds": 32
+      },
+      {
+        "effectiveMjd": 53736,
+        "taiMinusUtcSeconds": 33
+      },
+      {
+        "effectiveMjd": 54832,
+        "taiMinusUtcSeconds": 34
+      },
+      {
+        "effectiveMjd": 56109,
+        "taiMinusUtcSeconds": 35
+      },
+      {
+        "effectiveMjd": 57204,
+        "taiMinusUtcSeconds": 36
+      },
+      {
+        "effectiveMjd": 57754,
+        "taiMinusUtcSeconds": 37
+      }
+    ],
+    "transport": {
+      "publisherIntegrity": "VERIFIED"
+    }
+  },
+  "payloadSha256": "8f984bd8b5caf47f8126ea1c215f67390e4ef2b4aaba67b9b38d963249f7542d",
+  "schemaVersion": 1
+}

@@ -39,10 +39,37 @@ const scaffoldDirectories = new Map([
       'tap-schema.v1.adql',
     ]),
   ],
-  ['data/curation/patterns', new Set(['README.md'])],
-  ['data/curation/relationships', new Set(['README.md'])],
-  ['data/curation/routes', new Set(['README.md'])],
-  ['data/generated', new Set(['README.md'])],
+  ['data/curation/patterns', new Set(['README.md', 'patterns.v1.json'])],
+  ['data/curation/relationships', new Set(['README.md', 'relationships.v1.json'])],
+  ['data/curation/routes', new Set(['README.md', 'routes.v1.json'])],
+  ['data/curation/scenarios', new Set(['scenarios.v1.json'])],
+  ['data/curation/stars', new Set(['route-star-crosswalk.v1.json'])],
+  [
+    'data/generated',
+    new Set([
+      'README.md',
+      'MANIFEST.v1.json',
+      'route-stars-hipparcos1997-v1.json',
+      'leap-seconds-iers-v1.json',
+      'observer-umpsa-pekan-v1.json',
+      'time-domain-profile-v1.json',
+      'lesson-content-v1.json',
+      'synthetic',
+      // Ignored local-only output (Bulletin B values; redistribution unconfirmed).
+      'local-only',
+    ]),
+  ],
+  [
+    'data/generated/synthetic',
+    new Set([
+      'synthetic-stars-v1.json',
+      'synthetic-leap-seconds-v1.json',
+      'synthetic-eop-v1.json',
+      'synthetic-observer-v1.json',
+      'synthetic-time-domain-v1.json',
+      'synthetic-lesson-content-v1.json',
+    ]),
+  ],
 ]);
 const errors = [];
 const rawDirectory = 'data/raw';
@@ -440,6 +467,6 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Data boundary verified: the Gaia, Hipparcos 1997, IERS leap/EOP, and observer-preset manifests are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; local IERS leap/EOP set ${localLeapEopStatus}; local observer-preset set ${localObserverStatus}; curation and generated data remain placeholders; local raw data is ignored and untracked.`,
+    `Data boundary verified: the Gaia, Hipparcos 1997, IERS leap/EOP, and observer-preset manifests are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; local IERS leap/EOP set ${localLeapEopStatus}; local observer-preset set ${localObserverStatus}; curation and generated data are checked by verify-generated-data.mjs; local raw data is ignored and untracked.`,
   );
 }

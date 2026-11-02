@@ -1,0 +1,198 @@
+{
+  "approval": {
+    "decisionDate": null,
+    "decisionReference": null,
+    "reviewer": null,
+    "scope": "SCIENTIFIC_PROFILE_V1",
+    "state": "REVIEW_REQUIRED"
+  },
+  "artifactId": "leap-seconds-iers-v1",
+  "artifactType": "UFUQ_LEAP_SECOND_STATE",
+  "artifactVersion": "1",
+  "payload": {
+    "authority": "IERS Bulletin C",
+    "bulletinC": {
+      "consistency": "CONSISTENT",
+      "issues": [
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72
+      ]
+    },
+    "expiryMjd": 61584,
+    "manifestId": "iers-leap-eop-v1-20261101T154026Z",
+    "transitions": [
+      {
+        "effectiveMjd": 41317,
+        "ntpSeconds": 2272060800,
+        "taiMinusUtcSeconds": 10
+      },
+      {
+        "effectiveMjd": 41499,
+        "ntpSeconds": 2287785600,
+        "taiMinusUtcSeconds": 11
+      },
+      {
+        "effectiveMjd": 41683,
+        "ntpSeconds": 2303683200,
+        "taiMinusUtcSeconds": 12
+      },
+      {
+        "effectiveMjd": 42048,
+        "ntpSeconds": 2335219200,
+        "taiMinusUtcSeconds": 13
+      },
+      {
+        "effectiveMjd": 42413,
+        "ntpSeconds": 2366755200,
+        "taiMinusUtcSeconds": 14
+      },
+      {
+        "effectiveMjd": 42778,
+        "ntpSeconds": 2398291200,
+        "taiMinusUtcSeconds": 15
+      },
+      {
+        "effectiveMjd": 43144,
+        "ntpSeconds": 2429913600,
+        "taiMinusUtcSeconds": 16
+      },
+      {
+        "effectiveMjd": 43509,
+        "ntpSeconds": 2461449600,
+        "taiMinusUtcSeconds": 17
+      },
+      {
+        "effectiveMjd": 43874,
+        "ntpSeconds": 2492985600,
+        "taiMinusUtcSeconds": 18
+      },
+      {
+        "effectiveMjd": 44239,
+        "ntpSeconds": 2524521600,
+        "taiMinusUtcSeconds": 19
+      },
+      {
+        "effectiveMjd": 44786,
+        "ntpSeconds": 2571782400,
+        "taiMinusUtcSeconds": 20
+      },
+      {
+        "effectiveMjd": 45151,
+        "ntpSeconds": 2603318400,
+        "taiMinusUtcSeconds": 21
+      },
+      {
+        "effectiveMjd": 45516,
+        "ntpSeconds": 2634854400,
+        "taiMinusUtcSeconds": 22
+      },
+      {
+        "effectiveMjd": 46247,
+        "ntpSeconds": 2698012800,
+        "taiMinusUtcSeconds": 23
+      },
+      {
+        "effectiveMjd": 47161,
+        "ntpSeconds": 2776982400,
+        "taiMinusUtcSeconds": 24
+      },
+      {
+        "effectiveMjd": 47892,
+        "ntpSeconds": 2840140800,
+        "taiMinusUtcSeconds": 25
+      },
+      {
+        "effectiveMjd": 48257,
+        "ntpSeconds": 2871676800,
+        "taiMinusUtcSeconds": 26
+      },
+      {
+        "effectiveMjd": 48804,
+        "ntpSeconds": 2918937600,
+        "taiMinusUtcSeconds": 27
+      },
+      {
+        "effectiveMjd": 49169,
+        "ntpSeconds": 2950473600,
+        "taiMinusUtcSeconds": 28
+      },
+      {
+        "effectiveMjd": 49534,
+        "ntpSeconds": 2982009600,
+        "taiMinusUtcSeconds": 29
+      },
+      {
+        "effectiveMjd": 50083,
+        "ntpSeconds": 3029443200,
+        "taiMinusUtcSeconds": 30
+      },
+      {
+        "effectiveMjd": 50630,
+        "ntpSeconds": 3076704000,
+        "taiMinusUtcSeconds": 31
+      },
+      {
+        "effectiveMjd": 51179,
+        "ntpSeconds": 3124137600,
+        "taiMinusUtcSeconds": 32
+      },
+      {
+        "effectiveMjd": 53736,
+        "ntpSeconds": 3345062400,
+        "taiMinusUtcSeconds": 33
+      },
+      {
+        "effectiveMjd": 54832,
+        "ntpSeconds": 3439756800,
+        "taiMinusUtcSeconds": 34
+      },
+      {
+        "effectiveMjd": 56109,
+        "ntpSeconds": 3550089600,
+        "taiMinusUtcSeconds": 35
+      },
+      {
+        "effectiveMjd": 57204,
+        "ntpSeconds": 3644697600,
+        "taiMinusUtcSeconds": 36
+      },
+      {
+        "effectiveMjd": 57754,
+        "ntpSeconds": 3692217600,
+        "taiMinusUtcSeconds": 37
+      }
+    ],
+    "transport": {
+      "byteLength": 5065,
+      "expiryNtp": 4023129600,
+      "file": "leap-seconds.3992312697",
+      "publicDomainStatement": true,
+      "publisherIntegrity": "VERIFIED",
+      "publisherSha1": "a9bad14584c31c70758402aab37bfd545923836a",
+      "sha256": "db5a895f16853b03bfc865e8d68f9fc8710ef1740e3400c701cd46a5bbbc3433",
+      "updateNtp": 3992312697,
+      "url": "https://hpiers.obspm.fr/iers/bul/bulc/ntp/leap-seconds.3992312697"
+    }
+  },
+  "payloadSha256": "59ee9720dbb8b2f6d804e3cd6ef6de1955fa7f08d3357f2b90eceb29038e93bd",
+  "schemaVersion": 1
+}

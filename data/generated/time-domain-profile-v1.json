@@ -1,0 +1,53 @@
+{
+  "approval": {
+    "decisionDate": null,
+    "decisionReference": null,
+    "reviewer": null,
+    "scope": "SCIENTIFIC_PROFILE_V1",
+    "state": "REVIEW_REQUIRED"
+  },
+  "artifactId": "time-domain-profile-v1",
+  "artifactType": "UFUQ_SUPPORTED_TIME_DOMAIN",
+  "artifactVersion": "1",
+  "payload": {
+    "contributingDomainIdentities": [
+      "EOP four-point support 2025-09-03T00:00:00Z inclusive to 2026-05-31T00:00:00Z exclusive (eop-bulletinb-453-461-v1 ff253fec80728a9223461cb4ae1a5ec328550981b43f8623199acbd1874a8cd4)",
+      "Leap validity before 2027-06-28T00:00:00Z (leap-seconds-iers-v1 59ee9720dbb8b2f6d804e3cd6ef6de1955fa7f08d3357f2b90eceb29038e93bd)",
+      "epv00-derived model status 0 for 1900-2100",
+      "Amendment A1 bound horizon J2040.0 (route-stars-hipparcos1997-v1 52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c)",
+      "Observer preset has no time limit (observer-umpsa-pekan-v1 53788b3b467402fb5cb68dc2b9f90deec5d0773f14e8eabee21b87df555dc9ab)"
+    ],
+    "derivationMethodAndVersion": "tools/catalogue generateSupportedTimeDomain v1",
+    "domainVersion": "time-domain-profile-v1-2025-09-03-2026-05-31",
+    "earliest": {
+      "boundary": "INCLUSIVE",
+      "canonicalUtc": "2025-09-03T00:00:00Z"
+    },
+    "executionScope": "SCIENTIFIC_PROFILE_V1",
+    "inputResolution": "WHOLE_SECOND",
+    "interpolationSupportRequirements": "Samples i-1, i, i+1, i+2 for every field, contiguous, FINAL, one coherent series",
+    "latest": {
+      "boundary": "EXCLUSIVE",
+      "canonicalUtc": "2026-05-31T00:00:00Z"
+    },
+    "profileId": "ScientificProfileV1",
+    "requiredArtifactManifestIdentities": [
+      "ff253fec80728a9223461cb4ae1a5ec328550981b43f8623199acbd1874a8cd4",
+      "59ee9720dbb8b2f6d804e3cd6ef6de1955fa7f08d3357f2b90eceb29038e93bd",
+      "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c",
+      "53788b3b467402fb5cb68dc2b9f90deec5d0773f14e8eabee21b87df555dc9ab"
+    ],
+    "requiredFieldCoverage": [
+      "UT1_MINUS_UTC",
+      "XP",
+      "YP"
+    ],
+    "requiredLeapAndEopPolicyIdentities": [
+      "ScientificProfileV1 final-only leap/EOP policy (2C.6)",
+      "LAGRANGE_FOUR_POINT_V1 via continuous UT1-TAI",
+      "IERS_CONVENTIONS_2010_V1_0_0_ORTHO_EOP_PMSDNUT2_IBAND1_UTLIBR_TT_ARGUMENT_V1"
+    ]
+  },
+  "payloadSha256": "034f5f58fe1b2a8bc25cb5455ed027096c02859451e1f3f6c6ac0bc2bc3abf28",
+  "schemaVersion": 1
+}

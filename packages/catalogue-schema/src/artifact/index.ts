@@ -221,3 +221,112 @@ export const CATALOGUE_PROVENANCE_MANIFEST_SCHEMA_V1 = {
     },
   },
 } as const;
+
+function canonicalize(value: unknown, path: string): unknown {
+  if (value === null) return null;
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw new RangeError(`Non-finite number at ${path}.`);
+    return Object.is(value, -0) ? 0 : value;
+  }
+  if (typeof value === 'string') return value.normalize('NFC');
+  if (typeof value === 'boolean') return value;
+  if (Array.isArray(value)) {
+    return value.map((item, index) => canonicalize(item, `${path}[${index}]`));
+  }
+  if (typeof value === 'object') {
+    const record = value as Record<string, unknown>;
+    const result: Record<string, unknown> = {};
+    for (const key of Object.keys(record).sort()) {
+      const item = record[key];
+      if (item === undefined) throw new TypeError(`Undefined value at ${path}.${key}.`);
+      result[key.normalize('NFC')] = canonicalize(item, `${path}.${key}`);
+    }
+    return result;
+  }
+  throw new TypeError(`Unsupported value at ${path}.`);
+}
+
+/**
+ * Canonical JSON text under CATALOGUE_CANONICAL_SERIALIZATION_V1: sorted keys, NFC
+ * strings, two-space indentation, LF, trailing LF, -0 normalized, non-finite rejected.
+ */
+export function canonicalJson(value: unknown): string {
+  return `${JSON.stringify(canonicalize(value, '$'), null, 2)}\n`;
+}
+
+export interface ArtifactApprovalRecord {
+  readonly state: 'APPROVED' | 'NOT_APPROVED' | 'REVIEW_REQUIRED';
+  readonly scope: 'SCIENTIFIC_PROFILE_V1' | 'SYNTHETIC_TECHNICAL_FIXTURE';
+  readonly reviewer: string | null;
+  readonly decisionDate: string | null;
+  readonly decisionReference: string | null;
+}
+
+/** Serialized runtime artifact envelope written by tools/catalogue `data:generate`. */
+export interface RuntimeArtifactEnvelope<P = unknown> {
+  readonly artifactType: string;
+  readonly schemaVersion: 1;
+  readonly artifactId: string;
+  readonly artifactVersion: string;
+  readonly payloadSha256: string;
+  readonly approval: ArtifactApprovalRecord;
+  readonly fieldApprovals?: Readonly<Record<string, ArtifactApprovalRecord>>;
+  readonly payload: P;
+}
+
+const APPROVAL_STATES = new Set(['APPROVED', 'NOT_APPROVED', 'REVIEW_REQUIRED']);
+const APPROVAL_SCOPES = new Set(['SCIENTIFIC_PROFILE_V1', 'SYNTHETIC_TECHNICAL_FIXTURE']);
+
+function isApprovalRecord(value: unknown): value is ArtifactApprovalRecord {
+  if (typeof value !== 'object' || value === null) return false;
+  const record = value as Record<string, unknown>;
+  const optionalText = (key: string) => record[key] === null || typeof record[key] === 'string';
+  return (
+    APPROVAL_STATES.has(record.state as string) &&
+    APPROVAL_SCOPES.has(record.scope as string) &&
+    optionalText('reviewer') &&
+    optionalText('decisionDate') &&
+    optionalText('decisionReference')
+  );
+}
+
+/**
+ * Structural envelope check for untrusted artifact JSON (IMP-019). The caller supplies
+ * the payload hash computed over `canonicalJson(payload)`; a mismatch is an integrity
+ * failure, never a silently accepted artifact.
+ */
+export function validateArtifactEnvelope(
+  value: unknown,
+  expectedType: string,
+  payloadSha256: (canonicalPayload: string) => string,
+): { ok: true; envelope: RuntimeArtifactEnvelope } | { ok: false; reason: string } {
+  if (typeof value !== 'object' || value === null) return { ok: false, reason: 'Not an object.' };
+  const record = value as Record<string, unknown>;
+  if (record.artifactType !== expectedType) {
+    return { ok: false, reason: `Expected ${expectedType}, found ${String(record.artifactType)}.` };
+  }
+  if (record.schemaVersion !== 1) return { ok: false, reason: 'Unsupported schemaVersion.' };
+  if (typeof record.artifactId !== 'string' || typeof record.artifactVersion !== 'string') {
+    return { ok: false, reason: 'Missing artifact identity.' };
+  }
+  if (typeof record.payloadSha256 !== 'string' || !/^[a-f0-9]{64}$/.test(record.payloadSha256)) {
+    return { ok: false, reason: 'Missing payload hash.' };
+  }
+  if (!isApprovalRecord(record.approval)) return { ok: false, reason: 'Malformed approval.' };
+  if (record.fieldApprovals !== undefined) {
+    const fields = record.fieldApprovals as Record<string, unknown>;
+    if (typeof fields !== 'object' || fields === null) {
+      return { ok: false, reason: 'Malformed field approvals.' };
+    }
+    for (const approval of Object.values(fields)) {
+      if (!isApprovalRecord(approval)) return { ok: false, reason: 'Malformed field approval.' };
+    }
+  }
+  if (typeof record.payload !== 'object' || record.payload === null) {
+    return { ok: false, reason: 'Missing payload.' };
+  }
+  if (payloadSha256(canonicalJson(record.payload)) !== record.payloadSha256) {
+    return { ok: false, reason: 'Payload hash mismatch (INTEGRITY_FAILURE).' };
+  }
+  return { ok: true, envelope: record as unknown as RuntimeArtifactEnvelope };
+}

@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "route-stars-hipparcos1997-v1",
+      "byteLength": 54320,
+      "path": "data/generated/route-stars-hipparcos1997-v1.json",
+      "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c",
+      "sha256": "d4388883d19de853f99f950667c755694f037dde8712fd07860117728a8b72a9",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "leap-seconds-iers-v1",
+      "byteLength": 4574,
+      "path": "data/generated/leap-seconds-iers-v1.json",
+      "payloadSha256": "59ee9720dbb8b2f6d804e3cd6ef6de1955fa7f08d3357f2b90eceb29038e93bd",
+      "sha256": "7dd2f27cbf82b536682f26d2e455cf820bf21dc23fd5626803383cfdf10a9cfc",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "observer-umpsa-pekan-v1",
+      "byteLength": 3642,
+      "path": "data/generated/observer-umpsa-pekan-v1.json",
+      "payloadSha256": "53788b3b467402fb5cb68dc2b9f90deec5d0773f14e8eabee21b87df555dc9ab",
+      "sha256": "65e2802963705feece2ce3dc7fae0e0c4b204caead67b9f89c7144eb168b511b",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "time-domain-profile-v1",
+      "byteLength": 2401,
+      "path": "data/generated/time-domain-profile-v1.json",
+      "payloadSha256": "034f5f58fe1b2a8bc25cb5455ed027096c02859451e1f3f6c6ac0bc2bc3abf28",
+      "sha256": "a129dc340564f7888267b3ff61b724ece0cc1fe7cee7f37568727446ce0072ab",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "lesson-content-v1",
+      "byteLength": 21912,
+      "path": "data/generated/lesson-content-v1.json",
+      "payloadSha256": "0b60dd39243860ebb2d8fdd729b4b3f64bbc20d1af62b8edff4915cd9d7af0bd",
+      "sha256": "71bb004c2286d7d786786da33e8e61c51e3c434666f47a2aebef1156fba203bf",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "eop-bulletinb-453-461-v1",
+      "byteLength": 290601,
+      "path": "data/generated/local-only/eop-bulletinb-453-461-v1.json",
+      "payloadSha256": "ff253fec80728a9223461cb4ae1a5ec328550981b43f8623199acbd1874a8cd4",
+      "sha256": "f909cccf0b7271d9296f9ef0c121bf42b2242c7257fc692fcc31ce0e7fc4b90d",
+      "tracked": false
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-stars-v1",
+      "byteLength": 11524,
+      "path": "data/generated/synthetic/synthetic-stars-v1.json",
+      "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709",
+      "sha256": "45eb8ec2e332ccda008ac1f74a757b4efb9ca35a928b6f1358c633759eee15b7",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-leap-seconds-v1",
+      "byteLength": 3050,
+      "path": "data/generated/synthetic/synthetic-leap-seconds-v1.json",
+      "payloadSha256": "8f984bd8b5caf47f8126ea1c215f67390e4ef2b4aaba67b9b38d963249f7542d",
+      "sha256": "5c64c49c6ceaf5a8c17828c4528ea96f91f4c9192633d67654e67ce937a49db2",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-eop-v1",
+      "byteLength": 203878,
+      "path": "data/generated/synthetic/synthetic-eop-v1.json",
+      "payloadSha256": "2808bd9529081c9f53db587300ae20af181d3f7758058611adc1f5c4d726fe37",
+      "sha256": "5f4c26ea305fcbe813f47ca1075152951702894462eca438cb5b1901996902aa",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-observer-v1",
+      "byteLength": 1669,
+      "path": "data/generated/synthetic/synthetic-observer-v1.json",
+      "payloadSha256": "570823cf7811b0dbbd1d84cf9e84b63d3c280d48dbadfb1deee914a71f297fac",
+      "sha256": "b1e34979716825818e39d8370b2d4dd1236140bf885c3a12dcd60f1c24d3fcc0",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-time-domain-v1",
+      "byteLength": 1615,
+      "path": "data/generated/synthetic/synthetic-time-domain-v1.json",
+      "payloadSha256": "44cf3e589b1733808fd46456375a3d53cd6e42acd3ef44e54a59178ecc8374f1",
+      "sha256": "3cd4aa8e3c92b2cedba6e142c60052cea83780defa5798ac67b00dc9e5a24903",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-lesson-content-v1",
+      "byteLength": 14988,
+      "path": "data/generated/synthetic/synthetic-lesson-content-v1.json",
+      "payloadSha256": "ff13c01cb3a1f165ab73b7d9c60749f443b789f0e578e46fec669ccc77cd65dc",
+      "sha256": "a28a1ce3725dc489945b3a66a3899222b2ab47a2c46567204e6fe0949057b9f6",
+      "tracked": true
+    }
+  ],
+  "canonicalSerialization": "CATALOGUE_CANONICAL_SERIALIZATION_V1",
+  "generator": "tools/catalogue data:generate v1",
+  "manifestType": "UFUQ_GENERATED_DATA_MANIFEST",
+  "schemaVersion": 1
+}
