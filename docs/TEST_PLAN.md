@@ -15,7 +15,7 @@ The Phase 0 scaffold should expose these stable intentions through package scrip
 | `check` | formatting/lint, TypeScript, package boundaries, and browser-bundle exclusions |
 | `data:verify` | schema, provenance manifest, canonical serialization, referential integrity, and hashes |
 | `test` | unit/contract/property tests discovered only by `vitest.unit.config.ts` |
-| `test:reference` | production/reference astronomy and separately justified independent-oracle or BKT comparisons discovered only by `vitest.reference.config.ts` |
+| `test:reference` | production/reference astronomy and separately justified independent-oracle or BKT comparisons discovered only by `vitest.reference.config.ts`. **Active and in CI since 2026-11-02** (`tests/reference/profile-v1-reference.test.ts`) |
 | `test:integration` | API plus real-MySQL tests discovered only by `vitest.integration.config.ts` |
 | `test:e2e` | focused browser journeys, interaction boundaries, and accessibility checks |
 

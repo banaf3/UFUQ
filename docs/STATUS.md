@@ -1,6 +1,15 @@
 # Implementation status
 
-**Assessment date:** 2026-08-16
+**Assessment date:** 2026-11-02 (Phase 1 implementation and the Phase 2 vertical slice; earlier sections keep their own dates)
+
+**Update 2026-11-02:** Phase 1 is complete for implementation and the Phase 2 vertical
+slice runs end to end. ScientificProfileV1 is implemented in pure TypeScript
+(SOFA-derived route, IERS 2010 restoration, final-only EOP interpolation), 2E produces
+byte-reproducible artifacts, `test:reference` is active (104 cases agree with PyERFA to
+8.9e-16 rad), and the API/web lesson selects routes from data. Every real artifact and
+content record is `REVIEW_REQUIRED`, so strict ProfileV1 execution fails closed until
+named reviewers approve. See `spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md` and
+`PHASE2_VERTICAL_SLICE.md`. The paragraph below is the historical Phase 0 summary.
 
 The consolidated Phase 0 repository scaffold is validated. It contains health-only web
 and API applications, eight npm workspaces, pure empty/type-placeholder production
@@ -15,7 +24,7 @@ persistence/authentication behavior, dashboard, or deployment configuration.
 | Gate | Result | Basis |
 |---|---|---|
 | Repository scaffolding | YES | The consolidated eight-workspace TypeScript monorepo, non-npm oracle boundary, strict compiler/build setup, test discovery, dependency enforcement, lockfile, and CI are validated. |
-| Validated celestial-guidance vertical slice | NO | The source-neutral production route and final-only leap/EOP policy are specified but unimplemented. As of 2026-11-01, Milestone 2D has selected every data source with hash-bound evidence: ESA Hipparcos 1997 for the route stars (Amendment A1), the IERS leap transport, Bulletin B 453–461 final EOP, the IERS Conventions 2010 v1.0.0 restoration routines, and a candidate UMPSA Pekan observer preset. All are `REVIEW_REQUIRED`. Parsers and deterministic data (2E), the production implementation, production/reference evidence and numerical acceptance, cultural membership/route approval, scenario, and scoring tolerances remain open at their respective lifecycle gates. |
+| Validated celestial-guidance vertical slice | NO (implemented, pending review) | **2026-11-02:** the slice is implemented and runs end to end on the synthetic fixture and, in `REVIEW_PREVIEW`, on real data. It is not validated until named reviewers approve the five ProfileV1 artifacts, the EOP fields, and the lesson content, and a learner direction tolerance is approved (IMP-012). Historical basis: the source-neutral production route and final-only leap/EOP policy were specified but unimplemented. As of 2026-11-01, Milestone 2D has selected every data source with hash-bound evidence: ESA Hipparcos 1997 for the route stars (Amendment A1), the IERS leap transport, Bulletin B 453–461 final EOP, the IERS Conventions 2010 v1.0.0 restoration routines, and a candidate UMPSA Pekan observer preset. All are `REVIEW_REQUIRED`. Parsers and deterministic data (2E), the production implementation, production/reference evidence and numerical acceptance, cultural membership/route approval, scenario, and scoring tolerances remain open at their respective lifecycle gates. |
 | Participant study | NO | Participant protocol, ethics applicability/approval, instruments, recruitment, privacy, consent, data handling, and study-ready software remain unresolved or unimplemented. |
 | Deployment | NO | Hosting/operations target, production account policy, security/privacy release profile, performance/accessibility baselines, monitoring, and backup/restore evidence remain unresolved or unimplemented. |
 
@@ -387,6 +396,28 @@ Every selection is `REVIEW_REQUIRED`. Milestone 2D is
 named review, and deployment of an EOP bundle still needs confirmation of the IERS
 redistribution terms.
 
+### Milestone 2E, first implementation, reference comparison, and Phase 2 slice (2026-11-02)
+
+- **2E:** fail-closed parsers (Hipparcos `hip_main`, NTP leap list, Bulletin C,
+  Bulletin B Section 1) and `npm run data:generate` with a byte-identical `--check`.
+  The activated domain is `2025-09-03T00:00:00Z` inclusive to `2026-05-31T00:00:00Z`
+  exclusive. The Bulletin B bundle stays in ignored `data/generated/local-only/`.
+- **Implementation:** `astronomy-core` implements the normative route; 18 SOFA
+  `t_sofa_c.c` checks and every IERS routine test case pass. Findings: the FUNDARG
+  header uses IERS 2003 constants for LP and D; Fortran default-REAL literals need
+  `Math.fround`; the pinned MJD split resolves about 0.6 µs.
+- **Reference:** `test:reference` is active in CI. 104 Hipparcos-row cases match PyERFA
+  (shared SOFA lineage) to 8.9e-16 rad against the SOFA 1e-12 rad fidelity bound. This
+  is not scientific acceptance.
+- **Phase 2:** data-driven route selection, server scoring (exact star identity;
+  direction `MEASURED_NO_TOLERANCE`), R3F scene with keyboard controls, and Playwright
+  journey. New execution scopes: `REVIEW_PREVIEW` (opt-in, reviewer-only) and
+  `SYNTHETIC_TECHNICAL_FIXTURE`.
+- **Gates run 2026-11-02:** `npm run check`; `npm run test` (103); `npm run
+  test:reference` (10); `npm run build` plus the bundle-authority guard; `npm run
+  exports:check` (13); `npm run test:e2e` (4); oracle unittests (41). GitHub CI passed
+  on commit `04cf80e`.
+
 ### Milestone 2A modern synthetic-only retry
 
 The earlier exact candidate set remains recorded as a failed experiment: Astropy 7.2.2
@@ -511,6 +542,11 @@ Phase 1 Milestones 1, 2A, 2B, and the Milestone 2C specification gate are ready 
 closed in the proposed documentation commit. No 2C semantic blocker remains. Another
 synthetic batch, production/reference evidence and AST-006 numerical approval are not
 prerequisites to starting the bounded implementation; they retain their later gates.
+
+**Update 2026-11-02:** 2E, the first implementation, the reference comparison and the
+Phase 2 slice are done (see the section above). The authorized next work is named review
+and approval (`data/approvals/README.md`), then Phase 3 (assessments and BKT) on the
+synthetic fixture, which needs no approval to start.
 
 **Update 2026-11-01:** Milestone 2D's selections are complete for implementation
 (2D.1D, 2D.1E, 2D.2, and 2D.3 above). The authorized next work is Milestone 2E. The

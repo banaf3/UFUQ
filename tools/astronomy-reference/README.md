@@ -1,4 +1,24 @@
-# Independent synthetic astronomy reference tool
+# Independent astronomy reference tool
+
+## Post-implementation ScientificProfileV1 reference (2026-11-02)
+
+`reference_profile_v1.py` computes the PyERFA (2.0.1.5; ERFA 2.0.1 = SOFA 20231011)
+reference for the production geometric route. It has a decomposed path (`apco` with
+zero refraction constants, `atciq`, `atioq`) and the composed `atco13` with zero
+pressure. Its inputs are `fixtures/profile-v1-reference-input.v1.json`: the 13
+Hipparcos route rows, the observer candidate, and 8 instants with explicitly synthetic
+UT1-UTC/xp/yp, built by `scripts/reference/build-profile-v1-reference-input.mjs`. Its
+output is hash-pinned and replayed by `tests/test_profile_v1_reference.py`. The
+TypeScript comparison is `tests/reference/profile-v1-reference.test.ts`
+(`npm run test:reference`). This is shared-lineage implementation verification, not an
+independent oracle. It lives outside `run.py` because that file's bytes are frozen by
+the Batch 01 evidence.
+
+```powershell
+uv run --locked --no-sync python reference_profile_v1.py
+```
+
+The sections below describe the original synthetic-only scope.
 
 This non-npm Python tool contains the bounded Phase 1 environment/independence smoke
 test and the Milestone 2C.5B synthetic-only Batch 01 runner. It contains no catalogue

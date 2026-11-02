@@ -14,21 +14,23 @@ versioned `SkyPattern`, `GuidanceRelationship`, and `LessonRoute` data, with
 API-owned validity, scoring, mastery, and scaffold decisions.
 
 The current phase and the next step are in `docs/HANDOFF.md`; the full evidence record
-is `docs/STATUS.md`. As of 2026-11-01 the project is in **Phase 1** (astronomy and
-data technical spike). The web app and API are still health-only, and production
-TypeScript contains no astronomy calculation. The approved order is: Milestone 2D
-data/source authority, then 2E parsers and deterministic data, then the first bounded
-TypeScript astronomy implementation. Do not start production astronomy code ahead of
-that order. Installed Three.js/R3F dependencies do not mean a 3D lesson exists.
+is `docs/STATUS.md`. As of 2026-11-02 **Phase 1 is complete for implementation and the
+Phase 2 vertical slice is implemented, pending named review**
+(`docs/spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md`, `docs/PHASE2_VERTICAL_SLICE.md`).
+`packages/astronomy-core` holds the SOFA-derived ScientificProfileV1 route and the IERS
+2010 restoration port (keep their licence notices and "derived, not endorsed"
+statements). `tools/catalogue` generates the runtime artifacts; `apps/api` selects
+routes from data and scores; `apps/web` renders the R3F lesson. Every real artifact
+and content record is `REVIEW_REQUIRED`: strict ProfileV1 execution fails closed until
+a named reviewer writes an approval record (`data/approvals/README.md`). Never create
+an `APPROVED` record yourself. Use the `SYNTHETIC_TECHNICAL_FIXTURE` dataset for tests
+and the opt-in `REVIEW_PREVIEW` scope only for reviewer inspection.
 
-Milestone 2D is closed for implementation. The V1 route-star catalogue is ESA
-Hipparcos 1997 `hip_main` with bounded RV omission
-(`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap transport, Bulletin B EOP
-series, IERS 2010 restoration routines, and candidate observer preset are in
-`docs/spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`. All are `REVIEW_REQUIRED`, and
-Milestone 2E is next. The first
-route's helper is al-Kaff al-Khaḍīb leading to al-Jady, with greater Banāt Naʿsh as the
-alternative. Search the owner's Arabic sources with
+The V1 route-star catalogue is ESA Hipparcos 1997 `hip_main` with bounded RV omission
+(`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap, EOP, restoration and
+observer sources are in `docs/spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`. IERS
+Bulletin B values stay in ignored `data/generated/local-only/`. The first route's helper
+is al-Kaff al-Khaḍīb leading to al-Jady, with greater Banāt Naʿsh as the alternative. Search the owner's Arabic sources with
 `.agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs`.
 
 ## Repository map
@@ -53,20 +55,24 @@ graph. Add a justified edge together with its check; never disable the gate.
 
 Run from the repository root with Node 22.16.0 and npm 10.9.2 (`.nvmrc`). In
 PowerShell use `npm.cmd`/`npx.cmd` if the execution policy blocks the wrappers.
-All commands below passed on `main` on 2026-11-01 except the two inactive suites.
+All commands below passed on 2026-11-02 except `test:integration` (inactive until Phase 4).
 
-| Purpose                                     | Command                                                                                  |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Clean install                               | `npm ci`                                                                                 |
-| Format, lint, types, boundaries, data guard | `npm run check`                                                                          |
-| Unit tests                                  | `npm run test`                                                                           |
-| Build                                       | `npm run build`                                                                          |
-| Public export resolution                    | `npm run exports:check`                                                                  |
-| Browser smoke (owns the 4173/4174 servers)  | `npm run test:e2e`                                                                       |
-| Install Chromium if absent                  | `npx --no-install playwright install chromium`                                           |
-| Reference / integration suites              | `npm run test:reference` / `npm run test:integration` (inactive; fail closed when empty) |
-| Web dev server                              | `npm run dev -w @ufuq/web`                                                               |
-| Python oracle                               | see `tools/astronomy-reference/README.md` (uv 0.11.32, CPython 3.14.6)                   |
+| Purpose                                     | Command                                                                                                            |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Clean install                               | `npm ci`                                                                                                           |
+| Format, lint, types, boundaries, data guard | `npm run check`                                                                                                    |
+| Unit tests                                  | `npm run test`                                                                                                     |
+| Build                                       | `npm run build`                                                                                                    |
+| Public export resolution                    | `npm run exports:check`                                                                                            |
+| Browser smoke (owns the 4173/4174 servers)  | `npm run test:e2e`                                                                                                 |
+| Install Chromium if absent                  | `npx --no-install playwright install chromium`                                                                     |
+| Production/reference comparison (active)    | `npm run test:reference`                                                                                           |
+| Integration suite (inactive until Phase 4)  | `npm run test:integration` (fails closed when empty)                                                               |
+| Regenerate data / verify rebuild            | `npm run data:generate` / `npm run data:generate -- --check` (needs local `data/raw`)                              |
+| Reviewer preview of the real sky            | `npm run preview:review` (labelled unreviewed; never learner content)                                              |
+| Pending approvals                           | `npm run approvals:status`                                                                                         |
+| Web dev server                              | `npm run dev -w @ufuq/web`                                                                                         |
+| Python oracle                               | see `tools/astronomy-reference/README.md` (uv 0.11.32 at `%USERPROFILE%\.local\uv-0.11.32\uv.exe`, CPython 3.14.6) |
 
 ## Context to open for the task
 

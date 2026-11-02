@@ -236,6 +236,15 @@ I/311 is not promoted; PCRV/XHIP are not mixed speculatively. The 19 HIP IDs rem
 technical query/review set, not cultural or learner-route authority. The detailed gate
 is recorded in `spikes/PHASE1_PRODUCTION_CATALOGUE_AUTHORITY.md`.
 
+**Milestone 2E and first implementation outcome (2026-11-02):**
+`PHASE1_IMPLEMENTATION_COMPLETE_PENDING_SCIENTIFIC_ACCEPTANCE`. 2E parsers and
+byte-reproducible artifacts exist (`npm run data:generate -- --check`), the activated
+domain is `2025-09-03T00:00:00Z` inclusive to `2026-05-31T00:00:00Z` exclusive, the
+pure-TypeScript ScientificProfileV1 route is implemented, and `test:reference` is active:
+104 cases match PyERFA to 8.9e-16 rad (shared SOFA lineage; implementation fidelity, not
+acceptance). Named review, AST-006 tolerance approval and any stronger independent
+validation remain. See `spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md`.
+
 Milestone 2E implements the local read-only catalogue parser, leap/EOP parsers and
 independent normalized field records, leap-aware four-point interpolation plus the
 pinned IERS Conventions 2010 restoration configuration, runtime validation,
@@ -261,6 +270,12 @@ final numerical tolerance before production code exists; rejected spike code can
 removed without changing application contracts.
 
 ## Phase 2: minimal celestial-guidance vertical slice
+
+**Outcome (2026-11-02):** `VERTICAL_SLICE_IMPLEMENTED_PENDING_REVIEW`. The three-step
+journey (helper pattern, al-Jady, True North) runs end to end with server route
+selection and scoring. Every technical exit criterion is met. Reviewed operation-
+specific acceptance, approved content and an approved learner direction tolerance remain
+owner/reviewer gates. See `PHASE2_VERTICAL_SLICE.md`.
 
 **Goal:** deliver one validated local multi-step journey from an approved sky-pattern
 route to Al-Jady/Polaris through server-issued scenario, 3D presentation, raw learner

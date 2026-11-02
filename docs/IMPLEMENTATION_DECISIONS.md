@@ -131,6 +131,9 @@ Historical report/deviation/authority status remains in `governance/`.
   tracked and deployed with credit. Gaia DR3 and DR4 serve only as cross-checks, and
   I/311 stays the parser spike. Row component/quality records and scientific review
   remain open. See `spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`.
+  **2E (2026-11-02):** `data/generated/route-stars-hipparcos1997-v1.json` is the
+  generated runtime artifact (13 rows, native fields, covariance, A1 bounds, stable
+  `starId` crosswalk in `data/curation/stars/`), `REVIEW_REQUIRED`.
 - **Status:** `CATALOGUE_AUTHORITY_BLOCKED` (Gaia DR3 is the preferred candidate;
   adapter A and immutable query gate B are closed; I/311 remains a local
   non-redistributing spike; production row authority/minimal allowlist, Polaris authority, and
@@ -284,11 +287,19 @@ Historical report/deviation/authority status remains in `governance/`.
     v1.0.0 restoration routines, with hash-bound evidence
     (`spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`). Named review of the bundle and
     the 2E activation of the supported-time bounds remain.
+  - **IMPLEMENTED (2026-11-02):** `packages/astronomy-core` implements the route; 2E
+    derived the domain `2025-09-03T00:00:00Z` (inclusive) to `2026-05-31T00:00:00Z`
+    (exclusive). Implementation decisions: `CATALOGUE_TT_EPOCH_TO_TDB_GEOCENTRIC_V1`,
+    `TT_RATE_EQUALS_TDB_RATE_IAU2006_B3`, restoration evaluated at the TT MJD, the
+    opt-in `REVIEW_PREVIEW` scope, and the `SYNTHETIC_TECHNICAL_FIXTURE` scope. See
+    `spikes/PHASE1_2E_IMPLEMENTATION_AND_REFERENCE.md`.
   - **POST_IMPLEMENTATION:** compare the TypeScript implementation with pinned
     reference fixtures across the approved domain, record residuals and statuses,
     populate `F-001`/`F-005` and other applicable ledger evidence, activate
     `test:reference`, and seek operation-specific tolerance approval before scientific
-    acceptance.
+    acceptance. **2026-11-02:** `test:reference` is active; 104 cases match PyERFA to
+    8.9e-16 rad against the SOFA 1e-12 rad implementation-fidelity bound. F-001/F-005
+    population and tolerance approval remain.
   - **STRONGER_INDEPENDENT_VALIDATION:** evaluate USNO NOVAS or another genuinely
     independent positional-astronomy path. Astropy/PyERFA/ERFA/SOFA shared lineage
     cannot satisfy this stage.
@@ -304,7 +315,8 @@ Historical report/deviation/authority status remains in `governance/`.
 - **What code it affects:** Astronomy-to-scene adapter, camera orientation, raycasting,
   deterministic scene tests.
 - **Validation required:** Cardinal-direction, horizon/zenith, camera, and raycast tests
-  independent of screenshots.
+  independent of screenshots. **2026-11-02:** implemented in
+  `apps/web/src/scene/mapping.ts` with those tests in `mapping.test.ts`.
 
 ## IMP-011 — Reviewed sky-pattern and guidance content
 
@@ -327,6 +339,10 @@ Historical report/deviation/authority status remains in `governance/`.
   `OLD_ARABIAN` layer, verified claim by claim against its cited primary texts. Its
   CC BY-ND 4.0 line figures are never imported. Cultural, Arabic, and educational review
   are still required before learner release.
+  **2026-11-02:** candidate records exist in `data/curation/` (patterns, guidance,
+  routes, scenarios), each `REVIEW_REQUIRED` with source locators. *Dhāt al-Kursī* has
+  no Arabic script recorded because no local text verifies it; guide lines are
+  `MODERN_PEDAGOGICAL`. See `PHASE2_VERTICAL_SLICE.md`.
 - **Status:** unresolved
 - **What code it affects:** Curated `SkyPattern`, `GuidanceRelationship`, and
   `LessonRoute` data; scene overlays; assessment targets; lesson/scaffold configuration;
@@ -352,6 +368,8 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Validation required:** Schema/referential-integrity tests; ordered-step and
   alternative-path tests; missing-star route exclusion; applicable-scenario filtering;
   review-status enforcement; server-authority and no-special-case dependency tests.
+  **2026-11-02:** implemented (`evaluateRouteEligibility`, content validator, API and
+  browser tests).
 
 ## IMP-012 — Minimal scenario and scoring policy
 
@@ -371,6 +389,9 @@ Historical report/deviation/authority status remains in `governance/`.
   tolerance is selected. The observer/time
   input remains separate from learner-answer and scoring policy; a missing final
   scientific tolerance blocks later acceptance, not implementation start.
+  **2026-11-02:** three scenario presets (`REVIEW_REQUIRED`) are curated; star-identity
+  steps are scored exactly; the direction step is `MEASURED_NO_TOLERANCE` until a
+  tolerance policy is approved and supplied to `measureDirectionAnswer`.
 - **Status:** unresolved
 - **What code it affects:** Scenario/route fixture, route-selection use case,
   assessment-core scoring, API validation, browser interaction, reference tests.
@@ -454,4 +475,6 @@ Historical report/deviation/authority status remains in `governance/`.
   API request/response validation, package dependencies, and schema tests.
 - **Validation required:** Invalid/unknown input tests, web/API agreement on serialized
   DTOs, framework-free package checks, and one documented dependency decision before a
-  validator library is added.
+  validator library is added. **2026-11-02:** hand-written framework-free validators
+  (`validateArtifactEnvelope`, `validateLessonContent`, lesson request parsers); no
+  validator library added.
