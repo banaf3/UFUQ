@@ -32,6 +32,12 @@ import { type EarthOrientationInput, type EopBundle, earthOrientationAt } from '
 import { type ObserverPreset, validateObserverPreset } from '../observer/observer-preset.js';
 import { isInsideSupportedDomain, type SupportedTimeDomain } from '../time/supported-domain.js';
 import {
+  executeDisplayStar,
+  SKY_DISPLAY_POLICY_V1,
+  type SkyDisplayField,
+  type SkyDisplayResult,
+} from './sky-display.js';
+import {
   type ApprovedLeapState,
   parseCanonicalUtc,
   taiFromUtc,
@@ -127,6 +133,8 @@ export interface ProfileArtifacts {
   readonly eop?: EopBundle;
   readonly observers: ReadonlyMap<string, ObserverPreset>;
   readonly stars: ReadonlyMap<string, CatalogueStarState>;
+  /** Optional display-only background field (SkyDisplayPolicyV1); never assessed. */
+  readonly displayField?: SkyDisplayField;
 }
 
 export interface ProfileRequest {
@@ -134,6 +142,8 @@ export interface ProfileRequest {
   readonly utc?: unknown;
   readonly observerPresetId?: unknown;
   readonly starIds?: unknown;
+  /** Also execute the display-only background field after every gate has passed. */
+  readonly includeDisplayField?: boolean;
 }
 
 export interface TimeEvidence {
@@ -156,6 +166,8 @@ export type ProfileEvaluation =
       readonly earthOrientation: EarthOrientationInput;
       readonly artifactIdentities: readonly string[];
       readonly stars: readonly StarResult[];
+      /** Present only when requested; display-only and never assessed. */
+      readonly display?: SkyDisplayResult;
     }
   | {
       readonly outcome: GlobalFailureOutcome;
@@ -336,6 +348,9 @@ export function evaluateProfile(
     const star = artifacts.stars.get(result.starId) as CatalogueStarState;
     return executeStar(star, route.context);
   });
+  const display = request.includeDisplayField
+    ? evaluateDisplayField(artifacts.displayField, scope, route.context)
+    : undefined;
 
   return {
     outcome: 'GEOMETRIC_RESULT_PENDING_VALIDATION',
@@ -359,6 +374,36 @@ export function evaluateProfile(
       (artifacts.eop as EopBundle).identity.payloadSha256,
     ],
     stars: starResults,
+    ...(display === undefined ? {} : { display }),
+  };
+}
+
+/** SkyDisplayPolicyV1 over the background field, gated by the field's own approval. */
+function evaluateDisplayField(
+  field: SkyDisplayField | undefined,
+  scope: ExecutionScope,
+  context: ObserverAstrometryContext,
+): SkyDisplayResult {
+  if (field === undefined) return { status: 'NOT_ACCEPTED', reason: 'No display field.' };
+  if (field.approval.scope !== approvalScopeFor(scope) || !isApprovedFor(field.approval, scope)) {
+    return {
+      status: 'NOT_ACCEPTED',
+      reason: `Display field approval is ${field.approval.state} for ${scope}.`,
+    };
+  }
+  const stars = [];
+  const omittedStarIds: string[] = [];
+  for (const star of field.stars) {
+    const result = executeDisplayStar(star, field.epoch, context);
+    if (result === null) omittedStarIds.push(star.starId);
+    else stars.push(result);
+  }
+  return {
+    status: 'ACCEPTED',
+    policyId: SKY_DISPLAY_POLICY_V1.policyId,
+    fieldIdentity: field.identity,
+    stars,
+    omittedStarIds,
   };
 }
 

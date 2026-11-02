@@ -14,4 +14,5 @@ export * from './eop/iers2010/subdaily-restoration.js';
 export * from './observer/observer-preset.js';
 export * from './catalogue/catalogue-star.js';
 export * from './profile/evaluate.js';
+export * from './profile/sky-display.js';
 export * as astrometry from './astrometry/public.js';
