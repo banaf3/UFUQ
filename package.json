@@ -26,6 +26,7 @@
     "data:verify": "node scripts/verify-data-scaffold.mjs && node scripts/verify-generated-data.mjs",
     "data:generate": "tsc -b tools/catalogue --pretty false && node tools/catalogue/dist/cli.js",
     "approvals:status": "node scripts/approvals/status.mjs",
+    "evidence:bkt-sensitivity": "node scripts/evidence/bkt-sensitivity.mjs",
     "preview:review": "npm run build && node scripts/dev/run-review-preview.mjs",
     "exports:check": "node scripts/check-exports.mjs",
     "format": "prettier --write .",

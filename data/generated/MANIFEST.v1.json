@@ -39,10 +39,19 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "lesson-content-v1",
-      "byteLength": 21912,
+      "byteLength": 22216,
       "path": "data/generated/lesson-content-v1.json",
-      "payloadSha256": "0b60dd39243860ebb2d8fdd729b4b3f64bbc20d1af62b8edff4915cd9d7af0bd",
-      "sha256": "71bb004c2286d7d786786da33e8e61c51e3c434666f47a2aebef1156fba203bf",
+      "payloadSha256": "37c1a8998921ac7b102299122cdaba9e0877487a120b1bb63973cd512cfbb400",
+      "sha256": "0fb9fc97dcb8515e57b4d5575d389d17baf2b00c61b3b132ae41c44195750ebf",
+      "tracked": true
+    },
+    {
+      "approvalState": "REVIEW_REQUIRED",
+      "artifactId": "learning-configuration-v1",
+      "byteLength": 2757,
+      "path": "data/generated/learning-configuration-v1.json",
+      "payloadSha256": "1d796ce2f3e11a41130d7d5355ecc26136fd61e4faaf9c2f5d36f1ca89bf2971",
+      "sha256": "9aacec39d1590131d323861abfaad9d91d86cee87d8e9c5b9c271d479369cfdd",
       "tracked": true
     },
     {
@@ -102,10 +111,19 @@
     {
       "approvalState": "APPROVED",
       "artifactId": "synthetic-lesson-content-v1",
-      "byteLength": 14988,
+      "byteLength": 15543,
       "path": "data/generated/synthetic/synthetic-lesson-content-v1.json",
-      "payloadSha256": "ff13c01cb3a1f165ab73b7d9c60749f443b789f0e578e46fec669ccc77cd65dc",
-      "sha256": "a28a1ce3725dc489945b3a66a3899222b2ab47a2c46567204e6fe0949057b9f6",
+      "payloadSha256": "d2009356288e1592592b33376f45b59d118aa6d478eba83b31a08cc1eb9a1e33",
+      "sha256": "4992e1246a300c84686b438150748a7e0a3aa55a62d5683b097f77dc0e52f22a",
+      "tracked": true
+    },
+    {
+      "approvalState": "APPROVED",
+      "artifactId": "synthetic-learning-configuration-v1",
+      "byteLength": 7265,
+      "path": "data/generated/synthetic/synthetic-learning-configuration-v1.json",
+      "payloadSha256": "32d82a9a7fc95ff77a1838ad7573dcc010de7fd78ae2cc358ab9fdf946d6be0e",
+      "sha256": "1a1bd54d55d77eb0f99aeab2f9c6b93e503c7a75a60074099935074b390d07e7",
       "tracked": true
     }
   ],

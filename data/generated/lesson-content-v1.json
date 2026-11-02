@@ -35,6 +35,7 @@
             "transliteration": null
           }
         ],
+        "learnerTolerance": null,
         "review": {
           "decisionDate": null,
           "decisionReference": null,
@@ -451,6 +452,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": null,
+            "knowledgeComponentId": "KC-02",
             "patternId": "pattern-al-kaff-al-khadib",
             "prompt": "Find al-Kaff al-Khaḍīb, the henna-dyed hand: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
             "retryFeedback": "That star is not part of the hand. Look for five bright stars in a W shape.",
@@ -461,6 +463,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": "guide-kaff-to-jady",
+            "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
             "prompt": "Follow the guide line from the middle of the hand towards the horizon and select al-Jady.",
             "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
@@ -471,6 +474,7 @@
           {
             "directionId": "direction-true-north",
             "guidanceRelationshipId": "guide-jady-to-true-north",
+            "knowledgeComponentId": "KC-04",
             "patternId": null,
             "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
             "retryFeedback": "Your direction has been recorded and compared with True North.",
@@ -513,6 +517,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": null,
+            "knowledgeComponentId": "KC-01",
             "patternId": "pattern-banat-nash-al-kubra",
             "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Select one of its stars.",
             "retryFeedback": "That star is not part of Banāt Naʿsh. Look for a box of four stars with a curved tail of three.",
@@ -523,6 +528,7 @@
           {
             "directionId": null,
             "guidanceRelationshipId": "guide-banat-to-jady",
+            "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
             "prompt": "Follow the guide line through the two end stars of the box and select al-Jady.",
             "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
@@ -533,6 +539,7 @@
           {
             "directionId": "direction-true-north",
             "guidanceRelationshipId": "guide-jady-to-true-north",
+            "knowledgeComponentId": "KC-04",
             "patternId": null,
             "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
             "retryFeedback": "Your direction has been recorded and compared with True North.",
@@ -602,6 +609,6 @@
       "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c"
     }
   },
-  "payloadSha256": "0b60dd39243860ebb2d8fdd729b4b3f64bbc20d1af62b8edff4915cd9d7af0bd",
+  "payloadSha256": "37c1a8998921ac7b102299122cdaba9e0877487a120b1bb63973cd512cfbb400",
   "schemaVersion": 1
 }

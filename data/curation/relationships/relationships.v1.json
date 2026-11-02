@@ -23,6 +23,7 @@
         }
       ],
       "definition": { "kind": "TERRESTRIAL_TRUE_NORTH", "azimuthRadians": 0 },
+      "learnerTolerance": null,
       "review": {
         "state": "REVIEW_REQUIRED",
         "scope": "SCIENTIFIC_PROFILE_V1",

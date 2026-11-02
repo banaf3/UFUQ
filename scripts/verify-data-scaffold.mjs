@@ -44,6 +44,7 @@ const scaffoldDirectories = new Map([
   ['data/curation/routes', new Set(['README.md', 'routes.v1.json'])],
   ['data/curation/scenarios', new Set(['scenarios.v1.json'])],
   ['data/curation/stars', new Set(['route-star-crosswalk.v1.json'])],
+  ['data/curation/tutoring', new Set(['learning-configuration.v1.json'])],
   [
     'data/generated',
     new Set([
@@ -54,6 +55,7 @@ const scaffoldDirectories = new Map([
       'observer-umpsa-pekan-v1.json',
       'time-domain-profile-v1.json',
       'lesson-content-v1.json',
+      'learning-configuration-v1.json',
       'synthetic',
       // Ignored local-only output (Bulletin B values; redistribution unconfirmed).
       'local-only',
@@ -68,6 +70,7 @@ const scaffoldDirectories = new Map([
       'synthetic-observer-v1.json',
       'synthetic-time-domain-v1.json',
       'synthetic-lesson-content-v1.json',
+      'synthetic-learning-configuration-v1.json',
     ]),
   ],
 ]);

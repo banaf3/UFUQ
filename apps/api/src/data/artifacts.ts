@@ -22,6 +22,10 @@ import {
   validateArtifactEnvelope,
   validateLessonContent,
 } from '@ufuq/catalogue-schema';
+import {
+  type LearningConfigurationPayload,
+  validateLearningConfiguration,
+} from '@ufuq/tutoring-core';
 
 const sha256 = (text: string) => createHash('sha256').update(text, 'utf8').digest('hex');
 
@@ -256,6 +260,7 @@ export interface DatasetFiles {
   readonly observer: string;
   readonly domain: string;
   readonly content: string;
+  readonly learning: string;
 }
 
 export interface LoadedDataset {
@@ -265,6 +270,7 @@ export interface LoadedDataset {
   readonly observer: LoadedArtifact<ObserverPreset>;
   readonly domain: LoadedArtifact<SupportedTimeDomain>;
   readonly content: LoadedArtifact<LessonContentPayload>;
+  readonly learning: LoadedArtifact<LearningConfigurationPayload>;
 }
 
 export function loadDataset(directory: string, files: DatasetFiles): LoadedDataset {
@@ -290,5 +296,14 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
     observer: mapped(loadEnvelope(path(files.observer), 'UFUQ_OBSERVER_PRESET'), mapObserver),
     domain: mapped(loadEnvelope(path(files.domain), 'UFUQ_SUPPORTED_TIME_DOMAIN'), mapDomain),
     content,
+    learning: mapped(
+      loadEnvelope(path(files.learning), 'UFUQ_LEARNING_CONFIGURATION'),
+      (envelope) => {
+        const payload = envelope.payload as LearningConfigurationPayload;
+        const errors = validateLearningConfiguration(payload);
+        if (errors.length > 0) throw new TypeError(errors.join(' '));
+        return payload;
+      },
+    ),
   };
 }

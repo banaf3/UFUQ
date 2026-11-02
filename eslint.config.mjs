@@ -24,6 +24,7 @@ export default tseslint.config(
     files: nodeJavaScriptFiles,
     languageOptions: {
       globals: {
+        AbortSignal: 'readonly',
         AggregateError: 'readonly',
         clearTimeout: 'readonly',
         console: 'readonly',

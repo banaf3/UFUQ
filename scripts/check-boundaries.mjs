@@ -71,7 +71,9 @@ const allowedInternalDependencies = new Map([
     ]),
   ],
   ['@ufuq/web', new Set(['@ufuq/contracts', '@ufuq/catalogue-schema', '@ufuq/astronomy-core'])],
-  ['@ufuq/catalogue', new Set(['@ufuq/catalogue-schema'])],
+  // tools/catalogue validates learning-configuration artifacts with the pure tutoring-core
+  // validators at generation time (Phase 3); runtime packages still never import tools.
+  ['@ufuq/catalogue', new Set(['@ufuq/catalogue-schema', '@ufuq/tutoring-core'])],
 ]);
 
 const graph = new Map();

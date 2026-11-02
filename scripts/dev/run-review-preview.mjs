@@ -9,7 +9,7 @@ const root = resolve(import.meta.dirname, '..', '..');
 const children = [
   spawn(process.execPath, [join(root, 'apps/api/dist/server.js')], {
     cwd: root,
-    env: { ...process.env, UFUQ_ENABLE_REVIEW_PREVIEW: '1' },
+    env: { ...process.env, UFUQ_ENABLE_REVIEW_PREVIEW: '1', UFUQ_ENABLE_DEVELOPMENT_IDENTITY: '1' },
     stdio: 'inherit',
     windowsHide: true,
   }),

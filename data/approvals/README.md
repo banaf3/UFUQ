@@ -41,10 +41,15 @@ reviewer can inspect the real outputs only through the explicit local
 
    `state` may also be `NOT_APPROVED`. The EOP bundle takes separate `fieldApprovals`
    for `UT1_MINUS_UTC`, `XP`, and `YP`, because one field never promotes another.
-5. Content records (patterns, relationships, routes, scenarios) carry their own `review`
+5. The learning configuration (`learning-configuration-v1`) is approved like any other
+   artifact once BKT-001..BKT-005 are decided: edit
+   `data/curation/tutoring/learning-configuration.v1.json`, regenerate, then record the
+   approval for the new payload hash (see `docs/PHASE3_ASSESSMENT_AND_BKT.md`). The
+   proposed step-to-KC mapping is reviewed with each route (EDU-002).
+6. Content records (patterns, relationships, routes, scenarios) carry their own `review`
    blocks in `data/curation/`. The cultural, Arabic-language, and educational reviewers
    update those blocks.
-6. Run `npm run data:generate` (needs the local raw evidence), then `npm run check`.
+7. Run `npm run data:generate` (needs the local raw evidence), then `npm run check`.
    The generator refuses a stale record whose `payloadSha256` no longer matches.
 
 A changed artifact or content record produces a new payload hash, so an earlier
