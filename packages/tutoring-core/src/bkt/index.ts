@@ -1,2 +1,3 @@
-/** Logical BKT boundary. No model formula or parameter is implemented in Phase 0. */
-export {};
+/** Logical BKT boundary (IMP-013): pure arithmetic, typed decisions and behaviour analysis. */
+export * from './model.js';
+export * from './analysis.js';
