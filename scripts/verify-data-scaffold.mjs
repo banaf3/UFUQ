@@ -13,9 +13,19 @@ const scaffoldDirectories = new Map([
       'hipparcos-esa-1997-hip-screen-v1',
       'iers-leap-eop-v1',
       'observer-umpsa-pekan-v1',
+      'sky-catalogue-v1',
     ]),
   ],
   ['data/manifests/iers-leap-eop-v1', new Set(['README.md', 'acquisition-manifest.v1.json'])],
+  [
+    'data/manifests/sky-catalogue-v1',
+    new Set([
+      'README.md',
+      'acquisition-manifest.v1.json',
+      'hip-main-naked-eye.v1.adql',
+      'hip-main-line-stars.v1.adql',
+    ]),
+  ],
   [
     'data/manifests/observer-umpsa-pekan-v1',
     new Set(['README.md', 'acquisition-manifest.v1.json']),
@@ -56,6 +66,8 @@ const scaffoldDirectories = new Map([
       'time-domain-profile-v1.json',
       'lesson-content-v1.json',
       'learning-configuration-v1.json',
+      'sky-field-hipparcos1997-v1.json',
+      'sky-culture-iau-v1.json',
       'synthetic',
       // Ignored local-only output (Bulletin B values; redistribution unconfirmed).
       'local-only',
@@ -71,6 +83,8 @@ const scaffoldDirectories = new Map([
       'synthetic-time-domain-v1.json',
       'synthetic-lesson-content-v1.json',
       'synthetic-learning-configuration-v1.json',
+      'synthetic-sky-field-v1.json',
+      'synthetic-sky-culture-v1.json',
     ]),
   ],
 ]);
@@ -430,6 +444,33 @@ if (observerManifest) {
   );
 }
 
+// Sky-explorer source evidence (2026-11-02).
+let localSkyStatus = 'absent; original bytes were not verified';
+const skyManifest = readManifest('data/manifests/sky-catalogue-v1', 'sky-catalogue evidence');
+if (skyManifest) {
+  if (
+    skyManifest.manifestType !== 'UFUQ_SKY_CATALOGUE_SOURCE_EVIDENCE_MANIFEST' ||
+    skyManifest.schemaVersion !== 1 ||
+    skyManifest.scientificApproval !== 'REVIEW_REQUIRED' ||
+    skyManifest.culturalApproval !== 'REVIEW_REQUIRED' ||
+    skyManifest.sources?.constellationLines?.licence !== 'CC BY 4.0'
+  ) {
+    errors.push('Sky-catalogue manifest violates its evidence contract');
+  }
+  for (const query of skyManifest.queries ?? []) {
+    const absolutePath = join(repositoryRoot, query.path);
+    if (!existsSync(absolutePath) || sha256(absolutePath) !== query.sha256) {
+      errors.push(`Sky-catalogue query identity mismatch: ${query.path}`);
+    }
+  }
+  localSkyStatus = verifyRawSet(
+    'sky-catalogue',
+    skyManifest.rawEvidence?.files ?? [],
+    10,
+    'data/raw/sky-catalogue-v1',
+  );
+}
+
 if (!existsSync(join(repositoryRoot, rawDirectory))) {
   errors.push(`Missing scaffold directory: ${rawDirectory}`);
 } else {
@@ -470,6 +511,6 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Data boundary verified: the Gaia, Hipparcos 1997, IERS leap/EOP, and observer-preset manifests are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; local IERS leap/EOP set ${localLeapEopStatus}; local observer-preset set ${localObserverStatus}; curation and generated data are checked by verify-generated-data.mjs; local raw data is ignored and untracked.`,
+    `Data boundary verified: the Gaia, Hipparcos 1997, IERS leap/EOP, and observer-preset manifests are intact; local Gaia response set ${localGaiaResponseStatus}; local Hipparcos 1997 response set ${localHipparcosResponseStatus}; local IERS leap/EOP set ${localLeapEopStatus}; local observer-preset set ${localObserverStatus}; local sky-catalogue set ${localSkyStatus}; curation and generated data are checked by verify-generated-data.mjs; local raw data is ignored and untracked.`,
   );
 }

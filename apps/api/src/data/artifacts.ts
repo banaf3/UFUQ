@@ -13,7 +13,9 @@ import type {
   EopBundle,
   EopDailySample,
   ObserverPreset,
+  DisplayStarInput,
   ScientificApproval,
+  SkyDisplayField,
   SupportedTimeDomain,
 } from '@ufuq/astronomy-core';
 import {
@@ -33,6 +35,8 @@ export interface LoadedArtifact<T> {
   readonly status: 'AVAILABLE' | 'UNAVAILABLE' | 'INTEGRITY_FAILURE';
   readonly artifactId: string;
   readonly approvalState: string;
+  /** The approval's own scope (SCIENTIFIC_PROFILE_V1 or SYNTHETIC_TECHNICAL_FIXTURE). */
+  readonly approvalScope?: string;
   readonly payloadSha256: string | null;
   readonly value?: T;
   readonly reason?: string;
@@ -75,6 +79,7 @@ function loadEnvelope(path: string, type: string): LoadedArtifact<RuntimeArtifac
     status: 'AVAILABLE',
     artifactId: result.envelope.artifactId,
     approvalState: result.envelope.approval.state,
+    approvalScope: result.envelope.approval.scope,
     payloadSha256: result.envelope.payloadSha256,
     value: result.envelope,
   };
@@ -253,6 +258,76 @@ export function mapDomain(envelope: RuntimeArtifactEnvelope): SupportedTimeDomai
   return { ...payload, approval: approval(envelope.approval) };
 }
 
+type SkyFieldRow = [
+  number,
+  'FULL_SOLUTION' | 'COARSE_POSITION_NO_SOLUTION',
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number | null,
+];
+
+/** The display-only background field (SkyDisplayPolicyV1). */
+export function mapSkyField(envelope: RuntimeArtifactEnvelope): SkyDisplayField {
+  const payload = envelope.payload as {
+    policyId: string;
+    columns: readonly string[];
+    epoch: { julianDate: { part1: number; part2: number } };
+    stars: SkyFieldRow[];
+  };
+  const expected = 'hip,astrometry,raRad,decRad,plxMas,pmRaMasYr,pmDeMasYr,vmag,bv';
+  if (payload.policyId !== 'SKY_DISPLAY_POLICY_V1' || payload.columns.join(',') !== expected) {
+    throw new TypeError('Unsupported sky field layout.');
+  }
+  const stars: DisplayStarInput[] = payload.stars.map((row) => ({
+    starId: `hip-${requireNumber(row[0], 'hip')}`,
+    astrometry: row[1],
+    rightAscensionRadians: requireNumber(row[2], 'raRad'),
+    declinationRadians: requireNumber(row[3], 'decRad'),
+    parallaxMas: requireNumber(row[4], 'plx'),
+    muAlphaStarMasPerYear: requireNumber(row[5], 'pmRA'),
+    muDeltaMasPerYear: requireNumber(row[6], 'pmDE'),
+    visualMagnitude: requireNumber(row[7], 'vmag'),
+    colorIndexBV: row[8] === null ? null : requireNumber(row[8], 'bv'),
+  }));
+  return {
+    identity: identity(envelope),
+    approval: approval(envelope.approval),
+    epoch: {
+      scale: 'TT',
+      splitConvention: 'MJD_ZERO_PLUS_OFFSET',
+      part1: requireNumber(payload.epoch.julianDate.part1, 'epoch part1'),
+      part2: requireNumber(payload.epoch.julianDate.part2, 'epoch part2'),
+    },
+    stars,
+  };
+}
+
+export interface SkyCulturePayload {
+  readonly cultureId: string;
+  readonly title: string;
+  readonly layer: string;
+  readonly starFieldArtifact: { readonly artifactId: string; readonly payloadSha256: string };
+  readonly sources: Record<string, unknown>;
+  readonly constellations: readonly {
+    readonly abbreviation: string;
+    readonly name: string;
+    readonly polylines: readonly (readonly number[])[];
+  }[];
+  readonly starNames: readonly {
+    readonly hip: number;
+    readonly name: string;
+    readonly designation: string;
+    readonly constellation: string;
+    readonly language: string;
+    readonly origin: string;
+    readonly arabicScriptFromEtymology: string | null;
+  }[];
+}
+
 export interface DatasetFiles {
   readonly stars: string;
   readonly leap: string;
@@ -261,6 +336,8 @@ export interface DatasetFiles {
   readonly domain: string;
   readonly content: string;
   readonly learning: string;
+  readonly skyField: string;
+  readonly skyCulture: string;
 }
 
 export interface LoadedDataset {
@@ -271,6 +348,10 @@ export interface LoadedDataset {
   readonly domain: LoadedArtifact<SupportedTimeDomain>;
   readonly content: LoadedArtifact<LessonContentPayload>;
   readonly learning: LoadedArtifact<LearningConfigurationPayload>;
+  readonly skyField: LoadedArtifact<SkyDisplayField>;
+  readonly skyCulture: LoadedArtifact<SkyCulturePayload>;
+  /** Hipparcos number to route-star id, so the background never duplicates a route star. */
+  readonly routeStarByHip: ReadonlyMap<number, string>;
 }
 
 export function loadDataset(directory: string, files: DatasetFiles): LoadedDataset {
@@ -289,8 +370,33 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
     }
     return payload;
   });
+  const skyField = mapped(
+    loadEnvelope(path(files.skyField), 'UFUQ_SKY_DISPLAY_FIELD'),
+    mapSkyField,
+  );
+  const skyCulture = mapped(
+    loadEnvelope(path(files.skyCulture), 'UFUQ_SKY_CULTURE'),
+    (envelope) => {
+      const payload = envelope.payload as SkyCulturePayload;
+      if (
+        skyField.payloadSha256 !== null &&
+        payload.starFieldArtifact.payloadSha256 !== skyField.payloadSha256
+      ) {
+        throw new TypeError('Sky culture was generated against a different star field.');
+      }
+      return payload;
+    },
+  );
+  const routeStarByHip = new Map<number, string>();
+  for (const star of stars.value?.values() ?? []) {
+    const hip = /:HIP (\d+)$/.exec(star.sourceRecordId)?.[1];
+    if (hip !== undefined) routeStarByHip.set(Number(hip), star.starId);
+  }
   return {
     stars,
+    skyField,
+    skyCulture,
+    routeStarByHip,
     leap: mapped(loadEnvelope(path(files.leap), 'UFUQ_LEAP_SECOND_STATE'), mapLeap),
     eop: mapped(loadEnvelope(path(files.eop), 'UFUQ_EOP_DAILY_BUNDLE'), mapEop),
     observer: mapped(loadEnvelope(path(files.observer), 'UFUQ_OBSERVER_PRESET'), mapObserver),

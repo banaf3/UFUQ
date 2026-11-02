@@ -46,10 +46,14 @@ reviewer can inspect the real outputs only through the explicit local
    `data/curation/tutoring/learning-configuration.v1.json`, regenerate, then record the
    approval for the new payload hash (see `docs/PHASE3_ASSESSMENT_AND_BKT.md`). The
    proposed step-to-KC mapping is reviewed with each route (EDU-002).
-6. Content records (patterns, relationships, routes, scenarios) carry their own `review`
+6. The sky explorer adds `sky-field-hipparcos1997-v1` (astronomy/data review of the
+   display-only star field) and `sky-culture-iau-v1` (cultural and educational review of
+   the IAU figures and WGSN names, including the WGSN-derived Arabic scripts); see
+   `docs/SKY_EXPLORER.md`.
+7. Content records (patterns, relationships, routes, scenarios) carry their own `review`
    blocks in `data/curation/`. The cultural, Arabic-language, and educational reviewers
    update those blocks.
-7. Run `npm run data:generate` (needs the local raw evidence), then `npm run check`.
+8. Run `npm run data:generate` (needs the local raw evidence), then `npm run check`.
    The generator refuses a stale record whose `payloadSha256` no longer matches.
 
 A changed artifact or content record produces a new payload hash, so an earlier

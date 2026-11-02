@@ -1,0 +1,171 @@
+{
+  "manifestType": "UFUQ_SKY_CATALOGUE_SOURCE_EVIDENCE_MANIFEST",
+  "schemaVersion": 1,
+  "manifestId": "sky-catalogue-v1-20261102T065951Z",
+  "authorityStatus": "SOURCE_EVIDENCE_VERIFIED",
+  "scientificApproval": "REVIEW_REQUIRED",
+  "culturalApproval": "REVIEW_REQUIRED",
+  "scope": "Sky-explorer background: every Hipparcos star with Vmag <= 6.5, the stars used by the 88 IAU constellation figures, the figures themselves and the IAU WGSN star names.",
+  "sources": {
+    "hipparcos": {
+      "citation": "ESA (1997), The Hipparcos and Tycho Catalogues, ESA SP-1200",
+      "table": "hipparcos1.hip_main",
+      "service": "https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap/sync",
+      "licence": "ESA Hipparcos data, credit ESA (CC BY-NC 3.0 IGO), as recorded for the route stars"
+    },
+    "brightStarCatalogue": {
+      "citation": "Hoffleit, D., and Warren, W. H. Jr. (1991), The Bright Star Catalogue, 5th Revised Ed. (Preliminary Version), CDS V/50",
+      "files": ["ReadMe", "catalog.gz"],
+      "mirror": "https://vizier.cfa.harvard.edu/ftp/cats/V/50",
+      "use": "HR-to-HD cross-reference only"
+    },
+    "constellationLines": {
+      "citation": "van der Sluys, M. (2005-2026), ConstellationLines v1.4, DOI 10.5281/zenodo.10397192",
+      "repository": "https://github.com/MarcvdSluys/ConstellationLines",
+      "commit": "158ea7c588dd78a295dc977326e72ad29004d8eb",
+      "licence": "CC BY 4.0"
+    },
+    "constellationNames": {
+      "citation": "National Astronomical Observatory of Japan, Ephemeris Computation Office, \"Constellations\" (the 88 IAU constellations and abbreviations)",
+      "url": "https://eco.mtk.nao.ac.jp/koyomi/faq/constellations.html.en",
+      "use": "Abbreviation-to-name table only (names are the IAU standard names)"
+    },
+    "starNames": {
+      "citation": "IAU Working Group on Star Names (WGSN), IAU Catalog of Star Names, hosted at exopla.net",
+      "url": "https://exopla.net/star-names/modern-iau-star-names/",
+      "licence": "Names: free to use, not subject to copyright (WGSN statement on the page). Etymology texts: Creative Commons Attribution (IAU WGSN)."
+    }
+  },
+  "queries": [
+    {
+      "path": "data/manifests/sky-catalogue-v1/hip-main-naked-eye.v1.adql",
+      "byteLength": 65,
+      "sha256": "84f0e7d361072b610c2e89298edcf88b22cd39a755cdf5cae11673e3f0127e9d"
+    },
+    {
+      "path": "data/manifests/sky-catalogue-v1/hip-main-line-stars.v1.adql",
+      "byteLength": 5271,
+      "sha256": "03c47e4111f4f18bbe979dafc8ae763a398ec69907bec560fb3334cb0f33a4d7"
+    }
+  ],
+  "acquisition": {
+    "startedUtc": "2026-11-02T06:59:51.411Z",
+    "completedUtc": "2026-11-02T07:00:08.427Z",
+    "tool": "node v22.16.0 fetch",
+    "userAgent": "UFUQ-FYP-evidence/1 (+https://github.com/banaf3/UFUQ)",
+    "authentication": "ANONYMOUS",
+    "redirects": "REJECTED"
+  },
+  "rawEvidence": {
+    "repositoryPolicy": "IGNORED_LOCAL_ONLY_UNTIL_DERIVED_ARTIFACT_POLICY_APPLIED",
+    "directory": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z",
+    "files": [
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/hip-main-naked-eye.csv",
+        "role": "HIPPARCOS_NAKED_EYE_ROWS",
+        "url": "https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap/sync",
+        "requestStartedUtc": "2026-11-02T06:59:51.412Z",
+        "httpStatus": 200,
+        "contentType": "text/csv",
+        "byteLength": 3447874,
+        "sha256": "7818863047b497dfbee755bd53e40e15d4791d0fe2ccf7c4fc069990b6c0a943",
+        "query": "data/manifests/sky-catalogue-v1/hip-main-naked-eye.v1.adql"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/bsc-ReadMe",
+        "role": "BSC_README_BYTE_LAYOUT",
+        "url": "https://vizier.cfa.harvard.edu/ftp/cats/V/50/ReadMe",
+        "requestStartedUtc": "2026-11-02T06:59:57.266Z",
+        "httpStatus": 200,
+        "contentType": null,
+        "byteLength": 11571,
+        "sha256": "44fd9c73e2eecad0beb47bdfa3f01c60fd43f93d6964198e31fcd48732de5b33"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/bsc-catalog.gz",
+        "role": "BSC_CATALOG_FIXED_WIDTH_GZIP",
+        "url": "https://vizier.cfa.harvard.edu/ftp/cats/V/50/catalog.gz",
+        "requestStartedUtc": "2026-11-02T06:59:58.105Z",
+        "httpStatus": 200,
+        "contentType": null,
+        "byteLength": 573921,
+        "sha256": "3dc44b1e90be8fbe5bcc7656032560f51275f985c7e3f783c9028e1838ec7bed"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/constellation-lines-ConstellationLines.csv",
+        "role": "CONSTELLATION_LINES_CC_BY_4_0",
+        "url": "https://raw.githubusercontent.com/MarcvdSluys/ConstellationLines/158ea7c588dd78a295dc977326e72ad29004d8eb/ConstellationLines.csv",
+        "requestStartedUtc": "2026-11-02T07:00:00.769Z",
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "byteLength": 17653,
+        "sha256": "4a723a979c2fe9ea2984a7515b4caab85ff2160adebfe25ac9694e2a928a301d",
+        "commit": "158ea7c588dd78a295dc977326e72ad29004d8eb"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/constellation-lines-LICENSE",
+        "role": "CONSTELLATION_LINES_LICENCE",
+        "url": "https://raw.githubusercontent.com/MarcvdSluys/ConstellationLines/158ea7c588dd78a295dc977326e72ad29004d8eb/LICENSE",
+        "requestStartedUtc": "2026-11-02T07:00:00.841Z",
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "byteLength": 14325,
+        "sha256": "631f47b6144cc028e1440488e5562efefbf28b267063fce37b51292a85dad4e0",
+        "commit": "158ea7c588dd78a295dc977326e72ad29004d8eb"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/constellation-lines-CITATION.cff",
+        "role": "CONSTELLATION_LINES_CITATION",
+        "url": "https://raw.githubusercontent.com/MarcvdSluys/ConstellationLines/158ea7c588dd78a295dc977326e72ad29004d8eb/CITATION.cff",
+        "requestStartedUtc": "2026-11-02T07:00:00.864Z",
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "byteLength": 830,
+        "sha256": "22de1e536810f34cf2e32f39caa9229ac251a36d98c68f0936849a1b0dda8d0e",
+        "commit": "158ea7c588dd78a295dc977326e72ad29004d8eb"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/constellation-lines-readme.org",
+        "role": "CONSTELLATION_LINES_README",
+        "url": "https://raw.githubusercontent.com/MarcvdSluys/ConstellationLines/158ea7c588dd78a295dc977326e72ad29004d8eb/readme.org",
+        "requestStartedUtc": "2026-11-02T07:00:00.886Z",
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "byteLength": 3036,
+        "sha256": "91f84c30bce99e0d4e0ef3618899232c281ee4b05f1db00165c68c90063e3f90",
+        "commit": "158ea7c588dd78a295dc977326e72ad29004d8eb"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/hip-main-line-stars.csv",
+        "role": "HIPPARCOS_FIGURE_STARS_FAINTER_THAN_6_5",
+        "url": "https://esaskylegacy.esac.esa.int/esasky-legacy-sl-tap/tap/sync",
+        "requestStartedUtc": "2026-11-02T07:00:00.928Z",
+        "httpStatus": 200,
+        "contentType": "text/csv",
+        "byteLength": 877,
+        "sha256": "dac7fe23ab90cd176c49436353537d93f816c25da4c2262765bff64f79928a8c",
+        "query": "data/manifests/sky-catalogue-v1/hip-main-line-stars.v1.adql"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/wgsn-star-names.html",
+        "role": "IAU_WGSN_STAR_NAMES_PAGE",
+        "url": "https://exopla.net/star-names/modern-iau-star-names/",
+        "requestStartedUtc": "2026-11-02T07:00:01.771Z",
+        "httpStatus": 200,
+        "contentType": "text/html; charset=UTF-8",
+        "byteLength": 695949,
+        "sha256": "8c9beeab50625efe0935d68bdc2f17b1d5167c7e6d0da049180c604a34cd8a7c"
+      },
+      {
+        "path": "data/raw/sky-catalogue-v1/sky-catalogue-v1-20261102T065951Z/naoj-constellations.html",
+        "role": "IAU_CONSTELLATION_NAMES_TABLE",
+        "url": "https://eco.mtk.nao.ac.jp/koyomi/faq/constellations.html.en",
+        "requestStartedUtc": "2026-11-02T07:00:08.121Z",
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "byteLength": 9642,
+        "sha256": "da8a594c322a2735f5f822ee95e1627e982d449891be97a80e5b779dea0b9f99"
+      }
+    ]
+  }
+}

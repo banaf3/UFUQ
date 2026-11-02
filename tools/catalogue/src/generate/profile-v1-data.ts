@@ -33,19 +33,19 @@ export interface RepositoryPaths {
   readonly root: string;
 }
 
-interface RawFileRecord {
+export interface RawFileRecord {
   readonly path: string;
   readonly byteLength: number;
   readonly sha256: string;
   readonly role?: string;
 }
 
-function readJson<T>(root: string, path: string): T {
+export function readJson<T>(root: string, path: string): T {
   return JSON.parse(readFileSync(join(root, path), 'utf8')) as T;
 }
 
 /** Reads a raw evidence file and verifies its byte length and SHA-256. */
-function readVerified(root: string, record: RawFileRecord): Buffer {
+export function readVerified(root: string, record: RawFileRecord): Buffer {
   const bytes = readFileSync(join(root, record.path));
   const digest = sha256Hex(bytes);
   if (bytes.byteLength !== record.byteLength || digest !== record.sha256) {

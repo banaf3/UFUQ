@@ -18,6 +18,12 @@ approval.
   development identity, the exact-rational BKT oracle and sensitivity evidence
   (`PHASE3_ASSESSMENT_AND_BKT.md`). The real learning configuration is `NON_ADAPTIVE`
   (explicit no-op decisions) until BKT-001..BKT-005, EDU-002 and IMP-012 are approved.
+- **Sky explorer (owner request, 2026-11-02):** the first page is the whole naked-eye
+  sky (8,875 Hipparcos stars) with IAU figures, curated Arabic patterns, IAU star names
+  (Arabic-origin names with Arabic script), five projections and mouse navigation;
+  **Start lesson** is in the top bar and lessons run over the same sky
+  (`SKY_EXPLORER.md`, IMP-020). New real artifacts `sky-field-hipparcos1997-v1` and
+  `sky-culture-iau-v1` are `REVIEW_REQUIRED`.
 
 Readiness: scaffolding YES; vertical slice and adaptive tutoring implemented but NOT
 validated (approvals pending); participant study NO; deployment NO.
@@ -28,6 +34,7 @@ validated (approvals pending); participant study NO; deployment NO.
 | --- | --- |
 | All gates | `npm run check && npm run test && npm run test:reference && npm run evidence:bkt-sensitivity -- --check && npm run build && npm run exports:check && npm run test:e2e` |
 | E2E beside a running preview | `UFUQ_E2E_WEB_PORT=4183 UFUQ_E2E_API_PORT=4184 npm run test:e2e` (the runner refuses ports it does not own) |
+| Re-acquire sky sources (network) | `node scripts/evidence/acquire-sky-catalogue-v1.mjs` (new evidence directory; then regenerate) |
 | Real sky for reviewers (labelled unreviewed) | `npm run preview:review`, open http://127.0.0.1:4173, choose "Review preview" |
 | Regenerate data (needs local raw evidence) | `npm run data:generate` (verify with `-- --check`) |
 | Pending approvals | `npm run approvals:status` |
@@ -36,9 +43,10 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-02)
 
-Branch `feat/phase-03-assessment-bkt` was merged into `main`. It added Phase 3 (see
-`PHASE3_ASSESSMENT_AND_BKT.md`), learner-modelling sources in the source register, and
-e2e port isolation.
+Branch `feat/sky-explorer` was merged into `main`. It added the sky explorer: sky source
+acquisition and artifacts, `SkyDisplayPolicyV1`, `/api/v2/sky`, the R3F planetarium
+renderer and explorer page, and lessons over the full sky (`SKY_EXPLORER.md`). Before
+that, `feat/phase-03-assessment-bkt` added Phase 3.
 
 ## Next justified step
 
@@ -56,6 +64,10 @@ e2e port isolation.
    deployment; Qibla (KC-05) after the Qibla geodesy decisions.
 
 ## Open owner actions
+
+- **Sky explorer reviews:** `sky-field-hipparcos1997-v1` and `sky-culture-iau-v1`; an
+  atmosphere decision (refraction, extinction) before any near-horizon "as seen" claim;
+  sourced Arabic figures (for example the anwāʾ lunar mansions) for the curated layer.
 
 - **Reviews:** approval records for `route-stars-hipparcos1997-v1`,
   `leap-seconds-iers-v1`, `eop-bulletinb-453-461-v1` (per field),

@@ -10,12 +10,14 @@ import {
   type HealthResponse,
   LESSON_CONTRACT_VERSION,
   parseCreateLessonRequest,
+  parseSkyRequest,
   parseSubmitAnswerRequest,
 } from '@ufuq/contracts';
 
 import { loadDataset } from './data/artifacts.js';
 import { DevelopmentLearnerRegistry } from './learners/development-learners.js';
 import { type DatasetRegistration, LessonError, LessonService } from './lesson/lesson-service.js';
+import { SkyService } from './sky/sky-service.js';
 
 export interface AppOptions {
   /** Directory holding the generated artifacts (default: <repo>/data/generated). */
@@ -53,6 +55,8 @@ export function createDatasets(options: AppOptions = {}): Map<string, DatasetReg
       domain: 'time-domain-profile-v1.json',
       content: 'lesson-content-v1.json',
       learning: 'learning-configuration-v1.json',
+      skyField: 'sky-field-hipparcos1997-v1.json',
+      skyCulture: 'sky-culture-iau-v1.json',
     }),
     notice: options.enableReviewPreview
       ? 'REVIEW PREVIEW available: results computed from ScientificProfileV1 data and content that are still REVIEW_REQUIRED are for reviewer inspection only and are not learner content.'
@@ -76,6 +80,8 @@ export function createDatasets(options: AppOptions = {}): Map<string, DatasetReg
       domain: 'synthetic/synthetic-time-domain-v1.json',
       content: 'synthetic/synthetic-lesson-content-v1.json',
       learning: 'synthetic/synthetic-learning-configuration-v1.json',
+      skyField: 'synthetic/synthetic-sky-field-v1.json',
+      skyCulture: 'synthetic/synthetic-sky-culture-v1.json',
     }),
     notice:
       'SYNTHETIC TECHNICAL FIXTURE: invented stars, Earth-orientation values, lesson text and adaptive-tutoring policies for software testing. This is not the real sky, not learner content and not a proposed learning policy.',
@@ -102,7 +108,9 @@ export function createApp(options: AppOptions = {}): express.Express {
   app.disable('x-powered-by');
   app.use(express.json({ limit: '16kb' }));
   const learners = options.enableDevelopmentIdentity ? new DevelopmentLearnerRegistry() : null;
-  const service = new LessonService(createDatasets(options), learners);
+  const datasets = createDatasets(options);
+  const service = new LessonService(datasets, learners);
+  const sky = new SkyService(datasets);
 
   app.get('/health', (_request, response) => {
     const body: HealthResponse = { status: 'ok', service: 'api', phase: 'adaptive-tutoring' };
@@ -116,6 +124,18 @@ export function createApp(options: AppOptions = {}): express.Express {
       developmentIdentityEnabled: learners !== null,
     };
     response.status(200).json(body);
+  });
+
+  // Sky explorer (report UC-102): no learner identity, not an assessment.
+  app.get('/api/v2/sky', (request, response) => {
+    const parsed = parseSkyRequest(request.query as Record<string, unknown>);
+    if (!parsed.ok)
+      return sendError(response, 400, { error: 'BAD_REQUEST', detail: parsed.reason });
+    try {
+      response.status(200).json(sky.view(parsed.value));
+    } catch (error) {
+      handle(error, response);
+    }
   });
 
   app.post('/api/v2/development-learners', (_request, response) => {

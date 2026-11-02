@@ -3,11 +3,16 @@
 // and the issued support level (Phase 2 slice, adaptive since Phase 3).
 import { expect, test, type Page } from '@playwright/test';
 
-async function startSyntheticLesson(page: Page, scenarioLabel: string) {
-  await page
-    .getByLabel('Dataset')
-    .selectOption({ label: 'Synthetic technical fixture (not the real sky)' });
+/** From the sky explorer: pick the synthetic scenario, wait for its sky, start the lesson. */
+async function startSyntheticLesson(page: Page, scenarioLabel: string, utc: string) {
+  await expect(page.getByLabel('Data')).toHaveValue(
+    'synthetic-technical|SYNTHETIC_TECHNICAL_FIXTURE',
+    {
+      timeout: 20_000,
+    },
+  );
   await page.getByLabel('Scenario').selectOption({ label: scenarioLabel });
+  await expect(page.locator('.sky-notice summary')).toContainText(utc);
   await page.getByRole('button', { name: 'Start lesson' }).click();
 }
 
@@ -36,7 +41,7 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   page,
 }) => {
   await page.goto('/');
-  await startSyntheticLesson(page, 'Synthetic scenario A (route A)');
+  await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
   await expect(page.getByRole('heading', { name: 'Synthetic route A' })).toBeVisible();
   await expect(page.getByRole('note').first()).toContainText('SYNTHETIC TECHNICAL FIXTURE');
   await expect(page.getByText('Step 1 of 3')).toBeVisible();
@@ -67,8 +72,8 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await expect(page.getByTestId('model-trace')).toContainText('TRANSITION_ONLY');
 
   // Lesson 2 for the same development learner: the target-star skill is now FADING.
-  await page.getByRole('button', { name: 'Choose another scenario' }).click();
-  await startSyntheticLesson(page, 'Synthetic scenario A (route A)');
+  await page.getByRole('button', { name: 'Back to the sky' }).click();
+  await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
   await expect(page.getByTestId('support-level')).toContainText('GUIDED');
   await starButtons(page).nth(highIndex).click();
   await expect(page.getByText('Step 2 of 3')).toBeVisible();
@@ -77,7 +82,7 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
 
 test('synthetic route B: select every member of the helper pattern', async ({ page }) => {
   await page.goto('/');
-  await startSyntheticLesson(page, 'Synthetic scenario B (route B)');
+  await startSyntheticLesson(page, 'Synthetic scenario B (route B)', '2026-05-15T14:00:00Z');
   await expect(page.getByRole('heading', { name: 'Synthetic route B' })).toBeVisible();
   await expect(page.getByText('Select every star of synthetic helper B')).toBeVisible();
   // GUIDED support outlines the pattern (a worked example), which labels its members.
@@ -93,8 +98,8 @@ test('synthetic route B: select every member of the helper pattern', async ({ pa
 
 test('real ScientificProfileV1 data fails closed until it is approved', async ({ page }) => {
   await page.goto('/');
-  await page.getByLabel('Dataset').selectOption({ index: 0 });
-  await page.getByRole('button', { name: 'Start lesson' }).click();
+  await expect(page.getByLabel('Data')).toHaveValue(/synthetic/, { timeout: 20_000 });
+  await page.getByLabel('Data').selectOption('profile-v1-umpsa-pekan|SCIENTIFIC_PROFILE_V1');
   await expect(page.getByRole('alert')).toContainText(
     /NOT_SCIENTIFICALLY_APPROVED|NOT_APPROVED|REQUIRED/,
   );

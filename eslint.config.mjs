@@ -26,6 +26,7 @@ export default tseslint.config(
       globals: {
         AbortSignal: 'readonly',
         AggregateError: 'readonly',
+        URLSearchParams: 'readonly',
         clearTimeout: 'readonly',
         console: 'readonly',
         fetch: 'readonly',

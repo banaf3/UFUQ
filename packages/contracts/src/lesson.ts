@@ -30,6 +30,14 @@ export interface DatasetSummaryV2 {
     readonly utc: string;
   }[];
   readonly learningMode: 'ADAPTIVE' | 'NON_ADAPTIVE' | 'UNAVAILABLE';
+  /** The activated time domain for free sky exploration, when the dataset has one. */
+  readonly supportedDomain: {
+    readonly earliest: string;
+    readonly earliestBoundary: string;
+    readonly latest: string;
+    readonly latestBoundary: string;
+  } | null;
+  readonly observerLabel: string;
   readonly notice: string;
 }
 
@@ -62,6 +70,8 @@ export interface SkyStarV2 {
   /** Unit east, north, up direction (geometric, no refraction). */
   readonly enu: readonly [number, number, number];
   readonly visualMagnitude: number | null;
+  /** Johnson B-V for star colour; null when unknown. */
+  readonly colorIndexBV: number | null;
   readonly belowGeometricHorizon: boolean;
 }
 

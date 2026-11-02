@@ -1,0 +1,4 @@
+SELECT *
+FROM hipparcos1.hip_main
+WHERE Vmag <= 6.5
+ORDER BY HIP

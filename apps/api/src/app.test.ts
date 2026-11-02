@@ -12,6 +12,7 @@ import type {
   LessonSessionV2,
   LessonStepPromptV2,
   SkyOverlayV2,
+  SkyViewV1,
   StepFeedbackV2,
 } from '@ufuq/contracts';
 
@@ -446,5 +447,74 @@ describe('route eligibility (IMP-018)', () => {
     );
     expect(result[0]?.eligible).toBe(false);
     expect(result[0]?.reasons).toContain('s2 has no valid direction');
+  });
+});
+
+describe('sky explorer API (report UC-102)', () => {
+  const app = createApp({ enableDevelopmentIdentity: true });
+  const sky = (query: string) => request(app).get(`/api/v2/sky?${query}`);
+  const synthetic = 'datasetId=synthetic-technical&executionScope=SYNTHETIC_TECHNICAL_FIXTURE';
+
+  it('returns the whole sky with cultures for a scenario, without any identity', async () => {
+    const response = await sky(`${synthetic}&scenarioId=synthetic-scenario-a`);
+    expect(response.status).toBe(200);
+    const body = response.body as SkyViewV1;
+    expect(body.contractVersion).toBe('sky.v1');
+    expect(body.stars.count).toBe(413);
+    expect(body.stars.ids).toHaveLength(413);
+    expect(body.stars.enu).toHaveLength(413 * 3);
+    expect(new Set(body.stars.ids).size).toBe(413);
+    expect(body.cultures.map((c) => c.cultureId)).toEqual(['arabic-ufuq', 'synthetic-culture']);
+    const figure = body.cultures[1]?.figures[0];
+    expect(figure?.segments.length).toBe(3);
+    expect(body.starNames[0]).toMatchObject({ name: 'Synthetica', language: 'Synthetic' });
+    expect(body.provenance.displayPolicyId).toBe('SKY_DISPLAY_POLICY_V1');
+  });
+
+  it('accepts a canonical UTC instant inside the domain and refuses one outside', async () => {
+    const inside = await sky(`${synthetic}&utc=2026-06-01T15:00:00Z`);
+    expect(inside.status).toBe(200);
+    expect(inside.body.scenarioId).toBeNull();
+    // Inside leap validity but outside the activated domain (stage 4 after stage 3).
+    const outside = await sky(`${synthetic}&utc=2027-01-15T00:00:00Z`);
+    expect(outside.status).toBe(422);
+    expect(outside.body.error).toBe('TIME_OUTSIDE_SUPPORTED_DOMAIN');
+    expect((await sky(`${synthetic}&utc=now`)).status).toBe(422);
+  });
+
+  it('validates parameters and fails closed for unapproved real data', async () => {
+    expect((await sky(synthetic)).status).toBe(400);
+    expect((await sky(`${synthetic}&utc=2026-06-01T15:00:00Z&scenarioId=x`)).status).toBe(400);
+    expect((await sky(`${synthetic}&scenarioId=s&extra=1`)).status).toBe(400);
+    const strict = await sky(
+      'datasetId=profile-v1-umpsa-pekan&executionScope=SCIENTIFIC_PROFILE_V1&scenarioId=scenario-2025-11-15-evening',
+    );
+    expect(strict.status).toBe(422);
+    const preview = await sky(
+      'datasetId=profile-v1-umpsa-pekan&executionScope=REVIEW_PREVIEW&scenarioId=scenario-2025-11-15-evening',
+    );
+    expect(preview.status).toBe(403);
+  });
+
+  it('lists the supported domain for the time picker', async () => {
+    const list = await request(app).get('/api/v2/datasets');
+    const synthetic = list.body.datasets.find(
+      (d: { datasetId: string }) => d.datasetId === 'synthetic-technical',
+    );
+    expect(synthetic.supportedDomain).toEqual({
+      earliest: '2026-01-02T00:00:00Z',
+      earliestBoundary: 'INCLUSIVE',
+      latest: '2026-12-30T00:00:00Z',
+      latestBoundary: 'EXCLUSIVE',
+    });
+  });
+
+  it('gives lessons the full background sky behind opaque handles', async () => {
+    const learner = await newLearner(app);
+    const lesson = (await createLesson(app, learner, 'synthetic-scenario-a'))
+      .body as LessonSessionV2;
+    expect(lesson.stars).toHaveLength(413);
+    expect(JSON.stringify(lesson.stars)).not.toMatch(/hip-|synthetic-star-|Synthetica/);
+    expect(lesson.stars.some((star) => star.colorIndexBV !== null)).toBe(true);
   });
 });

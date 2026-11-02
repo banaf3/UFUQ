@@ -7,7 +7,9 @@ synthetic technical dataset. `local-only/` is ignored and holds the IERS Bulleti
 EOP bundle, whose redistribution terms are unconfirmed. Approval states come from
 `data/approvals/`. Since Phase 3 the set includes `learning-configuration-v1.json`
 (`NON_ADAPTIVE`, `REVIEW_REQUIRED`) and `synthetic/synthetic-learning-configuration-v1.json`
-(adaptive technical fixture).
+(adaptive technical fixture). The sky explorer adds `sky-field-hipparcos1997-v1.json`
+(display-only star field, IMP-020) and `sky-culture-iau-v1.json` (IAU figures and WGSN
+names), with synthetic twins.
 
 This directory is reserved for deterministic runtime artifacts. No catalogue or
 cultural data is present in the scaffold. Generated artifacts are tracked only after

@@ -1,0 +1,68 @@
+{
+  "approval": {
+    "decisionDate": "2026-11-02",
+    "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+    "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+    "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+    "state": "APPROVED"
+  },
+  "artifactId": "synthetic-sky-culture-v1",
+  "artifactType": "UFUQ_SKY_CULTURE",
+  "artifactVersion": "1",
+  "payload": {
+    "constellations": [
+      {
+        "abbreviation": "Sya",
+        "name": "Synthetic Alpha",
+        "polylines": [
+          [
+            900001,
+            900002,
+            900003,
+            900004
+          ]
+        ]
+      },
+      {
+        "abbreviation": "Syb",
+        "name": "Synthetic Beta",
+        "polylines": [
+          [
+            900011,
+            900012,
+            900013,
+            900014
+          ]
+        ]
+      }
+    ],
+    "crossmatch": {
+      "method": "NONE",
+      "positionMatches": [],
+      "unmatchedHr": []
+    },
+    "cultureId": "synthetic-culture",
+    "layer": "SYNTHETIC_TECHNICAL",
+    "sources": {
+      "note": "SYNTHETIC TECHNICAL FIXTURE"
+    },
+    "starFieldArtifact": {
+      "artifactId": "synthetic-sky-field-v1",
+      "payloadSha256": "4b17e5a176a4377ab37b6dbae9be04420af94296f1e6b0ff540a9580a431c729"
+    },
+    "starNames": [
+      {
+        "arabicScriptFromEtymology": null,
+        "constellation": "Sya",
+        "designation": "synthetic",
+        "hip": 900001,
+        "language": "Synthetic",
+        "name": "Synthetica",
+        "origin": "Invented name for a synthetic technical fixture."
+      }
+    ],
+    "title": "Synthetic culture (technical fixture)"
+  },
+  "payloadSha256": "fba9d4f7208afe295c217d0a96dafef0fb0e6ce8b40f91546f6f59855e475739",
+  "schemaVersion": 1
+}

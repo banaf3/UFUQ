@@ -92,6 +92,23 @@ Priority values are `REQUIRED_NOW`, `SUPPORTING_NOW`, `REQUIRED_LATER`, `OPTIONA
 | WILSON-ET-AL-2017 | Wilson, G., et al. (2017), “Good Enough Practices in Scientific Computing,” *PLOS Computational Biology* 13(6), e1005510, DOI `10.1371/journal.pcbi.1005510`; workflow recommendations; [publisher article](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510) | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Local restricted PDF and official web record | Supports low-overhead reproducibility and data/workflow hygiene suitable for one developer. |
 | KANEWALA-BIEMAN-2014 | Kanewala, U., and Bieman, J. M. (2014), “Testing Scientific Software: A Systematic Literature Review,” *Information and Software Technology* 56(10), 1219–1232, DOI `10.1016/j.infsof.2014.05.006`; abstract, results, and conclusion | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Local file is the 2018 arXiv preprint, not the publisher PDF | Supports oracle-problem awareness and layered scientific testing. Cite the peer-reviewed 2014 article by DOI and the local version as arXiv:1804.01954. |
 
+## Sky-explorer sources
+
+Added 2026-11-02 from official records retrieved that day (`docs/SKY_EXPLORER.md`).
+
+| Source ID | Citation and pointer | Class | Priority | Availability | Permitted UFUQ use and limit |
+|---|---|---|---|---|---|
+| CALABRETTA-GREISEN-2002 | Calabretta, M. R., and Greisen, E. W. (2002), "Representations of celestial coordinates in FITS," *A&A* 395, 1077–1122, DOI `10.1051/0004-6361:20021327`; [arXiv astro-ph/0207413](https://arxiv.org/abs/astro-ph/0207413) | AUTHORITATIVE_STANDARD | REQUIRED_NOW | Official preprint | Exact zenithal projection radial functions (Sect. 5.1, Eqs. 56, 58, 61, 69, 71) used by the sky renderer. Presentation geometry only. |
+| STELLARIUM-PROJECTORS | Stellarium, `src/core/StelProjectorClasses.hpp` (`getMaxFov`), [repository](https://github.com/Stellarium/stellarium) | CURRENT_TOOL_DOCUMENTATION | SUPPORTING_NOW | Official repository (GPL; values only, no code copied) | Field-of-view limits per projection (120, 235, 360, 360, 179.9999 degrees). |
+| BALLESTEROS-2012 | Ballesteros, F. J. (2012), "New insights into black bodies," *EPL* 97, 34008, DOI `10.1209/0295-5075/97/34008`; [arXiv 1201.1809](https://arxiv.org/abs/1201.1809), Eq. 14 | PRIMARY_RESEARCH | SUPPORTING_NOW | Official preprint | B-V to blackbody temperature for star colour (presentation; the paper states no validity range). |
+| WYMAN-SLOAN-SHIRLEY-2013 | Wyman, C., Sloan, P.-P., and Shirley, P. (2013), "Simple Analytic Approximations to the CIE XYZ Color Matching Functions," *JCGT* 2(2), 1–11; [journal page](https://jcgt.org/published/0002/02/01/), Eq. 4, Table 1 | PRIMARY_RESEARCH | SUPPORTING_NOW | Official open-access paper | Analytic CIE 1931 colour-matching functions for blackbody star colours. |
+| VANDERSLUYS-LINES-1.4 | van der Sluys, M. (2005–2026), *ConstellationLines* v1.4, DOI `10.5281/zenodo.10397192`; [repository](https://github.com/MarcvdSluys/ConstellationLines) | PRIMARY_DATASET | REQUIRED_NOW | Pinned commit in `data/manifests/sky-catalogue-v1/` | 88 IAU constellation stick figures (CC BY 4.0, credited). Modern pedagogical figures, not historical or Arabic figures. |
+| IAU-WGSN-CSN | IAU Working Group on Star Names, *IAU Catalog of Star Names*; [WGSN table](https://exopla.net/star-names/modern-iau-star-names/) | AUTHORITATIVE_STANDARD | REQUIRED_NOW | Page snapshot in `data/manifests/sky-catalogue-v1/` | Official star names (not subject to copyright), origin language and etymology texts (CC BY, credited). Arabic scripts quoted in etymologies are WGSN-derived and still need UFUQ Arabic-language review. |
+| NAOJ-CONSTELLATIONS | National Astronomical Observatory of Japan, "Constellations" table; [page](https://eco.mtk.nao.ac.jp/koyomi/faq/constellations.html.en) | CURRENT_TOOL_DOCUMENTATION | SUPPORTING_NOW | Page snapshot | The 88 IAU constellation names and abbreviations. |
+| BSC5-V50 | Hoffleit, D., and Warren, W. H. Jr. (1991), *The Bright Star Catalogue*, 5th Revised Ed. (Preliminary Version), CDS V/50; [CDS mirror at CfA](https://vizier.cfa.harvard.edu/ftp/cats/V/50/) | PRIMARY_DATASET | SUPPORTING_NOW | Original files (ReadMe, catalog.gz) hashed | HR-to-HD cross-reference for the figures only. |
+| POGSON-1856 | Pogson, N. (1856), "Magnitudes of thirty-six of the minor planets…," *MNRAS* 17, 12–15 | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Bibliographic record | The magnitude scale (flux ratio 10^(-0.4 dm)) behind the brightness rule. |
+| STEVENS-1961 | Stevens, S. S. (1961), "To honor Fechner and repeal his law," *Science* 133, 80–86 | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Bibliographic record | The power-law brightness exponent (0.5 for a point source) used to compress star brightness for display. |
+
 ## Learner-modelling sources
 
 Added 2026-11-02 for Phase 3 from official publisher, proceedings, DOI or repository
@@ -134,6 +151,7 @@ These tracked documents state UFUQ decisions; they are not external authorities.
 | UFUQ-STATUS | `docs/STATUS.md`, current readiness gates | PROJECT_DECISION | REQUIRED_NOW | Current state, not scientific evidence |
 | UFUQ-STRUCTURE-MIGRATION | `docs/STRUCTURE_MIGRATION.md`, post-migration assertions | PROJECT_DECISION | SUPPORTING_NOW | Historical structure evidence |
 | UFUQ-BKT-SPEC | `docs/TUTORING_BKT_SPEC.md`, BKT/observation/policy decisions and blockers | PROJECT_DECISION | REQUIRED_NOW | Phase 3 contract; supporting literature is in "Learner-modelling sources" |
+| UFUQ-SKY-EXPLORER | `docs/SKY_EXPLORER.md` | PROJECT_DECISION | REQUIRED_NOW | Sky explorer, display-only star field (IMP-020), projections, brightness and colour model, sources and open items |
 | UFUQ-PHASE3-TUTORING | `docs/PHASE3_ASSESSMENT_AND_BKT.md` and `docs/evidence/BKT_SENSITIVITY.md` | PROJECT_DECISION | REQUIRED_NOW | Phase 3 implementation, oracle bound, synthetic policies, sensitivity evidence and exit-gate state |
 | UFUQ-ADR-003 | `docs/adr/003-astronomical-coordinate-conventions.md`, decision and validation | PROJECT_DECISION | REQUIRED_NOW | Coordinate-convention decision record |
 | UFUQ-ADR-004 | `docs/adr/004-star-catalogue-and-provenance.md`, decision and validation | PROJECT_DECISION | REQUIRED_NOW | Catalogue/provenance decision record |
