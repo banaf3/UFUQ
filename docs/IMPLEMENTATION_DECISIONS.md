@@ -445,6 +445,31 @@ Historical report/deviation/authority status remains in `governance/`.
       Collision boxes cover both lines of text with 8 px either side, so two names
       never read as one phrase. Stellarium Web Engine instead fades overlapping labels
       by priority (`labels.c`); the moving rule is UFUQ's.
+    - **Steady names (2026-11-05, owner: names moved on selection and seemed to lag).**
+      Placement remembers each name between frames (`apps/web/src/sky/label-placement.ts`),
+      following MapLibre GL JS's symbol placement (`src/symbol/placement.ts`):
+      - a name first tries the place it had in the previous frame;
+      - names fade in and out over 300 ms (MapLibre's default `fadeDuration`); a name
+        that must move fades out at its old place while it fades in at the new one;
+      - on the first frame, and when coming in from off the screen, a name shows at once.
+
+      Two rules are UFUQ's:
+      - a kept place may overlap another name by up to 8 px (Stellarium Web Engine's
+        `max_overlap`);
+      - a name whose place leaves the screen scrolls away with the sky and returns to the
+        same place.
+
+      Selecting a figure therefore moves no name that still fits. On the review-preview
+      sky (1400 × 860 px, scripted), name jumps fell:
+
+      | Scenario | Before | After |
+      | --- | --- | --- |
+      | 120° pan | 155 | 11 |
+      | Zoom from 110° to 40° | 74 | 0 |
+      | Selecting figures | 10 | 0 |
+
+      Drawing all names costs about 1 ms per frame in Chromium, so drawing speed was
+      not the cause of the lag.
   - **Evidence.** New state `SCHOLARLY_STUDY` (a modern study citing named historical
     sources, e.g. Kunitzsch 1961 on the sea pilots' names). After the second reading
     pass:
