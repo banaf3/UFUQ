@@ -11,7 +11,8 @@
   (`aboutSources`);
 - English paraphrased notes for reviewers;
 - recorded identification conflicts;
-- navigation relationships.
+- navigation relationships;
+- `guidanceTarget`: the star the guidance leads to (al-Jady, HIP 11767), with its cited statement (Ibn Qutayba §170). The explorer names it in bold, and the figures in the relationships are named even in wide views.
 
 Every record cites its sources:
 

@@ -55,23 +55,39 @@ test('finds a named star and shows its card; shows a custom instant', async ({ p
   await page.getByPlaceholder('Find a star or figure').fill('Synthetica');
   await page.keyboard.press('Enter');
   const starCard = page.getByRole('complementary', { name: 'Selected star' });
-  // The tradition name comes first; the modern name is kept as origin information.
-  await expect(starCard.getByRole('heading', { level: 2 })).toHaveText('سين-١');
-  await expect(starCard).toContainText('Synthetic One');
+  // The tradition name leads, in English letters with the Arabic under it; the modern
+  // name is kept as origin information.
+  await expect(starCard.getByRole('heading', { level: 2 })).toHaveText('Synthetic One');
+  await expect(starCard).toContainText('سين-١');
   await expect(starCard).toContainText('Synthetica');
   await expect(starCard).not.toContainText('Synthetic Alpha'); // no IAU constellation rows
-  // Card text first, references last; no reviewer status or position rows.
+  // Card text first, references last and shown on request; no status or position rows.
   await expect(starCard.locator('.about')).toContainText('Invented card text');
-  await expect(starCard.getByRole('region', { name: 'References' })).toContainText(
-    'Synthetic technical fixture',
-  );
+  const references = starCard.getByRole('region', { name: 'References' });
+  await expect(references.getByText('Synthetic technical fixture')).toBeHidden();
+  await references.getByText(/References/).click();
+  await expect(references.getByText('Synthetic technical fixture')).toBeVisible();
   await expect(starCard).not.toContainText('anwāʾ texts');
   await expect(starCard).not.toContainText('Altitude');
-  // A figure the star belongs to opens its own card.
+  await expect(starCard.getByRole('button', { name: 'Back' })).toHaveCount(0);
+  const readout = page.locator('.readout');
+  await expect(readout).toContainText('FOV 70°');
+  // A figure the star belongs to opens its own card and zooms to it; its star zooms in.
   await starCard.getByRole('button', { name: /Synthetic A/ }).click();
   const figureCard = page.getByRole('complementary', { name: 'Selected figure' });
-  await expect(figureCard.getByRole('heading', { level: 2 })).toHaveText('سين-أ');
+  await expect(figureCard.getByRole('heading', { level: 2 })).toHaveText('Synthetic A');
   await expect(figureCard).toContainText('Stars (4)');
+  await figureCard.getByRole('button', { name: /Synthetic One/ }).click();
+  await expect(starCard.getByRole('heading', { level: 2 })).toHaveText('Synthetic One');
+  await expect(readout).toContainText(/FOV ([12]\d|30)°/);
+  // Back returns card by card, and to each card's view.
+  await starCard.getByRole('button', { name: 'Back' }).click();
+  await expect(figureCard.getByRole('heading', { level: 2 })).toHaveText('Synthetic A');
+  await figureCard.getByRole('button', { name: 'Back' }).click();
+  await expect(starCard.getByRole('heading', { level: 2 })).toHaveText('Synthetic One');
+  await expect(readout).toContainText('FOV 70°');
+  await expect(starCard.getByRole('button', { name: 'Back' })).toHaveCount(0);
+  await starCard.getByRole('button', { name: /Synthetic A/ }).click();
   await page.getByLabel('Scenario').selectOption('__custom__');
   await page.getByRole('textbox', { name: 'Date and time (UTC)' }).fill('2026-06-01T15:00');
   await page.getByRole('button', { name: 'Show' }).click();

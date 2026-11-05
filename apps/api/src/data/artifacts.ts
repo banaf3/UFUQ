@@ -374,6 +374,18 @@ export interface ArabicSkyPayload {
     readonly hip: number;
     readonly labelOnSky: boolean;
   })[];
+  /** The star the culture's guidance leads to (al-Jady), with its source; or null. */
+  readonly guidanceTarget: {
+    readonly hip: number;
+    readonly statement: string;
+    readonly sourceId: string;
+    readonly locator: string;
+  } | null;
+  readonly relationships: readonly {
+    readonly relationshipId: string;
+    readonly from: { readonly kind: string; readonly id?: string; readonly hip?: number };
+    readonly to: { readonly kind: string; readonly id?: string; readonly hip?: number };
+  }[];
 }
 
 export interface DatasetFiles {
@@ -451,6 +463,8 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
         throw new TypeError('Arabic sky culture payload is malformed.');
       if (payload.lineRule?.ruleId !== 'COMPILATION_LINES_UNMODIFIED')
         throw new TypeError('Arabic sky culture lines must be the unmodified compilation lines.');
+      if (!Array.isArray(payload.relationships) || payload.guidanceTarget === undefined)
+        throw new TypeError('Arabic sky culture payload predates the guidance target.');
       return payload;
     },
   );

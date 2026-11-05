@@ -57,6 +57,7 @@ const curation = (figures: ArabicSkyCuration['figures'], stars: ArabicSkyCuratio
     sources: [{ sourceId: 'SYNTHETIC', role: 'test' }],
     figures,
     stars,
+    guidanceTarget: null,
     relationships: [],
     review: { state: 'REVIEW_REQUIRED' },
   }) satisfies ArabicSkyCuration;
@@ -227,5 +228,21 @@ describe('curation validation (structure only, never cultural approval)', () => 
       lineRule: { ruleId: 'UFUQ_TREE_V1', layer: 'x', description: 'x' },
     });
     expect(errors).toContain(`lineRule must be ${LINE_RULE_ID}.`);
+  });
+
+  it('checks the guidance target: a curated star with a cited statement', () => {
+    const star = { ...base, hip: 1, arabic: 'نجم', transliteration: 'Najm', designation: 'HIP 1' };
+    const withTarget = (hip: number, sourceId = 'SYNTHETIC'): ArabicSkyCuration => ({
+      ...curation([figure('anwa-a', [1, 2])], [star]),
+      guidanceTarget: { hip, statement: 'Leads the way.', sourceId, locator: 'test' },
+    });
+    expect(validateArabicSkyCuration(withTarget(1))).toEqual([]);
+    expect(build(withTarget(1)).guidanceTarget?.hip).toBe(1);
+    expect(validateArabicSkyCuration(withTarget(2))).toContain(
+      'guidanceTarget: HIP 2 is not a curated star.',
+    );
+    expect(validateArabicSkyCuration(withTarget(1, 'NOPE'))).toContain(
+      'guidanceTarget: unknown source NOPE.',
+    );
   });
 });

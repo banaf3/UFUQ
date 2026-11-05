@@ -54,6 +54,9 @@ the learner) and its storyboard layout (full-screen sky, slim top bar, start but
   - A label that has to move cross-fades to its new place.
   - A label leaving the screen scrolls away with the sky.
   - Selecting something therefore moves no name that still fits (IMP-022).
+  - A figure name is first tried centred on the middle of the figure's stars (`centred`). Names keep clear of the compass letters.
+  - In wide views only guidance and bright figures are named (`figureNameFovLimit`, IMP-022).
+- **Cards:** following a link in a card frames the target (`frameDirections`). "← Back" restores the previous card and its view.
 - **Picking:** in screen space with the same projector. Three's `Raycaster` cannot follow non-linear projections.
 - **View state:** lives in `ViewController` (per-frame, outside React state).
 - **Brightness:**

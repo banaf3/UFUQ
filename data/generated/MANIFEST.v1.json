@@ -75,10 +75,10 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "sky-culture-arabic-anwa-v1",
-      "byteLength": 421418,
+      "byteLength": 421745,
       "path": "data/generated/sky-culture-arabic-anwa-v1.json",
-      "payloadSha256": "bbf71839f89b94a7d45aa7b6164ebb3f9383b14c33a447df6adc293c7724df99",
-      "sha256": "274508e9b916d055ad8eaffbfd6c07ea12445eb2d72e598925f78f90c5e98866",
+      "payloadSha256": "9f76df6380c932559900b0986f468e7587aa787c12a80b7aba2d407268d350df",
+      "sha256": "2b87cb9fb8c998c4c3bd90794d2bbef855c0ef7200127f7edd85d364651e9bf1",
       "tracked": true
     },
     {
@@ -174,10 +174,10 @@
     {
       "approvalState": "APPROVED",
       "artifactId": "synthetic-arabic-sky-culture-v1",
-      "byteLength": 5688,
+      "byteLength": 5904,
       "path": "data/generated/synthetic/synthetic-arabic-sky-culture-v1.json",
-      "payloadSha256": "bbbfe445b962c6ec82fbd0f37b8deb0dc30f6376a9f44fe8ce6a3286e0cca8d9",
-      "sha256": "8206637a8ec8dc9ad7fc8760c181e3044d527830ee73a7815b0a7647c9474d8c",
+      "payloadSha256": "630c20436559bb75e1201b3f16279322d0edf70a8aad13bb660dd4ecd9ba8296",
+      "sha256": "15355f78015d2e257f560c4e30b6c5971807515303d1cc599b189373bd0e1bd6",
       "tracked": true
     }
   ],

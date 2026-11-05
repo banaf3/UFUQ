@@ -470,6 +470,37 @@ Historical report/deviation/authority status remains in `governance/`.
 
       Drawing all names costs about 1 ms per frame in Chromium, so drawing speed was
       not the cause of the lag.
+    - **Centred names, wide views, al-Jady (owner's review, 2026-11-05).**
+      - A figure's name is centred in the middle of its stars, as Stellarium places
+        constellation names, when that middle is the figure's own. That is, no other
+        figure's lines (or stars, for a figure without lines) come nearer to it than
+        the figure's own; the figures around it and inside it do not count. Otherwise
+        it sits on its own lines as before. In the review-preview sky, al-Dabaran
+        wa-Qilasuhu wa-Kalbahu, Kursi al-Jawza al-Muqaddam, al-Jawza and al-Ayyuq
+        wa-Tawabi'uhu are centred; al-Thurayya al-Sura is not.
+      - In wide views only the most important or visible figures are named:
+        - *guidance figures* (named in one of the 28 cited navigation relationships;
+          20 figures) at every field of view;
+        - figures whose stars together shine at magnitude 0.5 or brighter at every
+          field of view (the combined magnitude is −2.5 log₁₀ Σ 10^(−0.4 m));
+        - fainter ones once the field of view is at most 120° × 2^((0.5 − m)/2.5),
+          the star-name law (about 1.2 at 100°, 3 at 60°).
+
+        Figures inside a larger one keep the 100° limit as well. These are UFUQ
+        display choices.
+      - al-Jady is named in bold (Tajawal 700), first, and in every view. It is the
+        culture's `guidanceTarget`, a curated, cited field (Ibn Qutayba §170: by
+        al-Jady the way and the qibla are found). It is the star UFUQ's routes lead to.
+        The explorer reads it from data rather than naming a star in code.
+      - Names keep clear of the compass letters on the horizon.
+    - **Cards (owner's review, 2026-11-05).**
+      - The name in English letters leads and the Arabic script follows, on titles and
+        in the lists.
+      - The References open on request.
+      - A figure or star clicked inside a card is selected and framed: a star at a
+        30° field of view at most, a figure filling about 70% of the view.
+      - "← Back" returns to the previous card and its view. Picking on the sky or
+        searching starts a new trail.
   - **Evidence.** New state `SCHOLARLY_STUDY` (a modern study citing named historical
     sources, e.g. Kunitzsch 1961 on the sea pilots' names). After the second reading
     pass:

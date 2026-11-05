@@ -21,8 +21,10 @@ import type { SkyCanvasStar, SkyLabel, SkyLine } from '../sky/sky-types.js';
 const DEG = Math.PI / 180;
 /** Tajawal (SIL OFL 1.1, bundled from @fontsource/tajawal) for Arabic and its transliteration. */
 export const NAME_FONT = "'Tajawal', 'Segoe UI', 'Arial', system-ui, sans-serif";
-/** One weight for every name, Arabic and Latin alike (neither is bold). */
+/** One weight for every name, Arabic and Latin alike (neither is bold)... */
 const NAME_WEIGHT = 500;
+/** ...except the star the guidance leads to (al-Jady), bold in both lines. */
+const GUIDANCE_TARGET_WEIGHT = 700;
 const FIGURE_NAME = 'rgb(159 194 241)';
 /** A figure inside a larger one: the figure blue, a little darker (0.85 of each channel). */
 const CHILD_FIGURE_NAME = 'rgb(135 165 205)';
@@ -117,42 +119,160 @@ const MAX_NAME_ANCHORS = 8;
 const SAME_PLACE = Math.cos(0.5 * DEG);
 
 export interface FigurePlacement {
-  /** Where the name may sit, best first; the first is the figure's point nearest its centre. */
+  /** Where the name may sit, best first. */
   readonly anchors: readonly Vec3[];
+  /** True when the first anchor is the centre of the stars: the name is centred there. */
+  readonly centred: boolean;
   /** The largest angle (rad) from the centre of the stars to a member star. */
   readonly spread: number;
+  /** The combined brightness of the member stars (visual magnitude). */
+  readonly magnitude: number;
 }
 
-/**
- * Where a figure's name may sit: points of the figure itself, nearest to the centre of its
- * stars first. They are on the figure's drawn lines (one per line, its point nearest that
- * centre), or for a figure without lines its member stars. A spread or curved figure
- * (al-Thurayya al-Sura, al-Asad) has its centre in empty sky, often beside another figure,
- * so its name stays on its own lines; if the best place is taken it moves along them.
- */
-export function figurePlacement(
-  figure: SkyFigureV2,
-  stars: readonly SkyCanvasStar[],
-): FigurePlacement | null {
-  const members = figure.memberIndices
-    .map((index) => stars[index]?.enu)
-    .filter((direction): direction is Vec3 => direction !== undefined);
-  const centre = meanDirection(members);
-  if (!centre) return null;
-  const onLines: Vec3[] = [];
+/** How near a direction comes to a figure: the cosine of the angle to its lines or stars. */
+function nearness(point: Vec3, figure: SkyFigureV2, stars: readonly SkyCanvasStar[]): number {
+  let best = -1;
   for (const [a, b] of figure.segments) {
     const from = stars[a]?.enu;
     const to = stars[b]?.enu;
-    if (from && to) onLines.push(nearestOnArc(from, to, centre));
+    if (from && to) best = Math.max(best, dot(point, nearestOnArc(from, to, point)));
   }
-  const anchors: Vec3[] = [];
-  for (const point of [...(onLines.length > 0 ? onLines : members)].sort(
-    (p, q) => dot(q, centre) - dot(p, centre),
-  ))
-    if (anchors.length < MAX_NAME_ANCHORS && anchors.every((a) => dot(a, point) < SAME_PLACE))
-      anchors.push(point);
-  const spread = Math.acos(Math.min(1, Math.min(...members.map((m) => dot(m, centre)))));
-  return { anchors, spread };
+  if (figure.segments.length === 0)
+    for (const index of figure.memberIndices) {
+      const star = stars[index];
+      if (star) best = Math.max(best, dot(point, star.enu));
+    }
+  return best;
+}
+
+/** A figure with the larger figures around it and the smaller figures inside it. */
+function familyOf(figures: readonly SkyFigureV2[], figure: SkyFigureV2): Set<string> {
+  const family = selectedFamily(figures, figure.figureId);
+  for (let parent = figure.parentId; parent;) {
+    family.add(parent);
+    parent = figures.find((f) => f.figureId === parent)?.parentId ?? null;
+  }
+  return family;
+}
+
+const placementCache = new WeakMap<
+  readonly SkyCanvasStar[],
+  WeakMap<readonly SkyFigureV2[], Map<string, FigurePlacement>>
+>();
+
+/**
+ * Where each figure's name may sit. The name is centred in the middle of its stars when
+ * that middle belongs to the figure, as Stellarium places constellation names
+ * (al-Dabaran wa-Qilasuhu wa-Kalbahu, Kursi al-Jawza al-Muqaddam). If the middle is nearer
+ * to another figure's lines than to the figure's own, the name would be read as the other
+ * figure's (al-Thurayya al-Sura's middle lies in al-Hamal), so it sits on the figure's own
+ * lines instead. In both cases further places along its lines follow, nearest the middle
+ * first (or its member stars, for a figure without lines).
+ */
+export function figurePlacements(
+  figures: readonly SkyFigureV2[],
+  stars: readonly SkyCanvasStar[],
+): Map<string, FigurePlacement> {
+  const cached = placementCache.get(stars)?.get(figures);
+  if (cached) return cached;
+  const centres = new Map<string, { centre: Vec3; spread: number }>();
+  for (const figure of figures) {
+    const members = figure.memberIndices
+      .map((index) => stars[index]?.enu)
+      .filter((direction): direction is Vec3 => direction !== undefined);
+    const centre = meanDirection(members);
+    if (centre)
+      centres.set(figure.figureId, {
+        centre,
+        spread: Math.acos(Math.min(1, Math.min(...members.map((m) => dot(m, centre))))),
+      });
+  }
+  const placements = new Map<string, FigurePlacement>();
+  for (const figure of figures) {
+    const own = centres.get(figure.figureId);
+    if (!own) continue;
+    const { centre, spread } = own;
+    const ownNearness = nearness(centre, figure, stars);
+    const ownAngle = Math.acos(Math.min(1, ownNearness));
+    const family = familyOf(figures, figure);
+    let centred = true;
+    for (const other of figures) {
+      const around = centres.get(other.figureId);
+      if (family.has(other.figureId) || !around) continue;
+      // Too far away to come nearer than the figure's own lines.
+      if (Math.acos(Math.min(1, dot(centre, around.centre))) - around.spread > ownAngle) continue;
+      if (nearness(centre, other, stars) > ownNearness) {
+        centred = false;
+        break;
+      }
+    }
+    const points: Vec3[] = [];
+    for (const [a, b] of figure.segments) {
+      const from = stars[a]?.enu;
+      const to = stars[b]?.enu;
+      if (from && to) points.push(nearestOnArc(from, to, centre));
+    }
+    if (points.length === 0)
+      for (const index of figure.memberIndices) {
+        const star = stars[index];
+        if (star) points.push(star.enu);
+      }
+    const anchors: Vec3[] = centred ? [centre] : [];
+    for (const point of points.sort((p, q) => dot(q, centre) - dot(p, centre)))
+      if (anchors.length < MAX_NAME_ANCHORS && anchors.every((a) => dot(a, point) < SAME_PLACE))
+        anchors.push(point);
+    const flux = figure.memberIndices.reduce(
+      (sum, index) => sum + 10 ** (-0.4 * (stars[index]?.magnitude ?? 99)),
+      0,
+    );
+    placements.set(figure.figureId, {
+      anchors,
+      centred,
+      spread,
+      magnitude: -2.5 * Math.log10(flux),
+    });
+  }
+  const byFigures = placementCache.get(stars) ?? new WeakMap();
+  byFigures.set(figures, placements);
+  placementCache.set(stars, byFigures);
+  return placements;
+}
+
+/** A star opened from a card is shown in at most this field of view. */
+export const STAR_FRAME_FOV = 30 * DEG;
+/** A figure opened from a card spans about this share of the field of view... */
+const FIGURE_FRAME_SHARE = 0.7;
+/** ...within these limits. */
+const FIGURE_FRAME_FOV = { min: 12 * DEG, max: 110 * DEG } as const;
+
+/**
+ * The view that frames what a card link opens: its centre, and a field of view that zooms
+ * in on a star (keeping a narrower view) or fits a figure with a margin.
+ */
+export function frameDirections(
+  directions: readonly Vec3[],
+  currentFov: number,
+): { readonly centre: Vec3; readonly fov: number } | null {
+  const centre = meanDirection(directions);
+  if (!centre) return null;
+  if (directions.length === 1) return { centre, fov: Math.min(currentFov, STAR_FRAME_FOV) };
+  const spread = Math.acos(Math.min(1, Math.min(...directions.map((d) => dot(d, centre)))));
+  const fov = (2 * spread) / FIGURE_FRAME_SHARE;
+  return {
+    centre,
+    fov: Math.min(FIGURE_FRAME_FOV.max, Math.max(FIGURE_FRAME_FOV.min, fov)),
+  };
+}
+
+/**
+ * In wide views only the guidance figures and the brightest figures are named; the others
+ * appear as the view narrows. A figure whose stars together shine at magnitude 0.5 or
+ * brighter is named at every field of view; fainter ones follow the star-name law (one
+ * magnitude per 2.5 halvings of the field): about 1.2 at 100 degrees, 3 at 60 degrees.
+ */
+export function figureNameFovLimit(magnitude: number, guidance: boolean): number {
+  if (guidance || magnitude <= 0.5) return 360 * DEG;
+  return 120 * DEG * 2 ** ((0.5 - magnitude) / 2.5);
 }
 
 export function skyLayers(
@@ -188,44 +308,60 @@ export function skyLayers(
     }
   }
   if (!options.showNames) return { lines, labels };
+  const placements = figurePlacements(figures, stars);
   for (const figure of figures) {
-    const placement = figurePlacement(figure, stars);
+    const placement = placements.get(figure.figureId);
     const [anchor, ...alternatives] = placement?.anchors ?? [];
     if (!placement || !anchor) continue;
     const child = figure.parentId !== null;
     const selected = figure.figureId === options.selectedFigureId;
     const size = child ? SMALL_NAME_SIZE : FIGURE_NAME_SIZE;
-    // Lower wins a collision: the selection, then whole figures, groups, then inner
-    // figures. Within each, compact figures (al-Thurayya, al-Haq'a) come first: their name
-    // has one natural place, while a spread figure can move along its own lines.
-    const rank = selected ? -1 : child ? 1 : figure.style === 'GROUP' ? 0.5 : 0;
+    // Lower wins a collision: the selection, then whole figures (guidance figures first),
+    // groups, then inner figures. Within each, compact figures (al-Thurayya, al-Haq'a) come
+    // first: their name has one natural place, while a spread figure has many.
+    const rank = selected
+      ? -1
+      : child
+        ? 1
+        : figure.style === 'GROUP'
+          ? 0.5
+          : figure.guidance
+            ? -0.25
+            : 0;
+    const fovLimit = Math.min(
+      figureNameFovLimit(placement.magnitude, figure.guidance),
+      child ? CHILD_FIGURE_MAX_FOV : 360 * DEG,
+    );
     labels.push({
       id: `${FIGURE_LABEL_ID}${figure.figureId}`,
       direction: anchor,
       alternatives,
+      centred: placement.centred,
       text: figure.arabic,
       secondary: figure.transliteration,
       color: selected ? SELECTED_NAME : child ? CHILD_FIGURE_NAME : FIGURE_NAME,
       font: `${NAME_WEIGHT} ${size.arabic}px ${NAME_FONT}`,
       secondaryFont: `${NAME_WEIGHT} ${size.latin}px ${NAME_FONT}`,
       priority: rank + placement.spread / Math.PI / 10,
-      ...(child && !selected ? { maxFov: CHILD_FIGURE_MAX_FOV } : {}),
+      ...(!selected && fovLimit < 360 * DEG ? { maxFov: fovLimit } : {}),
       offset: 22,
     });
   }
   for (const name of sky.arabicNames) {
     const star = stars[name.starIndex];
     if (!star || !name.labelOnSky) continue;
+    // The star the guidance leads to (al-Jady) is named in bold, first and in every view.
+    const weight = name.guidanceTarget ? GUIDANCE_TARGET_WEIGHT : NAME_WEIGHT;
     labels.push({
       id: `${STAR_LABEL_ID}${name.starIndex}`,
       direction: star.enu,
       text: name.arabic,
       secondary: name.transliteration,
       color: STAR_NAME,
-      font: `${NAME_WEIGHT} ${SMALL_NAME_SIZE.arabic}px ${NAME_FONT}`,
-      secondaryFont: `${NAME_WEIGHT} ${SMALL_NAME_SIZE.latin}px ${NAME_FONT}`,
-      priority: 2 + star.magnitude / 10,
-      maxFov: nameFovLimit(star.magnitude),
+      font: `${weight} ${SMALL_NAME_SIZE.arabic}px ${NAME_FONT}`,
+      secondaryFont: `${weight} ${SMALL_NAME_SIZE.latin}px ${NAME_FONT}`,
+      priority: name.guidanceTarget ? -0.5 : 2 + star.magnitude / 10,
+      ...(name.guidanceTarget ? {} : { maxFov: nameFovLimit(star.magnitude) }),
       offset: -14,
     });
   }

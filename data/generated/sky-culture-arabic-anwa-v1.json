@@ -22,7 +22,7 @@
     "cultureId": "arabic-anwa",
     "curation": {
       "path": "data/curation/sky-culture/arabic-anwa.v1.json",
-      "sha256": "1102878fd5c3a30f60c33755fb35da9ddc265f3ac03a7b987f500c1ffdfba522"
+      "sha256": "6c1d6d8fc040763a3a9ce5f8ff58a064331ff58165cfc612844104596c96b8e6"
     },
     "curationReview": {
       "decisionDate": null,
@@ -8957,6 +8957,12 @@
         "vocalization": "FROM_SOURCE_FORM"
       }
     ],
+    "guidanceTarget": {
+      "hip": 11767,
+      "locator": "§170 (local text L3102-3103)",
+      "sourceId": "IBN-QUTAYBA-ANWA",
+      "statement": "By al-Jady the qibla is known and the way is found, because it does not move. UFUQ lesson routes lead to al-Jady, then to True North and the qibla (project decision)."
+    },
     "layer": "OLD_ARABIAN",
     "lineRule": {
       "description": "Each figure's lines are the compilation's line arrays for its entry, reproduced unmodified (polylines read as consecutive pairs; one-star markers draw nothing). A segment whose star is outside the display field is not drawn and is recorded. UFUQ adds no segment of its own.",
@@ -13368,6 +13374,6 @@
       "vocalization": "From the vocalized source forms and IAU WGSN/Kunitzsch spellings; records marked UNVERIFIED need a philologist."
     }
   },
-  "payloadSha256": "bbf71839f89b94a7d45aa7b6164ebb3f9383b14c33a447df6adc293c7724df99",
+  "payloadSha256": "9f76df6380c932559900b0986f468e7587aa787c12a80b7aba2d407268d350df",
   "schemaVersion": 1
 }
