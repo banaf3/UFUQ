@@ -60,7 +60,19 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-05)
 
-Branch `feat/anwa-compilation-lines-and-cards` (IMP-022) answered the owner's review of
+Branch `fix/anwa-name-placement` (IMP-022, name placement) answered the owner's next
+review:
+
+- al-Jawzāʾ's name was hidden by al-Haqʿa's; a name that collides now moves to the
+  mirror place across its anchor, then beside it, then along the figure's lines;
+- figure names sit on their own lines, not at the centre of their stars (al-Thurayyā
+  al-Ṣūra no longer lands on al-Ḥamal);
+- compact figures (al-Thurayyā, al-Haqʿa) are placed first;
+- names inside a larger figure use the star-name size, in a slightly darker blue;
+- the owner's own colour and size edits (figure names rgb 159, 194, 241 at 16 px, grey
+  star names) are kept.
+
+Before that, branch `feat/anwa-compilation-lines-and-cards` (IMP-022) answered the owner's review of
 the anwāʾ sky:
 
 - the compilation's lines, unmodified with attribution, replace `UFUQ_TREE_V1`;

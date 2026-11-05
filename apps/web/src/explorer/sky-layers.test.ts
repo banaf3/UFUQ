@@ -2,13 +2,17 @@ import { describe, expect, it } from 'vitest';
 
 import type { SkyFigureV2, SkyViewV2 } from '@ufuq/contracts';
 
+import { meanDirection, type Vec3 } from '../sky/projection.js';
+import type { SkyCanvasStar } from '../sky/sky-types.js';
 import {
   CHILD_FIGURE_MAX_FOV,
+  figurePlacement,
   figureDetails,
   findOptions,
   foldName,
   matchFind,
   nameFovLimit,
+  nearestOnArc,
   skyLayers,
   skyStars,
   starDetails,
@@ -165,7 +169,7 @@ describe('sky layers (Arabic anwāʾ culture only)', () => {
       id: 'star:0',
       secondary: 'Al-Qalb',
     });
-    // Blue names; Arabic and transliteration in Tajawal at one weight (neither bold).
+    // Coloured names; Arabic and transliteration in Tajawal at one weight (neither bold).
     for (const label of labels) {
       expect(label.color.startsWith('rgb(')).toBe(true);
       expect(label.font.startsWith('500 ')).toBe(true);
@@ -178,8 +182,109 @@ describe('sky layers (Arabic anwāʾ culture only)', () => {
     // Modern names are never drawn on the sky.
     expect(texts).not.toContain('Antares');
     const child = labels.find((l) => l.id === 'figure:anwa-child');
+    const parent = labels.find((l) => l.id === 'figure:anwa-parent');
+    const star = labels.find((l) => l.id === 'star:0');
     expect(child?.maxFov).toBe(CHILD_FIGURE_MAX_FOV);
-    expect(labels.find((l) => l.id === 'figure:anwa-parent')?.maxFov).toBeUndefined();
+    expect(parent?.maxFov).toBeUndefined();
+    // A figure inside a larger one is named at the star-name size, a little darker.
+    expect(child?.font).toBe(star?.font);
+    expect(child?.secondaryFont).toBe(star?.secondaryFont);
+    expect(parent?.font).toContain(' 16px ');
+    expect(child?.color).not.toBe(parent?.color);
+  });
+
+  it('ranks whole figures first, compact ones before spread ones', () => {
+    const { labels } = skyLayers(sky, stars, { showLines: false, showNames: true });
+    const rank = (id: string) => labels.find((l) => l.id === id)?.priority ?? NaN;
+    // whole figure < group (dashed) < the figure inside the parent < star names
+    expect(rank('figure:anwa-parent')).toBeLessThan(rank('figure:anwa-group'));
+    expect(rank('figure:anwa-group')).toBeLessThan(rank('figure:anwa-child'));
+    expect(rank('figure:anwa-child')).toBeLessThan(rank('star:0'));
+    // A compact figure's name has one natural place, so it is placed before a spread one,
+    // which can move along its own lines.
+    const spread = figure({ figureId: 'spread', memberIndices: [0, 1, 2, 3] });
+    const compact = figure({ figureId: 'compact', memberIndices: [0, 1] });
+    const both = skyLayers(
+      { ...sky, culture: { ...sky.culture!, figures: [spread, compact] } },
+      stars,
+      { showLines: false, showNames: true },
+    ).labels;
+    const priority = (id: string) => both.find((l) => l.id === `figure:${id}`)?.priority ?? NaN;
+    expect(priority('compact')).toBeLessThan(priority('spread'));
+    expect(priority('spread')).toBeLessThan(0.5); // still a whole figure, before groups
+  });
+
+  it('puts a figure name on its own lines, not in the empty sky between them', () => {
+    // A wide V: the centre of its stars lies inside the V, away from both lines.
+    const unit = (e: number, n: number, u: number): Vec3 => {
+      const l = Math.hypot(e, n, u);
+      return [e / l, n / l, u / l];
+    };
+    const wide: SkyCanvasStar[] = [unit(-0.5, 1, 0.5), unit(0, 1, 0), unit(0.5, 1, 0.5)].map(
+      (enu) => ({ enu, magnitude: 2, colorIndexBV: null }),
+    );
+    const lines: [number, number][] = [
+      [0, 1],
+      [1, 2],
+    ];
+    const vee = figure({ figureId: 'vee', memberIndices: [0, 1, 2], segments: lines });
+    const placement = figurePlacement(vee, wide)!;
+    const centre = meanDirection(wide.map((s) => s.enu))!;
+    const separation = (a: Vec3, b: Vec3) =>
+      Math.acos(Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]));
+    const onLine = (p: Vec3, [i, j]: [number, number]) =>
+      Math.abs(
+        separation(p, wide[i]!.enu) +
+          separation(p, wide[j]!.enu) -
+          separation(wide[i]!.enu, wide[j]!.enu),
+      ) < 1e-9;
+    // Every place offered is on one of the lines, the best one first.
+    expect(placement.anchors.length).toBeGreaterThan(0);
+    for (const p of placement.anchors) expect(lines.some((line) => onLine(p, line))).toBe(true);
+    const best = placement.anchors[0]!;
+    expect(separation(best, centre)).toBeGreaterThan(5 * DEG); // the centre is off the lines
+    // No point of either line is nearer to the centre than the first place.
+    for (const t of [0, 0.25, 0.5, 0.75, 1])
+      for (const [i, j] of lines) {
+        const a = wide[i]!.enu;
+        const b = wide[j]!.enu;
+        const p = unit(
+          a[0] * (1 - t) + b[0] * t,
+          a[1] * (1 - t) + b[1] * t,
+          a[2] * (1 - t) + b[2] * t,
+        );
+        expect(separation(best, centre)).toBeLessThanOrEqual(separation(p, centre) + 1e-12);
+      }
+    // The spread is the widest star from the centre: an arm's end, not the tip.
+    expect(placement.spread).toBeCloseTo(separation(wide[0]!.enu, centre), 12);
+    // Without lines, the places are the member stars, nearest the centre first.
+    expect(figurePlacement({ ...vee, segments: [] }, wide)?.anchors[0]).toEqual(wide[1]!.enu);
+    // The label offers the further places to the renderer.
+    const label = skyLayers({ ...sky, culture: { ...sky.culture!, figures: [vee] } }, wide, {
+      showLines: false,
+      showNames: true,
+    }).labels.find((l) => l.id === 'figure:vee');
+    expect(label?.direction).toEqual(best);
+    expect(label?.alternatives).toEqual(placement.anchors.slice(1));
+  });
+
+  it('finds the nearest point of an arc, or its nearer end', () => {
+    const a: [number, number, number] = [1, 0, 0];
+    const b: [number, number, number] = [0, 1, 0];
+    const mid = nearestOnArc(
+      a,
+      b,
+      [Math.SQRT1_2, Math.SQRT1_2, 1].map((x) => x / Math.hypot(Math.SQRT1_2, Math.SQRT1_2, 1)) as [
+        number,
+        number,
+        number,
+      ],
+    );
+    expect(mid[0]).toBeCloseTo(Math.SQRT1_2, 12);
+    expect(mid[1]).toBeCloseTo(Math.SQRT1_2, 12);
+    expect(mid[2]).toBeCloseTo(0, 12);
+    // A point beyond the end a projects outside the arc, so the end itself is nearest.
+    expect(nearestOnArc(a, b, [Math.SQRT1_2, -Math.SQRT1_2, 0])).toEqual(a);
   });
 
   it('hides lines and names independently', () => {
