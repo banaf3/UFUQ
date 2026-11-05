@@ -55,12 +55,12 @@ import {
   starSprite,
 } from './star-appearance.js';
 import {
-  fontPixels,
-  type SkyCanvasStar,
-  type SkyLabel,
-  type SkyLine,
-  trimPolyline,
-} from './sky-types.js';
+  type LabelState,
+  placeLabels,
+  type PlacementResult,
+  SECONDARY_FONT,
+} from './label-placement.js';
+import { type SkyCanvasStar, type SkyLabel, type SkyLine, trimPolyline } from './sky-types.js';
 
 export type { SkyCanvasStar, SkyLabel, SkyLine };
 
@@ -91,11 +91,6 @@ export interface SkyCanvasProps {
 }
 
 const DEG = Math.PI / 180;
-const SECONDARY_FONT = '11px Inter, ui-sans-serif, system-ui, sans-serif';
-/** Pixels between an anchor (a star or a point of a figure) and a label placed beside it. */
-const LABEL_SIDE_GAP = 12;
-/** Empty pixels kept left and right of a label, so two names never read as one phrase. */
-const LABEL_PADDING = 8;
 
 const PROJECT_GLSL = /* glsl */ `
 uniform mat3 uRot;
@@ -243,7 +238,8 @@ interface LayersProps {
   readonly stars: readonly SkyCanvasStar[];
   readonly showGround: boolean;
   readonly limitingMagnitude: number;
-  readonly drawOverlay: () => void;
+  /** Draws lines and labels; true while labels are still fading. */
+  readonly drawOverlay: (dt: number) => boolean;
   readonly onFrameView: (view: ViewState) => void;
 }
 
@@ -332,9 +328,9 @@ function SkyLayers({
       showGround,
       limitingMagnitude,
     );
-    drawOverlay();
+    const fading = drawOverlay(Math.min(delta, 0.05));
     onFrameView(view);
-    if (moving) controller.requestFrame();
+    if (moving || fading) controller.requestFrame();
   });
 
   return (
@@ -383,7 +379,11 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
     const container = useRef<HTMLDivElement>(null);
     const overlay = useRef<HTMLCanvasElement>(null);
     /** Screen boxes (CSS px from the top left) of the clickable labels drawn last frame. */
-    const labelHits = useRef<{ id: string; box: [number, number, number, number] }[]>([]);
+    const labelHits = useRef<PlacementResult['hits']>([]);
+    /** Each label's place and fade, kept between frames so names stay steady. */
+    const labelStates = useRef(new Map<string, LabelState>());
+    /** Measured text widths by font and text (cleared when the name font loads). */
+    const textWidths = useRef(new Map<string, number>());
     const pointers = useRef(new Map<number, { x: number; y: number }>());
     const gesture = useRef({
       moved: false,
@@ -426,180 +426,142 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       [setTarget, controller],
     );
 
-    const drawOverlay = useCallback(() => {
-      const canvas = overlay.current;
-      const p = latest.current;
-      if (!canvas) return;
-      const ratio = window.devicePixelRatio || 1;
-      const width = controller.width;
-      const height = controller.height;
-      if (
-        canvas.width !== Math.round(width * ratio) ||
-        canvas.height !== Math.round(height * ratio)
-      ) {
-        canvas.width = Math.round(width * ratio);
-        canvas.height = Math.round(height * ratio);
-      }
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      ctx.clearRect(0, 0, width, height);
-      const projector = controller.projector();
-      const cx = width / 2;
-      const cy = height / 2;
-      const toScreen = (direction: Vec3): [number, number] | null => {
-        if (p.showGround && direction[2] < -0.002) return null;
-        const point = projector.project(direction);
-        return point === null ? null : [cx + point[0], cy - point[1]];
-      };
-      const jump = Math.min(width, height) * 0.45;
-      // A line stops short of each star by its drawn radius (with its soft edge) plus
-      // 0.2 degrees, as Stellarium Web Engine does, and never by less than 2 pixels.
-      const limitingMagnitude = p.limitingMagnitude ?? 6.5;
-      const gap = Math.max(2, 0.2 * DEG * projector.scale);
-      const endTrim = (magnitude: number | undefined, fallback: number) =>
-        magnitude === undefined
-          ? fallback
-          : 1.25 * starSprite(magnitude, limitingMagnitude).radius + gap;
+    const drawOverlay = useCallback(
+      (dt: number): boolean => {
+        const canvas = overlay.current;
+        const p = latest.current;
+        if (!canvas) return false;
+        const ratio = window.devicePixelRatio || 1;
+        const width = controller.width;
+        const height = controller.height;
+        if (
+          canvas.width !== Math.round(width * ratio) ||
+          canvas.height !== Math.round(height * ratio)
+        ) {
+          canvas.width = Math.round(width * ratio);
+          canvas.height = Math.round(height * ratio);
+        }
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return false;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        const projector = controller.projector();
+        const cx = width / 2;
+        const cy = height / 2;
+        const toScreen = (direction: Vec3): [number, number] | null => {
+          if (p.showGround && direction[2] < -0.002) return null;
+          const point = projector.project(direction);
+          return point === null ? null : [cx + point[0], cy - point[1]];
+        };
+        const jump = Math.min(width, height) * 0.45;
+        // A line stops short of each star by its drawn radius (with its soft edge) plus
+        // 0.2 degrees, as Stellarium Web Engine does, and never by less than 2 pixels.
+        const limitingMagnitude = p.limitingMagnitude ?? 6.5;
+        const gap = Math.max(2, 0.2 * DEG * projector.scale);
+        const endTrim = (magnitude: number | undefined, fallback: number) =>
+          magnitude === undefined
+            ? fallback
+            : 1.25 * starSprite(magnitude, limitingMagnitude).radius + gap;
 
-      for (const line of p.lines) {
-        ctx.beginPath();
-        // Split into continuous screen runs; trim only the line's own two ends.
-        const runs: [number, number][][] = [];
-        let run: [number, number][] = [];
-        for (const point of line.points) {
-          const screen = toScreen(point);
-          const last = run[run.length - 1];
-          if (screen && (!last || Math.hypot(screen[0] - last[0], screen[1] - last[1]) < jump)) {
-            run.push(screen);
-          } else {
-            if (run.length > 1) runs.push(run);
-            run = screen ? [screen] : [];
+        for (const line of p.lines) {
+          ctx.beginPath();
+          // Split into continuous screen runs; trim only the line's own two ends.
+          const runs: [number, number][][] = [];
+          let run: [number, number][] = [];
+          for (const point of line.points) {
+            const screen = toScreen(point);
+            const last = run[run.length - 1];
+            if (screen && (!last || Math.hypot(screen[0] - last[0], screen[1] - last[1]) < jump)) {
+              run.push(screen);
+            } else {
+              if (run.length > 1) runs.push(run);
+              run = screen ? [screen] : [];
+            }
           }
-        }
-        if (run.length > 1) runs.push(run);
-        const trimFirst = endTrim(line.endMagnitudes?.[0], line.trim ?? 0);
-        const trimLast = endTrim(line.endMagnitudes?.[1], line.trim ?? 0);
-        const firstVisible = line.points[0] !== undefined && toScreen(line.points[0]) !== null;
-        const lastPoint = line.points[line.points.length - 1];
-        const lastVisible = lastPoint !== undefined && toScreen(lastPoint) !== null;
-        runs.forEach((points, index) => {
-          const startTrim = firstVisible && index === 0 ? trimFirst : 0;
-          const finishTrim = lastVisible && index === runs.length - 1 ? trimLast : 0;
-          const drawn =
-            startTrim + finishTrim > 0 ? trimPolyline(points, startTrim, finishTrim) : points;
-          drawn.forEach((point, i) =>
-            i === 0 ? ctx.moveTo(point[0], point[1]) : ctx.lineTo(point[0], point[1]),
-          );
-        });
-        ctx.strokeStyle = line.color;
-        ctx.lineWidth = line.width;
-        ctx.setLineDash(line.dash ? [...line.dash] : []);
-        ctx.stroke();
-      }
-      ctx.setLineDash([]);
-
-      const placed: [number, number, number, number][] = [];
-      const hits: { id: string; box: [number, number, number, number] }[] = [];
-      const sorted = [...p.labels].sort((a, b) => a.priority - b.priority);
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      for (const label of sorted) {
-        if (label.maxFov !== undefined && controller.view.fov > label.maxFov) continue;
-        const secondaryFont = label.secondaryFont ?? SECONDARY_FONT;
-        const size = fontPixels(label.font);
-        const secondarySize = label.secondary ? fontPixels(secondaryFont) : 0;
-        // The second line sits one half-height of each font below the first.
-        const gap = label.secondary ? Math.round((size + secondarySize) / 2) + 1 : 0;
-        ctx.font = label.font;
-        let textWidth = ctx.measureText(label.text).width;
-        if (label.secondary) {
-          ctx.font = secondaryFont;
-          textWidth = Math.max(textWidth, ctx.measureText(label.secondary).width);
-        }
-        // The block spans `above` over the first line's middle and `below` under it.
-        const above = size * 0.6;
-        const below = gap + (label.secondary ? secondarySize : size) * 0.6;
-        const half = textWidth / 2 + LABEL_PADDING;
-        let place: [number, number] | null = null;
-        let box: [number, number, number, number] = [0, 0, 0, 0];
-        for (const anchor of [label.direction, ...(label.alternatives ?? [])]) {
-          const screen = toScreen(anchor);
-          if (!screen) continue;
-          const [sx, sy] = screen;
-          const preferred = sy - (label.offset ?? 0);
-          // If that place is taken, the block moves to the mirror place across the anchor,
-          // then beside the anchor (right, then left), centred on it.
-          const candidates: [number, number][] = [[sx, preferred]];
-          if (label.offset) {
-            const beside = textWidth / 2 + LABEL_SIDE_GAP;
-            const middle = sy - (below - above) / 2;
-            candidates.push(
-              [sx, 2 * sy - preferred - below + above],
-              [sx + beside, middle],
-              [sx - beside, middle],
+          if (run.length > 1) runs.push(run);
+          const trimFirst = endTrim(line.endMagnitudes?.[0], line.trim ?? 0);
+          const trimLast = endTrim(line.endMagnitudes?.[1], line.trim ?? 0);
+          const firstVisible = line.points[0] !== undefined && toScreen(line.points[0]) !== null;
+          const lastPoint = line.points[line.points.length - 1];
+          const lastVisible = lastPoint !== undefined && toScreen(lastPoint) !== null;
+          runs.forEach((points, index) => {
+            const startTrim = firstVisible && index === 0 ? trimFirst : 0;
+            const finishTrim = lastVisible && index === runs.length - 1 ? trimLast : 0;
+            const drawn =
+              startTrim + finishTrim > 0 ? trimPolyline(points, startTrim, finishTrim) : points;
+            drawn.forEach((point, i) =>
+              i === 0 ? ctx.moveTo(point[0], point[1]) : ctx.lineTo(point[0], point[1]),
             );
-          }
-          for (const [cx, cy] of candidates) {
-            const bounds: [number, number, number, number] = [
-              cx - half,
-              cy - above,
-              cx + half,
-              cy + below,
-            ];
-            if (bounds[2] < 0 || bounds[3] < 0 || bounds[0] > width || bounds[1] > height) continue;
-            if (
-              placed.some(
-                (b) => bounds[0] < b[2] && bounds[2] > b[0] && bounds[1] < b[3] && bounds[3] > b[1],
-              )
-            )
-              continue;
-            place = [cx, cy];
-            box = bounds;
-            break;
-          }
-          if (place) break;
+          });
+          ctx.strokeStyle = line.color;
+          ctx.lineWidth = line.width;
+          ctx.setLineDash(line.dash ? [...line.dash] : []);
+          ctx.stroke();
         }
-        if (!place) continue;
-        const [x, y] = place;
-        placed.push(box);
-        if (label.id) hits.push({ id: label.id, box });
+        ctx.setLineDash([]);
+
+        const { drawn, hits, fading } = placeLabels({
+          labels: p.labels,
+          fov: controller.view.fov,
+          width,
+          height,
+          toScreen,
+          measure: (font, text) => {
+            const key = `${font}\n${text}`;
+            let measured = textWidths.current.get(key);
+            if (measured === undefined) {
+              ctx.font = font;
+              measured = ctx.measureText(text).width;
+              textWidths.current.set(key, measured);
+            }
+            return measured;
+          },
+          states: labelStates.current,
+          dt,
+        });
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
-        ctx.shadowBlur = 4;
-        ctx.fillStyle = label.color;
-        ctx.font = label.font;
-        ctx.fillText(label.text, x, y);
-        if (label.secondary) {
-          ctx.font = secondaryFont;
-          ctx.fillText(label.secondary, x, y + gap);
+        for (const { label, x, y, gap: lineGap, opacity } of drawn) {
+          ctx.globalAlpha = opacity;
+          ctx.shadowBlur = 4;
+          ctx.fillStyle = label.color;
+          ctx.font = label.font;
+          ctx.fillText(label.text, x, y);
+          if (label.secondary) {
+            ctx.font = label.secondaryFont ?? SECONDARY_FONT;
+            ctx.fillText(label.secondary, x, y + lineGap);
+          }
         }
+        ctx.globalAlpha = 1;
         ctx.shadowBlur = 0;
-      }
+        labelHits.current = hits;
 
-      labelHits.current = hits;
-
-      if (p.showCardinals) {
-        ctx.font = '600 15px Inter, ui-sans-serif, system-ui, sans-serif';
-        for (const [text, degrees] of CARDINALS) {
-          const screen = toScreen(directionFromAltAz(0.0, degrees * DEG));
-          if (!screen) continue;
-          ctx.fillStyle = text.length === 1 ? '#9fd8c4' : 'rgba(159, 216, 196, 0.6)';
-          ctx.fillText(text, screen[0], screen[1] - 14);
+        if (p.showCardinals) {
+          ctx.font = '600 15px Inter, ui-sans-serif, system-ui, sans-serif';
+          for (const [text, degrees] of CARDINALS) {
+            const screen = toScreen(directionFromAltAz(0.0, degrees * DEG));
+            if (!screen) continue;
+            ctx.fillStyle = text.length === 1 ? '#9fd8c4' : 'rgba(159, 216, 196, 0.6)';
+            ctx.fillText(text, screen[0], screen[1] - 14);
+          }
         }
-      }
 
-      for (const index of p.highlighted ?? []) {
-        const star = p.stars[index];
-        if (!star) continue;
-        const screen = toScreen(star.enu);
-        if (!screen) continue;
-        ctx.beginPath();
-        ctx.arc(screen[0], screen[1], 11, 0, 2 * Math.PI);
-        ctx.strokeStyle = '#ffd27a';
-        ctx.lineWidth = 1.6;
-        ctx.stroke();
-      }
-    }, [controller]);
+        for (const index of p.highlighted ?? []) {
+          const star = p.stars[index];
+          if (!star) continue;
+          const screen = toScreen(star.enu);
+          if (!screen) continue;
+          ctx.beginPath();
+          ctx.arc(screen[0], screen[1], 11, 0, 2 * Math.PI);
+          ctx.strokeStyle = '#ffd27a';
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+        }
+        return fading;
+      },
+      [controller],
+    );
 
     const onFrameView = useCallback(
       (view: ViewState) => {
@@ -624,7 +586,10 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       void Promise.all(fonts500.map((font) => fonts.load(font, 'الجدي Al-Jady')))
         .catch(() => undefined)
         .then(() => {
-          if (active) controller.requestFrame();
+          if (!active) return;
+          // Widths measured with a fallback font before Tajawal arrived are wrong.
+          textWidths.current.clear();
+          controller.requestFrame();
         });
       return () => {
         active = false;

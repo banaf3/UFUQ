@@ -60,8 +60,23 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-05)
 
-Branch `fix/anwa-name-placement` (IMP-022, name placement) answered the owner's next
-review:
+Branch `fix/steady-sky-names` (IMP-022, steady names) answered the owner's report that
+names moved on selection and seemed to lag. Placement now remembers each name between
+frames (`apps/web/src/sky/label-placement.ts`, after MapLibre GL JS):
+
+- names fade in and out, and cross-fade when they must move;
+- a name leaving the screen scrolls away with the sky.
+
+On the real sky, name jumps fell:
+
+| Scenario | Before | After |
+| --- | --- | --- |
+| 120° pan | 155 | 11 |
+| Zoom from 110° to 40° | 74 | 0 |
+| Selecting figures | 10 | 0 |
+
+Before that, branch `fix/anwa-name-placement` (IMP-022, name placement) answered the
+owner's next review:
 
 - al-Jawzāʾ's name was hidden by al-Haqʿa's; a name that collides now moves to the
   mirror place across its anchor, then beside it, then along the figure's lines;
