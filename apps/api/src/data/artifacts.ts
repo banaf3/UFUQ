@@ -346,6 +346,9 @@ interface ArabicSkyRecord {
   readonly attestation: readonly { readonly sourceId: string; readonly locator: string }[];
   readonly notes: readonly ArabicSkyCitedText[];
   readonly conflicts: readonly ArabicSkyCitedText[];
+  readonly about: string | null;
+  readonly aboutSources: readonly { readonly sourceId: string; readonly locator: string }[];
+  readonly compilationEntry: string;
 }
 
 /** UFUQ_ARABIC_SKY_CULTURE payload (tools/catalogue/src/generate/arabic-sky.ts). */
@@ -446,6 +449,8 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
       }
       if (!Array.isArray(payload.figures) || !Array.isArray(payload.stars))
         throw new TypeError('Arabic sky culture payload is malformed.');
+      if (payload.lineRule?.ruleId !== 'COMPILATION_LINES_UNMODIFIED')
+        throw new TypeError('Arabic sky culture lines must be the unmodified compilation lines.');
       return payload;
     },
   );

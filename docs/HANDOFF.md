@@ -30,10 +30,15 @@ approval.
   - 114 figures and 123 star names, in Arabic with the transliteration under them.
   - Cited notes from Ibn Qutayba, al-Marzūqī and Ibn ʿĀṣim, and recorded identification
     conflicts.
-  - Lines follow `UFUQ_TREE_V1`, and figure cards open from labels.
+  - Lines are the compilation's, reproduced unmodified with attribution (IMP-022). Names
+    and lines are blue, names are in Tajawal with a plain-letter transliteration
+    (`UFUQ_PLAIN_V1`), and figure cards open from labels.
+  - Cards show an `about` paragraph and References only. There is no reviewer status,
+    position or region-only text.
   - The IAU figures are removed; IAU names remain only as origin information.
-  - 26 navigation relationships are recorded for the tutorials
-    (`references/syntheses/anwa-navigation-relationships.md`).
+  - 28 navigation relationships are recorded for the tutorials
+    (`references/syntheses/anwa-navigation-relationships.md`), and general knowledge for
+    the lessons is in `references/syntheses/anwa-general-knowledge.md`.
   - The new artifact `sky-culture-arabic-anwa-v1` is `REVIEW_REQUIRED`.
 
 Readiness: scaffolding YES; vertical slice and adaptive tutoring implemented but NOT
@@ -55,7 +60,20 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-05)
 
-Branch `feat/anwa-sky-culture` added the Arabic sky culture:
+Branch `feat/anwa-compilation-lines-and-cards` (IMP-022) answered the owner's review of
+the anwāʾ sky:
+
+- the compilation's lines, unmodified with attribution, replace `UFUQ_TREE_V1`;
+- learner cards: an `about` paragraph and References only;
+- plain-letter transliteration, the Tajawal font, and blue names and lines that stop
+  short of the stars;
+- a second reading pass (34 compilation-only names confirmed, no search-only record
+  left) and `references/syntheses/anwa-general-knowledge.md` for the lessons.
+
+The authoring scripts `about-anwa.mjs` and `apply-about-and-lines.mjs` are private, in
+`local-reference/cultural-astronomy/derived/research-notes/anwa-authoring-2026-11-05/`.
+
+Before that, branch `feat/anwa-sky-culture` added the Arabic sky culture:
 
 - the curation `data/curation/sky-culture/arabic-anwa.v1.json`;
 - the generator `tools/catalogue/src/generate/arabic-sky.ts` and its tests;
@@ -75,12 +93,15 @@ that, `feat/phase-03-assessment-bkt` added Phase 3.
 
 ## Next justified step
 
-0. **Arabic sky (agent, no approval needed to start):**
-   - read the passages behind the 27 `PRIMARY_TEXT_POINTER` records;
-   - look for sources for the 52 `COMPILATION_ONLY` records (al-Bīrūnī and al-Ṣūfī
-     editions are public domain; see `ARABIC_SKY_CULTURE.md`, "Further sources");
-   - turn the cited Cassiopeia-to-al-Jady chain (§174–178) into proposed
-     `GuidanceRelationship` steps for the Phase 2 route.
+0. **Arabic sky and lessons (agent, no approval needed to start):**
+   - turn `anwa-general-knowledge.md` (GK-01..GK-15) into proposed lesson-content
+     records, introduction first (al-Jady stays north and why), for educational review;
+   - turn the cited Cassiopeia-to-al-Jady chain (§174–178, Ibn ʿĀṣim L4602-4612) into
+     proposed `GuidanceRelationship` steps for the Phase 2 route;
+   - look for sources for the 18 remaining `COMPILATION_ONLY` records (al-Bīrūnī,
+     al-Ṣūfī, Ibn Mājid via Ferrand; see `ARABIC_SKY_CULTURE.md`, "Further sources");
+   - optionally acquire HIP 102727 and 102775 into the display field so al-Qidr's ring
+     is complete.
 
 1. **Owner actions (critical: they unlock real learner use):**
    - name the astronomy/data, Arabic/cultural and educational reviewers;
@@ -102,7 +123,11 @@ that, `feat/phase-03-assessment-bkt` added Phase 3.
     `sky-culture-arabic-anwa-v1`;
   - decide the recorded conflicts (al-Ṭarf, the two forearms, al-Zirr/al-Maysān,
     Ḥaḍār/al-Wazn, Kabid al-Asad, al-Nājidh);
-  - check the vocalization of al-Hulba, al-Laʿṭ and al-Maʿqil.
+  - check the vocalization of al-Hulba, al-Laʿṭ and al-Maʿqil;
+  - confirm the licence reading for showing the compilation's lines unmodified
+    (IMP-022), or ask Khalid al-Ajaji for permission (which would also allow completing
+    al-Qidr);
+  - review every card paragraph and the lesson background (`anwa-general-knowledge.md`).
 - **Local skill wrapper:** the untracked `.agents/skills/ufuq-reference/` folder (dated
   2026-11-02, not created in this session) makes the
   `tests/tooling/agent-instructions.test.ts` wrapper check fail locally (CI is

@@ -79,7 +79,8 @@ Line stars map from HR to HD to HIP. Ten double stars, where Hipparcos carries a
 neighbouring HD number, are matched by a recorded position match (at most 42.8″); none
 is unmatched. A Hipparcos-numbered IAU stick-figure file (dcf21) was rejected: its
 README says CC BY 4.0 while its file header says GPL-3.0, an unclear licence. The
-Stellarium *Arabic (Ancient)* figures stay excluded because they are CC BY-ND.
+Stellarium *Arabic (Ancient)* lines are reproduced unmodified with attribution (IMP-022);
+UFUQ never edits them, because the licence is CC BY-ND.
 
 ## Tests (2026-11-02)
 
@@ -96,4 +97,4 @@ Stellarium *Arabic (Ancient)* figures stay excluded because they are CC BY-ND.
 
 - Approve `sky-field-hipparcos1997-v1` (astronomy/data) and `sky-culture-iau-v1` (cultural and educational, including the WGSN-derived Arabic scripts) through `data/approvals/`.
 - An atmosphere decision (refraction, extinction and a site extinction coefficient) before any "as seen through the atmosphere" brightness or position near the horizon.
-- More Arabic figures need sourced research and cultural review before they can join the curated layer; nothing is invented. A natural next set is the anwāʾ lunar mansions (manāzil) from the owner's sources. The Stellarium *Arabic (Ancient)* figures need the author's permission, because they are CC BY-ND.
+- The anwāʾ culture (IMP-021, IMP-022) replaced the IAU figures on 2026-11-05. Changing any of its lines needs the author's permission, because they are CC BY-ND; completing al-Qidr needs two fainter stars added to the display field.

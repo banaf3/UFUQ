@@ -374,6 +374,86 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Linked phase:** sky explorer (after Phase 3). The navigation relationships
   (`docs/references/syntheses/anwa-navigation-relationships.md`) are Phase 2 route and
   tutorial candidates.
+- **Superseded in part by IMP-022 (2026-11-05):** lines, card content and the
+  transliteration shown to learners.
+
+## IMP-022 — Compilation lines, learner cards and the explorer's look
+
+- **Decision:** How the explorer draws the anwāʾ figures, what the information cards
+  say, and how names are written and styled.
+- **Current choice:** owner instruction of 2026-11-05 ("there is no line between HIP
+  27989 and HIP 26727 and there are wrong lines"; review the Stellarium *Arabic
+  (Ancient)* compilation).
+  - **Lines.** Each figure's lines are the compilation's `lines` arrays, reproduced
+    unmodified (`COMPILATION_LINES_UNMODIFIED`, layer `MODERN_COMPILATION`):
+    - each polyline is read as its consecutive pairs;
+    - one-star markers draw nothing;
+    - UFUQ adds no segment.
+    The arrays are copied verbatim into the curation; a check against the pinned copy
+    found all 116 identical. Three al-Qidr segments are not drawn because two of its
+    stars (HIP 102727, 102775) are outside the display field; they are recorded as
+    `omittedSegmentsNotInField`. `UFUQ_TREE_V1` is retired.
+  - **Licence basis.** CC BY-ND 4.0 §2(a)(1)(A) lets anyone reproduce and share the
+    material "in whole or in part". §2(a)(4) allows changes of format and medium,
+    which never produce Adapted Material. Redrawing the unchanged line list on UFUQ's
+    star field, with attribution, is therefore permitted. Adding, moving or editing
+    segments would be adaptation and stays forbidden. Attribution names the author, the
+    work, the licence with its link, and says the lines are unchanged. This replaces the
+    2026-11-01 reading that any import of the line arrays is a derivative. The owner may
+    still ask the author for permission to adapt, for example to complete al-Qidr.
+  - **Cards.** Each figure and star has `about`: an interesting fact in UFUQ's own words
+    that combines the cited sources, in plain ASCII.
+    - Positional descriptions (where to look, which star is beside which) are left out,
+      because the learner sees the sky.
+    - Statements that hold only in one place are left out: Iraq qibla rules, "low on the
+      horizon", "rises together with". They stay in notes and relationships for the
+      lessons.
+    - Sources appear only in a References section at the end of the card.
+    - Evidence states, conflict lists, "not recorded" messages and altitude/azimuth rows
+      are no longer shown. They remain in the API and curation for reviewers.
+    - The IAU WGSN origin is a collapsible "Modern name" row below the Arabic content.
+  - **Transliteration shown.** `UFUQ_PLAIN_V1`, generated deterministically from the
+    curated IJMES form:
+    - macrons and dots are dropped;
+    - ʿ becomes an apostrophe between two letters and is dropped at a word edge;
+    - ʾ is dropped;
+    - the first letter is capitalized.
+    The IJMES form stays in the curation and as `transliterationScholarly` in the
+    artifact. Search folds diacritics, apostrophes, hyphens and Arabic vowel marks.
+  - **Look.**
+    - Lines are blue (rgba 78, 116, 196) at 0.6 opacity (0.4 dashed for herds and
+      areas, 0.85 when selected). The blues follow Stellarium's default constellation
+      colours: lines 0.2, 0.2, 0.6 and names 0.4, 0.6, 0.9.
+    - Each line stops short of its two stars by 1.25 × the star's drawn radius plus
+      0.2° (at least 2 px), after Stellarium Web Engine's `line_truncate` (radius +
+      0.2°), so lines never cover the stars.
+    - Names are blue: rgb 102, 153, 230 for figures and 150, 184, 236 for stars.
+    - Arabic and transliteration use Tajawal (SIL OFL 1.1, bundled via
+      `@fontsource/tajawal` 5.3.0) at one weight, 500, so neither is bold. Lesson labels
+      use the same font.
+  - **Evidence.** New state `SCHOLARLY_STUDY` (a modern study citing named historical
+    sources, e.g. Kunitzsch 1961 on the sea pilots' names). After the second reading
+    pass:
+    - no record is left at `PRIMARY_TEXT_POINTER`;
+    - 18 records (5 figures, 13 stars) remain `COMPILATION_ONLY`, down from 52.
+- **Status:** implemented on `REVIEW_PREVIEW` and the synthetic fixture; the curation
+  stays `REVIEW_REQUIRED`. The licence reading is UFUQ's and is not legal advice.
+- **What code it affects:**
+  - `tools/catalogue/src/generate/arabic-sky.ts` (schemaVersion 2, `lineSegments`,
+    `plainTransliteration`, artifact version 2);
+  - `apps/api/src/sky/sky-service.ts` (references, attribution);
+  - `apps/api/src/data/artifacts.ts` (rejects other line rules);
+  - `packages/contracts/src/sky.ts` (additive: `about`, `references`,
+    `SCHOLARLY_STUDY`);
+  - `apps/web/src/explorer`, `apps/web/src/sky` and `apps/web/src/styles.css`.
+- **Validation required:**
+  - generator tests (verbatim polylines, markers, omitted segments, plain
+    transliteration, ASCII card text);
+  - API reference tests, web layer tests and the e2e card checks;
+  - the owner's review of the licence reading;
+  - cultural and educational review of every card text.
+- **Linked phase:** sky explorer. The general-knowledge items for the lessons are in
+  `docs/references/syntheses/anwa-general-knowledge.md`.
 
 ## IMP-011 — Reviewed sky-pattern and guidance content
 
@@ -394,7 +474,8 @@ Historical report/deviation/authority status remains in `governance/`.
   route; and the helper-to-al-Jady line as `MODERN_PEDAGOGICAL`. The Stellarium
   *Arabic (Ancient)* compilation is the primary navigation compilation for the
   `OLD_ARABIAN` layer, verified claim by claim against its cited primary texts. Its
-  CC BY-ND 4.0 line figures are never imported. Cultural, Arabic, and educational review
+  CC BY-ND 4.0 line figures may be shown only unmodified and attributed (IMP-022);
+  lesson guide lines stay `MODERN_PEDAGOGICAL`. Cultural, Arabic, and educational review
   are still required before learner release.
   **2026-11-02:** candidate records exist in `data/curation/` (patterns, guidance,
   routes, scenarios), each `REVIEW_REQUIRED` with source locators. *Dhāt al-Kursī* has

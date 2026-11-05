@@ -99,7 +99,7 @@ The local texts are in the private library (`local-reference/cultural-astronomy/
 
 | Source ID | Citation and pointer | Class | Priority | Availability | Permitted UFUQ use and limit |
 |---|---|---|---|---|---|
-| STELLARIUM-ARABIC-ANCIENT | Khalid al-Ajaji, Stellarium sky culture *Arabic (Ancient)*, `stellarium-skycultures` commit `014fbb5e`, CC BY-ND 4.0 | MODERN_COMPILATION | REQUIRED_NOW | Local pinned copy | Candidate names and memberships, cited per record. Never its line arrays, glosses or descriptions (ND). |
+| STELLARIUM-ARABIC-ANCIENT | Khalid al-Ajaji, Stellarium sky culture *Arabic (Ancient)*, `stellarium-skycultures` commit `014fbb5e`, CC BY-ND 4.0 | MODERN_COMPILATION | REQUIRED_NOW | Local pinned copy | Candidate names and memberships, cited per record. Its line arrays are reproduced unmodified with attribution (IMP-022) and never edited. Glosses only as facts restated in UFUQ's words; descriptions never copied (ND). |
 | AL-MARZUQI-AZMINA | al-Marzūqī, *Kitāb al-Azmina wa-l-Amkina* (Dār al-Kutub al-ʿIlmiyya, 1417 AH, ed. Khalīl al-Manṣūr, per filename) | PRIMARY_HISTORICAL | SUPPORTING_NOW | Local OCR text | Claim-level pointers and paraphrased notes; OCR and edition unverified. |
 | IBN-ASIM-ANWA | Ibn ʿĀṣim al-Thaqafī, *al-Anwāʾ wa-l-Azmina* (eds al-Qaysī and al-Dulaymī, Dār al-Jīl, 1996) | PRIMARY_HISTORICAL | SUPPORTING_NOW | Local OCR text | Claim-level pointers and paraphrased notes; Andalusi context. |
 | KITAB-AL-AYN | Attributed to al-Khalīl b. Aḥmad, *Kitāb al-ʿAyn* | LEXICAL | OPTIONAL | Local OCR text | Lexical meanings only; not star evidence. |

@@ -9,7 +9,8 @@ import type {
   DatasetSummaryV2,
   LessonExecutionScope,
   LessonSessionV2,
-  SkyCitedTextV2,
+  SkyFigureV2,
+  SkyReferenceV2,
   SkyViewV2,
 } from '@ufuq/contracts';
 
@@ -17,7 +18,6 @@ import { ApiError, createLesson, getSky, listDatasets } from '../api.js';
 import { altAz, PROJECTIONS, type ProjectionId, type ViewState } from '../sky/projection.js';
 import { SkyCanvas, type SkyCanvasHandle } from '../sky/SkyCanvas.js';
 import {
-  EVIDENCE_TEXT,
   FIGURE_LABEL_ID,
   type FigureDetails,
   figureDetails,
@@ -544,30 +544,6 @@ function ArabicTitle({
   );
 }
 
-function CitedList({
-  title,
-  items,
-  className,
-}: {
-  readonly title: string;
-  readonly items: readonly SkyCitedTextV2[];
-  readonly className?: string;
-}) {
-  if (items.length === 0) return null;
-  return (
-    <section className={className}>
-      <h3>{title}</h3>
-      <ul>
-        {items.map((item) => (
-          <li key={`${item.source}-${item.text}`}>
-            {item.text} <cite>({item.source})</cite>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 function AlternativeNames({
   names,
 }: {
@@ -576,7 +552,7 @@ function AlternativeNames({
   if (names.length === 0) return null;
   return (
     <p className="alt-names">
-      Also:{' '}
+      Also called{' '}
       {names.map((name, i) => (
         <span key={name.arabic}>
           {i > 0 && ' · '}
@@ -590,7 +566,42 @@ function AlternativeNames({
   );
 }
 
-/** Star card: the Arabic tradition first, then the modern origin, then the catalogue facts. */
+function FigureLink({
+  figure,
+  onFigure,
+}: {
+  readonly figure: SkyFigureV2;
+  readonly onFigure: (figureId: string) => void;
+}) {
+  return (
+    <button type="button" className="link" onClick={() => onFigure(figure.figureId)}>
+      <span lang="ar" dir="rtl">
+        {figure.arabic}
+      </span>{' '}
+      <span className="transliteration">{figure.transliteration}</span>
+    </button>
+  );
+}
+
+/** The works a card draws on, listed only here, never inside the text. */
+function References({ items }: { readonly items: readonly SkyReferenceV2[] }) {
+  if (items.length === 0) return null;
+  return (
+    <section className="references" aria-label="References">
+      <h3>References</h3>
+      <ul>
+        {items.map((item) => (
+          <li key={item.title}>
+            {item.title}
+            {item.detail && `, ${item.detail}`}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** Star card: the Arabic name and what the sources tell of it, then the modern origin. */
 function StarCard({
   details,
   onClose,
@@ -601,7 +612,6 @@ function StarCard({
   readonly onFigure: (figureId: string) => void;
 }) {
   const { arabic, modern } = details;
-  const position = altAz(details.enu);
   return (
     <aside className="info-card" aria-label="Selected star">
       <button type="button" className="close" aria-label="Close" onClick={onClose}>
@@ -615,9 +625,7 @@ function StarCard({
       {arabic && (
         <section className="tradition" aria-label="Arabic tradition">
           <AlternativeNames names={arabic.alternativeNames} />
-          <CitedList title="In the anwāʾ texts" items={arabic.notes} />
-          <CitedList title="Disputed or uncertain" items={arabic.conflicts} className="conflicts" />
-          <p className="evidence">{EVIDENCE_TEXT[arabic.evidence]}</p>
+          {arabic.about && <p className="about">{arabic.about}</p>}
         </section>
       )}
       {details.figures.length > 0 && (
@@ -626,63 +634,44 @@ function StarCard({
           <ul>
             {details.figures.map((figure) => (
               <li key={figure.figureId}>
-                <button type="button" className="link" onClick={() => onFigure(figure.figureId)}>
-                  <span lang="ar" dir="rtl">
-                    {figure.arabic}
-                  </span>{' '}
-                  <span className="transliteration">{figure.transliteration}</span>
-                </button>
+                <FigureLink figure={figure} onFigure={onFigure} />
               </li>
             ))}
           </ul>
         </section>
       )}
-      {!arabic && (
-        <p className="evidence">No name of the anwāʾ tradition is recorded for this star.</p>
-      )}
       {modern && (
-        <p className="etymology">
-          <strong>
-            Modern name {modern.name} ({modern.language} origin).
-          </strong>{' '}
-          {modern.origin} <span className="credit">(IAU WGSN, CC BY)</span>
-        </p>
+        <section className="origin" aria-label="Modern name">
+          <h3>Modern name</h3>
+          <details className="etymology">
+            <summary>
+              <strong>{modern.name}</strong> ({modern.language} origin)
+            </summary>
+            <p>{modern.origin}</p>
+          </details>
+        </section>
       )}
       <dl>
         {details.hip && (
           <>
-            <dt>Hipparcos</dt>
+            <dt>Catalogue</dt>
             <dd>HIP {details.hip}</dd>
           </>
         )}
-        <dt>Magnitude (V)</dt>
+        <dt>Brightness (magnitude)</dt>
         <dd>{details.magnitude?.toFixed(2)}</dd>
-        {details.colorIndex !== null && (
-          <>
-            <dt>Colour (B−V)</dt>
-            <dd>{details.colorIndex.toFixed(2)}</dd>
-          </>
-        )}
-        <dt>Altitude / azimuth</dt>
-        <dd>
-          {(position.altitude / DEG).toFixed(1)}° / {(position.azimuth / DEG).toFixed(1)}°
-        </dd>
       </dl>
-      {arabic && arabic.sources.length > 0 && (
-        <details className="sources">
-          <summary>Sources</summary>
-          <ul>
-            {arabic.sources.map((source) => (
-              <li key={source}>{source}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+      <References
+        items={[
+          ...(arabic?.references ?? []),
+          ...(modern ? [{ title: 'IAU Working Group on Star Names (CC BY)', detail: null }] : []),
+        ].filter((item, i, all) => all.findIndex((other) => other.title === item.title) === i)}
+      />
     </aside>
   );
 }
 
-/** Figure card: names, notes, disputes, its larger and smaller figures and its stars. */
+/** Figure card: names, what the sources tell of it, its larger and smaller figures, its stars. */
 function FigureCard({
   details,
   sky,
@@ -705,21 +694,14 @@ function FigureCard({
       <ArabicTitle arabic={figure.arabic} transliteration={figure.transliteration} />
       <section className="tradition" aria-label="Arabic tradition">
         <AlternativeNames names={figure.alternativeNames} />
-        <CitedList title="In the anwāʾ texts" items={figure.notes} />
-        <CitedList title="Disputed or uncertain" items={figure.conflicts} className="conflicts" />
-        <p className="evidence">{EVIDENCE_TEXT[figure.evidence]}</p>
+        {figure.about && <p className="about">{figure.about}</p>}
       </section>
       {(parent || children.length > 0) && (
         <section className="figures">
           {parent && (
             <>
               <h3>Part of</h3>
-              <button type="button" className="link" onClick={() => onFigure(parent.figureId)}>
-                <span lang="ar" dir="rtl">
-                  {parent.arabic}
-                </span>{' '}
-                <span className="transliteration">{parent.transliteration}</span>
-              </button>
+              <FigureLink figure={parent} onFigure={onFigure} />
             </>
           )}
           {children.length > 0 && (
@@ -728,12 +710,7 @@ function FigureCard({
               <ul>
                 {children.map((child) => (
                   <li key={child.figureId}>
-                    <button type="button" className="link" onClick={() => onFigure(child.figureId)}>
-                      <span lang="ar" dir="rtl">
-                        {child.arabic}
-                      </span>{' '}
-                      <span className="transliteration">{child.transliteration}</span>
-                    </button>
+                    <FigureLink figure={child} onFigure={onFigure} />
                   </li>
                 ))}
               </ul>
@@ -742,9 +719,7 @@ function FigureCard({
         </section>
       )}
       <section className="figures">
-        <h3>
-          Stars ({members.length}){figure.style === 'GROUP' ? ' · a group of stars' : ''}
-        </h3>
+        <h3>Stars ({members.length})</h3>
         <ul className="members">
           {members.map(({ index, name }) => (
             <li key={index}>
@@ -764,19 +739,7 @@ function FigureCard({
           ))}
         </ul>
       </section>
-      <p className="credit">
-        Lines are UFUQ teaching aids ({sky?.culture?.lineRule}), not historical drawings.
-      </p>
-      {figure.sources.length > 0 && (
-        <details className="sources">
-          <summary>Sources</summary>
-          <ul>
-            {figure.sources.map((source) => (
-              <li key={source}>{source}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+      <References items={figure.references} />
     </aside>
   );
 }

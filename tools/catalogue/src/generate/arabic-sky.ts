@@ -1,9 +1,9 @@
 /**
  * The Arabic (anwāʾ) sky culture for the sky explorer: the curated names, memberships,
- * notes and navigation relationships in data/curation/sky-culture, joined to the display
- * star field. Figure lines are drawn by the UFUQ_TREE_V1 rule (MODERN_PEDAGOGICAL), never
- * copied from a compilation. Nothing here is approved: the artifact takes its approval
- * from data/approvals like every other artifact.
+ * card text, notes and navigation relationships in data/curation/sky-culture, joined to
+ * the display star field. Figure lines are the compilation's line arrays, reproduced
+ * unmodified (COMPILATION_LINES_UNMODIFIED, IMP-022); UFUQ adds no segment. Nothing here
+ * is approved: the artifact takes its approval from data/approvals like every other one.
  */
 import {
   type ApprovalRecord,
@@ -16,12 +16,14 @@ import { loadApproval, readJson } from './profile-v1-data.js';
 
 export const ARABIC_SKY_CURATION = 'data/curation/sky-culture/arabic-anwa.v1.json';
 export const ARABIC_SKY_ARTIFACT_ID = 'sky-culture-arabic-anwa-v1';
+export const LINE_RULE_ID = 'COMPILATION_LINES_UNMODIFIED';
 
 export const EVIDENCE_STATES = [
   'PRIMARY_TEXT_READ',
   'PRIMARY_TEXT_POINTER',
   'COLLECTIVE_NAME_IN_PRIMARY_TEXT',
   'NAMED_WITH_FIGURE',
+  'SCHOLARLY_STUDY',
   'COMPILATION_ONLY',
 ] as const;
 export type EvidenceState = (typeof EVIDENCE_STATES)[number];
@@ -54,14 +56,19 @@ interface CuratedRecordBase {
   readonly notes: readonly CitedText[];
   readonly conflicts: readonly CitedText[];
   readonly compilationEntry: string;
+  /** Card text: a UFUQ paraphrase in plain English letters, or null. */
+  readonly about: string | null;
+  /** The sources the card text combines (the card's References). */
+  readonly aboutSources: readonly SourcePointer[];
 }
 
 export interface CuratedFigure extends CuratedRecordBase {
   readonly figureId: string;
   readonly style: 'FIGURE' | 'GROUP';
-  readonly shape: 'TREE' | 'RING';
   readonly members: readonly { readonly hip: number; readonly designation: string }[];
   readonly membershipCitations: readonly SourcePointer[];
+  /** The compilation's line arrays (polylines of HIP numbers), copied unmodified. */
+  readonly lines: readonly (readonly number[])[];
 }
 
 export interface CuratedStar extends CuratedRecordBase {
@@ -83,7 +90,7 @@ export interface CuratedRelationship {
 
 export interface ArabicSkyCuration {
   readonly curationType: 'UFUQ_ARABIC_SKY_CULTURE_CURATION';
-  readonly schemaVersion: 1;
+  readonly schemaVersion: 2;
   readonly cultureId: string;
   readonly title: string;
   readonly layer: string;
@@ -92,6 +99,7 @@ export interface ArabicSkyCuration {
   readonly lineRule: {
     readonly ruleId: string;
     readonly layer: string;
+    readonly sourceId?: string;
     readonly description: string;
   };
   readonly sources: readonly { readonly sourceId: string; readonly role: string }[];
@@ -109,14 +117,65 @@ export interface FieldStarPosition {
 }
 
 const ARABIC_LETTER = /[ء-ي]/;
+/** Card text is plain printable ASCII: no diacritics a general reader cannot type. */
+const PLAIN_TEXT = /^[\x20-\x7E]+$/;
+
+/**
+ * COMPILATION_LINES_UNMODIFIED: each polyline is read as its consecutive pairs; a pair of
+ * the same star is a one-star marker and draws nothing. Each pair is kept once, in the
+ * order the compilation gives it. A pair with a star outside the display field is not
+ * drawn and is returned as omitted, so nothing is silently re-routed.
+ */
+export function lineSegments(
+  lines: readonly (readonly number[])[],
+  inField: (hip: number) => boolean,
+): { segments: [number, number][]; omitted: [number, number][] } {
+  const segments: [number, number][] = [];
+  const omitted: [number, number][] = [];
+  const seen = new Set<string>();
+  for (const line of lines)
+    for (let i = 1; i < line.length; i += 1) {
+      const a = line[i - 1] as number;
+      const b = line[i] as number;
+      const key = a < b ? `${a}-${b}` : `${b}-${a}`;
+      if (a === b || seen.has(key)) continue;
+      seen.add(key);
+      (inField(a) && inField(b) ? segments : omitted).push([a, b]);
+    }
+  return { segments, omitted };
+}
+
+const MARKS = /\p{Mn}/gu;
+const LATIN_LETTER = /[A-Za-z]/;
+
+/**
+ * UFUQ_PLAIN_V1: the IJMES transliteration in plain letters for general readers. Macrons
+ * and dots are dropped, ʿ (ayn) becomes an apostrophe between two letters and is dropped
+ * at a word edge, ʾ (hamza) is dropped, and the first letter is capitalized. It is a
+ * deterministic simplification of the curated form, never a new reading.
+ */
+export function plainTransliteration(ijmes: string): string {
+  const base = ijmes.normalize('NFD').replace(MARKS, '');
+  let out = '';
+  for (let i = 0; i < base.length; i += 1) {
+    const c = base[i] as string;
+    if (c === 'ʾ') continue;
+    if (c === 'ʿ') {
+      if (LATIN_LETTER.test(base[i - 1] ?? '') && LATIN_LETTER.test(base[i + 1] ?? '')) out += "'";
+      continue;
+    }
+    out += c;
+  }
+  return out.charAt(0).toUpperCase() + out.slice(1);
+}
 
 /** Framework-free structural checks; a failure stops generation (never cultural approval). */
 export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[] {
   const errors: string[] = [];
   if (curation.curationType !== 'UFUQ_ARABIC_SKY_CULTURE_CURATION')
     errors.push('curationType must be UFUQ_ARABIC_SKY_CULTURE_CURATION.');
-  if (curation.schemaVersion !== 1) errors.push('schemaVersion must be 1.');
-  if (curation.lineRule?.ruleId !== 'UFUQ_TREE_V1') errors.push('lineRule must be UFUQ_TREE_V1.');
+  if (curation.schemaVersion !== 2) errors.push('schemaVersion must be 2.');
+  if (curation.lineRule?.ruleId !== LINE_RULE_ID) errors.push(`lineRule must be ${LINE_RULE_ID}.`);
   if (curation.review?.state === 'APPROVED' && !curation.review.reviewer)
     errors.push('An APPROVED curation needs a named reviewer.');
   const sources = new Set(curation.sources.map((source) => source.sourceId));
@@ -124,9 +183,20 @@ export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[]
     if (!ARABIC_LETTER.test(record.arabic)) errors.push(`${label}: arabic must be Arabic script.`);
     if (!record.transliteration?.trim()) errors.push(`${label}: transliteration required.`);
     if (!EVIDENCE_STATES.includes(record.evidence)) errors.push(`${label}: unknown evidence.`);
-    for (const cited of [...record.notes, ...record.conflicts, ...record.attestation]) {
-      if (!sources.has(cited.sourceId)) errors.push(`${label}: unknown source ${cited.sourceId}.`);
-      if (!cited.locator) errors.push(`${label}: a citation needs a locator.`);
+    const pointers = [
+      ...record.notes,
+      ...record.conflicts,
+      ...record.attestation,
+      ...record.aboutSources,
+    ];
+    for (const pointer of pointers) {
+      if (!sources.has(pointer.sourceId))
+        errors.push(`${label}: unknown source ${pointer.sourceId}.`);
+      if (!pointer.locator) errors.push(`${label}: a citation needs a locator.`);
+    }
+    if (record.about !== null) {
+      if (!PLAIN_TEXT.test(record.about)) errors.push(`${label}: about must be plain ASCII text.`);
+      if (record.aboutSources.length === 0) errors.push(`${label}: about uncited.`);
     }
   };
   const figureIds = new Set<string>();
@@ -136,11 +206,25 @@ export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[]
     if (figureIds.has(figure.figureId)) errors.push(`${label}: duplicate figureId.`);
     figureIds.add(figure.figureId);
     if (!['FIGURE', 'GROUP'].includes(figure.style)) errors.push(`${label}: unknown style.`);
-    if (!['TREE', 'RING'].includes(figure.shape)) errors.push(`${label}: unknown shape.`);
     if (figure.members.length === 0) errors.push(`${label}: no members.`);
     if (figure.membershipCitations.length === 0) errors.push(`${label}: membership uncited.`);
     if (figure.members.some((member) => !Number.isInteger(member.hip) || member.hip <= 0))
       errors.push(`${label}: members must be HIP numbers.`);
+    const wellFormed =
+      Array.isArray(figure.lines) &&
+      figure.lines.every(
+        (line) =>
+          Array.isArray(line) &&
+          line.length > 0 &&
+          line.every((hip) => Number.isInteger(hip) && hip > 0),
+      );
+    if (!wellFormed) errors.push(`${label}: lines must be arrays of HIP numbers.`);
+    else {
+      const memberHips = new Set(figure.members.map((member) => member.hip));
+      const joined = lineSegments(figure.lines, () => true).segments.flat();
+      if (joined.some((hip) => !memberHips.has(hip)))
+        errors.push(`${label}: a line joins a star that is not a member.`);
+    }
     checkRecord(label, figure);
   }
   const starHips = new Set<number>();
@@ -163,84 +247,23 @@ export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[]
   return errors;
 }
 
-const unit = (star: FieldStarPosition): [number, number, number] => [
-  Math.cos(star.decRad) * Math.cos(star.raRad),
-  Math.cos(star.decRad) * Math.sin(star.raRad),
-  Math.sin(star.decRad),
-];
-
-function separation(a: [number, number, number], b: [number, number, number]): number {
-  const cross = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-  return Math.atan2(Math.hypot(...cross), a[0] * b[0] + a[1] * b[1] + a[2] * b[2]);
-}
-
-const pairKey = (a: number, b: number) => (a < b ? `${a}-${b}` : `${b}-${a}`);
-
-/**
- * UFUQ_TREE_V1: a spanning tree over the members by great-circle separation, seeded with
- * the segments of every smaller figure whose members it contains. A RING figure also
- * joins the two ends of its tree when that tree is a simple path.
- */
-export function treeSegments(
-  members: readonly number[],
-  position: ReadonlyMap<number, [number, number, number]>,
-  seeds: readonly (readonly [number, number])[],
-  ring: boolean,
-): [number, number][] {
-  const parent = new Map(members.map((hip) => [hip, hip]));
-  const find = (hip: number): number => {
-    let root = hip;
-    while (parent.get(root) !== root) root = parent.get(root) as number;
-    parent.set(hip, root);
-    return root;
-  };
-  const edges: [number, number][] = [];
-  const seen = new Set<string>();
-  const add = (a: number, b: number) => {
-    const key = pairKey(a, b);
-    if (seen.has(key)) return;
-    seen.add(key);
-    edges.push(a < b ? [a, b] : [b, a]);
-    parent.set(find(a), find(b));
-  };
-  for (const [a, b] of seeds) if (parent.has(a) && parent.has(b)) add(a, b);
-  const candidates: { a: number; b: number; d: number }[] = [];
-  for (let i = 0; i < members.length; i += 1)
-    for (let j = i + 1; j < members.length; j += 1) {
-      const a = members[i] as number;
-      const b = members[j] as number;
-      candidates.push({
-        a: Math.min(a, b),
-        b: Math.max(a, b),
-        d: separation(
-          position.get(a) as [number, number, number],
-          position.get(b) as [number, number, number],
-        ),
-      });
-    }
-  candidates.sort((x, y) => x.d - y.d || x.a - y.a || x.b - y.b);
-  for (const { a, b } of candidates) if (find(a) !== find(b)) add(a, b);
-  if (ring && members.length >= 3 && edges.length === members.length - 1) {
-    const degree = new Map<number, number>();
-    for (const [a, b] of edges) {
-      degree.set(a, (degree.get(a) ?? 0) + 1);
-      degree.set(b, (degree.get(b) ?? 0) + 1);
-    }
-    const ends = members.filter((hip) => degree.get(hip) === 1);
-    if (ends.length === 2 && [...degree.values()].every((d) => d <= 2))
-      add(ends[0] as number, ends[1] as number);
-  }
-  return edges.sort((x, y) => x[0] - y[0] || x[1] - y[1]);
-}
-
 const normalizeArabic = (text: string) =>
   text
     .normalize('NFKC')
-    .replace(/[ً-ٰٟ]/g, '')
+    .replace(/[ً-ٰٟ]/g, '')
     .replace(/[آأإٱ]/g, 'ا')
     .replace(/ى/g, 'ي')
     .replace(/ة/g, 'ه')
     .trim();
+
+const plainNames = (names: readonly AlternativeName[]) =>
+  names.map((name) => ({
+    arabic: name.arabic,
+    transliteration:
+      name.transliteration === null ? null : plainTransliteration(name.transliteration),
+    transliterationScholarly: name.transliteration,
+    basis: name.basis,
+  }));
 
 /** Builds the culture payload from a curation record and the display field positions. */
 export function buildArabicSkyCulture(
@@ -251,8 +274,8 @@ export function buildArabicSkyCulture(
 ) {
   const errors = validateArabicSkyCuration(curation);
   if (errors.length > 0) throw new Error(`Arabic sky curation invalid:\n${errors.join('\n')}`);
-  const position = new Map(field.map((star) => [star.hip, unit(star)]));
-  const inField = (hip: number) => position.has(hip);
+  const fieldHips = new Set(field.map((star) => star.hip));
+  const inField = (hip: number) => fieldHips.has(hip);
 
   const prepared = curation.figures.map((figure, order) => {
     const hips = [...new Set(figure.members.map((member) => member.hip))];
@@ -272,43 +295,38 @@ export function buildArabicSkyCulture(
     const small = memberSet.get(inner) as Set<number>;
     return big.size > small.size && [...small].every((hip) => big.has(hip));
   };
-  // Children before parents, so a parent inherits its children's segments.
   const bySize = [...drawable].sort(
     (a, b) => a.members.length - b.members.length || a.order - b.order,
   );
-  const segments = new Map<string, [number, number][]>();
-  for (const entry of bySize) {
-    const seeds = bySize
-      .filter((other) => other !== entry && contains(entry.figure.figureId, other.figure.figureId))
-      .flatMap((other) => segments.get(other.figure.figureId) ?? []);
-    segments.set(
-      entry.figure.figureId,
-      treeSegments(entry.members, position, seeds, entry.figure.shape === 'RING'),
-    );
-  }
   const parentOf = (id: string) =>
     bySize.find((other) => other.figure.figureId !== id && contains(other.figure.figureId, id))
       ?.figure.figureId ?? null;
 
-  const figures = drawable.map(({ figure, members, omitted }) => ({
-    figureId: figure.figureId,
-    parentId: parentOf(figure.figureId),
-    arabic: figure.arabic,
-    transliteration: figure.transliteration,
-    vocalization: figure.vocalization,
-    alternativeNames: figure.alternativeNames,
-    style: figure.style,
-    shape: figure.shape,
-    members,
-    omittedMembersNotInField: omitted,
-    segments: segments.get(figure.figureId) ?? [],
-    membershipCitations: figure.membershipCitations,
-    evidence: figure.evidence,
-    attestation: figure.attestation,
-    notes: figure.notes,
-    conflicts: figure.conflicts,
-    compilationEntry: figure.compilationEntry,
-  }));
+  const figures = drawable.map(({ figure, members, omitted }) => {
+    const lines = lineSegments(figure.lines, inField);
+    return {
+      figureId: figure.figureId,
+      parentId: parentOf(figure.figureId),
+      arabic: figure.arabic,
+      transliteration: plainTransliteration(figure.transliteration),
+      transliterationScholarly: figure.transliteration,
+      vocalization: figure.vocalization,
+      alternativeNames: plainNames(figure.alternativeNames),
+      style: figure.style,
+      members,
+      omittedMembersNotInField: omitted,
+      segments: lines.segments,
+      omittedSegmentsNotInField: lines.omitted,
+      membershipCitations: figure.membershipCitations,
+      evidence: figure.evidence,
+      attestation: figure.attestation,
+      notes: figure.notes,
+      conflicts: figure.conflicts,
+      about: figure.about,
+      aboutSources: figure.aboutSources,
+      compilationEntry: figure.compilationEntry,
+    };
+  });
   const singleMemberFigures = prepared
     .filter((entry) => entry.members.length < 2)
     .map((entry) => entry.figure.figureId);
@@ -329,13 +347,16 @@ export function buildArabicSkyCulture(
         hip: star.hip,
         designation: star.designation,
         arabic: star.arabic,
-        transliteration: star.transliteration,
+        transliteration: plainTransliteration(star.transliteration),
+        transliterationScholarly: star.transliteration,
         vocalization: star.vocalization,
-        alternativeNames: star.alternativeNames,
+        alternativeNames: plainNames(star.alternativeNames),
         evidence: star.evidence,
         attestation: star.attestation,
         notes: star.notes,
         conflicts: star.conflicts,
+        about: star.about,
+        aboutSources: star.aboutSources,
         // A shared pair/group name or a figure's own name is shown by the figure label.
         labelOnSky: (nameCount.get(key) ?? 0) === 1 && !namedFigure,
         compilationEntry: star.compilationEntry,
@@ -353,6 +374,11 @@ export function buildArabicSkyCulture(
     sources: curation.sources,
     counts: {
       figures: figures.length,
+      segments: figures.reduce((sum, figure) => sum + figure.segments.length, 0),
+      segmentsNotInField: figures.reduce(
+        (sum, figure) => sum + figure.omittedSegmentsNotInField.length,
+        0,
+      ),
       stars: stars.length,
       relationships: curation.relationships.length,
       singleMemberFiguresNotDrawn: singleMemberFigures.length,
@@ -382,7 +408,7 @@ export function generateArabicSkyCulture(
     ARABIC_SKY_ARTIFACT_ID,
     sha256Hex(canonicalJson(payload)),
   );
-  return envelope('UFUQ_ARABIC_SKY_CULTURE', ARABIC_SKY_ARTIFACT_ID, '1', payload, approval);
+  return envelope('UFUQ_ARABIC_SKY_CULTURE', ARABIC_SKY_ARTIFACT_ID, '2', payload, approval);
 }
 
 /** Reads HIP and position from a UFUQ_SKY_DISPLAY_FIELD envelope (columnar rows). */
@@ -419,6 +445,8 @@ export function generateSyntheticArabicSkyCulture(
     ],
     conflicts: [],
     compilationEntry: 'SYNTHETIC',
+    about: 'Invented card text for a synthetic technical fixture; not a cultural claim.',
+    aboutSources: [source],
   });
   const members = (offset: number, count: number) =>
     Array.from({ length: count }, (_, i) => ({
@@ -427,30 +455,30 @@ export function generateSyntheticArabicSkyCulture(
     }));
   const curation: ArabicSkyCuration = {
     curationType: 'UFUQ_ARABIC_SKY_CULTURE_CURATION',
-    schemaVersion: 1,
+    schemaVersion: 2,
     cultureId: 'synthetic-arabic-culture',
     title: 'Synthetic culture (technical fixture)',
     layer: 'SYNTHETIC_TECHNICAL',
     note: 'SYNTHETIC TECHNICAL FIXTURE: invented labels, not Arabic sky lore.',
     transliteration: { system: 'none (synthetic)' },
-    lineRule: { ruleId: 'UFUQ_TREE_V1', layer: 'SYNTHETIC_TECHNICAL', description: 'test' },
+    lineRule: { ruleId: LINE_RULE_ID, layer: 'SYNTHETIC_TECHNICAL', description: 'test' },
     sources: [{ sourceId: 'SYNTHETIC', role: 'synthetic technical fixture' }],
     figures: [
       {
         ...record('سين-أ', 'Synthetic A'),
         figureId: 'anwa-synthetic-a',
         style: 'FIGURE',
-        shape: 'TREE',
         members: members(0, 4),
         membershipCitations: [source],
+        lines: [[900001, 900002, 900003, 900004]],
       },
       {
         ...record('سين-ب', 'Synthetic B'),
         figureId: 'anwa-synthetic-b',
         style: 'GROUP',
-        shape: 'RING',
         members: members(10, 4),
         membershipCitations: [source],
+        lines: [[900011, 900012, 900013, 900014, 900011]],
       },
     ],
     stars: [{ ...record('سين-١', 'Synthetic One'), hip: 900001, designation: 'synthetic' }],
@@ -466,7 +494,7 @@ export function generateSyntheticArabicSkyCulture(
   return envelope(
     'UFUQ_ARABIC_SKY_CULTURE',
     'synthetic-arabic-sky-culture-v1',
-    '1',
+    '2',
     payload,
     approval,
   );

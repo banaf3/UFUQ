@@ -64,9 +64,11 @@ verify every quotation against a scan or edition before approval:
 The Stellarium *Arabic (Ancient)* sky culture (Khalid al-Ajaji, CC BY-ND 4.0) is the
 **primary navigation compilation** for the `OLD_ARABIAN` layer. It is compiled from these
 same primary texts. Start from it to find candidate names and memberships, then cite
-both the compilation and a primary-text locator. Never import or transform its `lines`
-arrays into UFUQ data, because that would be an ND derivative. UFUQ line segments are
-its own `MODERN_PEDAGOGICAL` records.
+both the compilation and a primary-text locator. The explorer reproduces its `lines`
+arrays unmodified, with attribution (IMP-022: CC BY-ND 4.0 allows sharing in whole or in
+part and changes of format). Never edit, extend or re-route those lines, which would be
+an ND adaptation. Lesson guide lines between figures are UFUQ's own
+`MODERN_PEDAGOGICAL` records.
 
 ## Searching the Arabic texts
 

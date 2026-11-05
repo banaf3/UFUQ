@@ -17,6 +17,7 @@ import {
   type SkyCultureV2,
   type SkyEvidenceV2,
   type SkyModernNameV2,
+  type SkyReferenceV2,
   type SkyRequestV1,
   type SkyViewV2,
 } from '@ufuq/contracts';
@@ -54,6 +55,45 @@ const SOURCE_TITLES: Readonly<Record<string, string>> = {
   SYNTHETIC: 'Synthetic technical fixture',
 };
 const sourceTitle = (sourceId: string) => SOURCE_TITLES[sourceId] ?? sourceId;
+
+/** Learner-facing titles, in plain letters, for a card's References section. */
+const REFERENCE_TITLES: Readonly<Record<string, string>> = {
+  'IBN-QUTAYBA-ANWA': 'Ibn Qutayba, Kitab al-Anwa',
+  'AL-MARZUQI-AZMINA': 'al-Marzuqi, Kitab al-Azmina wa-l-Amkina',
+  'IBN-ASIM-ANWA': 'Ibn Asim, al-Anwa wa-l-Azmina',
+  'HAFEZ-2010': 'Hafez (2010), Abd al-Rahman al-Sufi and His Book of the Fixed Stars',
+  'KUNITZSCH-1961': 'Kunitzsch (1961), Untersuchungen zur Sternnomenklatur der Araber',
+  'IAU-WGSN-CSN': 'IAU Working Group on Star Names, star-name etymologies',
+  'STELLARIUM-ARABIC-ANCIENT':
+    'Khalid al-Ajaji, Arabic (Ancient) sky culture for Stellarium (CC BY-ND 4.0)',
+  SYNTHETIC: 'Synthetic technical fixture',
+};
+const COMPILATION = 'STELLARIUM-ARABIC-ANCIENT';
+/** The passage numbers a reader can look up: "§170" or "no. 176"; local line locators stay out. */
+const readerLocator = (locator: string): string | null =>
+  /^(§[\d§,\s–-]*\d|no\. [\w-]+)/.exec(locator)?.[1] ?? null;
+
+/** Groups the card's sources by work, keeping first-cited order; the compilation goes last. */
+export function references(
+  pointers: readonly { readonly sourceId: string; readonly locator: string }[],
+  withCompilation: boolean,
+): SkyReferenceV2[] {
+  const grouped = new Map<string, string[]>();
+  const all = withCompilation ? [...pointers, { sourceId: COMPILATION, locator: '' }] : pointers;
+  for (const pointer of all) {
+    const details = grouped.get(pointer.sourceId) ?? [];
+    const detail = readerLocator(pointer.locator);
+    if (detail && !details.includes(detail)) details.push(detail);
+    grouped.set(pointer.sourceId, details);
+  }
+  const ids = [...grouped.keys()].sort(
+    (a, b) => Number(a === COMPILATION) - Number(b === COMPILATION),
+  );
+  return ids.map((sourceId) => ({
+    title: REFERENCE_TITLES[sourceId] ?? sourceId,
+    detail: (grouped.get(sourceId) ?? []).join(', ') || null,
+  }));
+}
 const cited = (entry: ArabicSkyCitedText): SkyCitedTextV2 => ({
   text: entry.text,
   source: `${sourceTitle(entry.sourceId)}, ${entry.locator}`,
@@ -63,6 +103,12 @@ const sourceList = (
 ): string[] => [
   ...new Set(pointers.map((pointer) => `${sourceTitle(pointer.sourceId)}, ${pointer.locator}`)),
 ];
+
+/** CC BY-ND 4.0 attribution for the compilation's names, star groups and unmodified lines. */
+export const ARABIC_SKY_ATTRIBUTION =
+  'Arabic sky: star names, star groups and figure lines from "Arabic (Ancient)" by Khalid al-Ajaji, Stellarium sky cultures (https://github.com/Stellarium/stellarium-skycultures, arabic_ancient), licensed CC BY-ND 4.0 (https://creativecommons.org/licenses/by-nd/4.0/). The lines are reproduced without changes; a line is left out only where its star is not in the UFUQ star field. Names are checked against Ibn Qutayba, al-Marzuqi and Ibn Asim; card texts are UFUQ paraphrases. Cross-reference: Bright Star Catalogue, 5th ed. (CDS V/50).';
+const LINE_CREDIT =
+  'Lines: Khalid al-Ajaji, Arabic (Ancient) sky culture for Stellarium (CC BY-ND 4.0), unmodified.';
 
 export interface ComputedSky {
   readonly utc: string;
@@ -220,9 +266,8 @@ export class SkyService {
         title: arabic.title,
         layer: arabic.layer,
         reviewState: data.arabicSky.approvalState,
-        attribution:
-          'Names and memberships: the Stellarium Arabic (Ancient) compilation (K. al-Ajaji, CC BY-ND 4.0), checked against Ibn Qutayba, al-Marzuqi and Ibn Asim; notes are UFUQ paraphrases with locators; lines are UFUQ teaching aids (UFUQ_TREE_V1).',
-        lineRule: arabic.lineRule.ruleId,
+        attribution: ARABIC_SKY_ATTRIBUTION,
+        lineRule: LINE_CREDIT,
         figures: arabic.figures.map((figure) => ({
           figureId: figure.figureId,
           parentId: figure.parentId,
@@ -242,6 +287,8 @@ export class SkyService {
             .map(indexForHip)
             .filter((index): index is number => index !== undefined),
           evidence: figure.evidence as SkyEvidenceV2,
+          about: figure.about,
+          references: references(figure.aboutSources, figure.compilationEntry !== 'SYNTHETIC'),
           notes: figure.notes.map(cited),
           conflicts: figure.conflicts.map(cited),
           sources: sourceList([...figure.membershipCitations, ...figure.attestation]),
@@ -262,6 +309,12 @@ export class SkyService {
                 })),
                 labelOnSky: star.labelOnSky,
                 evidence: star.evidence as SkyEvidenceV2,
+                about: star.about,
+                references: references(
+                  star.aboutSources,
+                  star.compilationEntry !== 'SYNTHETIC' &&
+                    !star.aboutSources.some((source) => source.sourceId === COMPILATION),
+                ),
                 notes: star.notes.map(cited),
                 conflicts: star.conflicts.map(cited),
                 sources: sourceList(star.attestation),
@@ -326,7 +379,7 @@ export class SkyService {
         notices: [registration.notice],
         attributions: [
           ...registration.attributions,
-          'Arabic sky: names and memberships from the Stellarium Arabic (Ancient) compilation by Khalid al-Ajaji (CC BY-ND 4.0, cited per record; its figure lines are not used), checked against Ibn Qutayba, al-Marzuqi and Ibn Asim. Cross-reference: Bright Star Catalogue, 5th ed. (CDS V/50).',
+          ARABIC_SKY_ATTRIBUTION,
           'Modern star names and etymologies (origin information only): IAU Working Group on Star Names (WGSN), IAU Catalog of Star Names; etymology texts CC BY (IAU WGSN).',
         ],
       },

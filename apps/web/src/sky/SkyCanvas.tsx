@@ -52,6 +52,7 @@ import {
   FAINTEST_OPACITY,
   STAR_BASE_RADIUS,
   starColor,
+  starSprite,
 } from './star-appearance.js';
 import { type SkyCanvasStar, type SkyLabel, type SkyLine, trimPolyline } from './sky-types.js';
 
@@ -441,6 +442,14 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         return point === null ? null : [cx + point[0], cy - point[1]];
       };
       const jump = Math.min(width, height) * 0.45;
+      // A line stops short of each star by its drawn radius (with its soft edge) plus
+      // 0.2 degrees, as Stellarium Web Engine does, and never by less than 2 pixels.
+      const limitingMagnitude = p.limitingMagnitude ?? 6.5;
+      const gap = Math.max(2, 0.2 * DEG * projector.scale);
+      const endTrim = (magnitude: number | undefined, fallback: number) =>
+        magnitude === undefined
+          ? fallback
+          : 1.25 * starSprite(magnitude, limitingMagnitude).radius + gap;
 
       for (const line of p.lines) {
         ctx.beginPath();
@@ -458,14 +467,16 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
           }
         }
         if (run.length > 1) runs.push(run);
-        const trim = line.trim ?? 0;
+        const trimFirst = endTrim(line.endMagnitudes?.[0], line.trim ?? 0);
+        const trimLast = endTrim(line.endMagnitudes?.[1], line.trim ?? 0);
         const firstVisible = line.points[0] !== undefined && toScreen(line.points[0]) !== null;
         const lastPoint = line.points[line.points.length - 1];
         const lastVisible = lastPoint !== undefined && toScreen(lastPoint) !== null;
         runs.forEach((points, index) => {
-          const startTrim = trim > 0 && firstVisible && index === 0 ? trim : 0;
-          const endTrim = trim > 0 && lastVisible && index === runs.length - 1 ? trim : 0;
-          const drawn = startTrim + endTrim > 0 ? trimPolyline(points, startTrim, endTrim) : points;
+          const startTrim = firstVisible && index === 0 ? trimFirst : 0;
+          const finishTrim = lastVisible && index === runs.length - 1 ? trimLast : 0;
+          const drawn =
+            startTrim + finishTrim > 0 ? trimPolyline(points, startTrim, finishTrim) : points;
           drawn.forEach((point, i) =>
             i === 0 ? ctx.moveTo(point[0], point[1]) : ctx.lineTo(point[0], point[1]),
           );
@@ -506,7 +517,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         ctx.fillStyle = label.color;
         ctx.fillText(label.text, x, y);
         if (label.secondary) {
-          ctx.font = '11px Inter, ui-sans-serif, system-ui, sans-serif';
+          ctx.font = label.secondaryFont ?? '11px Inter, ui-sans-serif, system-ui, sans-serif';
           ctx.fillText(label.secondary, x, y + 14);
         }
         ctx.shadowBlur = 0;
@@ -550,6 +561,22 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
     useEffect(() => {
       controller.requestFrame();
     }, [props.lines, props.labels, props.highlighted, props.showCardinals, controller]);
+
+    // Canvas text does not wait for web fonts: load the name font, then draw again.
+    useEffect(() => {
+      const fonts = typeof document === 'undefined' ? undefined : document.fonts;
+      if (!fonts) return;
+      let active = true;
+      const fonts500 = ['500 16px Tajawal', '500 12px Tajawal'];
+      void Promise.all(fonts500.map((font) => fonts.load(font, 'الجدي Al-Jady')))
+        .catch(() => undefined)
+        .then(() => {
+          if (active) controller.requestFrame();
+        });
+      return () => {
+        active = false;
+      };
+    }, [controller]);
 
     // Wheel zoom needs a non-passive listener to prevent page scrolling.
     useEffect(() => {
