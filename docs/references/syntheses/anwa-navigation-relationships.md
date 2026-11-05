@@ -6,7 +6,8 @@ and could teach a learner, step by step, how to reach al-Jady (north) or a direc
 After that, assessments can ask the learner to trace the lines themselves.
 
 The structured records are the `relationships` array in
-`data/curation/sky-culture/arabic-anwa.v1.json` (26 records). Every record carries:
+`data/curation/sky-culture/arabic-anwa.v1.json` (28 records; two added in the second
+reading pass). Every record carries:
 
 - the source locator;
 - its context;
@@ -31,7 +32,9 @@ local text. Locators are unverified against the print edition.
 | | al-Qarn, with al-Qurḥa below it, stands beside al-Jady on its eastern side. | §174 |
 | | Together these give a cited chain from the al-Kaff al-Khaḍīb / Kawkabā al-Firq region to al-Jady. The current route's helper-to-al-Jady line is `MODERN_PEDAGOGICAL` (`docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`); these stars could become its cited intermediate steps. | |
 | Draco route | al-Ḥurrān (al-Dhiʾbān) lie between al-ʿAwāʾidh and al-Farqadān. al-ʿAwāʾidh lie to the left of al-Nasr al-Wāqiʿ, between it and Banāt Naʿsh. This gives a chain: al-Nasr al-Wāqiʿ → al-ʿAwāʾidh → al-Dhiʾbān → al-Farqadān → al-Jady. | §172–173 |
-| Between the groups | al-Ḥayya lies between al-Farqadān and Banāt Naʿsh (not yet identified with stars). | §177 |
+| Between the groups | al-Ḥayya lies between al-Farqadān and Banāt Naʿsh (not yet identified with stars). Ibn ʿĀṣim adds that its head is like the ring of an anklet. | §177; Ibn ʿĀṣim L4610-4611 |
+| Cepheus step (Ibn ʿĀṣim) | al-Qarn is two stars set wider apart than al-Ḥurrān, a spear's length from al-Jady when al-Jady leans to the east, with al-Qurḥa below. al-Marzūqī describes al-Firq the same way, so al-Qarn is probably the compilation's Kawkabā al-Firq (UFUQ reading, for review). | Ibn ʿĀṣim L4602-4607; al-Marzūqī L23674-23676 |
+| Draco step (Ibn ʿĀṣim) | al-Athāfī are three stars between al-Qidr and al-Jady. | Ibn ʿĀṣim L4605 |
 
 ## Other cited links between figures
 

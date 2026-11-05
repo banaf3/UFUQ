@@ -37,16 +37,19 @@ The API speaks `lesson.v2` at `/api/v2` and needs the opt-in development identit
 **Sky explorer (2026-11-02):** the first page renders the whole naked-eye sky
 (`docs/SKY_EXPLORER.md`): `GET /api/v2/sky` (contract `sky.v1`, now `sky.v2`), the display-only
 `SkyDisplayPolicyV1` for non-route stars (IMP-020), and an R3F planetarium renderer in
-`apps/web/src/sky` (zenithal projections, screen-space picking). Never import the
-Stellarium _Arabic (Ancient)_ figures (CC BY-ND) or invent Arabic figures; new ones need
-sourced research and review.
+`apps/web/src/sky` (zenithal projections, screen-space picking). Never invent Arabic
+figures; new ones need sourced research and review.
 
 **Arabic sky culture (2026-11-05):** the explorer shows only the anwāʾ sky
 (`docs/ARABIC_SKY_CULTURE.md`, IMP-021, contract `sky.v2`). It is generated from
-`data/curation/sky-culture/arabic-anwa.v1.json`, which holds names, memberships, cited
-notes, conflicts and the navigation relationships for tutorials. Lines follow the
-`UFUQ_TREE_V1` rule, never the compilation's line arrays. The private authoring scripts
-and research notes are in `local-reference/cultural-astronomy/derived/research-notes/`.
+`data/curation/sky-culture/arabic-anwa.v1.json`, which holds names, memberships, card
+text (`about`), cited notes, conflicts and the navigation relationships for tutorials.
+Lines are the Stellarium _Arabic (Ancient)_ compilation's (CC BY-ND), reproduced
+unmodified with attribution (IMP-022). Never edit, extend or re-route them. Cards are
+plain-English facts with references at the end, with no positional or region-only
+statements. Names show the `UFUQ_PLAIN_V1` transliteration in Tajawal. Lesson
+background: `docs/references/syntheses/anwa-general-knowledge.md`. The private authoring
+scripts and research notes are in `local-reference/cultural-astronomy/derived/research-notes/`.
 
 The V1 route-star catalogue is ESA Hipparcos 1997 `hip_main` with bounded RV omission
 (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap, EOP, restoration and

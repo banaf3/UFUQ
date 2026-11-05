@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/tajawal": "5.3.0",
     "@react-three/fiber": "9.6.1",
     "@ufuq/astronomy-core": "0.0.0",
     "@ufuq/catalogue-schema": "0.0.0",

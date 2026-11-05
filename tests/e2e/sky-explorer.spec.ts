@@ -60,6 +60,13 @@ test('finds a named star and shows its card; shows a custom instant', async ({ p
   await expect(starCard).toContainText('Synthetic One');
   await expect(starCard).toContainText('Synthetica');
   await expect(starCard).not.toContainText('Synthetic Alpha'); // no IAU constellation rows
+  // Card text first, references last; no reviewer status or position rows.
+  await expect(starCard.locator('.about')).toContainText('Invented card text');
+  await expect(starCard.getByRole('region', { name: 'References' })).toContainText(
+    'Synthetic technical fixture',
+  );
+  await expect(starCard).not.toContainText('anwāʾ texts');
+  await expect(starCard).not.toContainText('Altitude');
   // A figure the star belongs to opens its own card.
   await starCard.getByRole('button', { name: /Synthetic A/ }).click();
   const figureCard = page.getByRole('complementary', { name: 'Selected figure' });

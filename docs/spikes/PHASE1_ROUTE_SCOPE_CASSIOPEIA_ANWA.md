@@ -162,11 +162,14 @@ Treatment, superseding the earlier "comparison only" role:
   primary text, with a locator, before writing an evidence record.
 - It remains a modern compilation, not a primary witness. Membership claims cite both
   the compilation and the primary-text locator.
-- Its licence is CC BY-ND 4.0. UFUQ must not import or transform its `lines` arrays into
-  tracked or runtime data, because that would be a derivative. UFUQ defines its own
-  line segments as `MODERN_PEDAGOGICAL` records. Star-membership facts may be recorded
-  with attribution. An optional owner action is to ask the author (contact in the
-  upstream description) for permission to adapt the figures for this academic project.
+- Its licence is CC BY-ND 4.0. **Amended 2026-11-05 (IMP-022):**
+  - The sky explorer reproduces its `lines` arrays unmodified, with attribution. The
+    licence allows sharing "in whole or in part" and changes of format.
+  - UFUQ must not edit, extend or re-route those lines (adaptation).
+  - Lesson guide lines between figures remain UFUQ's own `MODERN_PEDAGOGICAL` records.
+  - Star-membership facts may be recorded with attribution.
+  - An optional owner action is to ask the author (contact in the upstream
+    description) for permission to adapt the figures for this academic project.
 
 ## 8. Tests this scope implies (later phases)
 

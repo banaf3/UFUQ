@@ -75,7 +75,8 @@ function overlayLayers(
           text: label.script ?? label.transliteration ?? '',
           ...(label.script && label.transliteration ? { secondary: label.transliteration } : {}),
           color: '#f2c86a',
-          font: "600 16px 'Noto Naskh Arabic', 'Segoe UI', system-ui, sans-serif",
+          font: "500 16px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
+          secondaryFont: "500 12px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
           priority: 0,
           offset: 24,
         });
@@ -110,7 +111,8 @@ function overlayLayers(
           text: label.script ?? label.transliteration ?? '',
           ...(label.script && label.transliteration ? { secondary: label.transliteration } : {}),
           color: '#f6e7b4',
-          font: "600 15px 'Noto Naskh Arabic', 'Segoe UI', system-ui, sans-serif",
+          font: "500 15px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
+          secondaryFont: "500 11px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
           priority: 0,
           offset: 22,
         });

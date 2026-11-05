@@ -3,7 +3,9 @@
  * stars and draw figures. Lessons never use it; they receive their own opaque star field.
  * Stars travel as compact parallel arrays (about 9,000 stars). sky.v2 (2026-11-05) teaches
  * the Arabic sky of the anwāʾ: one Arabic culture, Arabic star names with transliteration,
- * cited notes, and the modern IAU star names only as "origin" information.
+ * cited notes, and the modern IAU star names only as "origin" information. Additions of
+ * 2026-11-05 (before any release): card text (about) with its references, plain-letter
+ * transliterations, and figure lines reproduced unmodified from the compilation (IMP-022).
  */
 import type { LessonExecutionScope } from './lesson.js';
 
@@ -16,7 +18,15 @@ export type SkyEvidenceV2 =
   | 'PRIMARY_TEXT_POINTER'
   | 'COLLECTIVE_NAME_IN_PRIMARY_TEXT'
   | 'NAMED_WITH_FIGURE'
+  | 'SCHOLARLY_STUDY'
   | 'COMPILATION_ONLY';
+
+/** One work cited by a card, with the passage numbers worth showing a reader. */
+export interface SkyReferenceV2 {
+  readonly title: string;
+  /** For example "§170, §216" or "no. 176"; null when only the work is cited. */
+  readonly detail: string | null;
+}
 
 /** A note or a recorded conflict, with its human-readable citation. */
 export interface SkyCitedTextV2 {
@@ -34,15 +44,19 @@ export interface SkyFigureV2 {
   /** The smallest figure whose stars include this one's, or null for a top-level figure. */
   readonly parentId: string | null;
   readonly arabic: string;
-  /** IJMES transliteration of the Arabic name (not a translation). */
+  /** Transliteration of the Arabic name in plain letters (UFUQ_PLAIN_V1), not a translation. */
   readonly transliteration: string;
   readonly alternativeNames: readonly SkyAlternativeNameV2[];
   /** FIGURE: a drawn shape; GROUP: a herd or area of stars, drawn faintly. */
   readonly style: 'FIGURE' | 'GROUP';
-  /** Pairs of star indices into the star arrays (UFUQ teaching lines). */
+  /** Pairs of star indices into the star arrays: the compilation's lines, unmodified. */
   readonly segments: readonly (readonly [number, number])[];
   readonly memberIndices: readonly number[];
   readonly evidence: SkyEvidenceV2;
+  /** Card text in plain English letters, or null. */
+  readonly about: string | null;
+  readonly references: readonly SkyReferenceV2[];
+  /** Cited reviewer notes and recorded conflicts (not shown on learner cards). */
   readonly notes: readonly SkyCitedTextV2[];
   readonly conflicts: readonly SkyCitedTextV2[];
   readonly sources: readonly string[];
@@ -67,6 +81,9 @@ export interface SkyArabicNameV2 {
   /** False when the name is shared by a pair or group, or is the name of its own figure. */
   readonly labelOnSky: boolean;
   readonly evidence: SkyEvidenceV2;
+  /** Card text in plain English letters, or null. */
+  readonly about: string | null;
+  readonly references: readonly SkyReferenceV2[];
   readonly notes: readonly SkyCitedTextV2[];
   readonly conflicts: readonly SkyCitedTextV2[];
   readonly sources: readonly string[];

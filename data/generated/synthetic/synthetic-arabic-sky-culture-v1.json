@@ -8,11 +8,13 @@
   },
   "artifactId": "synthetic-arabic-sky-culture-v1",
   "artifactType": "UFUQ_ARABIC_SKY_CULTURE",
-  "artifactVersion": "1",
+  "artifactVersion": "2",
   "payload": {
     "counts": {
       "figures": 2,
       "relationships": 0,
+      "segments": 7,
+      "segmentsNotInField": 0,
       "singleMemberFiguresNotDrawn": 0,
       "stars": 1,
       "starsNotInField": 0
@@ -20,13 +22,20 @@
     "cultureId": "synthetic-arabic-culture",
     "curation": {
       "path": "data/curation/sky-culture/arabic-anwa.v1.json",
-      "sha256": "6f4fc999551a1ad6e63c553337730b53b6c9b44c81d80e68b94415ac4bc58ec4"
+      "sha256": "f2e7704738fd7bbd0fb68ffb63c3c9ff90c51abb23837a6d4c2b3bdc31729d12"
     },
     "curationReview": {
       "state": "SYNTHETIC_TECHNICAL_FIXTURE"
     },
     "figures": [
       {
+        "about": "Invented card text for a synthetic technical fixture; not a cultural claim.",
+        "aboutSources": [
+          {
+            "locator": "synthetic technical fixture",
+            "sourceId": "SYNTHETIC"
+          }
+        ],
         "alternativeNames": [],
         "arabic": "سين-أ",
         "attestation": [],
@@ -54,27 +63,35 @@
           }
         ],
         "omittedMembersNotInField": [],
+        "omittedSegmentsNotInField": [],
         "parentId": null,
         "segments": [
           [
             900001,
-            900003
+            900002
           ],
           [
             900002,
-            900004
+            900003
           ],
           [
             900003,
             900004
           ]
         ],
-        "shape": "TREE",
         "style": "FIGURE",
         "transliteration": "Synthetic A",
+        "transliterationScholarly": "Synthetic A",
         "vocalization": "FROM_SOURCE_FORM"
       },
       {
+        "about": "Invented card text for a synthetic technical fixture; not a cultural claim.",
+        "aboutSources": [
+          {
+            "locator": "synthetic technical fixture",
+            "sourceId": "SYNTHETIC"
+          }
+        ],
         "alternativeNames": [],
         "arabic": "سين-ب",
         "attestation": [],
@@ -102,28 +119,29 @@
           }
         ],
         "omittedMembersNotInField": [],
+        "omittedSegmentsNotInField": [],
         "parentId": null,
         "segments": [
           [
             900011,
-            900013
-          ],
-          [
-            900011,
-            900014
+            900012
           ],
           [
             900012,
             900013
           ],
           [
-            900012,
+            900013,
             900014
+          ],
+          [
+            900014,
+            900011
           ]
         ],
-        "shape": "RING",
         "style": "GROUP",
         "transliteration": "Synthetic B",
+        "transliterationScholarly": "Synthetic B",
         "vocalization": "FROM_SOURCE_FORM"
       }
     ],
@@ -131,7 +149,7 @@
     "lineRule": {
       "description": "test",
       "layer": "SYNTHETIC_TECHNICAL",
-      "ruleId": "UFUQ_TREE_V1"
+      "ruleId": "COMPILATION_LINES_UNMODIFIED"
     },
     "relationships": [],
     "singleMemberFiguresNotDrawn": [],
@@ -147,6 +165,13 @@
     },
     "stars": [
       {
+        "about": "Invented card text for a synthetic technical fixture; not a cultural claim.",
+        "aboutSources": [
+          {
+            "locator": "synthetic technical fixture",
+            "sourceId": "SYNTHETIC"
+          }
+        ],
         "alternativeNames": [],
         "arabic": "سين-١",
         "attestation": [],
@@ -164,6 +189,7 @@
           }
         ],
         "transliteration": "Synthetic One",
+        "transliterationScholarly": "Synthetic One",
         "vocalization": "FROM_SOURCE_FORM"
       }
     ],
@@ -172,6 +198,6 @@
       "system": "none (synthetic)"
     }
   },
-  "payloadSha256": "c41593814f7426fcff7328f68db7eeaea645c2eb15b64d06cedf60b2b2855b90",
+  "payloadSha256": "bbbfe445b962c6ec82fbd0f37b8deb0dc30f6376a9f44fe8ce6a3286e0cca8d9",
   "schemaVersion": 1
 }

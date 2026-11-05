@@ -317,23 +317,33 @@ input {
   margin: 0 1.5rem 0.6rem 0;
 }
 
+/* Names: Tajawal, one weight for Arabic and transliteration (neither is bold), in the
+   blue of the sky labels. */
 .info-card .arabic-title h2 {
   margin: 0;
-  font-family: 'Noto Naskh Arabic', 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-family: 'Tajawal', 'Segoe UI', 'Arial', system-ui, sans-serif;
   font-size: 1.7rem;
+  font-weight: 500;
   line-height: 1.35;
-  color: #f2c86a;
+  color: #8fb6ee;
   text-align: left;
 }
 
 .transliteration {
-  color: #e6d3a3;
-  font-style: italic;
+  font-family: 'Tajawal', 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-weight: 500;
+  color: #b9cff2;
 }
 
 .info-card .arabic-title .transliteration {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
+}
+
+.info-card .about {
+  margin: 0 0 0.7rem;
+  line-height: 1.55;
+  color: #dde7f1;
 }
 
 .info-card section {
@@ -359,17 +369,6 @@ input {
   margin-top: 0.3rem;
 }
 
-.info-card cite {
-  color: #8fa6bd;
-  font-size: 0.78rem;
-  font-style: normal;
-}
-
-.info-card .conflicts li {
-  color: #f3c4a0;
-}
-
-.info-card .evidence,
 .info-card .alt-names {
   margin: 0.35rem 0 0;
   color: #9fb3c6;
@@ -406,11 +405,14 @@ input {
 }
 
 .info-card [lang='ar'] {
-  font-family: 'Noto Naskh Arabic', 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-family: 'Tajawal', 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-weight: 500;
 }
 
-.info-card .sources {
-  margin-top: 0.5rem;
+.info-card .references {
+  margin: 0.7rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(143, 166, 189, 0.25);
   color: #8fa6bd;
   font-size: 0.78rem;
 }
@@ -419,6 +421,15 @@ input {
   margin: 0 0 0.6rem;
   color: #c9d8e6;
   line-height: 1.45;
+}
+
+.etymology summary {
+  cursor: pointer;
+}
+
+.etymology p {
+  margin: 0.35rem 0 0;
+  font-size: 0.86rem;
 }
 
 .credit {

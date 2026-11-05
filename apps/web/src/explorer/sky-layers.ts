@@ -2,21 +2,27 @@
  * Turns a sky.v2 response into renderer inputs: stars, figure lines and labels, plus the
  * facts for the information card. Pure, so the label policy is unit-tested without a
  * browser. The explorer teaches the Arabic sky of the anwāʾ: Arabic names (with their
- * transliteration underneath) are the only names drawn on the sky.
+ * plain-letter transliteration underneath) are the only names drawn on the sky.
+ *
+ * Look (IMP-022): blue lines and blue names, after Stellarium's default constellation
+ * colours (lines 0.2, 0.2, 0.6; names 0.4, 0.6, 0.9 in default_cfg.ini), kept fainter
+ * than the stars. Each line stops short of its two stars by the star's drawn radius plus
+ * a small margin, as Stellarium Web Engine does (radius + 0.2 degrees), so the lines never
+ * cover the stars they join. Arabic and transliteration share one font and one weight.
  */
-import type {
-  SkyArabicNameV2,
-  SkyEvidenceV2,
-  SkyFigureV2,
-  SkyModernNameV2,
-  SkyViewV2,
-} from '@ufuq/contracts';
+import type { SkyArabicNameV2, SkyFigureV2, SkyModernNameV2, SkyViewV2 } from '@ufuq/contracts';
 
 import { greatCircle, meanDirection, type Vec3 } from '../sky/projection.js';
 import type { SkyCanvasStar, SkyLabel, SkyLine } from '../sky/sky-types.js';
 
 const DEG = Math.PI / 180;
-const ARABIC_FONT = "'Noto Naskh Arabic', 'Segoe UI', 'Arial', system-ui, sans-serif";
+/** Tajawal (SIL OFL 1.1, bundled from @fontsource/tajawal) for Arabic and its transliteration. */
+export const NAME_FONT = "'Tajawal', 'Segoe UI', 'Arial', system-ui, sans-serif";
+/** One weight for every name, Arabic and Latin alike (neither is bold). */
+const NAME_WEIGHT = 500;
+const FIGURE_NAME = 'rgb(102, 153, 230)';
+const SELECTED_NAME = 'rgb(176, 208, 255)';
+const STAR_NAME = 'rgb(150, 184, 236)';
 
 export const FIGURE_LABEL_ID = 'figure:';
 export const STAR_LABEL_ID = 'star:';
@@ -50,10 +56,10 @@ export interface SkyLayerOptions {
 
 type LineStyle = 'SELECTED' | 'FIGURE' | 'GROUP';
 const LINE_RANK: Record<LineStyle, number> = { SELECTED: 0, FIGURE: 1, GROUP: 2 };
-const LINE_LOOK: Record<LineStyle, Omit<SkyLine, 'points'>> = {
-  SELECTED: { color: 'rgba(255, 226, 160, 0.98)', width: 2.6, trim: 6 },
-  FIGURE: { color: 'rgba(232, 180, 79, 0.85)', width: 1.6, trim: 6 },
-  GROUP: { color: 'rgba(232, 180, 79, 0.45)', width: 1.1, trim: 6, dash: [3, 4] },
+const LINE_LOOK: Record<LineStyle, Omit<SkyLine, 'points' | 'endMagnitudes'>> = {
+  SELECTED: { color: 'rgba(140, 182, 255, 0.85)', width: 1.8 },
+  FIGURE: { color: 'rgba(78, 116, 196, 0.6)', width: 1.1 },
+  GROUP: { color: 'rgba(78, 116, 196, 0.4)', width: 1, dash: [3, 4] },
 };
 
 /** The figure, its ancestors and its descendants: the lines drawn as selected. */
@@ -95,9 +101,14 @@ export function skyLayers(
       }
     }
     for (const { a, b, style } of segments.values()) {
-      const from = stars[a]?.enu;
-      const to = stars[b]?.enu;
-      if (from && to) lines.push({ points: greatCircle(from, to), ...LINE_LOOK[style] });
+      const from = stars[a];
+      const to = stars[b];
+      if (from && to)
+        lines.push({
+          points: greatCircle(from.enu, to.enu),
+          endMagnitudes: [from.magnitude, to.magnitude],
+          ...LINE_LOOK[style],
+        });
     }
   }
   if (!options.showNames) return { lines, labels };
@@ -115,8 +126,9 @@ export function skyLayers(
       direction: anchor,
       text: figure.arabic,
       secondary: figure.transliteration,
-      color: selected ? '#ffe2a0' : child ? 'rgba(242, 200, 106, 0.88)' : '#f2c86a',
-      font: `${child ? '500 14px' : '600 17px'} ${ARABIC_FONT}`,
+      color: selected ? SELECTED_NAME : FIGURE_NAME,
+      font: `${NAME_WEIGHT} ${child ? 14 : 16}px ${NAME_FONT}`,
+      secondaryFont: `${NAME_WEIGHT} ${child ? 11 : 12}px ${NAME_FONT}`,
       priority: selected ? -1 : child ? 1 : figure.style === 'GROUP' ? 0.5 : 0,
       ...(child && !selected ? { maxFov: CHILD_FIGURE_MAX_FOV } : {}),
       offset: 22,
@@ -130,8 +142,9 @@ export function skyLayers(
       direction: star.enu,
       text: name.arabic,
       secondary: name.transliteration,
-      color: 'rgba(236, 241, 248, 0.9)',
-      font: `500 14px ${ARABIC_FONT}`,
+      color: STAR_NAME,
+      font: `${NAME_WEIGHT} 13px ${NAME_FONT}`,
+      secondaryFont: `${NAME_WEIGHT} 11px ${NAME_FONT}`,
       priority: 2 + star.magnitude / 10,
       maxFov: nameFovLimit(star.magnitude),
       offset: -14,
@@ -139,15 +152,6 @@ export function skyLayers(
   }
   return { lines, labels };
 }
-
-export const EVIDENCE_TEXT: Readonly<Record<SkyEvidenceV2, string>> = {
-  PRIMARY_TEXT_READ: 'Read in the primary anwāʾ texts (see the sources).',
-  PRIMARY_TEXT_POINTER: 'Found in the primary anwāʾ texts by search; the passage is not yet read.',
-  COLLECTIVE_NAME_IN_PRIMARY_TEXT:
-    'The primary texts name this group; the exact name or division shown is the compilation’s.',
-  NAMED_WITH_FIGURE: 'Named after its figure, which the primary texts describe.',
-  COMPILATION_ONLY: 'Listed by the compilation; not yet located in the owner’s primary texts.',
-};
 
 export interface StarDetails {
   readonly id: string;
@@ -235,18 +239,37 @@ export function findOptions(sky: SkyViewV2): FindOption[] {
     .sort((a, b) => a.label.localeCompare(b.label));
 }
 
-/** Matches typed text against the options: exact label, then any name part. */
+/**
+ * Folds a name for search: case, Latin diacritics, ʿ ʾ and apostrophes, Arabic vowel marks
+ * and letter forms; hyphens count as spaces, and a loose fold drops word breaks too.
+ */
+export function foldName(text: string, loose = false): string {
+  return text
+    .normalize('NFD')
+    .replace(/\p{Mn}/gu, '') // Latin diacritics and Arabic vowel marks (NFD splits آ أ إ)
+    .toLowerCase()
+    .replace(/[ʿʾ'’ـ]/g, '')
+    .replace(/[\s-]+/g, loose ? '' : ' ')
+    .trim()
+    .replace(/ٱ/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه');
+}
+
+/**
+ * Matches typed text against the options: the whole label, then any name part, first
+ * with word breaks kept ("al qalb" = "Al-Qalb"), then without them ("alziba" = "Al-Ziba").
+ */
 export function matchFind(options: readonly FindOption[], text: string): FindOption | null {
-  const query = text.trim().toLowerCase();
-  if (!query) return null;
-  return (
-    options.find((option) => option.label.toLowerCase() === query) ??
-    options.find((option) =>
-      option.label
-        .toLowerCase()
-        .split(' — ')
-        .some((part) => part.replace(' (modern name)', '') === query),
-    ) ??
-    null
-  );
+  const parts = (option: FindOption) =>
+    option.label.split(' — ').map((part) => part.replace(' (modern name)', ''));
+  for (const loose of [false, true]) {
+    const query = foldName(text, loose);
+    if (!query) return null;
+    const found =
+      options.find((option) => foldName(option.label, loose) === query) ??
+      options.find((option) => parts(option).some((part) => foldName(part, loose) === query));
+    if (found) return found;
+  }
+  return null;
 }

@@ -2,6 +2,13 @@
 
 **Assessment date:** 2026-11-05 (Arabic sky culture in the explorer); 2026-11-02 for Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates.
 
+**Update 2026-11-05, second pass (IMP-022):** after the owner's review the explorer shows the Stellarium *Arabic (Ancient)* lines unmodified, with attribution (582 segments; the HIP 27989–26727 line of al-Jawzāʾ is now drawn). Three al-Qidr segments are left out because two of its stars are outside the display field.
+
+- **Cards:** an `about` paragraph of interesting facts in plain English, combined from the sources, with a References list at the end. Evidence states, conflicts, "not recorded" messages, altitude/azimuth, positional and region-only statements are no longer shown.
+- **Names:** the `UFUQ_PLAIN_V1` transliteration (no diacritics). Arabic and transliteration are in Tajawal at one weight, and names and lines are blue. Each line stops short of its stars by the star's drawn size plus 0.2°.
+- **Reading:** a second pass confirmed 34 of the 52 compilation-only names and closed every search-only record. Two navigation relationships were added (28 in all). Lesson background (why al-Jady stays north, the meaning of *nawʾ*, directions) is in `references/syntheses/anwa-general-knowledge.md`.
+- **Checks today:** `npm run check` passed; unit tests 258 of 259 (the one failure is the pre-existing untracked `ufuq-reference` skill folder); build passed; e2e 8 of 8 on spare ports. The real sky was checked on screenshots.
+
 **Update 2026-11-05 (Arabic sky culture):** the explorer now teaches the Arabic sky of the anwāʾ only (IMP-021, `ARABIC_SKY_CULTURE.md`).
 
 - **Content:** 114 figures and 123 star names in Arabic script with an IJMES transliteration. Notes paraphrase the passages read in Ibn Qutayba (§22–98, §170–187, §213–219), al-Marzūqī and Ibn ʿĀṣim, each with a locator. Identification conflicts are shown to the user.

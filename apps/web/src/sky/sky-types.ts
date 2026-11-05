@@ -14,6 +14,11 @@ export interface SkyLine {
   readonly dash?: readonly number[];
   /** Pixels left empty at each end, so a figure line stops short of its stars. */
   readonly trim?: number;
+  /**
+   * Magnitudes of the two stars a line joins: each end then stops short by that star's
+   * drawn radius plus a margin (overrides trim).
+   */
+  readonly endMagnitudes?: readonly [number, number];
 }
 
 /** Shortens a screen polyline by `start` and `end` pixels of path length. */
@@ -62,6 +67,8 @@ export interface SkyLabel {
   readonly secondary?: string;
   readonly color: string;
   readonly font: string;
+  /** Font of the secondary line (default: the UI font at 11 px). */
+  readonly secondaryFont?: string;
   /** Lower is drawn first and wins collisions. */
   readonly priority: number;
   /** Shown only while the field of view is at most this (rad). */

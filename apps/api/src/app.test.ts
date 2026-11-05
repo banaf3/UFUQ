@@ -469,9 +469,13 @@ describe('sky explorer API (report UC-102)', () => {
     expect(body).not.toHaveProperty('cultures');
     const [tree, ring] = body.culture?.figures ?? [];
     expect(tree).toMatchObject({ figureId: 'anwa-synthetic-a', style: 'FIGURE', parentId: null });
-    expect(tree?.segments).toHaveLength(3); // a spanning tree over four stars
-    expect(ring?.segments).toHaveLength(4); // a closed ring over four stars
+    expect(tree?.segments).toHaveLength(3); // an open polyline over four stars
+    expect(ring?.segments).toHaveLength(4); // a polyline that returns to its first star
     expect(tree?.notes[0]?.source).toBe('Synthetic technical fixture, synthetic technical fixture');
+    expect(tree?.about).toMatch(/^Invented card text/);
+    // The synthetic fixture cites only itself; real figures also credit the compilation.
+    expect(tree?.references).toEqual([{ title: 'Synthetic technical fixture', detail: null }]);
+    expect(body.culture?.lineRule).toMatch(/al-Ajaji.*CC BY-ND 4\.0.*unmodified/);
     expect(body.arabicNames[0]).toMatchObject({
       transliteration: 'Synthetic One',
       labelOnSky: true,
