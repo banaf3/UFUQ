@@ -21,6 +21,12 @@ export interface SkyLine {
   readonly endMagnitudes?: readonly [number, number];
 }
 
+/** The pixel size in a canvas font string such as "500 16px Tajawal" (14 if absent). */
+export function fontPixels(font: string): number {
+  const match = /(\d+(?:\.\d+)?)px/.exec(font);
+  return match ? Number(match[1]) : 14;
+}
+
 /** Shortens a screen polyline by `start` and `end` pixels of path length. */
 export function trimPolyline(
   points: readonly (readonly [number, number])[],
@@ -63,6 +69,8 @@ export interface SkyLabel {
   /** Set when the label can be clicked (passed to onPickLabel). */
   readonly id?: string;
   readonly direction: Vec3;
+  /** Further anchors, best first, tried when every place around `direction` is taken. */
+  readonly alternatives?: readonly Vec3[];
   readonly text: string;
   readonly secondary?: string;
   readonly color: string;
@@ -73,6 +81,11 @@ export interface SkyLabel {
   readonly priority: number;
   /** Shown only while the field of view is at most this (rad). */
   readonly maxFov?: number;
-  /** Vertical offset in CSS pixels (positive is upwards). */
+  /**
+   * Vertical offset in CSS pixels (positive is upwards). A label with an offset that would
+   * overlap a label already drawn moves to the mirror place on the other side of its
+   * anchor, then beside it (right, then left), then the same places around each of its
+   * alternatives; if every place is taken it is not drawn.
+   */
   readonly offset?: number;
 }

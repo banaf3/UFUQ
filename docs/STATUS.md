@@ -2,6 +2,15 @@
 
 **Assessment date:** 2026-11-05 (Arabic sky culture in the explorer); 2026-11-02 for Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates.
 
+**Update 2026-11-05, name placement:** figure names now sit on their own lines. A name that would overlap another moves across, beside or along its figure instead of disappearing (al-Jawzāʾ had been hidden by al-Haqʿa). Names of figures inside a larger one use the star-name size in a slightly darker blue. Checks today:
+
+- `npm run check` passed.
+- Unit tests: 262 of 263; the only failure is the untracked `ufuq-reference` folder.
+- Build and `exports:check` passed.
+- e2e: 8 of 8 on spare ports.
+- BKT evidence: byte-identical.
+- The real sky was checked on screenshots.
+
 **Update 2026-11-05, second pass (IMP-022):** after the owner's review the explorer shows the Stellarium *Arabic (Ancient)* lines unmodified, with attribution (582 segments; the HIP 27989–26727 line of al-Jawzāʾ is now drawn). Three al-Qidr segments are left out because two of its stars are outside the display field.
 
 - **Cards:** an `about` paragraph of interesting facts in plain English, combined from the sources, with a References list at the end. Evidence states, conflicts, "not recorded" messages, altitude/azimuth, positional and region-only statements are no longer shown.

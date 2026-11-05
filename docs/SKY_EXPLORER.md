@@ -48,7 +48,7 @@ the learner) and its storyboard layout (full-screen sky, slim top bar, start but
   Field-of-view limits are Stellarium's (120°, 235°, 360°, 360°, 180°). The field of view spans the smaller viewport side.
 - **Background:** a full-screen shader inverse-projects every pixel, so sky, ground and horizon are exact in every projection.
 - **Stars:** one point buffer. The vertex shader applies the forward projection and the brightness rule; blending is additive.
-- **Lines and labels:** a 2D overlay canvas drawn in the same frame. Text stays crisp, Arabic shaping is correct, lines have real widths, and figure lines stop 6 px short of their stars.
+- **Lines and labels:** a 2D overlay canvas drawn in the same frame. Text stays crisp, Arabic shaping is correct, lines have real widths, and figure lines stop short of their stars (IMP-022). Labels are placed in priority order. A label that would overlap one already drawn tries the mirror place across its anchor, then right and left of it, then its alternative anchors; otherwise it is not drawn.
 - **Picking:** in screen space with the same projector. Three's `Raycaster` cannot follow non-linear projections.
 - **View state:** lives in `ViewController` (per-frame, outside React state).
 - **Brightness:**

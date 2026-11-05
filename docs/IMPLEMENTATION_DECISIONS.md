@@ -427,10 +427,24 @@ Historical report/deviation/authority status remains in `governance/`.
     - Each line stops short of its two stars by 1.25 × the star's drawn radius plus
       0.2° (at least 2 px), after Stellarium Web Engine's `line_truncate` (radius +
       0.2°), so lines never cover the stars.
-    - Names are blue: rgb 102, 153, 230 for figures and 150, 184, 236 for stars.
+    - Names (owner's choice, 2026-11-05): figures rgb 159, 194, 241 at 16 px for both
+      lines; figures inside a larger one a little darker (rgb 135, 165, 205, 0.85 of each
+      channel) at the star-name size; star names grey (rgb 168, 167, 165) at 12 px
+      Arabic and 13 px transliteration.
     - Arabic and transliteration use Tajawal (SIL OFL 1.1, bundled via
       `@fontsource/tajawal` 5.3.0) at one weight, 500, so neither is bold. Lesson labels
       use the same font.
+    - **Name placement (2026-11-05).** A figure's name sits on its own lines: at the
+      point of its lines nearest the centre of its stars (its member star nearest that
+      centre when it has no lines), not at the centre itself. The centre of a spread
+      figure such as al-Thurayyā al-Ṣūra or al-Asad lies in empty sky, beside another
+      figure. Compact figures are placed first because their name has one natural
+      place (al-Thurayyā, al-Haqʿa). A name that would overlap one already drawn tries the
+      mirror place across its anchor, then right and left of it, then the same places
+      at the figure's other line points. If every place is taken it is not drawn.
+      Collision boxes cover both lines of text with 8 px either side, so two names
+      never read as one phrase. Stellarium Web Engine instead fades overlapping labels
+      by priority (`labels.c`); the moving rule is UFUQ's.
   - **Evidence.** New state `SCHOLARLY_STUDY` (a modern study citing named historical
     sources, e.g. Kunitzsch 1961 on the sea pilots' names). After the second reading
     pass:

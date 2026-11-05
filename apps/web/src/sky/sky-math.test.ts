@@ -164,3 +164,12 @@ describe('figure line trimming', () => {
     expect(short.at(-1)?.[0]).toBeCloseTo(7.5, 10);
   });
 });
+
+describe('label fonts', () => {
+  it('reads the pixel size of a canvas font', async () => {
+    const { fontPixels } = await import('./sky-types.js');
+    expect(fontPixels("500 16px 'Tajawal', sans-serif")).toBe(16);
+    expect(fontPixels('600 12.5px Inter')).toBe(12.5);
+    expect(fontPixels('bold serif')).toBe(14);
+  });
+});

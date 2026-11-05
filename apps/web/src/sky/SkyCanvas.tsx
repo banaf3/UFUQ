@@ -54,7 +54,13 @@ import {
   starColor,
   starSprite,
 } from './star-appearance.js';
-import { type SkyCanvasStar, type SkyLabel, type SkyLine, trimPolyline } from './sky-types.js';
+import {
+  fontPixels,
+  type SkyCanvasStar,
+  type SkyLabel,
+  type SkyLine,
+  trimPolyline,
+} from './sky-types.js';
 
 export type { SkyCanvasStar, SkyLabel, SkyLine };
 
@@ -85,6 +91,11 @@ export interface SkyCanvasProps {
 }
 
 const DEG = Math.PI / 180;
+const SECONDARY_FONT = '11px Inter, ui-sans-serif, system-ui, sans-serif';
+/** Pixels between an anchor (a star or a point of a figure) and a label placed beside it. */
+const LABEL_SIDE_GAP = 12;
+/** Empty pixels kept left and right of a label, so two names never read as one phrase. */
+const LABEL_PADDING = 8;
 
 const PROJECT_GLSL = /* glsl */ `
 uniform mat3 uRot;
@@ -495,30 +506,72 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       ctx.textBaseline = 'middle';
       for (const label of sorted) {
         if (label.maxFov !== undefined && controller.view.fov > label.maxFov) continue;
-        const screen = toScreen(label.direction);
-        if (!screen) continue;
-        const x = screen[0];
-        const y = screen[1] - (label.offset ?? 0);
-        if (x < -50 || y < -20 || x > width + 50 || y > height + 20) continue;
+        const secondaryFont = label.secondaryFont ?? SECONDARY_FONT;
+        const size = fontPixels(label.font);
+        const secondarySize = label.secondary ? fontPixels(secondaryFont) : 0;
+        // The second line sits one half-height of each font below the first.
+        const gap = label.secondary ? Math.round((size + secondarySize) / 2) + 1 : 0;
         ctx.font = label.font;
-        const textWidth = ctx.measureText(label.text).width;
-        const box: [number, number, number, number] = [
-          x - textWidth / 2 - 3,
-          y - 9,
-          x + textWidth / 2 + 3,
-          y + (label.secondary ? 22 : 9),
-        ];
-        if (placed.some((b) => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]))
-          continue;
+        let textWidth = ctx.measureText(label.text).width;
+        if (label.secondary) {
+          ctx.font = secondaryFont;
+          textWidth = Math.max(textWidth, ctx.measureText(label.secondary).width);
+        }
+        // The block spans `above` over the first line's middle and `below` under it.
+        const above = size * 0.6;
+        const below = gap + (label.secondary ? secondarySize : size) * 0.6;
+        const half = textWidth / 2 + LABEL_PADDING;
+        let place: [number, number] | null = null;
+        let box: [number, number, number, number] = [0, 0, 0, 0];
+        for (const anchor of [label.direction, ...(label.alternatives ?? [])]) {
+          const screen = toScreen(anchor);
+          if (!screen) continue;
+          const [sx, sy] = screen;
+          const preferred = sy - (label.offset ?? 0);
+          // If that place is taken, the block moves to the mirror place across the anchor,
+          // then beside the anchor (right, then left), centred on it.
+          const candidates: [number, number][] = [[sx, preferred]];
+          if (label.offset) {
+            const beside = textWidth / 2 + LABEL_SIDE_GAP;
+            const middle = sy - (below - above) / 2;
+            candidates.push(
+              [sx, 2 * sy - preferred - below + above],
+              [sx + beside, middle],
+              [sx - beside, middle],
+            );
+          }
+          for (const [cx, cy] of candidates) {
+            const bounds: [number, number, number, number] = [
+              cx - half,
+              cy - above,
+              cx + half,
+              cy + below,
+            ];
+            if (bounds[2] < 0 || bounds[3] < 0 || bounds[0] > width || bounds[1] > height) continue;
+            if (
+              placed.some(
+                (b) => bounds[0] < b[2] && bounds[2] > b[0] && bounds[1] < b[3] && bounds[3] > b[1],
+              )
+            )
+              continue;
+            place = [cx, cy];
+            box = bounds;
+            break;
+          }
+          if (place) break;
+        }
+        if (!place) continue;
+        const [x, y] = place;
         placed.push(box);
         if (label.id) hits.push({ id: label.id, box });
         ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
         ctx.shadowBlur = 4;
         ctx.fillStyle = label.color;
+        ctx.font = label.font;
         ctx.fillText(label.text, x, y);
         if (label.secondary) {
-          ctx.font = label.secondaryFont ?? '11px Inter, ui-sans-serif, system-ui, sans-serif';
-          ctx.fillText(label.secondary, x, y + 14);
+          ctx.font = secondaryFont;
+          ctx.fillText(label.secondary, x, y + gap);
         }
         ctx.shadowBlur = 0;
       }
