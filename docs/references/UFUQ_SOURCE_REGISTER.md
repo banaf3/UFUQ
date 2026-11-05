@@ -92,6 +92,18 @@ Priority values are `REQUIRED_NOW`, `SUPPORTING_NOW`, `REQUIRED_LATER`, `OPTIONA
 | WILSON-ET-AL-2017 | Wilson, G., et al. (2017), “Good Enough Practices in Scientific Computing,” *PLOS Computational Biology* 13(6), e1005510, DOI `10.1371/journal.pcbi.1005510`; workflow recommendations; [publisher article](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510) | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Local restricted PDF and official web record | Supports low-overhead reproducibility and data/workflow hygiene suitable for one developer. |
 | KANEWALA-BIEMAN-2014 | Kanewala, U., and Bieman, J. M. (2014), “Testing Scientific Software: A Systematic Literature Review,” *Information and Software Technology* 56(10), 1219–1232, DOI `10.1016/j.infsof.2014.05.006`; abstract, results, and conclusion | FOUNDATIONAL_RESEARCH | SUPPORTING_NOW | Local file is the 2018 arXiv preprint, not the publisher PDF | Supports oracle-problem awareness and layered scientific testing. Cite the peer-reviewed 2014 article by DOI and the local version as arXiv:1804.01954. |
 
+## Arabic sky-culture sources
+
+Added 2026-11-05 for the explorer's Arabic (anwāʾ) culture (`docs/ARABIC_SKY_CULTURE.md`).
+The local texts are in the private library (`local-reference/cultural-astronomy/`).
+
+| Source ID | Citation and pointer | Class | Priority | Availability | Permitted UFUQ use and limit |
+|---|---|---|---|---|---|
+| STELLARIUM-ARABIC-ANCIENT | Khalid al-Ajaji, Stellarium sky culture *Arabic (Ancient)*, `stellarium-skycultures` commit `014fbb5e`, CC BY-ND 4.0 | MODERN_COMPILATION | REQUIRED_NOW | Local pinned copy | Candidate names and memberships, cited per record. Never its line arrays, glosses or descriptions (ND). |
+| AL-MARZUQI-AZMINA | al-Marzūqī, *Kitāb al-Azmina wa-l-Amkina* (Dār al-Kutub al-ʿIlmiyya, 1417 AH, ed. Khalīl al-Manṣūr, per filename) | PRIMARY_HISTORICAL | SUPPORTING_NOW | Local OCR text | Claim-level pointers and paraphrased notes; OCR and edition unverified. |
+| IBN-ASIM-ANWA | Ibn ʿĀṣim al-Thaqafī, *al-Anwāʾ wa-l-Azmina* (eds al-Qaysī and al-Dulaymī, Dār al-Jīl, 1996) | PRIMARY_HISTORICAL | SUPPORTING_NOW | Local OCR text | Claim-level pointers and paraphrased notes; Andalusi context. |
+| KITAB-AL-AYN | Attributed to al-Khalīl b. Aḥmad, *Kitāb al-ʿAyn* | LEXICAL | OPTIONAL | Local OCR text | Lexical meanings only; not star evidence. |
+
 ## Sky-explorer sources
 
 Added 2026-11-02 from official records retrieved that day (`docs/SKY_EXPLORER.md`).

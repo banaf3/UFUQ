@@ -54,9 +54,17 @@ test('finds a named star and shows its card; shows a custom instant', async ({ p
   await openExplorer(page);
   await page.getByPlaceholder('Find a star or figure').fill('Synthetica');
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('complementary', { name: 'Selected star' })).toContainText(
-    'Synthetica',
-  );
+  const starCard = page.getByRole('complementary', { name: 'Selected star' });
+  // The tradition name comes first; the modern name is kept as origin information.
+  await expect(starCard.getByRole('heading', { level: 2 })).toHaveText('سين-١');
+  await expect(starCard).toContainText('Synthetic One');
+  await expect(starCard).toContainText('Synthetica');
+  await expect(starCard).not.toContainText('Synthetic Alpha'); // no IAU constellation rows
+  // A figure the star belongs to opens its own card.
+  await starCard.getByRole('button', { name: /Synthetic A/ }).click();
+  const figureCard = page.getByRole('complementary', { name: 'Selected figure' });
+  await expect(figureCard.getByRole('heading', { level: 2 })).toHaveText('سين-أ');
+  await expect(figureCard).toContainText('Stars (4)');
   await page.getByLabel('Scenario').selectOption('__custom__');
   await page.getByRole('textbox', { name: 'Date and time (UTC)' }).fill('2026-06-01T15:00');
   await page.getByRole('button', { name: 'Show' }).click();

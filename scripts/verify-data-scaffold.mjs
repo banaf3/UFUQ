@@ -53,6 +53,7 @@ const scaffoldDirectories = new Map([
   ['data/curation/relationships', new Set(['README.md', 'relationships.v1.json'])],
   ['data/curation/routes', new Set(['README.md', 'routes.v1.json'])],
   ['data/curation/scenarios', new Set(['scenarios.v1.json'])],
+  ['data/curation/sky-culture', new Set(['README.md', 'arabic-anwa.v1.json'])],
   ['data/curation/stars', new Set(['route-star-crosswalk.v1.json'])],
   ['data/curation/tutoring', new Set(['learning-configuration.v1.json'])],
   [
@@ -68,6 +69,7 @@ const scaffoldDirectories = new Map([
       'learning-configuration-v1.json',
       'sky-field-hipparcos1997-v1.json',
       'sky-culture-iau-v1.json',
+      'sky-culture-arabic-anwa-v1.json',
       'synthetic',
       // Ignored local-only output (Bulletin B values; redistribution unconfirmed).
       'local-only',
@@ -85,6 +87,7 @@ const scaffoldDirectories = new Map([
       'synthetic-learning-configuration-v1.json',
       'synthetic-sky-field-v1.json',
       'synthetic-sky-culture-v1.json',
+      'synthetic-arabic-sky-culture-v1.json',
     ]),
   ],
 ]);

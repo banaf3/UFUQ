@@ -17,7 +17,8 @@ the learner) and its storyboard layout (full-screen sky, slim top bar, start but
 | Bottom left | Transparent toggles: **Lines** (figures), **Names** (figure and star names), **Ground**. |
 | Bottom right | Projection, zoom out/in, azimuth/altitude/field-of-view readout. |
 | Navigation | Drag to look around ("grab the sky", with inertia); wheel or pinch to zoom; double-click to centre; arrow keys pan, + and - zoom. Selecting a star opens a card (name, Arabic script, magnitude, B-V, altitude/azimuth, figures, etymology). |
-| Sky cultures | Arabic patterns (UFUQ curated) + IAU constellations (default), Arabic only, or IAU only. Arabic views label IAU stars whose WGSN origin is Arabic (215 names), with the Arabic script where the WGSN etymology quotes it. |
+| Sky culture (since 2026-11-05) | Only the Arabic sky of the anwāʾ (`docs/ARABIC_SKY_CULTURE.md`, IMP-021, contract `sky.v2`): Arabic figure and star names with their transliteration under them, cited notes on the cards, IAU WGSN names only as origin information. The rows below describe the original 2026-11-02 release. |
+| Sky cultures (2026-11-02, superseded) | Arabic patterns (UFUQ curated) + IAU constellations (default), Arabic only, or IAU only. Arabic views label IAU stars whose WGSN origin is Arabic (215 names), with the Arabic script where the WGSN etymology quotes it. |
 
 ## How it is computed
 

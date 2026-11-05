@@ -288,15 +288,6 @@ input {
   font-size: 1.15rem;
 }
 
-.info-card .arabic {
-  margin: 0 0 0.5rem;
-  font-family: 'Noto Naskh Arabic', 'Segoe UI', system-ui, sans-serif;
-  font-size: 1.35rem;
-  color: #f2c86a;
-  direction: rtl;
-  text-align: left;
-}
-
 .info-card dl {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -322,8 +313,110 @@ input {
   font-size: 1.2rem;
 }
 
-.etymology {
+.info-card .arabic-title {
+  margin: 0 1.5rem 0.6rem 0;
+}
+
+.info-card .arabic-title h2 {
   margin: 0;
+  font-family: 'Noto Naskh Arabic', 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-size: 1.7rem;
+  line-height: 1.35;
+  color: #f2c86a;
+  text-align: left;
+}
+
+.transliteration {
+  color: #e6d3a3;
+  font-style: italic;
+}
+
+.info-card .arabic-title .transliteration {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+.info-card section {
+  margin: 0 0 0.7rem;
+}
+
+.info-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8fa6bd;
+}
+
+.info-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.45;
+}
+
+.info-card li + li {
+  margin-top: 0.3rem;
+}
+
+.info-card cite {
+  color: #8fa6bd;
+  font-size: 0.78rem;
+  font-style: normal;
+}
+
+.info-card .conflicts li {
+  color: #f3c4a0;
+}
+
+.info-card .evidence,
+.info-card .alt-names {
+  margin: 0.35rem 0 0;
+  color: #9fb3c6;
+  font-size: 0.8rem;
+}
+
+.info-card .figures ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.info-card .members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+}
+
+.info-card .members li + li {
+  margin-top: 0;
+}
+
+.info-card .link {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #cfe3f5;
+  text-align: left;
+  cursor: pointer;
+}
+
+.info-card .link:hover,
+.info-card .link:focus-visible {
+  text-decoration: underline;
+}
+
+.info-card [lang='ar'] {
+  font-family: 'Noto Naskh Arabic', 'Segoe UI', 'Arial', system-ui, sans-serif;
+}
+
+.info-card .sources {
+  margin-top: 0.5rem;
+  color: #8fa6bd;
+  font-size: 0.78rem;
+}
+
+.etymology {
+  margin: 0 0 0.6rem;
   color: #c9d8e6;
   line-height: 1.45;
 }

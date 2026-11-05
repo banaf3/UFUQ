@@ -76,6 +76,8 @@ export interface SkyCanvasProps {
   readonly highlighted?: readonly number[];
   readonly limitingMagnitude?: number;
   readonly onPick?: (index: number | null) => void;
+  /** A click on a label that has an id; star picking is skipped when it returns true. */
+  readonly onPickLabel?: (id: string) => boolean;
   readonly onViewChange?: (view: ViewState) => void;
   readonly ariaLabel: string;
   readonly className?: string;
@@ -368,6 +370,8 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
     const [controller] = useState(() => new ViewController(props.initialView));
     const container = useRef<HTMLDivElement>(null);
     const overlay = useRef<HTMLCanvasElement>(null);
+    /** Screen boxes (CSS px from the top left) of the clickable labels drawn last frame. */
+    const labelHits = useRef<{ id: string; box: [number, number, number, number] }[]>([]);
     const pointers = useRef(new Map<number, { x: number; y: number }>());
     const gesture = useRef({
       moved: false,
@@ -474,6 +478,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       ctx.setLineDash([]);
 
       const placed: [number, number, number, number][] = [];
+      const hits: { id: string; box: [number, number, number, number] }[] = [];
       const sorted = [...p.labels].sort((a, b) => a.priority - b.priority);
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -495,6 +500,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         if (placed.some((b) => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]))
           continue;
         placed.push(box);
+        if (label.id) hits.push({ id: label.id, box });
         ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
         ctx.shadowBlur = 4;
         ctx.fillStyle = label.color;
@@ -505,6 +511,8 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         }
         ctx.shadowBlur = 0;
       }
+
+      labelHits.current = hits;
 
       if (p.showCardinals) {
         ctx.font = '600 15px Inter, ui-sans-serif, system-ui, sans-serif';
@@ -562,6 +570,12 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       const p = latest.current;
       if (!element || !p.onPick) return;
       const rect = element.getBoundingClientRect();
+      const left = clientX - rect.left;
+      const top = clientY - rect.top;
+      const label = labelHits.current.find(
+        ({ box }) => left >= box[0] && left <= box[2] && top >= box[1] && top <= box[3],
+      );
+      if (label && p.onPickLabel?.(label.id)) return;
       const x = clientX - rect.left - rect.width / 2;
       const y = rect.height / 2 - (clientY - rect.top);
       const projector = createProjector(controller.view, rect.width, rect.height);

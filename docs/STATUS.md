@@ -1,6 +1,14 @@
 # Implementation status
 
-**Assessment date:** 2026-11-02 (Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates)
+**Assessment date:** 2026-11-05 (Arabic sky culture in the explorer); 2026-11-02 for Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates.
+
+**Update 2026-11-05 (Arabic sky culture):** the explorer now teaches the Arabic sky of the anwāʾ only (IMP-021, `ARABIC_SKY_CULTURE.md`).
+
+- **Content:** 114 figures and 123 star names in Arabic script with an IJMES transliteration. Notes paraphrase the passages read in Ibn Qutayba (§22–98, §170–187, §213–219), al-Marzūqī and Ibn ʿĀṣim, each with a locator. Identification conflicts are shown to the user.
+- **Drawing:** lines follow the `UFUQ_TREE_V1` teaching rule.
+- **Interaction:** star and figure cards put the tradition above the modern IAU "origin" information. The IAU figures and the culture selector are gone. The contract is `sky.v2`.
+- **Navigation relationships:** 26 are recorded as tutorial candidates (`references/syntheses/anwa-navigation-relationships.md`).
+- **Review:** the new artifact `sky-culture-arabic-anwa-v1` is `REVIEW_REQUIRED`.
 
 **Update 2026-11-02:** Phase 1 is complete for implementation and the Phase 2 vertical
 slice runs end to end. ScientificProfileV1 is implemented in pure TypeScript

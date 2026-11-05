@@ -57,6 +57,7 @@ export function createDatasets(options: AppOptions = {}): Map<string, DatasetReg
       learning: 'learning-configuration-v1.json',
       skyField: 'sky-field-hipparcos1997-v1.json',
       skyCulture: 'sky-culture-iau-v1.json',
+      arabicSky: 'sky-culture-arabic-anwa-v1.json',
     }),
     notice: options.enableReviewPreview
       ? 'REVIEW PREVIEW available: results computed from ScientificProfileV1 data and content that are still REVIEW_REQUIRED are for reviewer inspection only and are not learner content.'
@@ -82,6 +83,7 @@ export function createDatasets(options: AppOptions = {}): Map<string, DatasetReg
       learning: 'synthetic/synthetic-learning-configuration-v1.json',
       skyField: 'synthetic/synthetic-sky-field-v1.json',
       skyCulture: 'synthetic/synthetic-sky-culture-v1.json',
+      arabicSky: 'synthetic/synthetic-arabic-sky-culture-v1.json',
     }),
     notice:
       'SYNTHETIC TECHNICAL FIXTURE: invented stars, Earth-orientation values, lesson text and adaptive-tutoring policies for software testing. This is not the real sky, not learner content and not a proposed learning policy.',

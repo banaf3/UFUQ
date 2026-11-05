@@ -55,6 +55,8 @@ export function trimPolyline(
 }
 
 export interface SkyLabel {
+  /** Set when the label can be clicked (passed to onPickLabel). */
+  readonly id?: string;
   readonly direction: Vec3;
   readonly text: string;
   readonly secondary?: string;

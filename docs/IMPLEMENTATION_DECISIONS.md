@@ -341,6 +341,40 @@ Historical report/deviation/authority status remains in `governance/`.
   flagged cases, approval gating and byte-reproducible generation
   (`packages/astronomy-core/tests/sky-display.test.ts`, `docs/SKY_EXPLORER.md`).
 
+## IMP-021 — Arabic (anwāʾ) sky culture in the explorer
+
+- **Decision:** Which sky culture the explorer teaches, and how its names, figures and
+  notes are sourced and drawn.
+- **Current choice:** owner instruction of 2026-11-05.
+  - The explorer shows only the Arabic sky of the anwāʾ (`sky-culture-arabic-anwa-v1`,
+    from `data/curation/sky-culture/arabic-anwa.v1.json`): 114 figures and 123 star
+    names, in Arabic script with an IJMES transliteration.
+  - Names and memberships follow the owner's navigation compilation (Stellarium *Arabic
+    (Ancient)*, cited per record, line arrays never used), checked against Ibn Qutayba,
+    al-Marzūqī and Ibn ʿĀṣim.
+  - Notes are cited UFUQ paraphrases; identification disagreements are recorded and
+    shown, never resolved silently.
+  - Lines follow `UFUQ_TREE_V1` (`MODERN_PEDAGOGICAL`).
+  - The IAU figures and the culture selector are removed. IAU WGSN names remain only as
+    origin information on the star card.
+  - The contract is `sky.v2`.
+- **Status:** implemented on `REVIEW_PREVIEW` and the synthetic fixture; cultural,
+  Arabic-language, identification and educational review pending
+  (`docs/ARABIC_SKY_CULTURE.md`).
+- **What code it affects:**
+  - `tools/catalogue/src/generate/arabic-sky.ts`;
+  - `apps/api/src/sky` and `apps/api/src/data/artifacts.ts`;
+  - `packages/contracts/src/sky.ts`;
+  - `apps/web/src/explorer` and `apps/web/src/sky/SkyCanvas.tsx`.
+- **Validation required:**
+  - generator tests (tree rule, ring closure, parent detection, label policy, structural
+    validation);
+  - API and web unit tests, and the e2e star and figure cards;
+  - a named reviewer's approval of the artifact before the strict scope shows it.
+- **Linked phase:** sky explorer (after Phase 3). The navigation relationships
+  (`docs/references/syntheses/anwa-navigation-relationships.md`) are Phase 2 route and
+  tutorial candidates.
+
 ## IMP-011 — Reviewed sky-pattern and guidance content
 
 - **Decision:** Exact helper patterns, Arabic names/labels, memberships, line segments,

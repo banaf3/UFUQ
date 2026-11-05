@@ -92,6 +92,16 @@ Known disambiguation: الجدي names both the polar star (al-Jady, linked with
 and the zodiac sign Capricorn (برج الجدي, رأس الجدي, سعد الذابح contexts). Classify each
 hit explicitly.
 
+The explorer's curated anwāʾ culture (2026-11-05) is
+`data/curation/sky-culture/arabic-anwa.v1.json` (`docs/ARABIC_SKY_CULTURE.md`).
+
+- Add or correct records there with a cited source and an evidence state.
+- The tutorial relationships are in
+  `docs/references/syntheses/anwa-navigation-relationships.md`.
+- The private authoring scripts (Ibn Qutayba paragraph reader, attestation search, curation
+  builder) and the research notes are in
+  `local-reference/cultural-astronomy/derived/research-notes/`.
+
 Current route decisions (owner-delegated, 2026-11-01) are recorded in
 `docs/spikes/PHASE1_ROUTE_SCOPE_CASSIOPEIA_ANWA.md`:
 
