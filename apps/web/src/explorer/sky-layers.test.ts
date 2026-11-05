@@ -1,86 +1,116 @@
 import { describe, expect, it } from 'vitest';
 
-import type { SkyViewV1 } from '@ufuq/contracts';
+import type { SkyFigureV2, SkyViewV2 } from '@ufuq/contracts';
 
-import { nameFovLimit, skyLayers, skyStars, starDetails, starNameShown } from './sky-layers.js';
+import {
+  CHILD_FIGURE_MAX_FOV,
+  figureDetails,
+  findOptions,
+  matchFind,
+  nameFovLimit,
+  skyLayers,
+  skyStars,
+  starDetails,
+} from './sky-layers.js';
 
 const DEG = Math.PI / 180;
 
-const sky: SkyViewV1 = {
-  contractVersion: 'sky.v1',
-  datasetId: 'synthetic-technical',
+const figure = (overrides: Partial<SkyFigureV2> & Pick<SkyFigureV2, 'figureId'>): SkyFigureV2 => ({
+  parentId: null,
+  arabic: 'الأسد',
+  transliteration: 'al-Asad',
+  alternativeNames: [],
+  style: 'FIGURE',
+  segments: [],
+  memberIndices: [],
+  evidence: 'PRIMARY_TEXT_READ',
+  notes: [],
+  conflicts: [],
+  sources: [],
+  ...overrides,
+});
+
+// A tiny fixture: four stars, a figure with a smaller figure inside it, and a group.
+const sky: SkyViewV2 = {
+  contractVersion: 'sky.v2',
+  datasetId: 'test',
   executionScope: 'SYNTHETIC_TECHNICAL_FIXTURE',
-  utc: '2026-11-15T13:00:00Z',
+  utc: '2026-01-01T00:00:00Z',
   scenarioId: null,
-  observer: { label: 'test', latitudeDegrees: 3.5, longitudeDegrees: 103.4 },
+  observer: { label: 'Test', latitudeDegrees: 0, longitudeDegrees: 0 },
   stars: {
-    count: 3,
-    ids: ['hip-1', 'hip-2', 'route-star'],
-    enu: [0, 1, 0, 0.1, 0.99, 0.1, 0, 0.9, 0.43],
-    visualMagnitudes: [0.5, 3.0, 2.0],
-    colorIndices: [0.6, null, 1.2],
+    count: 4,
+    ids: ['hip-1', 'hip-2', 'hip-3', 'hip-4'],
+    enu: [0, 1, 0.1, 0.1, 1, 0.1, 0.2, 1, 0.2, 0.3, 1, 0.1],
+    visualMagnitudes: [1.0, 2.5, 4.0, 5.5],
+    colorIndices: [0.5, null, 1.2, 0.0],
   },
-  cultures: [
-    {
-      cultureId: 'arabic-ufuq',
-      title: 'Arabic star patterns (UFUQ curated)',
-      layer: 'OLD_ARABIAN',
-      reviewState: 'REVIEW_REQUIRED',
-      attribution: 'test',
-      figures: [
-        {
-          figureId: 'pattern',
-          name: 'al-Test',
-          labels: [
-            {
-              languageTag: 'ar',
-              script: 'اختبار',
-              transliteration: 'al-Test',
-              gloss: null,
-              layer: 'OLD_ARABIAN',
-            },
-          ],
-          segments: [[0, 2]],
-          memberIndices: [0, 2],
-        },
-      ],
-    },
-    {
-      cultureId: 'iau-modern',
-      title: 'Modern IAU constellations',
-      layer: 'MODERN_ASTRONOMICAL',
-      reviewState: 'REVIEW_REQUIRED',
-      attribution: 'test',
-      figures: [
-        {
-          figureId: 'iau-Tst',
-          name: 'Testa',
-          labels: [],
-          segments: [
-            [0, 1],
-            [1, 2],
-          ],
-          memberIndices: [0, 1, 2],
-        },
-      ],
-    },
-  ],
-  starNames: [
+  culture: {
+    cultureId: 'test-culture',
+    title: 'Test',
+    layer: 'OLD_ARABIAN',
+    reviewState: 'REVIEW_REQUIRED',
+    attribution: 'test',
+    lineRule: 'UFUQ_TREE_V1',
+    figures: [
+      figure({
+        figureId: 'anwa-parent',
+        segments: [
+          [0, 1],
+          [1, 2],
+        ],
+        memberIndices: [0, 1, 2],
+      }),
+      figure({
+        figureId: 'anwa-child',
+        parentId: 'anwa-parent',
+        arabic: 'الجبهة',
+        transliteration: 'al-Jabha',
+        segments: [[0, 1]],
+        memberIndices: [0, 1],
+      }),
+      figure({
+        figureId: 'anwa-group',
+        arabic: 'الظباء',
+        transliteration: 'al-Ẓibāʾ',
+        style: 'GROUP',
+        segments: [[2, 3]],
+        memberIndices: [2, 3],
+      }),
+    ],
+  },
+  arabicNames: [
     {
       starIndex: 0,
-      name: 'Alfa',
-      designation: 'a Tst',
-      language: 'Arabic',
-      arabicScript: 'ألف',
-      origin: 'test',
+      arabic: 'القلب',
+      transliteration: 'al-Qalb',
+      alternativeNames: [],
+      labelOnSky: true,
+      evidence: 'PRIMARY_TEXT_READ',
+      notes: [{ text: 'The red star.', source: 'Ibn Qutayba, §83' }],
+      conflicts: [],
+      sources: [],
     },
     {
       starIndex: 1,
-      name: 'Beta',
-      designation: 'b Tst',
-      language: 'Chinese',
+      arabic: 'الفرقدان',
+      transliteration: 'al-Farqadān',
+      alternativeNames: [],
+      labelOnSky: false,
+      evidence: 'NAMED_WITH_FIGURE',
+      notes: [],
+      conflicts: [],
+      sources: [],
+    },
+  ],
+  modernNames: [
+    {
+      starIndex: 0,
+      name: 'Antares',
+      designation: 'α Sco',
+      language: 'Greek',
       arabicScript: null,
-      origin: 'test',
+      origin: 'Greek.',
     },
   ],
   provenance: {
@@ -93,71 +123,87 @@ const sky: SkyViewV1 = {
     attributions: [],
   },
 };
+const stars = skyStars(sky);
 
-describe('sky layers', () => {
-  const stars = skyStars(sky);
-
-  it('unpacks the compact star arrays', () => {
-    expect(stars).toHaveLength(3);
-    expect(stars[1]).toEqual({ enu: [0.1, 0.99, 0.1], magnitude: 3, colorIndexBV: null });
+describe('sky layers (Arabic anwāʾ culture only)', () => {
+  it('draws each shared segment once and the group faintly', () => {
+    const { lines } = skyLayers(sky, stars, { showLines: true, showNames: false });
+    expect(lines).toHaveLength(3); // 0-1 (parent and child), 1-2, 2-3
+    const group = lines.find((line) => line.dash !== undefined);
+    expect(group?.color).toMatch(/0\.45\)$/);
+    expect(lines.filter((line) => line.dash === undefined)).toHaveLength(2);
   });
 
-  it('draws both cultures by default and filters by culture', () => {
-    const both = skyLayers(sky, stars, {
-      mode: 'ARABIC_AND_IAU',
+  it('highlights the selected figure with its children', () => {
+    const { lines } = skyLayers(sky, stars, {
       showLines: true,
-      showNames: true,
+      showNames: false,
+      selectedFigureId: 'anwa-parent',
     });
-    expect(both.lines).toHaveLength(3);
-    const arabic = skyLayers(sky, stars, { mode: 'ARABIC', showLines: true, showNames: true });
-    expect(arabic.lines).toHaveLength(1);
-    expect(arabic.labels.map((label) => label.text)).toEqual(['اختبار', 'Alfa']);
-    const iau = skyLayers(sky, stars, { mode: 'IAU', showLines: true, showNames: true });
-    expect(iau.lines).toHaveLength(2);
-    expect(iau.labels.map((label) => label.text).sort()).toEqual(['Alfa', 'Beta', 'TESTA']);
+    expect(lines.filter((line) => line.width === 2.6)).toHaveLength(2);
+  });
+
+  it('labels figures and unique star names in Arabic with the transliteration under it', () => {
+    const { labels } = skyLayers(sky, stars, { showLines: false, showNames: true });
+    const texts = labels.map((label) => label.text);
+    expect(texts).toEqual(['الأسد', 'الجبهة', 'الظباء', 'القلب']);
+    expect(labels.find((l) => l.text === 'القلب')).toMatchObject({
+      id: 'star:0',
+      secondary: 'al-Qalb',
+    });
+    // A shared pair name (al-Farqadān) is drawn by its figure, not on each star.
+    expect(texts).not.toContain('الفرقدان');
+    // Modern names are never drawn on the sky.
+    expect(texts).not.toContain('Antares');
+    const child = labels.find((l) => l.id === 'figure:anwa-child');
+    expect(child?.maxFov).toBe(CHILD_FIGURE_MAX_FOV);
+    expect(labels.find((l) => l.id === 'figure:anwa-parent')?.maxFov).toBeUndefined();
   });
 
   it('hides lines and names independently', () => {
-    const noLines = skyLayers(sky, stars, {
-      mode: 'ARABIC_AND_IAU',
-      showLines: false,
-      showNames: true,
+    expect(skyLayers(sky, stars, { showLines: false, showNames: false })).toEqual({
+      lines: [],
+      labels: [],
     });
-    expect(noLines.lines).toHaveLength(0);
-    expect(noLines.labels.length).toBeGreaterThan(0);
-    const noNames = skyLayers(sky, stars, {
-      mode: 'ARABIC_AND_IAU',
-      showLines: true,
-      showNames: false,
-    });
-    expect(noNames.labels).toHaveLength(0);
-    expect(noNames.lines.length).toBeGreaterThan(0);
   });
 
-  it('keeps Arabic-origin names in Arabic views and shows a script line', () => {
-    expect(starNameShown('Arabic', 4, 'ARABIC')).toBe(true);
-    expect(starNameShown('Chinese', 0.5, 'ARABIC')).toBe(false);
-    expect(starNameShown('Latin', 0.5, 'ARABIC_AND_IAU')).toBe(true);
-    expect(starNameShown('Chinese', 3, 'ARABIC_AND_IAU')).toBe(false);
-    expect(starNameShown('Chinese', 3, 'IAU')).toBe(true);
-    const labels = skyLayers(sky, stars, {
-      mode: 'ARABIC',
-      showLines: false,
-      showNames: true,
-    }).labels;
-    expect(labels.find((label) => label.text === 'Alfa')?.secondary).toBe('ألف');
+  it('reveals fainter star names only as the view narrows', () => {
+    expect(nameFovLimit(0.5)).toBeGreaterThan(300 * DEG);
+    expect(nameFovLimit(4)).toBeCloseTo(60 * DEG, 5);
+    expect(nameFovLimit(6.5)).toBeCloseTo(30 * DEG, 5);
   });
+});
 
-  it('reveals fainter star names as the view narrows', () => {
-    expect(nameFovLimit(1.0)).toBe(360 * DEG);
-    expect(nameFovLimit(4.0)).toBeCloseTo(60 * DEG, 10);
-    expect(nameFovLimit(6.5)).toBeCloseTo(30 * DEG, 10);
-  });
-
-  it('collects the facts of a picked star', () => {
+describe('information cards', () => {
+  it('puts the Arabic name first and keeps the modern name as origin information', () => {
     const details = starDetails(sky, 0);
+    expect(details.arabic?.transliteration).toBe('al-Qalb');
+    expect(details.modern?.name).toBe('Antares');
     expect(details.hip).toBe('1');
-    expect(details.names.map((name) => name.name)).toEqual(['Alfa']);
-    expect(details.figures.map((figure) => figure.name)).toEqual(['al-Test', 'Testa']);
+    // Smallest figure first; no IAU constellation is listed.
+    expect(details.figures.map((f) => f.figureId)).toEqual(['anwa-child', 'anwa-parent']);
+  });
+
+  it('gives a star without an Arabic name no Arabic record', () => {
+    const details = starDetails(sky, 3);
+    expect(details.arabic).toBeNull();
+    expect(details.figures.map((f) => f.figureId)).toEqual(['anwa-group']);
+  });
+
+  it('describes a figure with its parent, children and named members', () => {
+    const parent = figureDetails(sky, 'anwa-parent');
+    expect(parent?.children.map((f) => f.figureId)).toEqual(['anwa-child']);
+    expect(parent?.members[0]).toMatchObject({ index: 0 });
+    expect(parent?.members[0]?.name?.arabic).toBe('القلب');
+    expect(figureDetails(sky, 'anwa-child')?.parent?.figureId).toBe('anwa-parent');
+    expect(figureDetails(sky, 'missing')).toBeNull();
+  });
+
+  it('finds by transliteration, Arabic script or modern name', () => {
+    const options = findOptions(sky);
+    expect(matchFind(options, 'al-jabha')?.figureId).toBe('anwa-child');
+    expect(matchFind(options, 'القلب')?.indices).toEqual([0]);
+    expect(matchFind(options, 'antares')?.indices).toEqual([0]);
+    expect(matchFind(options, 'nothing')).toBeNull();
   });
 });

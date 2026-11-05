@@ -50,6 +50,11 @@ reviewer can inspect the real outputs only through the explicit local
    display-only star field) and `sky-culture-iau-v1` (cultural and educational review of
    the IAU figures and WGSN names, including the WGSN-derived Arabic scripts); see
    `docs/SKY_EXPLORER.md`.
+   Since 2026-11-05 `sky-culture-iau-v1` supplies only modern star names (origin
+   information). The explorer's culture is `sky-culture-arabic-anwa-v1`, which needs
+   cultural, Arabic-language, identification and educational review of
+   `data/curation/sky-culture/arabic-anwa.v1.json`. The recorded conflicts are listed in
+   `docs/ARABIC_SKY_CULTURE.md`.
 7. Content records (patterns, relationships, routes, scenarios) carry their own `review`
    blocks in `data/curation/`. The cultural, Arabic-language, and educational reviewers
    update those blocks.

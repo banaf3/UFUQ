@@ -12,7 +12,7 @@ import type {
   LessonSessionV2,
   LessonStepPromptV2,
   SkyOverlayV2,
-  SkyViewV1,
+  SkyViewV2,
   StepFeedbackV2,
 } from '@ufuq/contracts';
 
@@ -455,20 +455,33 @@ describe('sky explorer API (report UC-102)', () => {
   const sky = (query: string) => request(app).get(`/api/v2/sky?${query}`);
   const synthetic = 'datasetId=synthetic-technical&executionScope=SYNTHETIC_TECHNICAL_FIXTURE';
 
-  it('returns the whole sky with cultures for a scenario, without any identity', async () => {
+  it('returns the whole sky with its Arabic culture for a scenario, without any identity', async () => {
     const response = await sky(`${synthetic}&scenarioId=synthetic-scenario-a`);
     expect(response.status).toBe(200);
-    const body = response.body as SkyViewV1;
-    expect(body.contractVersion).toBe('sky.v1');
+    const body = response.body as SkyViewV2;
+    expect(body.contractVersion).toBe('sky.v2');
     expect(body.stars.count).toBe(413);
     expect(body.stars.ids).toHaveLength(413);
     expect(body.stars.enu).toHaveLength(413 * 3);
     expect(new Set(body.stars.ids).size).toBe(413);
-    expect(body.cultures.map((c) => c.cultureId)).toEqual(['arabic-ufuq', 'synthetic-culture']);
-    const figure = body.cultures[1]?.figures[0];
-    expect(figure?.segments.length).toBe(3);
-    expect(body.starNames[0]).toMatchObject({ name: 'Synthetica', language: 'Synthetic' });
+    // One culture only: the IAU constellations are no longer drawn.
+    expect(body.culture?.cultureId).toBe('synthetic-arabic-culture');
+    expect(body).not.toHaveProperty('cultures');
+    const [tree, ring] = body.culture?.figures ?? [];
+    expect(tree).toMatchObject({ figureId: 'anwa-synthetic-a', style: 'FIGURE', parentId: null });
+    expect(tree?.segments).toHaveLength(3); // a spanning tree over four stars
+    expect(ring?.segments).toHaveLength(4); // a closed ring over four stars
+    expect(tree?.notes[0]?.source).toBe('Synthetic technical fixture, synthetic technical fixture');
+    expect(body.arabicNames[0]).toMatchObject({
+      transliteration: 'Synthetic One',
+      labelOnSky: true,
+    });
+    // Modern names remain as origin information only.
+    expect(body.modernNames[0]).toMatchObject({ name: 'Synthetica', language: 'Synthetic' });
     expect(body.provenance.displayPolicyId).toBe('SKY_DISPLAY_POLICY_V1');
+    expect(body.provenance.artifacts.map((a) => a.artifactId)).toContain(
+      'synthetic-arabic-sky-culture-v1',
+    );
   });
 
   it('accepts a canonical UTC instant inside the domain and refuses one outside', async () => {

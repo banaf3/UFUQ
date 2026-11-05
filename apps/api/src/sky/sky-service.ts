@@ -10,17 +10,18 @@ import {
   evaluateProfile,
   type GeometricHorizontalDirection,
 } from '@ufuq/astronomy-core';
-import type { ContentReview, CulturalLabel } from '@ufuq/catalogue-schema';
 import {
-  type OverlayLabelV2,
   SKY_CONTRACT_VERSION,
-  type SkyCultureV1,
+  type SkyArabicNameV2,
+  type SkyCitedTextV2,
+  type SkyCultureV2,
+  type SkyEvidenceV2,
+  type SkyModernNameV2,
   type SkyRequestV1,
-  type SkyStarNameV1,
-  type SkyViewV1,
+  type SkyViewV2,
 } from '@ufuq/contracts';
 
-import type { LoadedArtifact } from '../data/artifacts.js';
+import type { ArabicSkyCitedText, LoadedArtifact } from '../data/artifacts.js';
 import {
   contentAccepted,
   type DatasetRegistration,
@@ -41,23 +42,27 @@ export function artifactAccepted(loaded: LoadedArtifact<unknown>, scope: Executi
   return scope === 'REVIEW_PREVIEW' && loaded.approvalState === 'REVIEW_REQUIRED';
 }
 
-function labelsOf(labels: readonly CulturalLabel[]): OverlayLabelV2[] {
-  return labels.map((label) => ({
-    languageTag: label.languageTag,
-    script: label.script,
-    transliteration: label.transliteration,
-    gloss: label.gloss,
-    layer: label.layer,
-  }));
-}
-
-function reviewSummary(reviews: readonly ContentReview[]): string {
-  if (reviews.length === 0) return 'NONE';
-  if (reviews.every((review) => review.state === 'APPROVED')) return 'APPROVED';
-  return reviews.some((review) => review.state === 'NOT_APPROVED')
-    ? 'NOT_APPROVED'
-    : 'REVIEW_REQUIRED';
-}
+/** Short titles for the citations shown in the explorer. */
+const SOURCE_TITLES: Readonly<Record<string, string>> = {
+  'IBN-QUTAYBA-ANWA': 'Ibn Qutayba, Kitāb al-Anwāʾ',
+  'AL-MARZUQI-AZMINA': 'al-Marzūqī, al-Azmina wa-l-Amkina',
+  'IBN-ASIM-ANWA': 'Ibn ʿĀṣim, al-Anwāʾ wa-l-Azmina',
+  'HAFEZ-2010': 'Hafez 2010 (al-Ṣūfī crosswalk)',
+  'KUNITZSCH-1961': 'Kunitzsch 1961',
+  'IAU-WGSN-CSN': 'IAU WGSN',
+  'STELLARIUM-ARABIC-ANCIENT': 'Stellarium Arabic (Ancient) compilation (K. al-Ajaji)',
+  SYNTHETIC: 'Synthetic technical fixture',
+};
+const sourceTitle = (sourceId: string) => SOURCE_TITLES[sourceId] ?? sourceId;
+const cited = (entry: ArabicSkyCitedText): SkyCitedTextV2 => ({
+  text: entry.text,
+  source: `${sourceTitle(entry.sourceId)}, ${entry.locator}`,
+});
+const sourceList = (
+  pointers: readonly { readonly sourceId: string; readonly locator: string }[],
+): string[] => [
+  ...new Set(pointers.map((pointer) => `${sourceTitle(pointer.sourceId)}, ${pointer.locator}`)),
+];
 
 export interface ComputedSky {
   readonly utc: string;
@@ -125,12 +130,12 @@ export function computeSky(
 }
 
 export class SkyService {
-  private readonly cache = new Map<string, SkyViewV1>();
+  private readonly cache = new Map<string, SkyViewV2>();
   private readonly maxEntries = 24;
 
   constructor(private readonly datasets: ReadonlyMap<string, DatasetRegistration>) {}
 
-  view(request: SkyRequestV1): SkyViewV1 {
+  view(request: SkyRequestV1): SkyViewV2 {
     const registration = this.datasets.get(request.datasetId);
     if (!registration)
       throw new LessonError(404, 'UNKNOWN_DATASET', `Unknown dataset ${request.datasetId}.`);
@@ -205,77 +210,70 @@ export class SkyService {
       return route === undefined ? indexOf.get(`hip-${hip}`) : indexOf.get(route);
     };
 
-    const cultures: SkyCultureV1[] = [];
-    // The project's curated Arabic patterns (lesson content), when accepted for the scope.
-    if (content) {
-      const patterns = content.patterns.filter((pattern) => contentAccepted(pattern.review, scope));
-      cultures.push({
-        cultureId: 'arabic-ufuq',
-        title: 'Arabic star patterns (UFUQ curated)',
-        layer: 'OLD_ARABIAN',
-        reviewState: reviewSummary(patterns.map((pattern) => pattern.review)),
+    // The Arabic (anwāʾ) culture: the only sky culture the explorer teaches.
+    let culture: SkyCultureV2 | null = null;
+    let arabicNames: SkyArabicNameV2[] = [];
+    const arabic = data.arabicSky.value;
+    if (arabic && artifactAccepted(data.arabicSky, scope)) {
+      culture = {
+        cultureId: arabic.cultureId,
+        title: arabic.title,
+        layer: arabic.layer,
+        reviewState: data.arabicSky.approvalState,
         attribution:
-          "UFUQ curation from the owner's Arabic sources (Kunitzsch 1961, Ibn Qutayba, al-Marzuqi and others), cited per pattern; line figures are UFUQ teaching aids.",
-        figures: patterns.map((pattern) => {
-          const members = pattern.memberStarIds
-            .map((id) => indexOf.get(id))
-            .filter((index): index is number => index !== undefined);
-          const label = pattern.labels[0];
-          return {
-            figureId: pattern.stableId,
-            name: label?.transliteration ?? label?.script ?? pattern.stableId,
-            labels: labelsOf(pattern.labels),
-            segments: pattern.lineSegments.flatMap((segment) => {
-              const a = indexOf.get(segment.fromStarId);
-              const b = indexOf.get(segment.toStarId);
-              return a === undefined || b === undefined ? [] : [[a, b] as const];
-            }),
-            memberIndices: members,
-          };
-        }),
+          'Names and memberships: the Stellarium Arabic (Ancient) compilation (K. al-Ajaji, CC BY-ND 4.0), checked against Ibn Qutayba, al-Marzuqi and Ibn Asim; notes are UFUQ paraphrases with locators; lines are UFUQ teaching aids (UFUQ_TREE_V1).',
+        lineRule: arabic.lineRule.ruleId,
+        figures: arabic.figures.map((figure) => ({
+          figureId: figure.figureId,
+          parentId: figure.parentId,
+          arabic: figure.arabic,
+          transliteration: figure.transliteration,
+          alternativeNames: figure.alternativeNames.map((name) => ({
+            arabic: name.arabic,
+            transliteration: name.transliteration,
+          })),
+          style: figure.style,
+          segments: figure.segments.flatMap(([from, to]) => {
+            const a = indexForHip(from);
+            const b = indexForHip(to);
+            return a === undefined || b === undefined ? [] : [[a, b] as const];
+          }),
+          memberIndices: figure.members
+            .map(indexForHip)
+            .filter((index): index is number => index !== undefined),
+          evidence: figure.evidence as SkyEvidenceV2,
+          notes: figure.notes.map(cited),
+          conflicts: figure.conflicts.map(cited),
+          sources: sourceList([...figure.membershipCitations, ...figure.attestation]),
+        })),
+      };
+      arabicNames = arabic.stars.flatMap((star) => {
+        const index = indexForHip(star.hip);
+        return index === undefined
+          ? []
+          : [
+              {
+                starIndex: index,
+                arabic: star.arabic,
+                transliteration: star.transliteration,
+                alternativeNames: star.alternativeNames.map((name) => ({
+                  arabic: name.arabic,
+                  transliteration: name.transliteration,
+                })),
+                labelOnSky: star.labelOnSky,
+                evidence: star.evidence as SkyEvidenceV2,
+                notes: star.notes.map(cited),
+                conflicts: star.conflicts.map(cited),
+                sources: sourceList(star.attestation),
+              },
+            ];
       });
     }
-    const culture = data.skyCulture.value;
-    let starNames: SkyStarNameV1[] = [];
-    if (culture && artifactAccepted(data.skyCulture, scope)) {
-      cultures.push({
-        cultureId: culture.cultureId,
-        title: culture.title,
-        layer: culture.layer,
-        reviewState: data.skyCulture.approvalState,
-        attribution:
-          'Figures: M. van der Sluys, ConstellationLines v1.4 (CC BY 4.0). Names: the 88 IAU constellations.',
-        figures: culture.constellations.map((constellation) => {
-          const segments: (readonly [number, number])[] = [];
-          const members = new Set<number>();
-          for (const polyline of constellation.polylines) {
-            for (let i = 1; i < polyline.length; i += 1) {
-              const a = indexForHip(polyline[i - 1] as number);
-              const b = indexForHip(polyline[i] as number);
-              if (a === undefined || b === undefined) continue;
-              segments.push([a, b]);
-              members.add(a);
-              members.add(b);
-            }
-          }
-          return {
-            figureId: `iau-${constellation.abbreviation}`,
-            name: constellation.name,
-            labels: [
-              {
-                languageTag: 'la',
-                script: constellation.name,
-                transliteration: null,
-                gloss: constellation.abbreviation,
-                layer: culture.layer,
-              },
-            ],
-            segments,
-            memberIndices: [...members],
-          };
-        }),
-      });
-      starNames = culture.starNames.flatMap((entry) => {
+    // Modern IAU WGSN names: origin information for a picked star, never sky labels.
+    const modern = data.skyCulture.value;
+    let modernNames: SkyModernNameV2[] = [];
+    if (modern && artifactAccepted(data.skyCulture, scope)) {
+      modernNames = modern.starNames.flatMap((entry) => {
         const index = indexForHip(entry.hip);
         return index === undefined
           ? []
@@ -292,7 +290,7 @@ export class SkyService {
       });
     }
 
-    const view: SkyViewV1 = {
+    const view: SkyViewV2 = {
       contractVersion: SKY_CONTRACT_VERSION,
       datasetId: request.datasetId,
       executionScope: scope,
@@ -304,8 +302,9 @@ export class SkyService {
         longitudeDegrees: observer.geodeticLongitudeDegrees,
       },
       stars: { count: ids.length, ids, enu, visualMagnitudes, colorIndices },
-      cultures,
-      starNames,
+      culture,
+      arabicNames,
+      modernNames,
       provenance: {
         profileId: sky.profileId,
         displayPolicyId: 'SKY_DISPLAY_POLICY_V1',
@@ -313,6 +312,7 @@ export class SkyService {
         artifacts: [
           data.stars,
           data.skyField,
+          data.arabicSky,
           data.skyCulture,
           data.leap,
           data.eop,
@@ -326,9 +326,8 @@ export class SkyService {
         notices: [registration.notice],
         attributions: [
           ...registration.attributions,
-          'Constellation figures: M. van der Sluys, ConstellationLines v1.4, DOI 10.5281/zenodo.10397192 (CC BY 4.0). Cross-reference: Bright Star Catalogue, 5th ed. (CDS V/50).',
-          'Star names and etymologies: IAU Working Group on Star Names (WGSN), IAU Catalog of Star Names; etymology texts CC BY (IAU WGSN).',
-          'Constellation names: the 88 IAU constellations (NAOJ table).',
+          'Arabic sky: names and memberships from the Stellarium Arabic (Ancient) compilation by Khalid al-Ajaji (CC BY-ND 4.0, cited per record; its figure lines are not used), checked against Ibn Qutayba, al-Marzuqi and Ibn Asim. Cross-reference: Bright Star Catalogue, 5th ed. (CDS V/50).',
+          'Modern star names and etymologies (origin information only): IAU Working Group on Star Names (WGSN), IAU Catalog of Star Names; etymology texts CC BY (IAU WGSN).',
         ],
       },
     };

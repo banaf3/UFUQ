@@ -1,7 +1,7 @@
 # Session handoff
 
 Read this first. Keep it short and current: replace, do not append history (history
-belongs in `docs/STATUS.md` and Git). Updated 2026-11-02.
+belongs in `docs/STATUS.md` and Git). Updated 2026-11-05.
 
 ## Current phase
 
@@ -25,6 +25,17 @@ approval.
   (`SKY_EXPLORER.md`, IMP-020). New real artifacts `sky-field-hipparcos1997-v1` and
   `sky-culture-iau-v1` are `REVIEW_REQUIRED`.
 
+- **Arabic sky culture (owner request, 2026-11-05):** the explorer now teaches only the
+  anwāʾ sky (`ARABIC_SKY_CULTURE.md`, IMP-021, contract `sky.v2`).
+  - 114 figures and 123 star names, in Arabic with the transliteration under them.
+  - Cited notes from Ibn Qutayba, al-Marzūqī and Ibn ʿĀṣim, and recorded identification
+    conflicts.
+  - Lines follow `UFUQ_TREE_V1`, and figure cards open from labels.
+  - The IAU figures are removed; IAU names remain only as origin information.
+  - 26 navigation relationships are recorded for the tutorials
+    (`references/syntheses/anwa-navigation-relationships.md`).
+  - The new artifact `sky-culture-arabic-anwa-v1` is `REVIEW_REQUIRED`.
+
 Readiness: scaffolding YES; vertical slice and adaptive tutoring implemented but NOT
 validated (approvals pending); participant study NO; deployment NO.
 
@@ -42,7 +53,20 @@ validated (approvals pending); participant study NO; deployment NO.
 | BKT oracle (uv CPython 3.14.6) | `python -I tools/bkt-reference/bkt_reference.py --check`; `python -I -m unittest discover -s tools/bkt-reference/tests` |
 | Astronomy oracle | `tools/astronomy-reference` with uv 0.11.32 at `%USERPROFILE%\.local\uv-0.11.32\uv.exe` |
 
-## Last completed increment (2026-11-02)
+## Last completed increment (2026-11-05)
+
+Branch `feat/anwa-sky-culture` added the Arabic sky culture:
+
+- the curation `data/curation/sky-culture/arabic-anwa.v1.json`;
+- the generator `tools/catalogue/src/generate/arabic-sky.ts` and its tests;
+- `sky.v2` in the contracts, API and web;
+- the new star and figure cards;
+- the docs `ARABIC_SKY_CULTURE.md` and the relationship synthesis.
+
+The private research notes and authoring scripts are in
+`local-reference/cultural-astronomy/derived/research-notes/`.
+
+Earlier (2026-11-02):
 
 Branch `feat/sky-explorer` was merged into `main`. It added the sky explorer: sky source
 acquisition and artifacts, `SkyDisplayPolicyV1`, `/api/v2/sky`, the R3F planetarium
@@ -50,6 +74,13 @@ renderer and explorer page, and lessons over the full sky (`SKY_EXPLORER.md`). B
 that, `feat/phase-03-assessment-bkt` added Phase 3.
 
 ## Next justified step
+
+0. **Arabic sky (agent, no approval needed to start):**
+   - read the passages behind the 27 `PRIMARY_TEXT_POINTER` records;
+   - look for sources for the 52 `COMPILATION_ONLY` records (al-Bīrūnī and al-Ṣūfī
+     editions are public domain; see `ARABIC_SKY_CULTURE.md`, "Further sources");
+   - turn the cited Cassiopeia-to-al-Jady chain (§174–178) into proposed
+     `GuidanceRelationship` steps for the Phase 2 route.
 
 1. **Owner actions (critical: they unlock real learner use):**
    - name the astronomy/data, Arabic/cultural and educational reviewers;
@@ -66,6 +97,17 @@ that, `feat/phase-03-assessment-bkt` added Phase 3.
 
 ## Open owner actions
 
+- **Arabic sky review:**
+  - cultural, Arabic-language, identification and educational review of
+    `sky-culture-arabic-anwa-v1`;
+  - decide the recorded conflicts (al-Ṭarf, the two forearms, al-Zirr/al-Maysān,
+    Ḥaḍār/al-Wazn, Kabid al-Asad, al-Nājidh);
+  - check the vocalization of al-Hulba, al-Laʿṭ and al-Maʿqil.
+- **Local skill wrapper:** the untracked `.agents/skills/ufuq-reference/` folder (dated
+  2026-11-02, not created in this session) makes the
+  `tests/tooling/agent-instructions.test.ts` wrapper check fail locally (CI is
+  unaffected). Either track it as a canonical skill with a thin `.claude` wrapper, or
+  remove it.
 - **Sky explorer reviews:** `sky-field-hipparcos1997-v1` and `sky-culture-iau-v1`; an
   atmosphere decision (refraction, extinction) before any near-horizon "as seen" claim;
   sourced Arabic figures (for example the anwāʾ lunar mansions) for the curated layer.

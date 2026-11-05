@@ -328,6 +328,51 @@ export interface SkyCulturePayload {
   }[];
 }
 
+/** Cited text in the Arabic sky culture (note or recorded conflict). */
+export interface ArabicSkyCitedText {
+  readonly text: string;
+  readonly sourceId: string;
+  readonly locator: string;
+}
+
+interface ArabicSkyRecord {
+  readonly arabic: string;
+  readonly transliteration: string;
+  readonly alternativeNames: readonly {
+    readonly arabic: string;
+    readonly transliteration: string | null;
+  }[];
+  readonly evidence: string;
+  readonly attestation: readonly { readonly sourceId: string; readonly locator: string }[];
+  readonly notes: readonly ArabicSkyCitedText[];
+  readonly conflicts: readonly ArabicSkyCitedText[];
+}
+
+/** UFUQ_ARABIC_SKY_CULTURE payload (tools/catalogue/src/generate/arabic-sky.ts). */
+export interface ArabicSkyPayload {
+  readonly cultureId: string;
+  readonly title: string;
+  readonly layer: string;
+  readonly starFieldArtifact: { readonly artifactId: string; readonly payloadSha256: string };
+  readonly lineRule: { readonly ruleId: string; readonly layer: string };
+  readonly sources: readonly { readonly sourceId: string; readonly role: string }[];
+  readonly figures: readonly (ArabicSkyRecord & {
+    readonly figureId: string;
+    readonly parentId: string | null;
+    readonly style: 'FIGURE' | 'GROUP';
+    readonly members: readonly number[];
+    readonly segments: readonly (readonly [number, number])[];
+    readonly membershipCitations: readonly {
+      readonly sourceId: string;
+      readonly locator: string;
+    }[];
+  })[];
+  readonly stars: readonly (ArabicSkyRecord & {
+    readonly hip: number;
+    readonly labelOnSky: boolean;
+  })[];
+}
+
 export interface DatasetFiles {
   readonly stars: string;
   readonly leap: string;
@@ -338,6 +383,7 @@ export interface DatasetFiles {
   readonly learning: string;
   readonly skyField: string;
   readonly skyCulture: string;
+  readonly arabicSky: string;
 }
 
 export interface LoadedDataset {
@@ -350,6 +396,7 @@ export interface LoadedDataset {
   readonly learning: LoadedArtifact<LearningConfigurationPayload>;
   readonly skyField: LoadedArtifact<SkyDisplayField>;
   readonly skyCulture: LoadedArtifact<SkyCulturePayload>;
+  readonly arabicSky: LoadedArtifact<ArabicSkyPayload>;
   /** Hipparcos number to route-star id, so the background never duplicates a route star. */
   readonly routeStarByHip: ReadonlyMap<number, string>;
 }
@@ -387,6 +434,21 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
       return payload;
     },
   );
+  const arabicSky = mapped(
+    loadEnvelope(path(files.arabicSky), 'UFUQ_ARABIC_SKY_CULTURE'),
+    (envelope) => {
+      const payload = envelope.payload as ArabicSkyPayload;
+      if (
+        skyField.payloadSha256 !== null &&
+        payload.starFieldArtifact.payloadSha256 !== skyField.payloadSha256
+      ) {
+        throw new TypeError('Arabic sky culture was generated against a different star field.');
+      }
+      if (!Array.isArray(payload.figures) || !Array.isArray(payload.stars))
+        throw new TypeError('Arabic sky culture payload is malformed.');
+      return payload;
+    },
+  );
   const routeStarByHip = new Map<number, string>();
   for (const star of stars.value?.values() ?? []) {
     const hip = /:HIP (\d+)$/.exec(star.sourceRecordId)?.[1];
@@ -396,6 +458,7 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
     stars,
     skyField,
     skyCulture,
+    arabicSky,
     routeStarByHip,
     leap: mapped(loadEnvelope(path(files.leap), 'UFUQ_LEAP_SECOND_STATE'), mapLeap),
     eop: mapped(loadEnvelope(path(files.eop), 'UFUQ_EOP_DAILY_BUNDLE'), mapEop),

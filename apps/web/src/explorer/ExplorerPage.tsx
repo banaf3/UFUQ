@@ -9,13 +9,26 @@ import type {
   DatasetSummaryV2,
   LessonExecutionScope,
   LessonSessionV2,
-  SkyViewV1,
+  SkyCitedTextV2,
+  SkyViewV2,
 } from '@ufuq/contracts';
 
 import { ApiError, createLesson, getSky, listDatasets } from '../api.js';
 import { altAz, PROJECTIONS, type ProjectionId, type ViewState } from '../sky/projection.js';
 import { SkyCanvas, type SkyCanvasHandle } from '../sky/SkyCanvas.js';
-import { CULTURE_MODES, type CultureMode, skyLayers, skyStars, starDetails } from './sky-layers.js';
+import {
+  EVIDENCE_TEXT,
+  FIGURE_LABEL_ID,
+  type FigureDetails,
+  figureDetails,
+  findOptions as buildFindOptions,
+  matchFind,
+  STAR_LABEL_ID,
+  type StarDetails,
+  skyLayers,
+  skyStars,
+  starDetails,
+} from './sky-layers.js';
 
 const DEG = Math.PI / 180;
 const CUSTOM = '__custom__';
@@ -70,17 +83,17 @@ export function ExplorerPage({
 }) {
   const [datasets, setDatasets] = useState<readonly DatasetSummaryV2[]>([]);
   const [selection, setSelection] = useState<Selection | null>(null);
-  const [sky, setSky] = useState<SkyViewV1 | null>(null);
+  const [sky, setSky] = useState<SkyViewV2 | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const [mode, setMode] = useState<CultureMode>('ARABIC_AND_IAU');
   const [showLines, setShowLines] = useState(true);
   const [showNames, setShowNames] = useState(true);
   const [showGround, setShowGround] = useState(true);
   const [projection, setProjection] = useState<ProjectionId>(INITIAL_VIEW.projection);
   const [view, setView] = useState<ViewState>(INITIAL_VIEW);
   const [picked, setPicked] = useState<number | null>(null);
+  const [pickedFigure, setPickedFigure] = useState<string | null>(null);
   const [findText, setFindText] = useState('');
   const [starting, setStarting] = useState(false);
   const canvas = useRef<SkyCanvasHandle>(null);
@@ -99,6 +112,7 @@ export function ExplorerPage({
       setSky(result);
       setSelection(next);
       setPicked(null);
+      setPickedFigure(null);
     } catch (caught) {
       setError(describeError(caught));
     } finally {
@@ -157,32 +171,57 @@ export function ExplorerPage({
 
   const stars = useMemo(() => (sky ? skyStars(sky) : []), [sky]);
   const layers = useMemo(
-    () => (sky ? skyLayers(sky, stars, { mode, showLines, showNames }) : { lines: [], labels: [] }),
-    [sky, stars, mode, showLines, showNames],
+    () =>
+      sky
+        ? skyLayers(sky, stars, { showLines, showNames, selectedFigureId: pickedFigure })
+        : { lines: [], labels: [] },
+    [sky, stars, showLines, showNames, pickedFigure],
   );
   const dataset = datasets.find((d) => d.datasetId === selection?.datasetId);
   const details = sky && picked !== null ? starDetails(sky, picked) : null;
+  const figureCard = sky && pickedFigure !== null ? figureDetails(sky, pickedFigure) : null;
+  const pickStar = useCallback((index: number | null) => {
+    setPicked(index);
+    setPickedFigure(null);
+  }, []);
+  const pickFigure = useCallback((figureId: string) => {
+    setPickedFigure(figureId);
+    setPicked(null);
+  }, []);
+  const pickLabel = useCallback(
+    (id: string) => {
+      if (id.startsWith(FIGURE_LABEL_ID)) pickFigure(id.slice(FIGURE_LABEL_ID.length));
+      else if (id.startsWith(STAR_LABEL_ID)) pickStar(Number(id.slice(STAR_LABEL_ID.length)));
+      else return false;
+      return true;
+    },
+    [pickFigure, pickStar],
+  );
   const highlighted = useMemo(() => (picked === null ? [] : [picked]), [picked]);
 
-  const findOptions = useMemo(() => {
-    if (!sky) return [];
-    const options: { label: string; indices: number[] }[] = [];
-    for (const name of sky.starNames) options.push({ label: name.name, indices: [name.starIndex] });
-    for (const culture of sky.cultures)
-      for (const figure of culture.figures)
-        options.push({ label: figure.name, indices: figure.memberIndices.slice() });
-    return options.sort((a, b) => a.label.localeCompare(b.label));
-  }, [sky]);
+  const findOptions = useMemo(() => (sky ? buildFindOptions(sky) : []), [sky]);
 
   const find = () => {
-    const option = findOptions.find((o) => o.label.toLowerCase() === findText.trim().toLowerCase());
+    const option = matchFind(findOptions, findText);
     if (!option || !sky) return;
     const members = option.indices.map((i) => stars[i]?.enu).filter((d) => d !== undefined);
     if (members.length === 0) return;
     const sum = members.reduce((a, d) => [a[0] + d[0], a[1] + d[1], a[2] + d[2]], [0, 0, 0]);
     const { altitude, azimuth } = altAz(sum as [number, number, number]);
-    canvas.current?.setView({ altitude, azimuth, fov: Math.min(view.fov, 70 * DEG) });
-    if (option.indices.length === 1) setPicked(option.indices[0] ?? null);
+    // Below the horizon (with the ground shown): face its direction and say so.
+    const hidden = showGround && altitude < 0;
+    canvas.current?.setView({
+      altitude: hidden ? 15 * DEG : altitude,
+      azimuth,
+      fov: Math.min(view.fov, 70 * DEG),
+    });
+    setNotice(
+      hidden
+        ? `${option.label} is below the horizon now (towards azimuth ${Math.round(azimuth / DEG)}°). Turn the ground off or choose another time to see it.`
+        : null,
+    );
+    if (option.figureId) pickFigure(option.figureId);
+    else if (option.indices.length === 1) pickStar(option.indices[0] ?? null);
   };
 
   const startLesson = async () => {
@@ -243,7 +282,8 @@ export function ExplorerPage({
             showGround={showGround}
             showCardinals
             highlighted={highlighted}
-            onPick={setPicked}
+            onPick={pickStar}
+            onPickLabel={pickLabel}
             onViewChange={setView}
             ariaLabel={`Night sky over ${sky.observer.label} at ${sky.utc}: ${sky.stars.count} stars.`}
           />
@@ -328,16 +368,6 @@ export function ExplorerPage({
                 <button type="submit">Show</button>
               </form>
             )}
-            <label className="field">
-              <span>Sky culture</span>
-              <select value={mode} onChange={(event) => setMode(event.target.value as CultureMode)}>
-                {CULTURE_MODES.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
             <form
               className="field find"
               onSubmit={(event) => {
@@ -347,7 +377,7 @@ export function ExplorerPage({
             >
               <input
                 list="sky-find"
-                placeholder="Find a star or figure"
+                placeholder="Find a star or figure (Arabic or transliteration)"
                 aria-label="Find a star or figure"
                 value={findText}
                 onChange={(event) => setFindText(event.target.value)}
@@ -448,54 +478,16 @@ export function ExplorerPage({
       </div>
 
       {details && sky && (
-        <aside className="info-card" aria-label="Selected star">
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={() => setPicked(null)}
-          >
-            ×
-          </button>
-          <h2>{details.names[0]?.name ?? (details.hip ? `HIP ${details.hip}` : details.id)}</h2>
-          {details.names[0]?.arabicScript && (
-            <p className="arabic">{details.names[0].arabicScript}</p>
-          )}
-          <dl>
-            {details.hip && (
-              <>
-                <dt>Hipparcos</dt>
-                <dd>HIP {details.hip}</dd>
-              </>
-            )}
-            <dt>Magnitude (V)</dt>
-            <dd>{details.magnitude?.toFixed(2)}</dd>
-            {details.colorIndex !== null && (
-              <>
-                <dt>Colour (B−V)</dt>
-                <dd>{details.colorIndex.toFixed(2)}</dd>
-              </>
-            )}
-            <dt>Altitude / azimuth</dt>
-            <dd>
-              {(altAz(details.enu).altitude / DEG).toFixed(1)}° /{' '}
-              {(altAz(details.enu).azimuth / DEG).toFixed(1)}°
-            </dd>
-            {details.figures.map((figure) => (
-              <FigureRow
-                key={`${figure.culture}-${figure.name}`}
-                culture={figure.culture}
-                name={figure.name}
-              />
-            ))}
-          </dl>
-          {details.names[0] && (
-            <p className="etymology">
-              <strong>{details.names[0].language} origin.</strong> {details.names[0].origin}{' '}
-              <span className="credit">(IAU WGSN, CC BY)</span>
-            </p>
-          )}
-        </aside>
+        <StarCard details={details} onClose={() => pickStar(null)} onFigure={pickFigure} />
+      )}
+      {figureCard && (
+        <FigureCard
+          details={figureCard}
+          sky={sky}
+          onClose={() => setPickedFigure(null)}
+          onFigure={pickFigure}
+          onStar={pickStar}
+        />
       )}
 
       <footer className="sky-notice" role="note">
@@ -535,11 +527,256 @@ export function ExplorerPage({
   );
 }
 
-function FigureRow({ culture, name }: { readonly culture: string; readonly name: string }) {
+function ArabicTitle({
+  arabic,
+  transliteration,
+}: {
+  readonly arabic: string;
+  readonly transliteration: string;
+}) {
   return (
-    <>
-      <dt>{culture}</dt>
-      <dd>{name}</dd>
-    </>
+    <hgroup className="arabic-title">
+      <h2 lang="ar" dir="rtl">
+        {arabic}
+      </h2>
+      <p className="transliteration">{transliteration}</p>
+    </hgroup>
+  );
+}
+
+function CitedList({
+  title,
+  items,
+  className,
+}: {
+  readonly title: string;
+  readonly items: readonly SkyCitedTextV2[];
+  readonly className?: string;
+}) {
+  if (items.length === 0) return null;
+  return (
+    <section className={className}>
+      <h3>{title}</h3>
+      <ul>
+        {items.map((item) => (
+          <li key={`${item.source}-${item.text}`}>
+            {item.text} <cite>({item.source})</cite>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function AlternativeNames({
+  names,
+}: {
+  readonly names: readonly { readonly arabic: string; readonly transliteration: string | null }[];
+}) {
+  if (names.length === 0) return null;
+  return (
+    <p className="alt-names">
+      Also:{' '}
+      {names.map((name, i) => (
+        <span key={name.arabic}>
+          {i > 0 && ' · '}
+          <span lang="ar" dir="rtl">
+            {name.arabic}
+          </span>
+          {name.transliteration && ` (${name.transliteration})`}
+        </span>
+      ))}
+    </p>
+  );
+}
+
+/** Star card: the Arabic tradition first, then the modern origin, then the catalogue facts. */
+function StarCard({
+  details,
+  onClose,
+  onFigure,
+}: {
+  readonly details: StarDetails;
+  readonly onClose: () => void;
+  readonly onFigure: (figureId: string) => void;
+}) {
+  const { arabic, modern } = details;
+  const position = altAz(details.enu);
+  return (
+    <aside className="info-card" aria-label="Selected star">
+      <button type="button" className="close" aria-label="Close" onClick={onClose}>
+        ×
+      </button>
+      {arabic ? (
+        <ArabicTitle arabic={arabic.arabic} transliteration={arabic.transliteration} />
+      ) : (
+        <h2>{modern?.name ?? (details.hip ? `HIP ${details.hip}` : details.id)}</h2>
+      )}
+      {arabic && (
+        <section className="tradition" aria-label="Arabic tradition">
+          <AlternativeNames names={arabic.alternativeNames} />
+          <CitedList title="In the anwāʾ texts" items={arabic.notes} />
+          <CitedList title="Disputed or uncertain" items={arabic.conflicts} className="conflicts" />
+          <p className="evidence">{EVIDENCE_TEXT[arabic.evidence]}</p>
+        </section>
+      )}
+      {details.figures.length > 0 && (
+        <section className="figures">
+          <h3>Part of</h3>
+          <ul>
+            {details.figures.map((figure) => (
+              <li key={figure.figureId}>
+                <button type="button" className="link" onClick={() => onFigure(figure.figureId)}>
+                  <span lang="ar" dir="rtl">
+                    {figure.arabic}
+                  </span>{' '}
+                  <span className="transliteration">{figure.transliteration}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {!arabic && (
+        <p className="evidence">No name of the anwāʾ tradition is recorded for this star.</p>
+      )}
+      {modern && (
+        <p className="etymology">
+          <strong>
+            Modern name {modern.name} ({modern.language} origin).
+          </strong>{' '}
+          {modern.origin} <span className="credit">(IAU WGSN, CC BY)</span>
+        </p>
+      )}
+      <dl>
+        {details.hip && (
+          <>
+            <dt>Hipparcos</dt>
+            <dd>HIP {details.hip}</dd>
+          </>
+        )}
+        <dt>Magnitude (V)</dt>
+        <dd>{details.magnitude?.toFixed(2)}</dd>
+        {details.colorIndex !== null && (
+          <>
+            <dt>Colour (B−V)</dt>
+            <dd>{details.colorIndex.toFixed(2)}</dd>
+          </>
+        )}
+        <dt>Altitude / azimuth</dt>
+        <dd>
+          {(position.altitude / DEG).toFixed(1)}° / {(position.azimuth / DEG).toFixed(1)}°
+        </dd>
+      </dl>
+      {arabic && arabic.sources.length > 0 && (
+        <details className="sources">
+          <summary>Sources</summary>
+          <ul>
+            {arabic.sources.map((source) => (
+              <li key={source}>{source}</li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </aside>
+  );
+}
+
+/** Figure card: names, notes, disputes, its larger and smaller figures and its stars. */
+function FigureCard({
+  details,
+  sky,
+  onClose,
+  onFigure,
+  onStar,
+}: {
+  readonly details: FigureDetails;
+  readonly sky: SkyViewV2 | null;
+  readonly onClose: () => void;
+  readonly onFigure: (figureId: string) => void;
+  readonly onStar: (index: number) => void;
+}) {
+  const { figure, parent, children, members } = details;
+  return (
+    <aside className="info-card" aria-label="Selected figure">
+      <button type="button" className="close" aria-label="Close" onClick={onClose}>
+        ×
+      </button>
+      <ArabicTitle arabic={figure.arabic} transliteration={figure.transliteration} />
+      <section className="tradition" aria-label="Arabic tradition">
+        <AlternativeNames names={figure.alternativeNames} />
+        <CitedList title="In the anwāʾ texts" items={figure.notes} />
+        <CitedList title="Disputed or uncertain" items={figure.conflicts} className="conflicts" />
+        <p className="evidence">{EVIDENCE_TEXT[figure.evidence]}</p>
+      </section>
+      {(parent || children.length > 0) && (
+        <section className="figures">
+          {parent && (
+            <>
+              <h3>Part of</h3>
+              <button type="button" className="link" onClick={() => onFigure(parent.figureId)}>
+                <span lang="ar" dir="rtl">
+                  {parent.arabic}
+                </span>{' '}
+                <span className="transliteration">{parent.transliteration}</span>
+              </button>
+            </>
+          )}
+          {children.length > 0 && (
+            <>
+              <h3>Contains</h3>
+              <ul>
+                {children.map((child) => (
+                  <li key={child.figureId}>
+                    <button type="button" className="link" onClick={() => onFigure(child.figureId)}>
+                      <span lang="ar" dir="rtl">
+                        {child.arabic}
+                      </span>{' '}
+                      <span className="transliteration">{child.transliteration}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )}
+      <section className="figures">
+        <h3>
+          Stars ({members.length}){figure.style === 'GROUP' ? ' · a group of stars' : ''}
+        </h3>
+        <ul className="members">
+          {members.map(({ index, name }) => (
+            <li key={index}>
+              <button type="button" className="link" onClick={() => onStar(index)}>
+                {name ? (
+                  <>
+                    <span lang="ar" dir="rtl">
+                      {name.arabic}
+                    </span>{' '}
+                    <span className="transliteration">{name.transliteration}</span>
+                  </>
+                ) : (
+                  (sky?.stars.ids[index] ?? '').replace('hip-', 'HIP ')
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <p className="credit">
+        Lines are UFUQ teaching aids ({sky?.culture?.lineRule}), not historical drawings.
+      </p>
+      {figure.sources.length > 0 && (
+        <details className="sources">
+          <summary>Sources</summary>
+          <ul>
+            {figure.sources.map((source) => (
+              <li key={source}>{source}</li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </aside>
   );
 }

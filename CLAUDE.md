@@ -35,11 +35,18 @@ The API speaks `lesson.v2` at `/api/v2` and needs the opt-in development identit
 (`UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1`) to create lessons before Phase 4 authentication.
 
 **Sky explorer (2026-11-02):** the first page renders the whole naked-eye sky
-(`docs/SKY_EXPLORER.md`): `GET /api/v2/sky` (contract `sky.v1`), the display-only
+(`docs/SKY_EXPLORER.md`): `GET /api/v2/sky` (contract `sky.v1`, now `sky.v2`), the display-only
 `SkyDisplayPolicyV1` for non-route stars (IMP-020), and an R3F planetarium renderer in
 `apps/web/src/sky` (zenithal projections, screen-space picking). Never import the
 Stellarium _Arabic (Ancient)_ figures (CC BY-ND) or invent Arabic figures; new ones need
 sourced research and review.
+
+**Arabic sky culture (2026-11-05):** the explorer shows only the anwāʾ sky
+(`docs/ARABIC_SKY_CULTURE.md`, IMP-021, contract `sky.v2`). It is generated from
+`data/curation/sky-culture/arabic-anwa.v1.json`, which holds names, memberships, cited
+notes, conflicts and the navigation relationships for tutorials. Lines follow the
+`UFUQ_TREE_V1` rule, never the compilation's line arrays. The private authoring scripts
+and research notes are in `local-reference/cultural-astronomy/derived/research-notes/`.
 
 The V1 route-star catalogue is ESA Hipparcos 1997 `hip_main` with bounded RV omission
 (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap, EOP, restoration and

@@ -5,7 +5,7 @@ import type {
   DevelopmentLearnerV2,
   LessonExecutionScope,
   LessonSessionV2,
-  SkyViewV1,
+  SkyViewV2,
   StepAnswerV2,
   StepFeedbackV2,
 } from '@ufuq/contracts';
@@ -77,7 +77,7 @@ export function getSky(
   datasetId: string,
   executionScope: LessonExecutionScope,
   when: { readonly scenarioId: string } | { readonly utc: string },
-): Promise<SkyViewV1> {
+): Promise<SkyViewV2> {
   const query = new URLSearchParams({
     datasetId,
     executionScope,

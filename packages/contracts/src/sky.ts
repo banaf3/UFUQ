@@ -1,33 +1,79 @@
 /**
- * Versioned sky-explorer contract (sky.v1). The explorer is not an assessment: it may name
+ * Versioned sky-explorer contract (sky.v2). The explorer is not an assessment: it may name
  * stars and draw figures. Lessons never use it; they receive their own opaque star field.
- * Stars travel as compact parallel arrays (about 9,000 stars).
+ * Stars travel as compact parallel arrays (about 9,000 stars). sky.v2 (2026-11-05) teaches
+ * the Arabic sky of the anwāʾ: one Arabic culture, Arabic star names with transliteration,
+ * cited notes, and the modern IAU star names only as "origin" information.
  */
-import type { LessonExecutionScope, OverlayLabelV2 } from './lesson.js';
+import type { LessonExecutionScope } from './lesson.js';
 
-export type SkyContractVersion = 'sky.v1';
-export const SKY_CONTRACT_VERSION: SkyContractVersion = 'sky.v1';
+export type SkyContractVersion = 'sky.v2';
+export const SKY_CONTRACT_VERSION: SkyContractVersion = 'sky.v2';
 
-export interface SkyFigureV1 {
-  readonly figureId: string;
-  /** Display name: the IAU name, or the curated pattern's first label. */
-  readonly name: string;
-  readonly labels: readonly OverlayLabelV2[];
-  /** Pairs of star indices into the star arrays. */
-  readonly segments: readonly (readonly [number, number])[];
-  readonly memberIndices: readonly number[];
+/** How far a name or figure is supported by the owner's primary anwāʾ texts. */
+export type SkyEvidenceV2 =
+  | 'PRIMARY_TEXT_READ'
+  | 'PRIMARY_TEXT_POINTER'
+  | 'COLLECTIVE_NAME_IN_PRIMARY_TEXT'
+  | 'NAMED_WITH_FIGURE'
+  | 'COMPILATION_ONLY';
+
+/** A note or a recorded conflict, with its human-readable citation. */
+export interface SkyCitedTextV2 {
+  readonly text: string;
+  readonly source: string;
 }
 
-export interface SkyCultureV1 {
+export interface SkyAlternativeNameV2 {
+  readonly arabic: string;
+  readonly transliteration: string | null;
+}
+
+export interface SkyFigureV2 {
+  readonly figureId: string;
+  /** The smallest figure whose stars include this one's, or null for a top-level figure. */
+  readonly parentId: string | null;
+  readonly arabic: string;
+  /** IJMES transliteration of the Arabic name (not a translation). */
+  readonly transliteration: string;
+  readonly alternativeNames: readonly SkyAlternativeNameV2[];
+  /** FIGURE: a drawn shape; GROUP: a herd or area of stars, drawn faintly. */
+  readonly style: 'FIGURE' | 'GROUP';
+  /** Pairs of star indices into the star arrays (UFUQ teaching lines). */
+  readonly segments: readonly (readonly [number, number])[];
+  readonly memberIndices: readonly number[];
+  readonly evidence: SkyEvidenceV2;
+  readonly notes: readonly SkyCitedTextV2[];
+  readonly conflicts: readonly SkyCitedTextV2[];
+  readonly sources: readonly string[];
+}
+
+export interface SkyCultureV2 {
   readonly cultureId: string;
   readonly title: string;
   readonly layer: string;
   readonly reviewState: string;
   readonly attribution: string;
-  readonly figures: readonly SkyFigureV1[];
+  readonly lineRule: string;
+  readonly figures: readonly SkyFigureV2[];
 }
 
-export interface SkyStarNameV1 {
+/** An Arabic star name of the anwāʾ tradition. */
+export interface SkyArabicNameV2 {
+  readonly starIndex: number;
+  readonly arabic: string;
+  readonly transliteration: string;
+  readonly alternativeNames: readonly SkyAlternativeNameV2[];
+  /** False when the name is shared by a pair or group, or is the name of its own figure. */
+  readonly labelOnSky: boolean;
+  readonly evidence: SkyEvidenceV2;
+  readonly notes: readonly SkyCitedTextV2[];
+  readonly conflicts: readonly SkyCitedTextV2[];
+  readonly sources: readonly string[];
+}
+
+/** A modern IAU WGSN star name, shown only as origin information when a star is picked. */
+export interface SkyModernNameV2 {
   readonly starIndex: number;
   readonly name: string;
   readonly designation: string;
@@ -38,7 +84,7 @@ export interface SkyStarNameV1 {
   readonly origin: string;
 }
 
-export interface SkyViewV1 {
+export interface SkyViewV2 {
   readonly contractVersion: SkyContractVersion;
   readonly datasetId: string;
   readonly executionScope: LessonExecutionScope;
@@ -59,8 +105,10 @@ export interface SkyViewV1 {
     /** Johnson B-V colour index, null when the catalogue has none. */
     readonly colorIndices: readonly (number | null)[];
   };
-  readonly cultures: readonly SkyCultureV1[];
-  readonly starNames: readonly SkyStarNameV1[];
+  /** The Arabic culture, or null when its artifact is not accepted for the scope. */
+  readonly culture: SkyCultureV2 | null;
+  readonly arabicNames: readonly SkyArabicNameV2[];
+  readonly modernNames: readonly SkyModernNameV2[];
   readonly provenance: {
     readonly profileId: string;
     readonly displayPolicyId: string;

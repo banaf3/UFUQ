@@ -15,6 +15,7 @@ import {
   sha256Hex,
 } from '../canonical-json.js';
 import { generateSyntheticLearningConfiguration } from './learning-configuration.js';
+import { generateSyntheticArabicSkyCulture } from './arabic-sky.js';
 import { generateSyntheticSkyArtifacts } from './sky.js';
 import { loadApproval } from './profile-v1-data.js';
 
@@ -544,6 +545,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     content,
     SYNTHETIC,
   );
+  const syntheticSky = generateSyntheticSkyArtifacts(SYNTHETIC);
   return [
     stars,
     leap,
@@ -552,7 +554,8 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     domain,
     contentEnvelope,
     generateSyntheticLearningConfiguration(SYNTHETIC),
-    generateSyntheticSkyArtifacts(SYNTHETIC).field,
-    generateSyntheticSkyArtifacts(SYNTHETIC).culture,
+    syntheticSky.field,
+    syntheticSky.culture,
+    generateSyntheticArabicSkyCulture(syntheticSky.field, SYNTHETIC),
   ];
 }
