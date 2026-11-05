@@ -53,6 +53,11 @@ export interface SkyFigureV2 {
   readonly segments: readonly (readonly [number, number])[];
   readonly memberIndices: readonly number[];
   readonly evidence: SkyEvidenceV2;
+  /**
+   * True when a cited navigation relationship of the culture starts or ends at this
+   * figure (a guidance figure, named on the sky even in the widest views).
+   */
+  readonly guidance: boolean;
   /** Card text in plain English letters, or null. */
   readonly about: string | null;
   readonly references: readonly SkyReferenceV2[];
@@ -80,6 +85,11 @@ export interface SkyArabicNameV2 {
   readonly alternativeNames: readonly SkyAlternativeNameV2[];
   /** False when the name is shared by a pair or group, or is the name of its own figure. */
   readonly labelOnSky: boolean;
+  /**
+   * True for the star the culture's guidance leads to (al-Jady, where UFUQ's routes end),
+   * named in bold and in every view.
+   */
+  readonly guidanceTarget: boolean;
   readonly evidence: SkyEvidenceV2;
   /** Card text in plain English letters, or null. */
   readonly about: string | null;

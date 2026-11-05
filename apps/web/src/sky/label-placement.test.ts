@@ -98,6 +98,33 @@ describe('steady label placement', () => {
     expect(result.fading).toBe(true);
   });
 
+  it('centres a figure name on the middle of its stars, then tries the usual places', () => {
+    const states = new Map<string, LabelState>();
+    const middle = { ...label('fig', 300, 300, 1), centred: true };
+    const alone = place([middle], states);
+    // One line of 16 px text: centred, its middle sits on the anchor.
+    expect(alone.drawn[0]).toMatchObject({ x: 300, y: 300 });
+    const taken = place([middle, { ...label('first', 300, 300, 0), offset: 0 }], new Map());
+    expect(taken.drawn.find((d) => d.label.id === 'fig')).toMatchObject({ x: 300, y: 278 });
+  });
+
+  it('keeps names clear of the compass letters', () => {
+    const states = new Map<string, LabelState>();
+    const star = { ...label('jady', 400, 300, 0), offset: -14 }; // named below the star
+    const result = placeLabels({
+      labels: [star],
+      fov: 1,
+      width: 800,
+      height: 600,
+      toScreen,
+      measure,
+      states,
+      dt: frame,
+      obstacles: [[390, 305, 410, 325]], // the "N" just under it
+    });
+    expect(result.drawn[0]?.y).toBeLessThan(300); // moved above the star
+  });
+
   it('lets a name scroll off the screen instead of hopping to a place still on it', () => {
     const states = new Map<string, LabelState>();
     place([label('edge', 700, 100, 0)], states);

@@ -22,7 +22,7 @@
     "cultureId": "synthetic-arabic-culture",
     "curation": {
       "path": "data/curation/sky-culture/arabic-anwa.v1.json",
-      "sha256": "f2e7704738fd7bbd0fb68ffb63c3c9ff90c51abb23837a6d4c2b3bdc31729d12"
+      "sha256": "c0ab8feb57b33ca4810d9021ffdb1ca2830fc93ca8d8f19e27347d7a86a70f7a"
     },
     "curationReview": {
       "state": "SYNTHETIC_TECHNICAL_FIXTURE"
@@ -145,6 +145,12 @@
         "vocalization": "FROM_SOURCE_FORM"
       }
     ],
+    "guidanceTarget": {
+      "hip": 900001,
+      "locator": "synthetic",
+      "sourceId": "SYNTHETIC",
+      "statement": "Invented guidance target for a synthetic technical fixture; not a cultural claim."
+    },
     "layer": "SYNTHETIC_TECHNICAL",
     "lineRule": {
       "description": "test",
@@ -198,6 +204,6 @@
       "system": "none (synthetic)"
     }
   },
-  "payloadSha256": "bbbfe445b962c6ec82fbd0f37b8deb0dc30f6376a9f44fe8ce6a3286e0cca8d9",
+  "payloadSha256": "630c20436559bb75e1201b3f16279322d0edf70a8aad13bb660dd4ecd9ba8296",
   "schemaVersion": 1
 }

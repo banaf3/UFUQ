@@ -15,13 +15,21 @@ import type {
 } from '@ufuq/contracts';
 
 import { ApiError, createLesson, getSky, listDatasets } from '../api.js';
-import { altAz, PROJECTIONS, type ProjectionId, type ViewState } from '../sky/projection.js';
+import {
+  altAz,
+  meanDirection,
+  PROJECTIONS,
+  type ProjectionId,
+  type Vec3,
+  type ViewState,
+} from '../sky/projection.js';
 import { SkyCanvas, type SkyCanvasHandle } from '../sky/SkyCanvas.js';
 import {
   FIGURE_LABEL_ID,
   type FigureDetails,
   figureDetails,
   findOptions as buildFindOptions,
+  frameDirections,
   matchFind,
   STAR_LABEL_ID,
   type StarDetails,
@@ -48,6 +56,17 @@ const INITIAL_VIEW: ViewState = {
   fov: 110 * DEG,
   projection: 'STEREOGRAPHIC',
 };
+
+/** What an information card shows. */
+type CardTarget =
+  | { readonly kind: 'star'; readonly index: number }
+  | { readonly kind: 'figure'; readonly figureId: string };
+
+/** A card the reader left by following a link in it, with the view it had. */
+interface CardStep {
+  readonly target: CardTarget;
+  readonly view: ViewState;
+}
 
 interface Selection {
   readonly datasetId: string;
@@ -94,6 +113,8 @@ export function ExplorerPage({
   const [view, setView] = useState<ViewState>(INITIAL_VIEW);
   const [picked, setPicked] = useState<number | null>(null);
   const [pickedFigure, setPickedFigure] = useState<string | null>(null);
+  /** The cards behind the current one, for Back (cleared by any other selection). */
+  const [cardHistory, setCardHistory] = useState<readonly CardStep[]>([]);
   const [findText, setFindText] = useState('');
   const [starting, setStarting] = useState(false);
   const canvas = useRef<SkyCanvasHandle>(null);
@@ -113,6 +134,7 @@ export function ExplorerPage({
       setSelection(next);
       setPicked(null);
       setPickedFigure(null);
+      setCardHistory([]);
     } catch (caught) {
       setError(describeError(caught));
     } finally {
@@ -180,14 +202,75 @@ export function ExplorerPage({
   const dataset = datasets.find((d) => d.datasetId === selection?.datasetId);
   const details = sky && picked !== null ? starDetails(sky, picked) : null;
   const figureCard = sky && pickedFigure !== null ? figureDetails(sky, pickedFigure) : null;
+  // A pick on the sky or a search starts a new trail of cards.
   const pickStar = useCallback((index: number | null) => {
     setPicked(index);
     setPickedFigure(null);
+    setCardHistory([]);
   }, []);
   const pickFigure = useCallback((figureId: string) => {
     setPickedFigure(figureId);
     setPicked(null);
+    setCardHistory([]);
   }, []);
+  const show = (target: CardTarget) => {
+    setPicked(target.kind === 'star' ? target.index : null);
+    setPickedFigure(target.kind === 'figure' ? target.figureId : null);
+  };
+
+  /** Turns the view to the directions; below the horizon (ground shown) it says so. */
+  const lookAt = (directions: readonly Vec3[], label: string, fov: number) => {
+    const centre = meanDirection(directions);
+    if (!centre) return;
+    const { altitude, azimuth } = altAz(centre);
+    const hidden = showGround && altitude < 0;
+    canvas.current?.setView({ altitude: hidden ? 15 * DEG : altitude, azimuth, fov });
+    setNotice(
+      hidden
+        ? `${label} is below the horizon now (towards azimuth ${Math.round(azimuth / DEG)}°). Turn the ground off or choose another time to see it.`
+        : null,
+    );
+  };
+
+  /** A link inside a card: zoom to it, select it, and remember the way back. */
+  const followCardLink = (target: CardTarget) => {
+    const handle = canvas.current;
+    if (!sky || !handle) return;
+    const current: CardTarget | null =
+      picked !== null
+        ? { kind: 'star', index: picked }
+        : pickedFigure !== null
+          ? { kind: 'figure', figureId: pickedFigure }
+          : null;
+    if (current)
+      setCardHistory((steps) => [...steps, { target: current, view: handle.getTarget() }]);
+    show(target);
+    const figure =
+      target.kind === 'figure'
+        ? sky.culture?.figures.find((f) => f.figureId === target.figureId)
+        : undefined;
+    const indices = target.kind === 'star' ? [target.index] : (figure?.memberIndices ?? []);
+    const directions = indices.map((i) => stars[i]?.enu).filter((d) => d !== undefined);
+    const frame = frameDirections(directions, handle.getTarget().fov);
+    if (!frame) return;
+    const name =
+      target.kind === 'figure'
+        ? (figure?.transliteration ?? '')
+        : (sky.arabicNames.find((n) => n.starIndex === target.index)?.transliteration ??
+          (sky.stars.ids[target.index] ?? '').replace('hip-', 'HIP '));
+    lookAt(directions, name, frame.fov);
+  };
+
+  /** Back: the previous card, and the view it had (zooming out again). */
+  const goBack = () => {
+    const last = cardHistory.at(-1);
+    if (!last) return;
+    setCardHistory((steps) => steps.slice(0, -1));
+    show(last.target);
+    setNotice(null);
+    canvas.current?.setView(last.view);
+  };
+  const onBack = cardHistory.length > 0 ? goBack : null;
   const pickLabel = useCallback(
     (id: string) => {
       if (id.startsWith(FIGURE_LABEL_ID)) pickFigure(id.slice(FIGURE_LABEL_ID.length));
@@ -206,20 +289,7 @@ export function ExplorerPage({
     if (!option || !sky) return;
     const members = option.indices.map((i) => stars[i]?.enu).filter((d) => d !== undefined);
     if (members.length === 0) return;
-    const sum = members.reduce((a, d) => [a[0] + d[0], a[1] + d[1], a[2] + d[2]], [0, 0, 0]);
-    const { altitude, azimuth } = altAz(sum as [number, number, number]);
-    // Below the horizon (with the ground shown): face its direction and say so.
-    const hidden = showGround && altitude < 0;
-    canvas.current?.setView({
-      altitude: hidden ? 15 * DEG : altitude,
-      azimuth,
-      fov: Math.min(view.fov, 70 * DEG),
-    });
-    setNotice(
-      hidden
-        ? `${option.label} is below the horizon now (towards azimuth ${Math.round(azimuth / DEG)}°). Turn the ground off or choose another time to see it.`
-        : null,
-    );
+    lookAt(members, option.label, Math.min(view.fov, 70 * DEG));
     if (option.figureId) pickFigure(option.figureId);
     else if (option.indices.length === 1) pickStar(option.indices[0] ?? null);
   };
@@ -478,15 +548,24 @@ export function ExplorerPage({
       </div>
 
       {details && sky && (
-        <StarCard details={details} onClose={() => pickStar(null)} onFigure={pickFigure} />
+        <StarCard
+          details={details}
+          onClose={() => pickStar(null)}
+          onBack={onBack}
+          onFigure={(figureId) => followCardLink({ kind: 'figure', figureId })}
+        />
       )}
       {figureCard && (
         <FigureCard
           details={figureCard}
           sky={sky}
-          onClose={() => setPickedFigure(null)}
-          onFigure={pickFigure}
-          onStar={pickStar}
+          onClose={() => {
+            setPickedFigure(null);
+            setCardHistory([]);
+          }}
+          onBack={onBack}
+          onFigure={(figureId) => followCardLink({ kind: 'figure', figureId })}
+          onStar={(index) => followCardLink({ kind: 'star', index })}
         />
       )}
 
@@ -527,7 +606,8 @@ export function ExplorerPage({
   );
 }
 
-function ArabicTitle({
+/** The card title: the name in English letters first, the Arabic script under it. */
+function NameTitle({
   arabic,
   transliteration,
 }: {
@@ -535,12 +615,31 @@ function ArabicTitle({
   readonly transliteration: string;
 }) {
   return (
-    <hgroup className="arabic-title">
-      <h2 lang="ar" dir="rtl">
+    <hgroup className="name-title">
+      <h2>{transliteration}</h2>
+      <p lang="ar" dir="rtl">
         {arabic}
-      </h2>
-      <p className="transliteration">{transliteration}</p>
+      </p>
     </hgroup>
+  );
+}
+
+/** A name in English letters, then its Arabic script. */
+function Name({
+  arabic,
+  transliteration,
+}: {
+  readonly arabic: string;
+  readonly transliteration: string | null;
+}) {
+  return (
+    <>
+      {transliteration && <span className="transliteration">{transliteration}</span>}
+      {transliteration && ' '}
+      <span lang="ar" dir="rtl" className="arabic">
+        {arabic}
+      </span>
+    </>
   );
 }
 
@@ -556,10 +655,7 @@ function AlternativeNames({
       {names.map((name, i) => (
         <span key={name.arabic}>
           {i > 0 && ' · '}
-          <span lang="ar" dir="rtl">
-            {name.arabic}
-          </span>
-          {name.transliteration && ` (${name.transliteration})`}
+          <Name arabic={name.arabic} transliteration={name.transliteration} />
         </span>
       ))}
     </p>
@@ -575,50 +671,71 @@ function FigureLink({
 }) {
   return (
     <button type="button" className="link" onClick={() => onFigure(figure.figureId)}>
-      <span lang="ar" dir="rtl">
-        {figure.arabic}
-      </span>{' '}
-      <span className="transliteration">{figure.transliteration}</span>
+      <Name arabic={figure.arabic} transliteration={figure.transliteration} />
     </button>
   );
 }
 
-/** The works a card draws on, listed only here, never inside the text. */
+/** The works a card draws on, listed only here and shown when the reader opens them. */
 function References({ items }: { readonly items: readonly SkyReferenceV2[] }) {
   if (items.length === 0) return null;
   return (
     <section className="references" aria-label="References">
-      <h3>References</h3>
-      <ul>
-        {items.map((item) => (
-          <li key={item.title}>
-            {item.title}
-            {item.detail && `, ${item.detail}`}
-          </li>
-        ))}
-      </ul>
+      <details>
+        <summary>References ({items.length})</summary>
+        <ul>
+          {items.map((item) => (
+            <li key={item.title}>
+              {item.title}
+              {item.detail && `, ${item.detail}`}
+            </li>
+          ))}
+        </ul>
+      </details>
     </section>
   );
 }
 
-/** Star card: the Arabic name and what the sources tell of it, then the modern origin. */
+/** Close, and Back to the previous card when the reader came from one. */
+function CardButtons({
+  onClose,
+  onBack,
+}: {
+  readonly onClose: () => void;
+  readonly onBack: (() => void) | null;
+}) {
+  return (
+    <>
+      {onBack && (
+        <button type="button" className="back" aria-label="Back" onClick={onBack}>
+          ← Back
+        </button>
+      )}
+      <button type="button" className="close" aria-label="Close" onClick={onClose}>
+        ×
+      </button>
+    </>
+  );
+}
+
+/** Star card: the name and what the sources tell of it, then the modern origin. */
 function StarCard({
   details,
   onClose,
+  onBack,
   onFigure,
 }: {
   readonly details: StarDetails;
   readonly onClose: () => void;
+  readonly onBack: (() => void) | null;
   readonly onFigure: (figureId: string) => void;
 }) {
   const { arabic, modern } = details;
   return (
     <aside className="info-card" aria-label="Selected star">
-      <button type="button" className="close" aria-label="Close" onClick={onClose}>
-        ×
-      </button>
+      <CardButtons onClose={onClose} onBack={onBack} />
       {arabic ? (
-        <ArabicTitle arabic={arabic.arabic} transliteration={arabic.transliteration} />
+        <NameTitle arabic={arabic.arabic} transliteration={arabic.transliteration} />
       ) : (
         <h2>{modern?.name ?? (details.hip ? `HIP ${details.hip}` : details.id)}</h2>
       )}
@@ -676,22 +793,22 @@ function FigureCard({
   details,
   sky,
   onClose,
+  onBack,
   onFigure,
   onStar,
 }: {
   readonly details: FigureDetails;
   readonly sky: SkyViewV2 | null;
   readonly onClose: () => void;
+  readonly onBack: (() => void) | null;
   readonly onFigure: (figureId: string) => void;
   readonly onStar: (index: number) => void;
 }) {
   const { figure, parent, children, members } = details;
   return (
     <aside className="info-card" aria-label="Selected figure">
-      <button type="button" className="close" aria-label="Close" onClick={onClose}>
-        ×
-      </button>
-      <ArabicTitle arabic={figure.arabic} transliteration={figure.transliteration} />
+      <CardButtons onClose={onClose} onBack={onBack} />
+      <NameTitle arabic={figure.arabic} transliteration={figure.transliteration} />
       <section className="tradition" aria-label="Arabic tradition">
         <AlternativeNames names={figure.alternativeNames} />
         {figure.about && <p className="about">{figure.about}</p>}
@@ -725,12 +842,7 @@ function FigureCard({
             <li key={index}>
               <button type="button" className="link" onClick={() => onStar(index)}>
                 {name ? (
-                  <>
-                    <span lang="ar" dir="rtl">
-                      {name.arabic}
-                    </span>{' '}
-                    <span className="transliteration">{name.transliteration}</span>
-                  </>
+                  <Name arabic={name.arabic} transliteration={name.transliteration} />
                 ) : (
                   (sky?.stars.ids[index] ?? '').replace('hip-', 'HIP ')
                 )}

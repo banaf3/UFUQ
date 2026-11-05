@@ -105,8 +105,21 @@ export interface ArabicSkyCuration {
   readonly sources: readonly { readonly sourceId: string; readonly role: string }[];
   readonly figures: readonly CuratedFigure[];
   readonly stars: readonly CuratedStar[];
+  /**
+   * The star the culture's guidance leads to, with its source: al-Jady, by which the way
+   * and the qibla are found (Ibn Qutayba §170), where UFUQ's lesson routes end. The
+   * explorer names it in bold. Null when a culture has none.
+   */
+  readonly guidanceTarget: GuidanceTarget | null;
   readonly relationships: readonly CuratedRelationship[];
   readonly review: Record<string, unknown> & { readonly state: string };
+}
+
+export interface GuidanceTarget {
+  readonly hip: number;
+  readonly statement: string;
+  readonly sourceId: string;
+  readonly locator: string;
 }
 
 /** The display field rows the generator needs: HIP and catalogue-epoch position. */
@@ -243,6 +256,16 @@ export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[]
     }
     if (!sources.has(relation.sourceId))
       errors.push(`${relation.relationshipId}: unknown source ${relation.sourceId}.`);
+  }
+  const target = curation.guidanceTarget;
+  if (target === undefined) errors.push('guidanceTarget must be a cited star or null.');
+  if (target) {
+    if (!starHips.has(target.hip))
+      errors.push(`guidanceTarget: HIP ${target.hip} is not a curated star.`);
+    if (!sources.has(target.sourceId))
+      errors.push(`guidanceTarget: unknown source ${target.sourceId}.`);
+    if (!target.statement.trim() || !target.locator.trim())
+      errors.push('guidanceTarget: a statement and a locator are required.');
   }
   return errors;
 }
@@ -387,6 +410,7 @@ export function buildArabicSkyCulture(
     singleMemberFiguresNotDrawn: singleMemberFigures,
     figures,
     stars,
+    guidanceTarget: curation.guidanceTarget,
     relationships: curation.relationships,
     curationReview: curation.review,
   };
@@ -482,6 +506,13 @@ export function generateSyntheticArabicSkyCulture(
       },
     ],
     stars: [{ ...record('سين-١', 'Synthetic One'), hip: 900001, designation: 'synthetic' }],
+    guidanceTarget: {
+      hip: 900001,
+      statement:
+        'Invented guidance target for a synthetic technical fixture; not a cultural claim.',
+      sourceId: 'SYNTHETIC',
+      locator: 'synthetic',
+    },
     relationships: [],
     review: { state: 'SYNTHETIC_TECHNICAL_FIXTURE' },
   };

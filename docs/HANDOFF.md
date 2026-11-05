@@ -60,7 +60,17 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-05)
 
-Branch `fix/steady-sky-names` (IMP-022, steady names) answered the owner's report that
+Branch `feat/anwa-names-and-card-navigation` (IMP-022) answered the owner's next review:
+
+- figure names centred in their figures when the middle is their own;
+- only guidance and bright figures named in wide views;
+- al-Jady in bold, from the new cited `guidanceTarget` curation field (contract
+  `sky.v2` gains `guidance` and `guidanceTarget`);
+- names clear of the compass letters;
+- cards with English letters first and References on request;
+- links inside a card zoom to their target, with "← Back" to the previous card and view.
+
+Before that, branch `fix/steady-sky-names` (IMP-022, steady names) answered the owner's report that
 names moved on selection and seemed to lag. Placement now remembers each name between
 frames (`apps/web/src/sky/label-placement.ts`, after MapLibre GL JS):
 

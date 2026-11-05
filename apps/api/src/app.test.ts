@@ -479,7 +479,10 @@ describe('sky explorer API (report UC-102)', () => {
     expect(body.arabicNames[0]).toMatchObject({
       transliteration: 'Synthetic One',
       labelOnSky: true,
+      guidanceTarget: true, // the fixture's invented guidance target, shown in bold
     });
+    // No navigation relationship names a synthetic figure.
+    expect(body.culture?.figures.map((f) => f.guidance)).toEqual([false, false]);
     // Modern names remain as origin information only.
     expect(body.modernNames[0]).toMatchObject({ name: 'Synthetica', language: 'Synthetic' });
     expect(body.provenance.displayPolicyId).toBe('SKY_DISPLAY_POLICY_V1');

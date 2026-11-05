@@ -2,6 +2,14 @@
 
 **Assessment date:** 2026-11-05 (Arabic sky culture in the explorer); 2026-11-02 for Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates.
 
+**Update 2026-11-05, centred names and card navigation:**
+
+- Figure names are centred in their figures, unless the middle belongs to another figure.
+- Wide views name only the guidance figures (cited navigation relationships) and the brightest figures.
+- al-Jady is bold, read from the new cited curation field `guidanceTarget`.
+- Cards lead with the English-letter name and open their References on request.
+- Links inside a card zoom to the target, with "← Back" to the previous card and view.
+
 **Update 2026-11-05, steady names:** names keep their place between frames, fade in and out, and cross-fade when they must move (after MapLibre GL JS's symbol placement). A name leaving the screen scrolls away with the sky. Selecting a figure no longer moves other names. In a scripted 120° pan on the real sky, name jumps fell from 155 to 11. Checks for this update are listed in `HANDOFF.md`.
 
 **Update 2026-11-05, name placement:** figure names now sit on their own lines. A name that would overlap another moves across, beside or along its figure instead of disappearing (al-Jawzāʾ had been hidden by al-Haqʿa). Names of figures inside a larger one use the star-name size in a slightly darker blue. Checks today:

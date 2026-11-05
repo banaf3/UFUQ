@@ -500,7 +500,18 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         }
         ctx.setLineDash([]);
 
+        // The compass letters on the horizon, which names keep clear of.
+        const cardinals: { text: string; x: number; y: number }[] = [];
+        if (p.showCardinals)
+          for (const [text, degrees] of CARDINALS) {
+            const screen = toScreen(directionFromAltAz(0.0, degrees * DEG));
+            if (screen) cardinals.push({ text, x: screen[0], y: screen[1] - 14 });
+          }
         const { drawn, hits, fading } = placeLabels({
+          obstacles: cardinals.map(({ text, x, y }): [number, number, number, number] => {
+            const half = text.length * 6;
+            return [x - half, y - 10, x + half, y + 10];
+          }),
           labels: p.labels,
           fov: controller.view.fov,
           width,
@@ -537,14 +548,10 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         ctx.shadowBlur = 0;
         labelHits.current = hits;
 
-        if (p.showCardinals) {
-          ctx.font = '600 15px Inter, ui-sans-serif, system-ui, sans-serif';
-          for (const [text, degrees] of CARDINALS) {
-            const screen = toScreen(directionFromAltAz(0.0, degrees * DEG));
-            if (!screen) continue;
-            ctx.fillStyle = text.length === 1 ? '#9fd8c4' : 'rgba(159, 216, 196, 0.6)';
-            ctx.fillText(text, screen[0], screen[1] - 14);
-          }
+        ctx.font = '600 15px Inter, ui-sans-serif, system-ui, sans-serif';
+        for (const { text, x, y } of cardinals) {
+          ctx.fillStyle = text.length === 1 ? '#9fd8c4' : 'rgba(159, 216, 196, 0.6)';
+          ctx.fillText(text, x, y);
         }
 
         for (const index of p.highlighted ?? []) {
@@ -582,7 +589,8 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
       const fonts = typeof document === 'undefined' ? undefined : document.fonts;
       if (!fonts) return;
       let active = true;
-      const fonts500 = ['500 16px Tajawal', '500 12px Tajawal'];
+      // The 500 weight for every name, 700 for the star the guidance leads to (al-Jady).
+      const fonts500 = ['500 16px Tajawal', '500 12px Tajawal', '700 12px Tajawal'];
       void Promise.all(fonts500.map((font) => fonts.load(font, 'الجدي Al-Jady')))
         .catch(() => undefined)
         .then(() => {

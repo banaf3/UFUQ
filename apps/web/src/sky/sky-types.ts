@@ -71,6 +71,8 @@ export interface SkyLabel {
   readonly direction: Vec3;
   /** Further anchors, best first, tried when every place around `direction` is taken. */
   readonly alternatives?: readonly Vec3[];
+  /** The label is first tried centred on `direction` (the middle of a figure). */
+  readonly centred?: boolean;
   readonly text: string;
   readonly secondary?: string;
   readonly color: string;

@@ -16,6 +16,7 @@
  * So choosing a figure, which ranks its name first, moves no name that still fits, and a
  * name moves only when another name really takes its place.
  *
+ * A centred label (a figure name in the middle of its stars) first tries the middle itself.
  * The places around an anchor are: the label's offset (above a figure, below a star), the
  * mirror place across the anchor, then right and left of it; then the same around each
  * alternative anchor. Pure: the canvas passes in projection and text measurement.
@@ -68,6 +69,8 @@ export interface PlacementInput {
   readonly states: Map<string, LabelState>;
   /** Seconds since the previous frame. */
   readonly dt: number;
+  /** Screen boxes no label may cover (the compass letters on the horizon). */
+  readonly obstacles?: readonly Box[];
 }
 
 export interface PlacementResult {
@@ -105,7 +108,7 @@ export function placeLabels(input: PlacementInput): PlacementResult {
   const { width, height, states } = input;
   const first = states.size === 0;
   const step = (input.dt * 1000) / LABEL_FADE_MS;
-  const placedBoxes: Box[] = [];
+  const placedBoxes: Box[] = [...(input.obstacles ?? [])];
   const drawn: DrawnLabel[] = [];
   const hits: { id: string; box: Box }[] = [];
   const seen = new Set<string>();
@@ -131,6 +134,8 @@ export function placeLabels(input: PlacementInput): PlacementResult {
     const half = textWidth / 2 + PADDING;
     const anchors = [label.direction, ...(label.alternatives ?? [])];
     const spotCount = label.offset ? 4 : 1;
+    // A centred label first tries the middle of its first anchor, then the usual places.
+    const spotsAt = (anchor: number) => (label.centred && anchor === 0 ? spotCount + 1 : spotCount);
     const screens = new Map<number, readonly [number, number] | null>();
     const screenOf = (anchor: number) => {
       if (!screens.has(anchor)) {
@@ -147,12 +152,15 @@ export function placeLabels(input: PlacementInput): PlacementResult {
       const preferred = sy - (label.offset ?? 0);
       const middle = sy - (below - above) / 2;
       const beside = textWidth / 2 + SIDE_GAP;
+      const kind = label.centred && anchor === 0 ? spot - 1 : spot;
       const [x, y] =
-        spot === 0
-          ? [sx, preferred]
-          : spot === 1
-            ? [sx, 2 * sy - preferred - below + above]
-            : [spot === 2 ? sx + beside : sx - beside, middle];
+        kind === -1
+          ? [sx, middle]
+          : kind === 0
+            ? [sx, preferred]
+            : kind === 1
+              ? [sx, 2 * sy - preferred - below + above]
+              : [kind === 2 ? sx + beside : sx - beside, middle];
       return { x, y, box: [x - half, y - above, x + half, y + below] };
     };
     const free = (anchor: number, spot: number, allowed = 0) => {
@@ -187,7 +195,7 @@ export function placeLabels(input: PlacementInput): PlacementResult {
         }
       }
       for (let anchor = 0; !choice && !away && anchor < anchors.length; anchor += 1)
-        for (let spot = 0; !choice && spot < spotCount; spot += 1) {
+        for (let spot = 0; !choice && spot < spotsAt(anchor); spot += 1) {
           const place = free(anchor, spot);
           if (place) choice = { anchor, spot, ...place };
         }

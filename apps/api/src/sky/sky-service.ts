@@ -261,6 +261,15 @@ export class SkyService {
     let arabicNames: SkyArabicNameV2[] = [];
     const arabic = data.arabicSky.value;
     if (arabic && artifactAccepted(data.arabicSky, scope)) {
+      // Guidance figures: those a cited navigation relationship starts or ends at.
+      const guidance = new Set(
+        arabic.relationships.flatMap((relation) =>
+          [relation.from, relation.to].flatMap((end) =>
+            end.kind === 'FIGURE' && end.id ? [end.id] : [],
+          ),
+        ),
+      );
+      const targetHip = arabic.guidanceTarget?.hip ?? null;
       culture = {
         cultureId: arabic.cultureId,
         title: arabic.title,
@@ -287,6 +296,7 @@ export class SkyService {
             .map(indexForHip)
             .filter((index): index is number => index !== undefined),
           evidence: figure.evidence as SkyEvidenceV2,
+          guidance: guidance.has(figure.figureId),
           about: figure.about,
           references: references(figure.aboutSources, figure.compilationEntry !== 'SYNTHETIC'),
           notes: figure.notes.map(cited),
@@ -308,6 +318,7 @@ export class SkyService {
                   transliteration: name.transliteration,
                 })),
                 labelOnSky: star.labelOnSky,
+                guidanceTarget: star.hip === targetHip,
                 evidence: star.evidence as SkyEvidenceV2,
                 about: star.about,
                 references: references(

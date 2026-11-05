@@ -11956,6 +11956,12 @@
       ]
     }
   ],
+  "guidanceTarget": {
+    "hip": 11767,
+    "statement": "By al-Jady the qibla is known and the way is found, because it does not move. UFUQ lesson routes lead to al-Jady, then to True North and the qibla (project decision).",
+    "sourceId": "IBN-QUTAYBA-ANWA",
+    "locator": "§170 (local text L3102-3103)"
+  },
   "relationships": [
     {
       "relationshipId": "anwa-rel-farqadan-jady",
