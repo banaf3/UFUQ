@@ -2,6 +2,29 @@
 
 **Assessment date:** 2026-11-05 (Arabic sky culture in the explorer); 2026-11-02 for Phase 1 implementation, the Phase 2 vertical slice and Phase 3 adaptive tutoring; earlier sections keep their own dates.
 
+**Update 2026-11-15, navigation lessons, report-based BKT, the Qibla, accounts and MySQL
+(Phase 4, `PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`):**
+
+- **Lessons:** a taught walkthrough flies from figure to figure (van Wijk and Nuij camera
+  paths) and traces the lines to al-Jady, True North and the Qibla. A four-step assessment
+  follows.
+- **Adaptive support:** the real learning configuration is now `ADAPTIVE` with the
+  report's values (Table 3-14, 0.85, Table 2-5). Support goes from lines without names to
+  no lines as mastery passes 0.85, and is restored after errors.
+- **The Qibla:** a spherical bearing to the Kaaba (OSM candidate, `REVIEW_REQUIRED`): 292°
+  07′ 15″ at UMPSA Pekan, with an independent oracle. The owner chose a 15° tolerance.
+- **Accounts and storage:** MySQL 8.4 with the report's tables, accounts with lockout,
+  the learner dashboard, administrator analytics and the system log.
+- **Checks today:**
+  - `npm run check` passed;
+  - unit tests 303 of 304 (the `ufuq-reference` folder);
+  - `test:reference` 157 of 157;
+  - `test:integration` 7 of 7 on real MySQL;
+  - e2e 9 of 9;
+  - data and BKT evidence byte-identical.
+
+The rubric map for PSM 2 EV1 is `PSM2_EV1_READINESS.md`.
+
 **Update 2026-11-05, centred names and card navigation:**
 
 - Figure names are centred in their figures, unless the middle belongs to another figure.

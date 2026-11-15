@@ -58,15 +58,45 @@ export interface SkyPattern {
   readonly review: ContentReview;
 }
 
+/**
+ * A geodetic destination for a Qibla direction (AST-005). The coordinate is a sourced
+ * candidate until a named reviewer approves it; it is never taken from a historical map,
+ * table or mosque orientation.
+ */
+export interface QiblaDestination {
+  readonly destinationId: string;
+  readonly label: string;
+  readonly latitudeDegrees: number;
+  /** East-positive. */
+  readonly longitudeDegrees: number;
+  readonly datum: 'WGS84';
+  /** Half the largest extent of the destination footprint (m), as the source gives it. */
+  readonly footprintRadiusMetres: number;
+  readonly source: SourceCitation;
+  readonly crossChecks: readonly SourceCitation[];
+}
+
+export type DirectionDefinition =
+  | {
+      readonly kind: 'TERRESTRIAL_TRUE_NORTH';
+      /** North-zero, east-positive azimuth of the target direction (rad). */
+      readonly azimuthRadians: 0;
+    }
+  | {
+      /**
+       * The Qibla as the initial great-circle bearing on a sphere from the observer to the
+       * destination, clockwise from True North (the report's NFR-2 spherical trigonometry;
+       * the azimuth is computed per observer by the server).
+       */
+      readonly kind: 'QIBLA_SPHERICAL_INITIAL_BEARING';
+      readonly destination: QiblaDestination;
+    };
+
 export interface DirectionTarget {
   readonly stableId: string;
   readonly contentVersion: string;
   readonly labels: readonly CulturalLabel[];
-  readonly definition: {
-    readonly kind: 'TERRESTRIAL_TRUE_NORTH';
-    /** North-zero, east-positive azimuth of the target direction (rad). */
-    readonly azimuthRadians: 0;
-  };
+  readonly definition: DirectionDefinition;
   /**
    * Learner answer tolerance for this direction (IMP-012). Null until approved: the answer
    * is then measured, never graded. Synthetic content may carry a synthetic policy.
@@ -79,6 +109,12 @@ export interface DirectionTolerancePolicyRecord {
   readonly policyId: string;
   /** Inclusive maximum wrapped azimuth difference (rad), in (0, pi]. */
   readonly maximumDifferenceRadians: number;
+  /**
+   * Who chose the value: the project owner (a recorded owner decision, still subject to
+   * the record's review), a named reviewer through an approved record, or a synthetic
+   * technical fixture. An agent never fills this.
+   */
+  readonly decidedBy: 'PROJECT_OWNER' | 'NAMED_REVIEWER' | 'SYNTHETIC_TECHNICAL';
   readonly approvalReference: string;
 }
 
@@ -97,7 +133,12 @@ export type GuidanceInstruction =
       readonly throughStarId: string;
       readonly toStarId: string;
     }
-  | { readonly kind: 'VERTICAL_TO_HORIZON'; readonly fromStarId: string };
+  | { readonly kind: 'VERTICAL_TO_HORIZON'; readonly fromStarId: string }
+  /**
+   * From the horizon point below the star (True North), turn along the horizon to the
+   * target direction's azimuth.
+   */
+  | { readonly kind: 'HORIZON_TURN_FROM_NORTH'; readonly fromStarId: string };
 
 /** Retained for the Phase 0 generic interface. */
 export interface InstructionalLineOrVector {
@@ -160,6 +201,30 @@ export interface LessonRouteStep {
   readonly retryFeedback: string;
 }
 
+/**
+ * What one walkthrough frame shows. Culture records come from the Arabic sky culture
+ * artifact, which supplies their cited card text; content records come from this artifact.
+ */
+export type WalkthroughFocus =
+  | { readonly kind: 'PATTERN'; readonly patternId: string }
+  | { readonly kind: 'CULTURE_FIGURE'; readonly figureId: string }
+  | { readonly kind: 'CULTURE_STAR'; readonly hip: number }
+  | { readonly kind: 'RELATIONSHIP'; readonly relationshipId: string }
+  | { readonly kind: 'DIRECTION'; readonly directionId: string };
+
+/**
+ * One step of the taught walkthrough that precedes assessment (report storyboard figure
+ * 3-5): the camera moves to the focus, its lines and names are drawn, and the frame's
+ * teaching instruction is shown with the focus record's cited text. Frames whose focus
+ * is below the horizon in the scenario are skipped.
+ */
+export interface WalkthroughFrame {
+  readonly frameId: string;
+  readonly focus: WalkthroughFocus;
+  /** UFUQ's own teaching instruction (MODERN_PEDAGOGICAL), plain English. */
+  readonly instruction: string;
+}
+
 export interface LessonRoute {
   readonly stableId: string;
   readonly routeVersion: string;
@@ -167,6 +232,8 @@ export interface LessonRoute {
   /** Lower number is preferred when several routes are eligible (data, not code). */
   readonly selectionPriority: number;
   readonly requiredStarIds: readonly string[];
+  /** The taught walkthrough shown before the assessment steps. */
+  readonly walkthrough: readonly WalkthroughFrame[];
   readonly steps: readonly LessonRouteStep[];
   readonly allowedAlternativeRouteIds: readonly string[];
   readonly review: ContentReview;
@@ -204,6 +271,14 @@ const FORBIDDEN_CASSIOPEIA_LABELS = ['Kursī al-Jawzāʾ', 'Kursi al-Jawza'];
 export function validateLessonContent(
   content: LessonContentPayload,
   availableStarIds: ReadonlySet<string>,
+  /**
+   * The sky culture's figure ids and named-star HIP numbers, for walkthrough frames; null
+   * when no culture is available here (frames that use it are then skipped at runtime).
+   */
+  culture: {
+    readonly figureIds: ReadonlySet<string>;
+    readonly starHips: ReadonlySet<number>;
+  } | null = { figureIds: new Set(), starHips: new Set() },
 ): string[] {
   const errors: string[] = [];
   const unique = (ids: readonly string[], label: string) => {
@@ -319,6 +394,12 @@ export function validateLessonContent(
         : instruction.kind === 'POINTER_EXTENSION'
           ? [instruction.fromStarId, instruction.throughStarId, instruction.toStarId]
           : [instruction.fromStarId];
+    if (
+      instruction.kind === 'HORIZON_TURN_FROM_NORTH' &&
+      relationship.target.kind !== 'direction'
+    ) {
+      errors.push(`${relationship.stableId} turns along the horizon but has no direction target.`);
+    }
     for (const starId of starIds) {
       if (!availableStarIds.has(starId))
         errors.push(`${relationship.stableId} instruction star ${starId} has no row.`);
@@ -368,6 +449,25 @@ export function validateLessonContent(
         if (!relationship) errors.push(`${route.stableId}/${step.stepId} relationship is missing.`);
       }
     }
+    unique(
+      route.walkthrough.map((frame) => frame.frameId),
+      `${route.stableId} walkthrough frame`,
+    );
+    for (const frame of route.walkthrough) {
+      const focus = frame.focus;
+      const label = `${route.stableId}/${frame.frameId}`;
+      if (focus.kind === 'PATTERN' && !patterns.has(focus.patternId))
+        errors.push(`${label} names an unknown pattern.`);
+      if (focus.kind === 'RELATIONSHIP' && !relationships.has(focus.relationshipId))
+        errors.push(`${label} names an unknown relationship.`);
+      if (focus.kind === 'DIRECTION' && !directions.has(focus.directionId))
+        errors.push(`${label} names an unknown direction.`);
+      if (focus.kind === 'CULTURE_FIGURE' && culture && !culture.figureIds.has(focus.figureId))
+        errors.push(`${label} names a figure missing from the sky culture.`);
+      if (focus.kind === 'CULTURE_STAR' && culture && !culture.starHips.has(focus.hip))
+        errors.push(`${label} names a star missing from the sky culture.`);
+      if (frame.instruction.trim().length === 0) errors.push(`${label} has no instruction.`);
+    }
     for (const alternative of route.allowedAlternativeRouteIds) {
       if (!routes.has(alternative) || alternative === route.stableId) {
         errors.push(`${route.stableId} alternative ${alternative} is not another known route.`);
@@ -376,6 +476,23 @@ export function validateLessonContent(
   }
 
   for (const direction of content.directions) {
+    const definition = direction.definition;
+    if (definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING') {
+      const destination = definition.destination;
+      if (
+        !Number.isFinite(destination.latitudeDegrees) ||
+        Math.abs(destination.latitudeDegrees) > 90 ||
+        !Number.isFinite(destination.longitudeDegrees) ||
+        destination.longitudeDegrees <= -180 ||
+        destination.longitudeDegrees > 180
+      ) {
+        errors.push(`${direction.stableId} destination coordinate is out of range.`);
+      }
+      if (!(destination.footprintRadiusMetres > 0))
+        errors.push(`${direction.stableId} destination footprint must be positive.`);
+      if (!destination.source.sourceId || !destination.source.locator)
+        errors.push(`${direction.stableId} destination coordinate is uncited (AST-005).`);
+    }
     const tolerance = direction.learnerTolerance;
     if (tolerance === null) continue;
     if (
@@ -390,9 +507,16 @@ export function validateLessonContent(
         `${direction.stableId} learner tolerance lacks an identifier or approval reference.`,
       );
     }
-    if (!synthetic && direction.review.state !== 'APPROVED') {
+    if (synthetic !== (tolerance.decidedBy === 'SYNTHETIC_TECHNICAL')) {
+      errors.push(`${direction.stableId} tolerance decision kind does not match the scope.`);
+    }
+    if (
+      !synthetic &&
+      tolerance.decidedBy === 'NAMED_REVIEWER' &&
+      direction.review.state !== 'APPROVED'
+    ) {
       errors.push(
-        `${direction.stableId} carries a learner tolerance without approved review (IMP-012).`,
+        `${direction.stableId} carries a reviewer tolerance without approved review (IMP-012).`,
       );
     }
   }

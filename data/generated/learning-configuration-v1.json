@@ -14,33 +14,93 @@
       "guess": 0.2,
       "initialMastery": 0.2,
       "learn": 0.1,
-      "parameterSetId": "report-example-bkt",
+      "parameterSetId": "report-table-3-14",
       "parameterSetVersion": "1",
       "slip": 0.1,
       "status": "REPORT_EXAMPLE_NOT_CALIBRATED"
     },
     "configurationScope": "SCIENTIFIC_PROFILE_V1",
-    "configurationVersion": "1",
+    "configurationVersion": "2",
     "cueConfiguration": {
-      "configurationId": "phase2-fixed-presentation",
+      "configurationId": "report-storyboard-cues",
       "configurationVersion": "1",
       "cues": {
-        "KC-01": [],
-        "KC-02": [],
-        "KC-03": [
-          "SOURCE_PATTERN_OUTLINE",
-          "GUIDE_LINE_FULL"
-        ],
-        "KC-04": [
-          "SOURCE_STAR_LABEL",
-          "GUIDE_LINE_FULL"
-        ],
-        "KC-05": []
+        "KC-01": {
+          "FADING": [
+            "FIGURE_LINES"
+          ],
+          "GUIDED": [
+            "FIGURE_LINES",
+            "FIGURE_NAMES",
+            "TARGET_OUTLINE",
+            "SHAPE_HINT_TEXT",
+            "CARDINAL_MARKS"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-02": {
+          "FADING": [
+            "FIGURE_LINES"
+          ],
+          "GUIDED": [
+            "FIGURE_LINES",
+            "FIGURE_NAMES",
+            "TARGET_OUTLINE",
+            "SHAPE_HINT_TEXT",
+            "CARDINAL_MARKS"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-03": {
+          "FADING": [
+            "FIGURE_LINES"
+          ],
+          "GUIDED": [
+            "FIGURE_LINES",
+            "FIGURE_NAMES",
+            "SOURCE_PATTERN_OUTLINE",
+            "GUIDE_LINE_FULL",
+            "CARDINAL_MARKS"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-04": {
+          "FADING": [
+            "FIGURE_LINES"
+          ],
+          "GUIDED": [
+            "FIGURE_LINES",
+            "FIGURE_NAMES",
+            "SOURCE_STAR_LABEL",
+            "GUIDE_LINE_FULL",
+            "CARDINAL_MARKS"
+          ],
+          "INDEPENDENT": []
+        },
+        "KC-05": {
+          "FADING": [
+            "FIGURE_LINES",
+            "QIBLA_BEARING_TEXT"
+          ],
+          "GUIDED": [
+            "FIGURE_LINES",
+            "FIGURE_NAMES",
+            "CARDINAL_MARKS",
+            "QIBLA_ARC_FULL",
+            "QIBLA_BEARING_TEXT"
+          ],
+          "INDEPENDENT": []
+        }
       },
-      "kind": "NON_ADAPTIVE_FIXED",
+      "kind": "ADAPTIVE",
       "status": "REVIEW_REQUIRED"
     },
-    "independentConfirmation": null,
+    "independentConfirmation": {
+      "policyId": "report-repeated-independent-correct",
+      "policyVersion": "1",
+      "requiredConsecutiveIndependentCorrect": 2,
+      "status": "REVIEW_REQUIRED"
+    },
     "knowledgeComponents": [
       {
         "id": "KC-01",
@@ -63,32 +123,147 @@
         "name": "Derive Qibla from True North"
       }
     ],
-    "masteryThreshold": null,
-    "observationPolicy": null,
-    "scaffoldPolicy": null,
-    "unresolved": [
-      {
-        "decisionId": "BKT-003",
-        "field": "masteryThreshold",
-        "note": "The report example threshold is .85; its boundary rule, learner wording and rounding, and its relation to independent confirmation are unresolved."
-      },
-      {
-        "decisionId": "BKT-003",
-        "field": "independentConfirmation",
-        "note": "The immediate independent-success count, spacing, reset and expiry are unresolved."
-      },
-      {
-        "decisionId": "BKT-001",
-        "field": "observationPolicy",
-        "note": "The assisted-evidence option (DEV-006); invalid, no-response, timeout, abandonment, retry and duplicate handling; and session-purpose eligibility (BKT-005) are unresolved."
-      },
-      {
-        "decisionId": "BKT-004",
-        "field": "scaffoldPolicy",
-        "note": "The initial scaffold, fade and restore rules, history window, reason codes and learner-facing explanations are unresolved."
+    "masteryThreshold": {
+      "comparison": "AT_OR_ABOVE",
+      "policyId": "report-threshold-0-85",
+      "policyVersion": "1",
+      "status": "REVIEW_REQUIRED",
+      "threshold": 0.85
+    },
+    "observationPolicy": {
+      "policyId": "report-update-every-attempt",
+      "policyVersion": "1",
+      "rules": [
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "EVALUATION_SESSION_ISOLATED",
+          "ruleId": "report-evaluation-isolated",
+          "when": {
+            "purposes": [
+              "PRE_TEST",
+              "POST_TEST",
+              "RECALL"
+            ]
+          }
+        },
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "NO_SCORABLE_RESPONSE",
+          "ruleId": "report-no-scorable-response",
+          "when": {
+            "responses": [
+              "NO_RESPONSE",
+              "TIMEOUT",
+              "ABANDONED",
+              "INVALID"
+            ]
+          }
+        },
+        {
+          "decision": "NO_MODEL_UPDATE",
+          "reasonCode": "NO_BINARY_EVIDENCE",
+          "ruleId": "report-no-binary-result",
+          "when": {
+            "responses": [
+              "SCORED_UNCLASSIFIED"
+            ]
+          }
+        },
+        {
+          "decision": "OBSERVATION_FROM_SCORE",
+          "reasonCode": "REPORT_UPDATE_AFTER_EVERY_ATTEMPT",
+          "ruleId": "report-every-scored-attempt",
+          "when": {}
+        }
+      ],
+      "status": "REVIEW_REQUIRED"
+    },
+    "scaffoldPolicy": {
+      "historyWindow": 1,
+      "initialState": "FADING",
+      "policyId": "report-table-2-5",
+      "policyVersion": "1",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "TRAILING_FIRST_ATTEMPT_CORRECT_AT_LEAST",
+              "scaffoldStates": [
+                "FADING"
+              ]
+            },
+            {
+              "kind": "MASTERY_AT_LEAST",
+              "value": 0.85
+            }
+          ],
+          "from": "FADING",
+          "reasonCode": "REDUCE_SUPPORT_AT_THRESHOLD",
+          "ruleId": "fading-to-independent-at-threshold",
+          "to": "INDEPENDENT"
+        },
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "INCORRECT_IN_WINDOW_AT_LEAST"
+            },
+            {
+              "kind": "MASTERY_BELOW",
+              "value": 0.85
+            }
+          ],
+          "from": "FADING",
+          "reasonCode": "RESTORE_GUIDANCE_BELOW_THRESHOLD",
+          "ruleId": "fading-to-guided-after-error",
+          "to": "GUIDED"
+        },
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "TRAILING_FIRST_ATTEMPT_CORRECT_AT_LEAST",
+              "scaffoldStates": [
+                "GUIDED"
+              ]
+            },
+            {
+              "kind": "MASTERY_AT_LEAST",
+              "value": 0.85
+            }
+          ],
+          "from": "GUIDED",
+          "reasonCode": "REDUCE_SUPPORT_AT_THRESHOLD",
+          "ruleId": "guided-to-fading-at-threshold",
+          "to": "FADING"
+        },
+        {
+          "conditions": [
+            {
+              "count": 1,
+              "kind": "INCORRECT_IN_WINDOW_AT_LEAST"
+            },
+            {
+              "kind": "MASTERY_BELOW",
+              "value": 0.85
+            }
+          ],
+          "from": "INDEPENDENT",
+          "reasonCode": "RESTORE_LINES_BELOW_THRESHOLD",
+          "ruleId": "independent-to-fading-below-threshold",
+          "to": "FADING"
+        }
+      ],
+      "status": "REVIEW_REQUIRED",
+      "unchangedReasonCodes": {
+        "FADING": "MAINTAIN_LINES_BELOW_THRESHOLD",
+        "GUIDED": "MAINTAIN_GUIDANCE_BELOW_THRESHOLD",
+        "INDEPENDENT": "MAINTAIN_INDEPENDENT_AT_THRESHOLD"
       }
-    ]
+    },
+    "unresolved": []
   },
-  "payloadSha256": "1d796ce2f3e11a41130d7d5355ecc26136fd61e4faaf9c2f5d36f1ca89bf2971",
+  "payloadSha256": "d15f2b06fe349c0cac7dae5273cfabb79a894de72cad5bfb1dfc2a81e9731d36",
   "schemaVersion": 1
 }

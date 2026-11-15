@@ -5,7 +5,7 @@
   "directions": [
     {
       "stableId": "direction-true-north",
-      "contentVersion": "1",
+      "contentVersion": "2",
       "labels": [
         {
           "languageTag": "en",
@@ -22,12 +22,82 @@
           ]
         }
       ],
-      "definition": { "kind": "TERRESTRIAL_TRUE_NORTH", "azimuthRadians": 0 },
-      "learnerTolerance": null,
+      "definition": {
+        "kind": "TERRESTRIAL_TRUE_NORTH",
+        "azimuthRadians": 0
+      },
+      "learnerTolerance": {
+        "policyId": "owner-direction-tolerance-15deg",
+        "maximumDifferenceRadians": 0.2617993877991494,
+        "decidedBy": "PROJECT_OWNER",
+        "approvalReference": "Owner decision 2026-11-15 (chat): a True North or Qibla answer within 15 degrees counts as correct (IMP-012)."
+      },
       "review": {
         "state": "REVIEW_REQUIRED",
         "scope": "SCIENTIFIC_PROFILE_V1",
         "requiredReviewKinds": ["EDUCATIONAL"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "direction-qibla",
+      "contentVersion": "1",
+      "labels": [
+        {
+          "languageTag": "ar",
+          "script": "القبلة",
+          "transliteration": "al-Qibla",
+          "gloss": "the direction of the Kaaba in Makkah, faced in prayer",
+          "layer": "MODERN_ASTRONOMICAL",
+          "citations": [
+            {
+              "sourceId": "UFUQ-REPORT",
+              "locator": "section 1.1 and NFR-2",
+              "supports": "the Qibla as the direction derived from True North by spherical trigonometry"
+            }
+          ]
+        }
+      ],
+      "definition": {
+        "kind": "QIBLA_SPHERICAL_INITIAL_BEARING",
+        "destination": {
+          "destinationId": "kaaba-osm-way-103914569",
+          "label": "The Kaaba, Makkah",
+          "latitudeDegrees": 21.4225079,
+          "longitudeDegrees": 39.826189,
+          "datum": "WGS84",
+          "footprintRadiusMetres": 8,
+          "source": {
+            "sourceId": "OSM-NOMINATIM",
+            "locator": "OpenStreetMap way 103914569 (\"الكعبة\"), Nominatim centroid 21.4225079, 39.8261890, bounding box 21.4224468-21.4225861 N, 39.8261095-39.8262546 E, accessed 2026-11-15",
+            "supports": "the destination point; data (c) OpenStreetMap contributors, ODbL 1.0"
+          },
+          "crossChecks": [
+            {
+              "sourceId": "WIKIPEDIA-KAABA",
+              "locator": "article Kaaba, coordinates 21 25 21 N, 39 49 34 E (accessed 2026-11-15)",
+              "supports": "agrees within about 2 m"
+            },
+            {
+              "sourceId": "MUFTI-WP-FALAK",
+              "locator": "Jabatan Mufti Wilayah Persekutuan, Soalan lazim falak: Kiblat (accessed 2026-11-15)",
+              "supports": "Qibla azimuths used in Malaysia lie between 291 and 293 degrees"
+            }
+          ]
+        }
+      },
+      "learnerTolerance": {
+        "policyId": "owner-direction-tolerance-15deg",
+        "maximumDifferenceRadians": 0.2617993877991494,
+        "decidedBy": "PROJECT_OWNER",
+        "approvalReference": "Owner decision 2026-11-15 (chat): a True North or Qibla answer within 15 degrees counts as correct (IMP-012)."
+      },
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL", "SCIENTIFIC"],
         "reviewer": null,
         "decisionDate": null,
         "decisionReference": null
@@ -38,8 +108,14 @@
     {
       "stableId": "guide-kaff-to-jady",
       "relationshipVersion": "1",
-      "source": { "kind": "pattern", "stableId": "pattern-al-kaff-al-khadib" },
-      "target": { "kind": "pattern", "stableId": "pattern-al-jady" },
+      "source": {
+        "kind": "pattern",
+        "stableId": "pattern-al-kaff-al-khadib"
+      },
+      "target": {
+        "kind": "pattern",
+        "stableId": "pattern-al-jady"
+      },
       "relationshipType": "LEADS_TO_TARGET_STAR",
       "instruction": {
         "kind": "GREAT_CIRCLE_ARC",
@@ -68,8 +144,14 @@
     {
       "stableId": "guide-banat-to-jady",
       "relationshipVersion": "1",
-      "source": { "kind": "pattern", "stableId": "pattern-banat-nash-al-kubra" },
-      "target": { "kind": "pattern", "stableId": "pattern-al-jady" },
+      "source": {
+        "kind": "pattern",
+        "stableId": "pattern-banat-nash-al-kubra"
+      },
+      "target": {
+        "kind": "pattern",
+        "stableId": "pattern-al-jady"
+      },
       "relationshipType": "LEADS_TO_TARGET_STAR",
       "instruction": {
         "kind": "POINTER_EXTENSION",
@@ -99,10 +181,19 @@
     {
       "stableId": "guide-jady-to-true-north",
       "relationshipVersion": "1",
-      "source": { "kind": "pattern", "stableId": "pattern-al-jady" },
-      "target": { "kind": "direction", "stableId": "direction-true-north" },
+      "source": {
+        "kind": "pattern",
+        "stableId": "pattern-al-jady"
+      },
+      "target": {
+        "kind": "direction",
+        "stableId": "direction-true-north"
+      },
       "relationshipType": "LEADS_TO_DIRECTION",
-      "instruction": { "kind": "VERTICAL_TO_HORIZON", "fromStarId": "ufuq-star-006" },
+      "instruction": {
+        "kind": "VERTICAL_TO_HORIZON",
+        "fromStarId": "ufuq-star-006"
+      },
       "layer": "MODERN_ASTRONOMICAL",
       "explanation": "al-Jady lies close to the north celestial pole, so the point on the horizon directly below it is close to True North. al-Jady is a star cue; True North is a direction on the ground, and they are not the same thing.",
       "historicalContext": {
@@ -121,6 +212,51 @@
           "sourceId": "UFUQ-ASTRO-SPEC",
           "locator": "ADR-003: Polaris remains a star cue distinct from terrestrial True North",
           "supports": "the cue/target distinction"
+        }
+      ],
+      "review": {
+        "state": "REVIEW_REQUIRED",
+        "scope": "SCIENTIFIC_PROFILE_V1",
+        "requiredReviewKinds": ["EDUCATIONAL", "SCIENTIFIC"],
+        "reviewer": null,
+        "decisionDate": null,
+        "decisionReference": null
+      }
+    },
+    {
+      "stableId": "guide-north-to-qibla",
+      "relationshipVersion": "1",
+      "source": {
+        "kind": "pattern",
+        "stableId": "pattern-al-jady"
+      },
+      "target": {
+        "kind": "direction",
+        "stableId": "direction-qibla"
+      },
+      "relationshipType": "LEADS_TO_DIRECTION",
+      "instruction": {
+        "kind": "HORIZON_TURN_FROM_NORTH",
+        "fromStarId": "ufuq-star-006"
+      },
+      "layer": "MODERN_ASTRONOMICAL",
+      "explanation": "Stand facing True North, the point on the horizon below al-Jady. The Qibla is the shortest way over the Earth to the Kaaba. From this place it is a fixed angle clockwise from True North: turn that many degrees through east, south and west, or equally turn the rest of the way back from north towards the west.",
+      "historicalContext": {
+        "text": "Arabic anwa writers tied the qibla to al-Jady for their own lands, for example al-Jady against the right shoulder in Iraq. Such rules belong to their place; away from it the angle must be computed for the observer.",
+        "layer": "HISTORICAL_CONTEXT_ONLY",
+        "citations": [
+          {
+            "sourceId": "IBN-QUTAYBA-ANWA",
+            "locator": "section 218 (local text)",
+            "supports": "a historical, region-specific qibla rule (Iraq)"
+          }
+        ]
+      },
+      "citations": [
+        {
+          "sourceId": "UFUQ-REPORT",
+          "locator": "NFR-2; storyboard figure 3-5 (Qibla derivation line)",
+          "supports": "deriving the Qibla bearing from True North by spherical trigonometry"
         }
       ],
       "review": {

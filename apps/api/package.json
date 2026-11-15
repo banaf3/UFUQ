@@ -21,6 +21,7 @@
     "@ufuq/catalogue-schema": "0.0.0",
     "@ufuq/contracts": "0.0.0",
     "@ufuq/tutoring-core": "0.0.0",
-    "express": "5.2.1"
+    "express": "5.2.1",
+    "mysql2": "3.24.6"
   }
 }

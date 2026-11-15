@@ -420,19 +420,6 @@ export interface LoadedDataset {
 export function loadDataset(directory: string, files: DatasetFiles): LoadedDataset {
   const path = (name: string) => join(directory, name);
   const stars = mapped(loadEnvelope(path(files.stars), 'UFUQ_ROUTE_STAR_ASTROMETRY'), mapStars);
-  const content = mapped(loadEnvelope(path(files.content), 'UFUQ_LESSON_CONTENT'), (envelope) => {
-    const payload = envelope.payload as LessonContentPayload;
-    const starIds = new Set(stars.value?.keys() ?? []);
-    const errors = validateLessonContent(payload, starIds);
-    if (errors.length > 0) throw new TypeError(errors.join(' '));
-    if (
-      stars.payloadSha256 !== null &&
-      payload.starArtifact.payloadSha256 !== stars.payloadSha256
-    ) {
-      throw new TypeError('Lesson content was generated against a different star artifact.');
-    }
-    return payload;
-  });
   const skyField = mapped(
     loadEnvelope(path(files.skyField), 'UFUQ_SKY_DISPLAY_FIELD'),
     mapSkyField,
@@ -469,6 +456,25 @@ export function loadDataset(directory: string, files: DatasetFiles): LoadedDatas
       return payload;
     },
   );
+  const content = mapped(loadEnvelope(path(files.content), 'UFUQ_LESSON_CONTENT'), (envelope) => {
+    const payload = envelope.payload as LessonContentPayload;
+    const starIds = new Set(stars.value?.keys() ?? []);
+    const culture = arabicSky.value
+      ? {
+          figureIds: new Set(arabicSky.value.figures.map((figure) => figure.figureId)),
+          starHips: new Set(arabicSky.value.stars.map((star) => star.hip)),
+        }
+      : null;
+    const errors = validateLessonContent(payload, starIds, culture);
+    if (errors.length > 0) throw new TypeError(errors.join(' '));
+    if (
+      stars.payloadSha256 !== null &&
+      payload.starArtifact.payloadSha256 !== stars.payloadSha256
+    ) {
+      throw new TypeError('Lesson content was generated against a different star artifact.');
+    }
+    return payload;
+  });
   const routeStarByHip = new Map<number, string>();
   for (const star of stars.value?.values() ?? []) {
     const hip = /:HIP (\d+)$/.exec(star.sourceRecordId)?.[1];

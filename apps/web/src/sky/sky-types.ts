@@ -19,6 +19,27 @@ export interface SkyLine {
    * drawn radius plus a margin (overrides trim).
    */
   readonly endMagnitudes?: readonly [number, number];
+  /**
+   * Draws the line progressively from its first point: performance.now() when drawing
+   * starts and how long it takes (lesson walkthroughs trace from one figure to the next).
+   */
+  readonly drawFrom?: number;
+  readonly drawMs?: number;
+}
+
+/** The part of a polyline drawn after a fraction of its time (by point count, then lerp). */
+export function partialPoints(points: readonly Vec3[], fraction: number): Vec3[] {
+  if (fraction >= 1 || points.length < 2) return [...points];
+  if (fraction <= 0) return points.slice(0, 1);
+  const position = fraction * (points.length - 1);
+  const whole = Math.floor(position);
+  const a = points[whole] as Vec3;
+  const b = points[whole + 1] as Vec3;
+  const t = position - whole;
+  return [
+    ...points.slice(0, whole + 1),
+    [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t],
+  ];
 }
 
 /** The pixel size in a canvas font string such as "500 16px Tajawal" (14 if absent). */

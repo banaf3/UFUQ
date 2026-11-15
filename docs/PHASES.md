@@ -343,6 +343,14 @@ semantics, sensitivity evidence, and local E2E journeys pass without participant
 
 ## Phase 4: persistence and authentication
 
+**State (2026-11-15):** implemented, pending review (`PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`):
+MySQL 8.4 schema and migrations, the locked attempt transaction, accounts with sessions
+and lockout, the progress dashboard, read-only analytics and the system log. The
+integration suite is active. Not yet built: replay of matching retries (request
+fingerprints). The owner also asked for the taught walkthrough, the Qibla step and the
+report-based adaptive configuration in the same increment (IMP-014, IMP-023, IMP-024).
+ExecPlan: `.agent/execplans/phase-04-navigation-lessons-accounts.md`.
+
 **Goal:** make attempts/mastery durable and introduce secure learner/admin identity
 boundaries.
 

@@ -1,5 +1,10 @@
 # Phase 3: assessments and BKT adaptation
 
+> **2026-11-15:** on the owner's instruction the real configuration now uses the report's
+> values and rules and is `ADAPTIVE` (still `REVIEW_REQUIRED`). See
+> `PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`; the `NON_ADAPTIVE` description below is the
+> 2026-11-02 state.
+
 **Outcome (2026-11-02):** `ADAPTIVE_TUTORING_IMPLEMENTED_PENDING_APPROVAL`. The pure BKT,
 observation-semantics and adaptive-policy modules, the typed decision records, issued cue
 snapshots, a new assessment type, deterministic traces, an exact-rational reference

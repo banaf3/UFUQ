@@ -2,12 +2,12 @@
   "curationType": "UFUQ_LESSON_ROUTE_CURATION",
   "schemaVersion": 1,
   "note": "Routes are selected by the server from data: a route is eligible only when every required star has a valid pending-or-approved geometric direction that is not below the geometric horizon. Priority encodes the owner's route preference (2D.1C D-2); no pattern is hard-coded as the entry point.",
-  "knowledgeComponentMappingNote": "Each step credits one primary knowledge component (TUTORING_BKT_SPEC.md: one scored task, one KC). PROPOSED for EDU-002 review with the route: Banat Na'sh to KC-01; Dhat al-Kursi (Cassiopeia; also al-Kaff al-Khadib, recorded in the same pattern record), to KC-02; al-Jady to KC-03; True North to KC-04. KC-05 (Qibla) has no task yet.",
+  "knowledgeComponentMappingNote": "Each step credits one primary knowledge component (TUTORING_BKT_SPEC.md: one scored task, one KC). PROPOSED for EDU-002 review with the route: Banat Na'sh to KC-01; Dhat al-Kursi (Cassiopeia; also al-Kaff al-Khadib, recorded in the same pattern record), to KC-02; al-Jady to KC-03; True North to KC-04. Qibla to KC-05 (step 4, owner request of 2026-11-15).",
   "routes": [
     {
       "stableId": "route-kaff-to-jady-to-north",
-      "routeVersion": "1",
-      "title": "From Dhāt al-Kursī to al-Jady to True North",
+      "routeVersion": "2",
+      "title": "From Dhāt al-Kursī to al-Jady to True North and the Qibla",
       "selectionPriority": 1,
       "requiredStarIds": [
         "ufuq-star-001",
@@ -17,6 +17,56 @@
         "ufuq-star-005",
         "ufuq-star-006"
       ],
+      "walkthrough": [
+        {
+          "frameId": "frame-dhat-al-kursi",
+          "focus": {
+            "kind": "CULTURE_FIGURE",
+            "figureId": "anwa-al-kaff-al-khadib"
+          },
+          "instruction": "Start in the north with Dhāt al-Kursī: five bright stars in a W or M. Learn its shape first; it is your way in to al-Jady."
+        },
+        {
+          "frameId": "frame-kawkaba-al-firq",
+          "focus": {
+            "kind": "CULTURE_FIGURE",
+            "figureId": "anwa-kawkaba-al-firq"
+          },
+          "instruction": "Next to it is Kawkabā al-Firq. Its bright star, al-Abyaḍ, is one of the stars the anwāʾ writers say lead the eye to al-Jady."
+        },
+        {
+          "frameId": "frame-guide-to-jady",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-kaff-to-jady"
+          },
+          "instruction": "Now trace from the middle star of Dhāt al-Kursī towards the pole. Follow the line until you reach al-Jady. The line is a UFUQ teaching aid, not a historical figure."
+        },
+        {
+          "frameId": "frame-al-jady",
+          "focus": {
+            "kind": "CULTURE_STAR",
+            "hip": 11767
+          },
+          "instruction": "This is al-Jady. Learn its place well: every route in UFUQ ends here, and from it you find True North."
+        },
+        {
+          "frameId": "frame-true-north",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-jady-to-true-north"
+          },
+          "instruction": "Drop straight down from al-Jady to the horizon. That point on the ground is True North. al-Jady is the star; True North is the direction below it."
+        },
+        {
+          "frameId": "frame-qibla",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-north-to-qibla"
+          },
+          "instruction": "Face True North, then turn clockwise along the horizon by the Qibla bearing of this place. The arc shows the turn; the end of the arc is the Qibla."
+        }
+      ],
       "steps": [
         {
           "stepId": "step-1-find-helper",
@@ -25,7 +75,7 @@
           "patternId": "pattern-al-kaff-al-khadib",
           "directionId": null,
           "guidanceRelationshipId": null,
-          "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+          "prompt": "Find Dhāt al-Kursī: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
           "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
           "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape."
         },
@@ -36,9 +86,9 @@
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-kaff-to-jady",
-          "prompt": "Follow the guide line from the middle of Dhāt al-Kursī towards the horizon and select al-Jady.",
+          "prompt": "Now find al-Jady and select it.",
           "successFeedback": "That is al-Jady, the polar star.",
-          "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon."
+          "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north."
         },
         {
           "stepId": "step-3-face-north",
@@ -50,6 +100,17 @@
           "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
           "successFeedback": "Your direction has been recorded and compared with True North.",
           "retryFeedback": "Your direction has been recorded and compared with True North."
+        },
+        {
+          "stepId": "step-4-face-qibla",
+          "taskKind": "INDICATE_DIRECTION",
+          "knowledgeComponentId": "KC-05",
+          "patternId": null,
+          "directionId": "direction-qibla",
+          "guidanceRelationshipId": "guide-north-to-qibla",
+          "prompt": "Now face the Qibla: find True North, turn clockwise by the Qibla bearing of this place, then confirm your direction.",
+          "successFeedback": "Your direction has been recorded and compared with the Qibla.",
+          "retryFeedback": "Your direction has been recorded and compared with the Qibla."
         }
       ],
       "allowedAlternativeRouteIds": ["route-banat-to-jady-to-north"],
@@ -64,8 +125,8 @@
     },
     {
       "stableId": "route-banat-to-jady-to-north",
-      "routeVersion": "1",
-      "title": "From Banāt Naʿsh to al-Jady to True North",
+      "routeVersion": "2",
+      "title": "From Banāt Naʿsh to al-Jady to True North and the Qibla",
       "selectionPriority": 2,
       "requiredStarIds": [
         "ufuq-star-006",
@@ -76,6 +137,56 @@
         "ufuq-star-011",
         "ufuq-star-012",
         "ufuq-star-013"
+      ],
+      "walkthrough": [
+        {
+          "frameId": "frame-banat-nash-al-kubra",
+          "focus": {
+            "kind": "CULTURE_FIGURE",
+            "figureId": "anwa-banat-nash-al-kubra"
+          },
+          "instruction": "Start with Banāt Naʿsh al-Kubrā: four stars make the bier and three daughters walk behind it. Learn this shape first."
+        },
+        {
+          "frameId": "frame-guide-to-jady",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-banat-to-jady"
+          },
+          "instruction": "Take the two stars at the end of the bier farthest from the daughters, and continue their line out of the box. Follow it to al-Jady. This pointer line is a modern UFUQ teaching aid; the anwāʾ texts do not state it."
+        },
+        {
+          "frameId": "frame-al-farqadan",
+          "focus": {
+            "kind": "CULTURE_FIGURE",
+            "figureId": "anwa-al-farqadan"
+          },
+          "instruction": "Around al-Jady wheel al-Farqadān, the two leading stars of the lesser Banāt Naʿsh. The group runs from this bright pair to al-Jady, its last daughter."
+        },
+        {
+          "frameId": "frame-al-jady",
+          "focus": {
+            "kind": "CULTURE_STAR",
+            "hip": 11767
+          },
+          "instruction": "This is al-Jady. Learn its place well: every route in UFUQ ends here, and from it you find True North."
+        },
+        {
+          "frameId": "frame-true-north",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-jady-to-true-north"
+          },
+          "instruction": "Drop straight down from al-Jady to the horizon. That point on the ground is True North. al-Jady is the star; True North is the direction below it."
+        },
+        {
+          "frameId": "frame-qibla",
+          "focus": {
+            "kind": "RELATIONSHIP",
+            "relationshipId": "guide-north-to-qibla"
+          },
+          "instruction": "Face True North, then turn clockwise along the horizon by the Qibla bearing of this place. The arc shows the turn; the end of the arc is the Qibla."
+        }
       ],
       "steps": [
         {
@@ -96,9 +207,9 @@
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-banat-to-jady",
-          "prompt": "Follow the guide line through the two end stars of the box and select al-Jady.",
+          "prompt": "Now find al-Jady and select it.",
           "successFeedback": "That is al-Jady, the polar star.",
-          "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon."
+          "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north."
         },
         {
           "stepId": "step-3-face-north",
@@ -110,6 +221,17 @@
           "prompt": "Now face True North: turn until the centre marker sits on the horizon directly below al-Jady, then confirm your direction.",
           "successFeedback": "Your direction has been recorded and compared with True North.",
           "retryFeedback": "Your direction has been recorded and compared with True North."
+        },
+        {
+          "stepId": "step-4-face-qibla",
+          "taskKind": "INDICATE_DIRECTION",
+          "knowledgeComponentId": "KC-05",
+          "patternId": null,
+          "directionId": "direction-qibla",
+          "guidanceRelationshipId": "guide-north-to-qibla",
+          "prompt": "Now face the Qibla: find True North, turn clockwise by the Qibla bearing of this place, then confirm your direction.",
+          "successFeedback": "Your direction has been recorded and compared with the Qibla.",
+          "retryFeedback": "Your direction has been recorded and compared with the Qibla."
         }
       ],
       "allowedAlternativeRouteIds": ["route-kaff-to-jady-to-north"],

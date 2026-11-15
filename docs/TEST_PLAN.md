@@ -28,7 +28,7 @@ when no matching test exists; neither uses `passWithNoTests`.
 |---|---|---|
 | Unit | Phase 0 | Always; the health test proves discovery. |
 | Reference | First production/reference comparison | Add to CI when a production implementation first has pinned comparison fixtures; it remains mandatory thereafter. |
-| Integration | Phase 4 | Add to CI with the first API/persistence integration test; real MySQL is mandatory for transaction claims. |
+| Integration | Phase 4 (active since 2026-11-15) | `tests/integration/mysql-persistence.test.ts` on real MySQL 8.4 (`UFUQ_TEST_MYSQL_URL`, a dedicated `*_test` database); CI runs it against a MySQL 8.4 service container. |
 | E2E | Phase 0 | Always; the health smoke proves browser/server lifecycle. |
 
 Milestone 2C.6 makes the astronomy evidence order explicit:

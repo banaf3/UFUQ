@@ -10,7 +10,21 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
+    # Phase 4 integration suite (IMP-015): real MySQL 8.4, never a mock.
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-root-only
+          MYSQL_DATABASE: ufuq_test
+          MYSQL_USER: ufuq_test
+          MYSQL_PASSWORD: ci-test-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -pci-root-only"
+          --health-interval=5s --health-timeout=5s --health-retries=30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,6 +39,9 @@ jobs:
       - run: npm run data:verify
       - run: npm run test
       - run: npm run test:reference
+      - run: npm run test:integration
+        env:
+          UFUQ_TEST_MYSQL_URL: mysql://ufuq_test:ci-test-only@127.0.0.1:3306/ufuq_test
       - run: npm run evidence:bkt-sensitivity -- --check
       - run: npm run build
       - run: npm run exports:check

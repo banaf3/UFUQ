@@ -9,15 +9,10 @@ import type {
 } from '@ufuq/contracts';
 
 import { ApiError, submitAnswer } from '../api.js';
-import { describeEnu, horizonPointBelow, normalizeHeading } from '../scene/mapping.js';
-import { greatCircle, meanDirection, type Vec3, type ViewState } from '../sky/projection.js';
-import {
-  SkyCanvas,
-  type SkyCanvasHandle,
-  type SkyCanvasStar,
-  type SkyLabel,
-  type SkyLine,
-} from '../sky/SkyCanvas.js';
+import { describeEnu, normalizeHeading } from '../scene/mapping.js';
+import type { ViewState } from '../sky/projection.js';
+import { SkyCanvas, type SkyCanvasHandle, type SkyCanvasStar } from '../sky/SkyCanvas.js';
+import { guideTexts, overlayLayers } from './overlay-layers.js';
 
 const DEG = Math.PI / 180;
 const STEP = 2 * DEG;
@@ -33,93 +28,18 @@ const INITIAL_VIEW: ViewState = {
   projection: 'STEREOGRAPHIC',
 };
 
+/** The report's three presentation levels (storyboard figures 3-5 to 3-7). */
+const SUPPORT_TEXT = {
+  GUIDED: 'Guided: figure lines, names and the guide are shown.',
+  FADING: 'Lines only: the figure lines are shown without names.',
+  INDEPENDENT: 'From memory: no lines and no names.',
+} as const;
+
 function supportText(step: LessonStepPromptV2): string {
   if (step.support.mode === 'NON_ADAPTIVE')
     return 'Fixed presentation: adaptive support is not configured yet (BKT-004 pending).';
-  return `Support level: ${step.support.scaffoldState ?? 'none'} (issued by the server).`;
-}
-
-function guideTexts(overlays: readonly SkyOverlayV2[]): { key: string; text: string }[] {
-  return overlays.flatMap((overlay) => {
-    if (overlay.kind === 'GUIDE_ARC' || overlay.kind === 'GUIDE_ARC_PARTIAL')
-      return [{ key: overlay.relationshipId, text: overlay.explanation }];
-    if (overlay.kind === 'VERTICAL_TO_HORIZON') {
-      const history = overlay.historicalContext ? ` History: ${overlay.historicalContext}` : '';
-      return [{ key: overlay.relationshipId, text: `${overlay.explanation}${history}` }];
-    }
-    return [];
-  });
-}
-
-/** Issued overlays as renderer lines and labels (cues only; never targets). */
-function overlayLayers(
-  overlays: readonly SkyOverlayV2[],
-  enuOf: (handle: string) => Vec3 | undefined,
-): { lines: SkyLine[]; labels: SkyLabel[] } {
-  const lines: SkyLine[] = [];
-  const labels: SkyLabel[] = [];
-  const arc = (from: Vec3 | undefined, to: Vec3 | undefined, line: Omit<SkyLine, 'points'>) => {
-    if (from && to) lines.push({ ...line, points: greatCircle(from, to) });
-  };
-  for (const overlay of overlays) {
-    if (overlay.kind === 'PATTERN_OUTLINE') {
-      for (const [a, b] of overlay.segments)
-        arc(enuOf(a), enuOf(b), { color: 'rgba(232, 180, 79, 0.95)', width: 1.8 });
-      const anchor = meanDirection(
-        overlay.memberHandles.map(enuOf).filter((d): d is Vec3 => d !== undefined),
-      );
-      const label = overlay.labels[0];
-      if (anchor && label) {
-        labels.push({
-          direction: anchor,
-          text: label.script ?? label.transliteration ?? '',
-          ...(label.script && label.transliteration ? { secondary: label.transliteration } : {}),
-          color: '#f2c86a',
-          font: "500 16px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
-          secondaryFont: "500 12px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
-          priority: 0,
-          offset: 24,
-        });
-      }
-    } else if (overlay.kind === 'GUIDE_ARC') {
-      for (let i = 1; i < overlay.handles.length; i += 1)
-        arc(enuOf(overlay.handles[i - 1] as string), enuOf(overlay.handles[i] as string), {
-          color: 'rgba(127, 227, 255, 0.95)',
-          width: 1.8,
-          dash: [8, 6],
-        });
-    } else if (overlay.kind === 'GUIDE_ARC_PARTIAL') {
-      arc(enuOf(overlay.fromHandle), overlay.endEnu, {
-        color: 'rgba(127, 227, 255, 0.95)',
-        width: 1.8,
-        dash: [8, 6],
-      });
-    } else if (overlay.kind === 'VERTICAL_TO_HORIZON') {
-      const from = enuOf(overlay.fromHandle);
-      if (from)
-        arc(from, horizonPointBelow(from), {
-          color: 'rgba(166, 247, 200, 0.95)',
-          width: 1.8,
-          dash: [6, 6],
-        });
-    } else {
-      const direction = enuOf(overlay.handle);
-      const label = overlay.labels.find((l) => l.script) ?? overlay.labels[0];
-      if (direction && label) {
-        labels.push({
-          direction,
-          text: label.script ?? label.transliteration ?? '',
-          ...(label.script && label.transliteration ? { secondary: label.transliteration } : {}),
-          color: '#f6e7b4',
-          font: "500 15px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
-          secondaryFont: "500 11px 'Tajawal', 'Segoe UI', system-ui, sans-serif",
-          priority: 0,
-          offset: 22,
-        });
-      }
-    }
-  }
-  return { lines, labels };
+  const state = step.support.scaffoldState;
+  return state ? SUPPORT_TEXT[state] : 'Support level: none.';
 }
 
 export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit: () => void }) {
@@ -293,7 +213,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           ariaLabel="Lesson sky"
         />
         <div className="reticle" aria-hidden="true" />
-        {!directionStep && (
+        {!directionStep && !step?.hideCardinalLabels && (
           <div className="heading-readout" aria-live="polite">
             Facing {headingDegrees.toFixed(0)}° ({compassPoint(headingDegrees)})
           </div>
@@ -344,7 +264,10 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
         ) : (
           <section>
             <h2>Lesson complete</h2>
-            <p>You moved from the helper pattern to al-Jady and then to True North.</p>
+            <p>
+              You traced from the figure to al-Jady, then to True North and the Qibla. Your progress
+              for each skill is saved and shapes the support of your next lesson.
+            </p>
           </section>
         )}
 
@@ -401,11 +324,14 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
         {directionStep && (
           <section>
             <p className="hint">
-              Compass labels are hidden for this step. Turn the view until the centre marker is on
-              the horizon below al-Jady.
+              {step?.knowledgeComponentId === 'KC-05'
+                ? 'Find True North first, then turn the view by the Qibla bearing until the centre marker is on the Qibla.'
+                : 'Turn the view until the centre marker is on the horizon below al-Jady.'}
             </p>
             <button type="button" className="primary" disabled={busy} onClick={confirmDirection}>
-              Confirm: I am facing True North
+              {step?.knowledgeComponentId === 'KC-05'
+                ? 'Confirm: I am facing the Qibla'
+                : 'Confirm: I am facing True North'}
             </button>
           </section>
         )}

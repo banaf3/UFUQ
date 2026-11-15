@@ -3,8 +3,16 @@
 // and the issued support level (Phase 2 slice, adaptive since Phase 3).
 import { expect, test, type Page } from '@playwright/test';
 
-/** From the sky explorer: pick the synthetic scenario, wait for its sky, start the lesson. */
+/**
+ * From the sky explorer: pick the synthetic scenario, wait for its sky, start the lesson,
+ * then skip the taught walkthrough to the assessment.
+ */
 async function startSyntheticLesson(page: Page, scenarioLabel: string, utc: string) {
+  await openWalkthrough(page, scenarioLabel, utc);
+  await page.getByRole('button', { name: 'Skip to the assessment' }).click();
+}
+
+async function openWalkthrough(page: Page, scenarioLabel: string, utc: string) {
   await expect(page.getByLabel('Data')).toHaveValue(
     'synthetic-technical|SYNTHETIC_TECHNICAL_FIXTURE',
     {
@@ -14,6 +22,7 @@ async function startSyntheticLesson(page: Page, scenarioLabel: string, utc: stri
   await page.getByLabel('Scenario').selectOption({ label: scenarioLabel });
   await expect(page.locator('.sky-notice summary')).toContainText(utc);
   await page.getByRole('button', { name: 'Start lesson' }).click();
+  await expect(page.getByText('Learn the route')).toBeVisible();
 }
 
 function starButtons(page: Page) {
@@ -26,6 +35,14 @@ async function altitudes(page: Page): Promise<number[]> {
     buttons.map((button) => button.getAttribute('aria-label') ?? ''),
   );
   return labels.map((label) => Number(/altitude (-?\d+) degrees/.exec(label)?.[1] ?? 'NaN'));
+}
+
+/** From True North, 35 two-degree turns to the west face the synthetic destination (about 290.6 degrees). */
+async function faceQiblaAndConfirm(page: Page) {
+  const sky = page.getByRole('application');
+  await sky.focus();
+  for (let i = 0; i < 35; i += 1) await sky.press('ArrowLeft');
+  await page.getByRole('button', { name: 'Confirm: I am facing the Qibla' }).click();
 }
 
 async function faceNorthAndConfirm(page: Page) {
@@ -44,8 +61,8 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
   await expect(page.getByRole('heading', { name: 'Synthetic route A' })).toBeVisible();
   await expect(page.getByRole('note').first()).toContainText('SYNTHETIC TECHNICAL FIXTURE');
-  await expect(page.getByText('Step 1 of 3')).toBeVisible();
-  await expect(page.getByTestId('support-level')).toContainText('GUIDED');
+  await expect(page.getByText('Step 1 of 4')).toBeVisible();
+  await expect(page.getByTestId('support-level')).toContainText('Guided');
   await expect(page.getByText('Hint: Synthetic zigzag of five stars.')).toBeVisible();
 
   // Step 1: a high star belongs to the helper; the low near-pole star is the target.
@@ -55,18 +72,23 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await starButtons(page).nth(lowIndex).click();
   await expect(page.getByLabel('Feedback')).toContainText('Try again');
   await starButtons(page).nth(highIndex).click();
-  await expect(page.getByText('Step 2 of 3')).toBeVisible();
+  await expect(page.getByText('Step 2 of 4')).toBeVisible();
   await expect(page.getByLabel('Feedback')).toContainText('Synthetic guide line.');
 
   // Step 2: select the target with the keyboard (focus it in the list, press Enter).
   await starButtons(page).nth(lowIndex).focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByText('Step 3 of 3')).toBeVisible();
+  await expect(page.getByText('Step 3 of 4')).toBeVisible();
 
   // Step 3: graded only because the synthetic fixture carries a synthetic tolerance.
   await faceNorthAndConfirm(page);
   await expect(page.getByLabel('Feedback')).toContainText('differs from True North by 0.0 degrees');
-  await expect(page.getByLabel('Feedback')).toContainText('synthetic-direction-tolerance');
+  await expect(page.getByLabel('Feedback')).toContainText('inside the 10.0° tolerance');
+  await expect(page.getByText('Step 4 of 4')).toBeVisible();
+
+  // Step 4: the Qibla, computed for the observer and graded by the same synthetic tolerance.
+  await faceQiblaAndConfirm(page);
+  await expect(page.getByLabel('Feedback')).toContainText('differs from the Qibla by 0.6 degrees');
   await expect(page.getByRole('heading', { name: 'Lesson complete' })).toBeVisible();
   await page.getByTestId('model-trace').locator('summary').click();
   await expect(page.getByTestId('model-trace')).toContainText('TRANSITION_ONLY');
@@ -74,10 +96,10 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   // Lesson 2 for the same development learner: the target-star skill is now FADING.
   await page.getByRole('button', { name: 'Back to the sky' }).click();
   await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
-  await expect(page.getByTestId('support-level')).toContainText('GUIDED');
+  await expect(page.getByTestId('support-level')).toContainText('Guided');
   await starButtons(page).nth(highIndex).click();
-  await expect(page.getByText('Step 2 of 3')).toBeVisible();
-  await expect(page.getByTestId('support-level')).toContainText('FADING');
+  await expect(page.getByText('Step 2 of 4')).toBeVisible();
+  await expect(page.getByTestId('support-level')).toContainText('Lines only');
 });
 
 test('synthetic route B: select every member of the helper pattern', async ({ page }) => {
@@ -93,7 +115,7 @@ test('synthetic route B: select every member of the helper pattern', async ({ pa
   await expect(page.getByLabel('Feedback')).toContainText('Try again');
   await members.nth(6).click();
   await page.getByRole('button', { name: 'Submit selection (7 stars)' }).click();
-  await expect(page.getByText('Step 2 of 3')).toBeVisible();
+  await expect(page.getByText('Step 2 of 4')).toBeVisible();
 });
 
 test('real ScientificProfileV1 data fails closed until it is approved', async ({ page }) => {
@@ -103,4 +125,23 @@ test('real ScientificProfileV1 data fails closed until it is approved', async ({
   await expect(page.getByRole('alert')).toContainText(
     /NOT_SCIENTIFICALLY_APPROVED|NOT_APPROVED|REQUIRED/,
   );
+});
+
+test('the taught walkthrough traces the route frame by frame before the assessment', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await openWalkthrough(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
+  await expect(page.getByRole('heading', { name: 'Synthetic route A' })).toBeVisible();
+  await expect(page.getByText('Step 1 of 5')).toBeVisible();
+  await expect(page.getByText('Synthetic helper pattern.')).toBeVisible();
+  for (let frame = 2; frame <= 5; frame += 1) {
+    await page.getByRole('button', { name: 'Next →' }).click();
+    await expect(page.getByText(`Step ${frame} of 5`)).toBeVisible();
+  }
+  // The last frame turns from True North to the Qibla and states the bearing.
+  await expect(page.getByText(/the Qibla is \d+° \d\d′ clockwise from True North/)).toBeVisible();
+  await page.getByRole('button', { name: 'Start the assessment' }).click();
+  await expect(page.getByText('Step 1 of 4')).toBeVisible();
+  await expect(page.getByTestId('support-level')).toContainText('Guided');
 });

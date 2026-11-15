@@ -3,7 +3,7 @@
 **State (2026-11-02):** implemented and tested; every real artifact is `REVIEW_REQUIRED`.
 The first page of the web app is now the whole naked-eye sky for a scenario or a chosen
 instant, with constellation figures and names, mouse/touch/keyboard navigation and five
-projections. A lesson starts only from the top bar and runs over the same full sky.
+projections. A lesson starts only from the top bar and runs over the same full sky: since 2026-11-15 it opens with a taught walkthrough (IMP-024) before the assessment.
 This follows the founding report's celestial-environment use case (UC-102: open the
 simulator, choose location and time, rotate, pan and zoom; the assessment is started by
 the learner) and its storyboard layout (full-screen sky, slim top bar, start button).

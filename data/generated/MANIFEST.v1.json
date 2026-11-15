@@ -39,19 +39,19 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "lesson-content-v1",
-      "byteLength": 22525,
+      "byteLength": 32981,
       "path": "data/generated/lesson-content-v1.json",
-      "payloadSha256": "cc16ae2bc609c95b66651e3def9f48c33351bcf89eab7d466359d88da76d79d5",
-      "sha256": "ac1fc17720b811e0960c768af079a0e82e52b81dad3ac2a307d1a525a7f24fb3",
+      "payloadSha256": "6a7c068a7663678712d7979f74acb70c33a06ad860354fba6ad128092837959d",
+      "sha256": "027277ef14c0090fc41f1af90baf18ac5c16abc5a5e73dfc341da75e4a0a9600",
       "tracked": true
     },
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "learning-configuration-v1",
-      "byteLength": 2757,
+      "byteLength": 6992,
       "path": "data/generated/learning-configuration-v1.json",
-      "payloadSha256": "1d796ce2f3e11a41130d7d5355ecc26136fd61e4faaf9c2f5d36f1ca89bf2971",
-      "sha256": "9aacec39d1590131d323861abfaad9d91d86cee87d8e9c5b9c271d479369cfdd",
+      "payloadSha256": "d15f2b06fe349c0cac7dae5273cfabb79a894de72cad5bfb1dfc2a81e9731d36",
+      "sha256": "678a9981c00281ba8a814015491c0889e1168a1e54e5ea35705d91697abb53d6",
       "tracked": true
     },
     {
@@ -138,10 +138,10 @@
     {
       "approvalState": "APPROVED",
       "artifactId": "synthetic-lesson-content-v1",
-      "byteLength": 15543,
+      "byteLength": 21710,
       "path": "data/generated/synthetic/synthetic-lesson-content-v1.json",
-      "payloadSha256": "d2009356288e1592592b33376f45b59d118aa6d478eba83b31a08cc1eb9a1e33",
-      "sha256": "4992e1246a300c84686b438150748a7e0a3aa55a62d5683b097f77dc0e52f22a",
+      "payloadSha256": "17c9bb8b8c40793b0813e2f26968836821970dd0c684076660eecbb243b6dc05",
+      "sha256": "1853d293d2da351694d2ae232a49c6875da0fc4b1ba151ccf7bab4caf0c30d9b",
       "tracked": true
     },
     {

@@ -31,6 +31,7 @@
         ],
         "learnerTolerance": {
           "approvalReference": "SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)",
+          "decidedBy": "SYNTHETIC_TECHNICAL",
           "maximumDifferenceRadians": 0.17453292519943295,
           "policyId": "synthetic-direction-tolerance"
         },
@@ -43,6 +44,51 @@
           "state": "APPROVED"
         },
         "stableId": "direction-true-north"
+      },
+      {
+        "contentVersion": "1",
+        "definition": {
+          "destination": {
+            "crossChecks": [],
+            "datum": "WGS84",
+            "destinationId": "synthetic-destination",
+            "footprintRadiusMetres": 1,
+            "label": "Synthetic destination (technical fixture)",
+            "latitudeDegrees": 20,
+            "longitudeDegrees": 40,
+            "source": {
+              "locator": "invented technical value",
+              "sourceId": "SYNTHETIC",
+              "supports": "software tests only"
+            }
+          },
+          "kind": "QIBLA_SPHERICAL_INITIAL_BEARING"
+        },
+        "labels": [
+          {
+            "citations": [],
+            "gloss": "synthetic technical label",
+            "languageTag": "en",
+            "layer": "SYNTHETIC_TECHNICAL",
+            "script": "Qibla (synthetic fixture)",
+            "transliteration": null
+          }
+        ],
+        "learnerTolerance": {
+          "approvalReference": "SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)",
+          "decidedBy": "SYNTHETIC_TECHNICAL",
+          "maximumDifferenceRadians": 0.17453292519943295,
+          "policyId": "synthetic-direction-tolerance"
+        },
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "stableId": "direction-qibla"
       }
     ],
     "patterns": [
@@ -253,6 +299,35 @@
       },
       {
         "citations": [],
+        "explanation": "Synthetic turn from north to the destination bearing.",
+        "historicalContext": null,
+        "instruction": {
+          "fromStarId": "synthetic-star-target",
+          "kind": "HORIZON_TURN_FROM_NORTH"
+        },
+        "layer": "SYNTHETIC_TECHNICAL",
+        "relationshipType": "LEADS_TO_DIRECTION",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": "2026-11-02",
+          "decisionReference": "IMP-011/IMP-012 visibly synthetic technical fixture; never learner content",
+          "requiredReviewKinds": [],
+          "reviewer": "NOT_APPLICABLE_SYNTHETIC",
+          "scope": "SYNTHETIC_TECHNICAL_FIXTURE",
+          "state": "APPROVED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "synthetic-pattern-target"
+        },
+        "stableId": "synthetic-guide-qibla",
+        "target": {
+          "kind": "direction",
+          "stableId": "direction-qibla"
+        }
+      },
+      {
+        "citations": [],
         "explanation": "Synthetic vertical to the horizon.",
         "historicalContext": null,
         "instruction": {
@@ -338,9 +413,62 @@
             "stepId": "step-3",
             "successFeedback": "Accepted (synthetic technical fixture).",
             "taskKind": "INDICATE_DIRECTION"
+          },
+          {
+            "directionId": "direction-qibla",
+            "guidanceRelationshipId": "synthetic-guide-qibla",
+            "knowledgeComponentId": "KC-05",
+            "patternId": null,
+            "prompt": "Face the synthetic destination and confirm.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-4",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "INDICATE_DIRECTION"
           }
         ],
-        "title": "Synthetic route A"
+        "title": "Synthetic route A",
+        "walkthrough": [
+          {
+            "focus": {
+              "kind": "PATTERN",
+              "patternId": "synthetic-pattern-helper-a"
+            },
+            "frameId": "frame-helper",
+            "instruction": "Synthetic helper pattern."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-a"
+            },
+            "frameId": "frame-guide",
+            "instruction": "Synthetic guide."
+          },
+          {
+            "focus": {
+              "kind": "PATTERN",
+              "patternId": "synthetic-pattern-target"
+            },
+            "frameId": "frame-target",
+            "instruction": "Synthetic target."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-north"
+            },
+            "frameId": "frame-north",
+            "instruction": "Synthetic north."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-qibla"
+            },
+            "frameId": "frame-qibla",
+            "instruction": "Synthetic qibla."
+          }
+        ]
       },
       {
         "allowedAlternativeRouteIds": [
@@ -400,9 +528,62 @@
             "stepId": "step-3",
             "successFeedback": "Accepted (synthetic technical fixture).",
             "taskKind": "INDICATE_DIRECTION"
+          },
+          {
+            "directionId": "direction-qibla",
+            "guidanceRelationshipId": "synthetic-guide-qibla",
+            "knowledgeComponentId": "KC-05",
+            "patternId": null,
+            "prompt": "Face the synthetic destination and confirm.",
+            "retryFeedback": "Not correct (synthetic technical fixture).",
+            "stepId": "step-4",
+            "successFeedback": "Accepted (synthetic technical fixture).",
+            "taskKind": "INDICATE_DIRECTION"
           }
         ],
-        "title": "Synthetic route B"
+        "title": "Synthetic route B",
+        "walkthrough": [
+          {
+            "focus": {
+              "kind": "PATTERN",
+              "patternId": "synthetic-pattern-helper-b"
+            },
+            "frameId": "frame-helper",
+            "instruction": "Synthetic helper pattern."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-b"
+            },
+            "frameId": "frame-guide",
+            "instruction": "Synthetic guide."
+          },
+          {
+            "focus": {
+              "kind": "PATTERN",
+              "patternId": "synthetic-pattern-target"
+            },
+            "frameId": "frame-target",
+            "instruction": "Synthetic target."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-north"
+            },
+            "frameId": "frame-north",
+            "instruction": "Synthetic north."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "synthetic-guide-qibla"
+            },
+            "frameId": "frame-qibla",
+            "instruction": "Synthetic qibla."
+          }
+        ]
       }
     ],
     "scenarios": [
@@ -442,6 +623,6 @@
       "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709"
     }
   },
-  "payloadSha256": "d2009356288e1592592b33376f45b59d118aa6d478eba83b31a08cc1eb9a1e33",
+  "payloadSha256": "17c9bb8b8c40793b0813e2f26968836821970dd0c684076660eecbb243b6dc05",
   "schemaVersion": 1
 }

@@ -60,7 +60,13 @@ import {
   type PlacementResult,
   SECONDARY_FONT,
 } from './label-placement.js';
-import { type SkyCanvasStar, type SkyLabel, type SkyLine, trimPolyline } from './sky-types.js';
+import {
+  partialPoints,
+  type SkyCanvasStar,
+  type SkyLabel,
+  type SkyLine,
+  trimPolyline,
+} from './sky-types.js';
 
 export type { SkyCanvasStar, SkyLabel, SkyLine };
 
@@ -69,6 +75,8 @@ export interface SkyCanvasHandle {
   /** Where the view is heading once smoothing settles (the user's intended view). */
   getTarget(): ViewState;
   setView(change: Partial<ViewState>, animate?: boolean): void;
+  /** A smooth van Wijk and Nuij flight to a view (fly-to.ts). */
+  flyTo(change: Partial<ViewState>): void;
   zoomBy(factor: number): void;
   panBy(deltaAzimuth: number, deltaAltitude: number): void;
 }
@@ -413,6 +421,10 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
         getView: () => controller.view,
         getTarget: () => controller.target,
         setView: setTarget,
+        flyTo: (change) => {
+          controller.flyTo(change);
+          controller.requestFrame();
+        },
         zoomBy: (factor) => setTarget({ fov: controller.target.fov * factor }),
         panBy: (deltaAzimuth, deltaAltitude) =>
           setTarget(
@@ -463,12 +475,22 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
             ? fallback
             : 1.25 * starSprite(magnitude, limitingMagnitude).radius + gap;
 
+        let tracing = false;
+        const now = performance.now();
         for (const line of p.lines) {
           ctx.beginPath();
+          let points = line.points;
+          if (line.drawFrom !== undefined && line.drawMs !== undefined) {
+            const fraction = (now - line.drawFrom) / Math.max(1, line.drawMs);
+            if (fraction < 1) {
+              tracing = true;
+              points = partialPoints(line.points, fraction);
+            }
+          }
           // Split into continuous screen runs; trim only the line's own two ends.
           const runs: [number, number][][] = [];
           let run: [number, number][] = [];
-          for (const point of line.points) {
+          for (const point of points) {
             const screen = toScreen(point);
             const last = run[run.length - 1];
             if (screen && (!last || Math.hypot(screen[0] - last[0], screen[1] - last[1]) < jump)) {
@@ -481,12 +503,13 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
           if (run.length > 1) runs.push(run);
           const trimFirst = endTrim(line.endMagnitudes?.[0], line.trim ?? 0);
           const trimLast = endTrim(line.endMagnitudes?.[1], line.trim ?? 0);
-          const firstVisible = line.points[0] !== undefined && toScreen(line.points[0]) !== null;
-          const lastPoint = line.points[line.points.length - 1];
+          const firstVisible = points[0] !== undefined && toScreen(points[0]) !== null;
+          const lastPoint = points[points.length - 1];
           const lastVisible = lastPoint !== undefined && toScreen(lastPoint) !== null;
+          const complete = points === line.points;
           runs.forEach((points, index) => {
             const startTrim = firstVisible && index === 0 ? trimFirst : 0;
-            const finishTrim = lastVisible && index === runs.length - 1 ? trimLast : 0;
+            const finishTrim = lastVisible && index === runs.length - 1 && complete ? trimLast : 0;
             const drawn =
               startTrim + finishTrim > 0 ? trimPolyline(points, startTrim, finishTrim) : points;
             drawn.forEach((point, i) =>
@@ -565,7 +588,7 @@ export const SkyCanvas = forwardRef<SkyCanvasHandle, SkyCanvasProps>(
           ctx.lineWidth = 1.6;
           ctx.stroke();
         }
-        return fading;
+        return fading || tracing;
       },
       [controller],
     );
