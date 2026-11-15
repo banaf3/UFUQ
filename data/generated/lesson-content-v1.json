@@ -568,7 +568,7 @@
           "scope": "SCIENTIFIC_PROFILE_V1",
           "state": "REVIEW_REQUIRED"
         },
-        "routeVersion": "2",
+        "routeVersion": "3",
         "selectionPriority": 1,
         "stableId": "route-kaff-to-jady-to-north",
         "steps": [
@@ -577,10 +577,10 @@
             "guidanceRelationshipId": null,
             "knowledgeComponentId": "KC-02",
             "patternId": "pattern-al-kaff-al-khadib",
-            "prompt": "Find Dhāt al-Kursī: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
-            "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape.",
+            "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Drag the sky until the circle is on one of its stars, then confirm.",
+            "retryFeedback": "The circle is not on Dhāt al-Kursī. Look for five bright stars in a W shape.",
             "stepId": "step-1-find-helper",
-            "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
+            "successFeedback": "The circle is on Dhāt al-Kursī.",
             "taskKind": "IDENTIFY_PATTERN_MEMBER"
           },
           {
@@ -588,10 +588,10 @@
             "guidanceRelationshipId": "guide-kaff-to-jady",
             "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
-            "prompt": "Now find al-Jady and select it.",
-            "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north.",
+            "prompt": "Now find al-Jady: drag the sky until the circle is on it, then confirm.",
+            "retryFeedback": "The circle is not on al-Jady. Trace again from the figure you found towards the north.",
             "stepId": "step-2-find-jady",
-            "successFeedback": "That is al-Jady, the polar star.",
+            "successFeedback": "The circle is on al-Jady, the polar star.",
             "taskKind": "IDENTIFY_TARGET_STAR"
           },
           {
@@ -694,7 +694,7 @@
           "scope": "SCIENTIFIC_PROFILE_V1",
           "state": "REVIEW_REQUIRED"
         },
-        "routeVersion": "2",
+        "routeVersion": "3",
         "selectionPriority": 2,
         "stableId": "route-banat-to-jady-to-north",
         "steps": [
@@ -703,10 +703,10 @@
             "guidanceRelationshipId": null,
             "knowledgeComponentId": "KC-01",
             "patternId": "pattern-banat-nash-al-kubra",
-            "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Select one of its stars.",
-            "retryFeedback": "That star is not part of Banāt Naʿsh. Look for a box of four stars with a curved tail of three.",
+            "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Drag the sky until the circle is on one of its stars, then confirm.",
+            "retryFeedback": "The circle is not on Banāt Naʿsh. Look for a box of four stars with a curved tail of three.",
             "stepId": "step-1-find-helper",
-            "successFeedback": "That star belongs to Banāt Naʿsh. The group is now outlined.",
+            "successFeedback": "The circle is on Banāt Naʿsh.",
             "taskKind": "IDENTIFY_PATTERN_MEMBER"
           },
           {
@@ -714,10 +714,10 @@
             "guidanceRelationshipId": "guide-banat-to-jady",
             "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
-            "prompt": "Now find al-Jady and select it.",
-            "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north.",
+            "prompt": "Now find al-Jady: drag the sky until the circle is on it, then confirm.",
+            "retryFeedback": "The circle is not on al-Jady. Trace again from the figure you found towards the north.",
             "stepId": "step-2-find-jady",
-            "successFeedback": "That is al-Jady, the polar star.",
+            "successFeedback": "The circle is on al-Jady, the polar star.",
             "taskKind": "IDENTIFY_TARGET_STAR"
           },
           {
@@ -854,6 +854,6 @@
       "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c"
     }
   },
-  "payloadSha256": "6a7c068a7663678712d7979f74acb70c33a06ad860354fba6ad128092837959d",
+  "payloadSha256": "1109ac51ae232e5a06d031d93077d5c894e24c80f8a4cc08500d8eb366d1c6f0",
   "schemaVersion": 1
 }

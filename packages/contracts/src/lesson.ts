@@ -16,6 +16,13 @@ export type LessonExecutionScope =
 /** Session purpose is recorded independently of assistance (BKT-005). */
 export type SessionPurposeV2 = 'PRE_TEST' | 'LEARNING' | 'POST_TEST' | 'RECALL';
 
+/**
+ * Radius of the answer circle as a share of the field of view, which spans the smaller side
+ * of the sky view (so the circle is this share of that side). The web draws the circle with
+ * it and the server scores with it, so what the learner sees is what is scored.
+ */
+export const POINT_CIRCLE_RADIUS_SHARE = 0.04;
+
 export type KnowledgeComponentIdV2 = 'KC-01' | 'KC-02' | 'KC-03' | 'KC-04' | 'KC-05';
 export type ScaffoldStateV2 = 'GUIDED' | 'FADING' | 'INDEPENDENT';
 
@@ -274,8 +281,17 @@ export interface WalkthroughV2 {
 }
 
 export type StepAnswerV2 =
-  | { readonly kind: 'STAR_SELECTION'; readonly starHandle: string }
   | { readonly kind: 'STAR_SET_SELECTION'; readonly starHandles: readonly string[] }
+  | {
+      /**
+       * The view centre (the circle) placed on the answer. The server turns the field of
+       * view into the circle's angular radius (POINT_CIRCLE_RADIUS_SHARE of the field).
+       */
+      readonly kind: 'SKY_POINT';
+      readonly azimuthRadians: number;
+      readonly altitudeRadians: number;
+      readonly fovRadians: number;
+    }
   | { readonly kind: 'DIRECTION'; readonly azimuthRadians: number };
 
 export interface SubmitAnswerRequestV2 {
@@ -419,12 +435,6 @@ function parseAnswer(value: unknown): string | null {
     return 'answer required.';
   const answer = value as Record<string, unknown>;
   const only = (...keys: string[]) => Object.keys(answer).every((key) => keys.includes(key));
-  if (answer.kind === 'STAR_SELECTION') {
-    if (!only('kind', 'starHandle')) return 'Unknown answer field.';
-    if (typeof answer.starHandle !== 'string' || answer.starHandle.length === 0)
-      return 'starHandle required.';
-    return null;
-  }
   if (answer.kind === 'STAR_SET_SELECTION') {
     if (!only('kind', 'starHandles')) return 'Unknown answer field.';
     const handles = answer.starHandles;
@@ -432,6 +442,18 @@ function parseAnswer(value: unknown): string | null {
       return `starHandles must hold 1 to ${MAX_SET_SELECTION} handles.`;
     if (!handles.every((handle) => typeof handle === 'string' && handle.length > 0))
       return 'starHandles must be non-empty strings.';
+    return null;
+  }
+  if (answer.kind === 'SKY_POINT') {
+    if (!only('kind', 'azimuthRadians', 'altitudeRadians', 'fovRadians'))
+      return 'Unknown answer field.';
+    const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+    if (!finite(answer.azimuthRadians) || !finite(answer.altitudeRadians))
+      return 'azimuthRadians and altitudeRadians must be finite numbers.';
+    if (Math.abs(answer.altitudeRadians) > Math.PI / 2 + 1e-9)
+      return 'altitudeRadians must be within a quarter turn.';
+    if (!finite(answer.fovRadians) || answer.fovRadians <= 0 || answer.fovRadians > Math.PI * 2)
+      return 'fovRadians must be a positive finite angle.';
     return null;
   }
   if (answer.kind === 'DIRECTION') {

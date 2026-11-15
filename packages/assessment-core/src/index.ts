@@ -1,7 +1,8 @@
 /**
  * Pure assessment scoring (Phase 2 vertical slice, extended in Phase 3).
  *
- * - Star identification is exact set membership: no tolerance is involved.
+ * - Star identification is exact set membership (select-every-member tasks).
+ * - Pointing the view circle at a pattern or star is scored by the circle's angular radius.
  * - "Select every member" answers are exact set equality, with diagnostics only.
  * - Direction answers are measured as a wrapped circular difference (ADR-003: "angular
  *   answers use robust vector separation or wrapped circular distance"). No learner
@@ -23,6 +24,57 @@ export function scoreStarSelection(
     return { result: 'CORRECT', selectedStarId };
   }
   return { result: 'INCORRECT', selectedStarId };
+}
+
+export type PointedLocationScore =
+  | {
+      readonly result: 'CORRECT';
+      readonly nearestStarId: string;
+      readonly separationRadians: number;
+    }
+  | {
+      readonly result: 'INCORRECT';
+      /** The nearest accepted star, or null when no accepted star has a direction. */
+      readonly nearestStarId: string | null;
+      readonly separationRadians: number | null;
+    };
+
+/**
+ * "Put the circle on it": the learner navigates the sky and places the view centre. The
+ * answer is correct when the pointed direction is within the circle's angular radius of
+ * the nearest accepted star. The radius is the circle the learner sees (the server derives
+ * it from the reported field of view), so zooming in asks for more precision.
+ *
+ * Directions are unit east-north-up vectors. A non-finite or non-unit answer is incorrect.
+ */
+export function scorePointedLocation(
+  pointed: readonly [number, number, number],
+  accepted: ReadonlyMap<string, readonly [number, number, number]>,
+  toleranceRadians: number,
+): PointedLocationScore {
+  if (!Number.isFinite(toleranceRadians) || toleranceRadians < 0 || toleranceRadians > Math.PI)
+    throw new RangeError('A pointing tolerance must be finite and in [0, pi] radians.');
+  let nearestStarId: string | null = null;
+  let separationRadians: number | null = null;
+  if (pointed.every(Number.isFinite)) {
+    for (const [starId, direction] of accepted) {
+      const cosine = Math.min(
+        1,
+        Math.max(
+          -1,
+          pointed[0] * direction[0] + pointed[1] * direction[1] + pointed[2] * direction[2],
+        ),
+      );
+      const angle = Math.acos(cosine);
+      if (separationRadians === null || angle < separationRadians) {
+        separationRadians = angle;
+        nearestStarId = starId;
+      }
+    }
+  }
+  if (nearestStarId !== null && separationRadians !== null && separationRadians <= toleranceRadians)
+    return { result: 'CORRECT', nearestStarId, separationRadians };
+  return { result: 'INCORRECT', nearestStarId, separationRadians };
 }
 
 export type StarSetScore =
@@ -128,7 +180,7 @@ export type ScoredOutcome = 'CORRECT' | 'INCORRECT' | 'UNCLASSIFIED';
  * classified against an explicit tolerance policy; a bare measurement is UNCLASSIFIED.
  */
 export function scoredOutcomeOf(
-  score: StarSelectionScore | StarSetScore | DirectionMeasurement,
+  score: StarSelectionScore | StarSetScore | PointedLocationScore | DirectionMeasurement,
 ): ScoredOutcome {
   switch (score.result) {
     case 'CORRECT':

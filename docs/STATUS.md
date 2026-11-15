@@ -17,7 +17,7 @@
   the learner dashboard, administrator analytics and the system log.
 - **Checks today:**
   - `npm run check` passed;
-  - unit tests 303 of 304 (the `ufuq-reference` folder);
+  - unit tests 308 of 309 (the `ufuq-reference` folder);
   - `test:reference` 157 of 157;
   - `test:integration` 7 of 7 on real MySQL;
   - e2e 9 of 9;

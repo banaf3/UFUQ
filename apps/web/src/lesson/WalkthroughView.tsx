@@ -178,9 +178,11 @@ export function WalkthroughView({
       </header>
 
       <aside className="lesson-panel" aria-live="polite">
-        <div className="notice" role="note">
-          {walkthrough.provenance.notices[0]}
-        </div>
+        {walkthrough.provenance.executionScope === 'SYNTHETIC_TECHNICAL_FIXTURE' && (
+          <div className="notice" role="note">
+            {walkthrough.provenance.notices[0]}
+          </div>
+        )}
         {frame ? (
           <section aria-labelledby="frame-title">
             <p className="eyebrow">

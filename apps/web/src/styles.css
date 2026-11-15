@@ -108,6 +108,7 @@ input {
 }
 
 .sky-stage {
+  container-type: size;
   position: absolute;
   inset: 0;
 }
@@ -530,8 +531,9 @@ input {
 .reticle {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: 28px;
-  height: 28px;
+  /* The answer circle: its size is set from the share the server scores with. */
+  width: var(--reticle-diameter, 28px);
+  height: var(--reticle-diameter, 28px);
   transform: translate(-50%, -50%);
   border: 2px solid rgb(127 227 255 / 85%);
   border-radius: 50%;
@@ -789,4 +791,23 @@ button.link {
   height: 0.7rem;
   border-radius: 3px;
   background: var(--accent);
+}
+
+.signin-callout {
+  position: fixed;
+  top: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: grid;
+  gap: 0.5rem;
+  max-width: 300px;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.signin-callout p {
+  margin: 0;
 }

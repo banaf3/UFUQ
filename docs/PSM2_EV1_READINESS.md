@@ -32,7 +32,7 @@ learner's mastery. What now runs:
 | FR-1 Scenario rendering (location and time) | Done | `apps/web/src/sky`, `packages/astronomy-core` (SOFA-derived ScientificProfileV1) | `test:reference` (Astropy/PyERFA comparison), e2e |
 | FR-2 Dynamic visibility (magnitude, scenario) | Done | display policy (IMP-020), route eligibility (IMP-018) | unit and API tests |
 | FR-3 Scenario generation (spatial tasks) | Done | `data/curation/routes`, walkthrough and four assessment steps per route | API tests, e2e |
-| FR-4 Input evaluation (star picking, facing direction) | Done | `assessment-core`; 15° direction tolerance (owner) | unit, API and e2e tests |
+| FR-4 Input evaluation (pointing the circle at a star, facing direction) | Done | `assessment-core`; circle radius 4% of the field (IMP-025); 15° direction tolerance (owner) | unit, API and e2e tests |
 | FR-5 Authentication (registration, login, sessions) | Done | `apps/api/src/accounts` | unit and MySQL integration tests |
 | FR-6 BKT probability update | Done, report parameters | `tutoring-core/src/bkt`, `learning-configuration.v1.json` | exact-rational oracle (136 cases), integration |
 | FR-7 Adaptive tutoring (lines and highlights by mastery) | Done, report Table 2-5 | scaffold policy and cues | API test, browser run (lines only → from memory) |
@@ -190,22 +190,24 @@ implemented. The remaining work is evaluation, hardening and approvals, consiste
 ## Demo script for the supervisor (about 10 minutes)
 
 Set up once with `npm run db:local -- init`. Before the demo, run `npm run preview:review`
-(it starts MySQL and the servers), open http://127.0.0.1:4173 and choose "Review preview"
-under Data.
+(it starts MySQL, creates the demo accounts and starts the servers) and open
+http://127.0.0.1:4173; the real sky is the default.
 
 1. **UC-102:** drag, zoom and change the projection. Open the Dhāt al-Kursī card and its
    references.
-2. **UC-101:** Sign in → Create an account. Show the locked-account message after five
-   wrong passwords on a second account, if wanted.
+2. **UC-101:** Sign in with the demo learner `user1@ufuq.test` (password `1234567`) or Sign
+   in / Register → create an account (8 or more characters). Show the locked-account message
+   after five wrong passwords on a second account, if wanted.
 3. **Walkthrough:** Start lesson. Step through: Dhāt al-Kursī → Kawkabā al-Firq → guide
    line → al-Jady → True North → the Qibla (292° 07′).
-4. **Assessment, lines only:** find Dhāt al-Kursī and al-Jady, face north, face the Qibla.
+4. **Assessment, lines only:** drag the sky until the circle is on Dhāt al-Kursī, then on
+   al-Jady, then face north and the Qibla.
    Then show a wrong answer: the support returns to guided with names.
 5. Repeat the lesson: after two correct answers per skill the support becomes "From
    memory: no lines and no names".
 6. **UC-104:** My progress: mastery per skill (20 % → 58 % → 87 % → 97 %), the support
    level, and each answer with mastery before and after.
-7. **UC-105:** sign in as an administrator (created with `npm run admin:create`) →
+7. **UC-105:** sign in as an administrator (`admin1@ufuq.test`, password `1234567`) →
    Analytics: totals, per-skill mastery, answers per day, the system log (read-only).
 8. **Evidence:** `npm run test:integration` (real MySQL), `npm run test:reference` (BKT
    and Qibla oracles), and the e2e suite.

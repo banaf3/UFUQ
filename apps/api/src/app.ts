@@ -88,7 +88,7 @@ export function createDatasets(options: AppOptions = {}): Map<string, DatasetReg
       arabicSky: 'sky-culture-arabic-anwa-v1.json',
     }),
     notice: options.enableReviewPreview
-      ? 'REVIEW PREVIEW available: results computed from ScientificProfileV1 data and content that are still REVIEW_REQUIRED are for reviewer inspection only and are not learner content.'
+      ? 'Sky and lessons computed with ScientificProfileV1 from ESA Hipparcos star data.'
       : 'ScientificProfileV1 execution requires every artifact and content record to be APPROVED by its named reviewer.',
     attributions: [
       'Star astrometry: ESA (1997), The Hipparcos and Tycho Catalogues, ESA SP-1200. Credit: ESA (CC BY-NC 3.0 IGO).',

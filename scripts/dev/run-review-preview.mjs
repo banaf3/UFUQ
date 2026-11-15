@@ -21,6 +21,13 @@ if (!mysqlUrl && existsSync(mysqlConfig)) {
   });
   mysqlUrl = JSON.parse(readFileSync(mysqlConfig, 'utf8')).url;
 }
+// Demo accounts (admin1/admin2/user1/user2 @ufuq.test, password 1234567): local database only.
+if (mysqlUrl && !process.env.UFUQ_NO_DEMO_ACCOUNTS) {
+  spawnSync(process.execPath, [join(root, 'apps/api/dist/seed-demo.js')], {
+    stdio: 'inherit',
+    env: { ...process.env, UFUQ_MYSQL_URL: mysqlUrl },
+  });
+}
 const children = [
   spawn(process.execPath, [join(root, 'apps/api/dist/server.js')], {
     cwd: root,

@@ -541,7 +541,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
             'KC-02',
             'synthetic-pattern-helper-a',
             null,
-            'Select a star of synthetic helper A.',
+            'Put the circle on a star of synthetic helper A, then confirm.',
           ),
           step(
             'step-2',
@@ -549,7 +549,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
             'KC-03',
             'synthetic-pattern-target',
             'synthetic-guide-a',
-            'Select the synthetic target star.',
+            'Put the circle on the synthetic target star, then confirm.',
           ),
           step(
             'step-3',
@@ -619,7 +619,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
             'KC-03',
             'synthetic-pattern-target',
             'synthetic-guide-b',
-            'Select the synthetic target star.',
+            'Put the circle on the synthetic target star, then confirm.',
           ),
           step(
             'step-3',

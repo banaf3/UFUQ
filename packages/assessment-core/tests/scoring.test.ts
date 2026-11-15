@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   measureDirectionAnswer,
   scoredOutcomeOf,
+  scorePointedLocation,
   scoreStarSelection,
   scoreStarSetSelection,
   wrappedAzimuthDifference,
@@ -102,5 +103,35 @@ describe('Phase 3 answer types: boundaries, wrap and invalid input', () => {
     expect(scoredOutcomeOf(scoreStarSetSelection(['a'], new Set(['b'])))).toBe('INCORRECT');
     expect(scoredOutcomeOf(measureDirectionAnswer(0.3, 0, null))).toBe('UNCLASSIFIED');
     expect(scoredOutcomeOf(measureDirectionAnswer(0.3, 0, policy))).toBe('INCORRECT');
+  });
+});
+
+describe('pointing the circle at the answer', () => {
+  const north: readonly [number, number, number] = [0, 1, 0];
+  const accepted = new Map<string, readonly [number, number, number]>([
+    ['near', [0, Math.cos(10 * (Math.PI / 180)), Math.sin(10 * (Math.PI / 180))]],
+    ['far', [1, 0, 0]],
+  ]);
+
+  it('is correct inside the circle and reports the nearest star', () => {
+    const inside = scorePointedLocation(north, accepted, 11 * (Math.PI / 180));
+    expect(inside).toMatchObject({ result: 'CORRECT', nearestStarId: 'near' });
+    const outside = scorePointedLocation(north, accepted, 9 * (Math.PI / 180));
+    expect(outside).toMatchObject({ result: 'INCORRECT', nearestStarId: 'near' });
+    expect(scoredOutcomeOf(inside)).toBe('CORRECT');
+    expect(scoredOutcomeOf(outside)).toBe('INCORRECT');
+  });
+
+  it('includes the circle edge and never accepts a non-finite or empty answer', () => {
+    const edge = scorePointedLocation(north, accepted, 10 * (Math.PI / 180) + 1e-12);
+    expect(edge.result).toBe('CORRECT');
+    expect(scorePointedLocation([Number.NaN, 0, 0], accepted, 1).result).toBe('INCORRECT');
+    expect(scorePointedLocation(north, new Map(), 1)).toEqual({
+      result: 'INCORRECT',
+      nearestStarId: null,
+      separationRadians: null,
+    });
+    expect(() => scorePointedLocation(north, accepted, -1)).toThrow(RangeError);
+    expect(() => scorePointedLocation(north, accepted, Number.NaN)).toThrow(RangeError);
   });
 });

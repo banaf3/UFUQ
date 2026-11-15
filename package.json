@@ -27,6 +27,7 @@
     "data:generate": "tsc -b tools/catalogue --pretty false && node tools/catalogue/dist/cli.js",
     "approvals:status": "node scripts/approvals/status.mjs",
     "admin:create": "npm run build -w @ufuq/api && node apps/api/dist/create-admin.js",
+    "db:seed-demo": "npm run build -w @ufuq/api && node apps/api/dist/seed-demo.js",
     "db:local": "node scripts/dev/mysql-local.mjs",
     "evidence:bkt-sensitivity": "node scripts/evidence/bkt-sensitivity.mjs",
     "preview:review": "npm run build && node scripts/dev/run-review-preview.mjs",

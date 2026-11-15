@@ -5,7 +5,12 @@ belongs in `docs/STATUS.md` and Git). Updated 2026-11-15.
 
 ## Current phase
 
-**Phase 4 (2026-11-15) is implemented, pending review**
+**Phase 4 (2026-11-15) is implemented, pending review.** Later the same day the owner asked
+for pointing answers (no multiple choice, IMP-025), no "unreviewed" wording in the learner
+screens, a visible sign-in, and demo accounts (admin1, admin2, user1, user2 @ufuq.test,
+password 1234567, `npm run db:seed-demo`).
+
+**Phase 4 detail:**
 (`PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`). It covers:
 
 - lessons with a taught walkthrough (camera flights, traced lines) to al-Jady, True North
@@ -62,6 +67,7 @@ validated (approvals pending); participant study NO; deployment NO.
 | --- | --- |
 | Local MySQL (once, then automatic in the preview) | `npm run db:local -- init`; also `start`, `stop`, `status`, `url` |
 | Integration suite (real MySQL) | `UFUQ_TEST_MYSQL_URL=$(node scripts/dev/mysql-local.mjs url test) npm run test:integration` |
+| Demo accounts (local only, password 1234567) | `npm run db:seed-demo` (also run by `preview:review`) |
 | Create an administrator | `UFUQ_MYSQL_URL=... UFUQ_ADMIN_PASSWORD=... npm run admin:create -- "Name" email` |
 | Qibla oracle | `python -I tools/qibla-reference/qibla_reference.py --check`; `python -I -m unittest discover -s tools/qibla-reference/tests` |
 | All gates | `npm run check && npm run test && npm run test:reference && npm run evidence:bkt-sensitivity -- --check && npm run build && npm run exports:check && npm run test:e2e` |

@@ -386,7 +386,7 @@
             "guidanceRelationshipId": null,
             "knowledgeComponentId": "KC-02",
             "patternId": "synthetic-pattern-helper-a",
-            "prompt": "Select a star of synthetic helper A.",
+            "prompt": "Put the circle on a star of synthetic helper A, then confirm.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
             "stepId": "step-1",
             "successFeedback": "Accepted (synthetic technical fixture).",
@@ -397,7 +397,7 @@
             "guidanceRelationshipId": "synthetic-guide-a",
             "knowledgeComponentId": "KC-03",
             "patternId": "synthetic-pattern-target",
-            "prompt": "Select the synthetic target star.",
+            "prompt": "Put the circle on the synthetic target star, then confirm.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
             "stepId": "step-2",
             "successFeedback": "Accepted (synthetic technical fixture).",
@@ -512,7 +512,7 @@
             "guidanceRelationshipId": "synthetic-guide-b",
             "knowledgeComponentId": "KC-03",
             "patternId": "synthetic-pattern-target",
-            "prompt": "Select the synthetic target star.",
+            "prompt": "Put the circle on the synthetic target star, then confirm.",
             "retryFeedback": "Not correct (synthetic technical fixture).",
             "stepId": "step-2",
             "successFeedback": "Accepted (synthetic technical fixture).",
@@ -623,6 +623,6 @@
       "payloadSha256": "ae026c34500415f3d5f850a4db80bb3d567a73cd4808c7b5f8c9db9a0cbb3709"
     }
   },
-  "payloadSha256": "17c9bb8b8c40793b0813e2f26968836821970dd0c684076660eecbb243b6dc05",
+  "payloadSha256": "517328d3a406078ef859e989be0c30c2e838ab961c50ce11c7030c86a1289ed9",
   "schemaVersion": 1
 }
