@@ -811,3 +811,23 @@ button.link {
 .signin-callout p {
   margin: 0;
 }
+
+.result-card {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--warn);
+  border-radius: 10px;
+  background: var(--glass);
+}
+
+.result-card.result-correct {
+  border-left-color: var(--ok);
+}
+
+.result-card h3,
+.result-card p {
+  margin: 0;
+}
