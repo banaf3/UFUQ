@@ -82,13 +82,18 @@
               {
                 "locator": "al-Sufi catalogue heading, PDF p. 151",
                 "sourceId": "HAFEZ-2010",
-                "supports": "the chair figure name for Cassiopeia; exact Arabic form unresolved in the local texts, so no Arabic script is recorded"
+                "supports": "the chair figure name for Cassiopeia"
+              },
+              {
+                "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
+                "sourceId": "AL-SUFI-KAWAKIB",
+                "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
               }
             ],
             "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
-            "languageTag": "ar-Latn",
+            "languageTag": "ar",
             "layer": "GRECO_ARABIC_SCHOLARLY",
-            "script": null,
+            "script": "ذات الكرسي",
             "transliteration": "Dhāt al-Kursī"
           }
         ],
@@ -454,10 +459,10 @@
             "guidanceRelationshipId": null,
             "knowledgeComponentId": "KC-02",
             "patternId": "pattern-al-kaff-al-khadib",
-            "prompt": "Find al-Kaff al-Khaḍīb, the henna-dyed hand: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
-            "retryFeedback": "That star is not part of the hand. Look for five bright stars in a W shape.",
+            "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+            "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape.",
             "stepId": "step-1-find-helper",
-            "successFeedback": "That star belongs to al-Kaff al-Khaḍīb. The hand is now outlined.",
+            "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
             "taskKind": "IDENTIFY_PATTERN_MEMBER"
           },
           {
@@ -465,7 +470,7 @@
             "guidanceRelationshipId": "guide-kaff-to-jady",
             "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
-            "prompt": "Follow the guide line from the middle of the hand towards the horizon and select al-Jady.",
+            "prompt": "Follow the guide line from the middle of Dhāt al-Kursī towards the horizon and select al-Jady.",
             "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
             "stepId": "step-2-find-jady",
             "successFeedback": "That is al-Jady, the polar star.",
@@ -483,7 +488,7 @@
             "taskKind": "INDICATE_DIRECTION"
           }
         ],
-        "title": "From al-Kaff al-Khaḍīb to al-Jady to True North"
+        "title": "From Dhāt al-Kursī to al-Jady to True North"
       },
       {
         "allowedAlternativeRouteIds": [
@@ -609,6 +614,6 @@
       "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c"
     }
   },
-  "payloadSha256": "37c1a8998921ac7b102299122cdaba9e0877487a120b1bb63973cd512cfbb400",
+  "payloadSha256": "cc16ae2bc609c95b66651e3def9f48c33351bcf89eab7d466359d88da76d79d5",
   "schemaVersion": 1
 }

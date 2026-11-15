@@ -60,6 +60,13 @@ validated (approvals pending); participant study NO; deployment NO.
 
 ## Last completed increment (2026-11-05)
 
+**Latest (owner request): the five-star Cassiopeia figure is now named Dhāt al-Kursī (ذات الكرسي).**
+al-Kaff al-Khaḍīb stays as its alternative name. The change covers the sky figure, its card, the pattern record
+and the route text; ids (`anwa-al-kaff-al-khadib`, `route-kaff-to-jady-to-north`) are unchanged. Source: al-Ṣūfī,
+*Ṣuwar al-Kawākib* (Arabic Wikisource transcription of the Library of Congress scan), added as `AL-SUFI-KAWAKIB`.
+It describes a thirteen-star seated woman, so the five-star membership is recorded as a conflict. al-Nāqa was kept.
+Needs Arabic/cultural review; the quote is not yet checked against a page image.
+
 Branch `feat/anwa-names-and-card-navigation` (IMP-022) answered the owner's next review:
 
 - figure names centred in their figures when the middle is their own;

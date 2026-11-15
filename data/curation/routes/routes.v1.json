@@ -2,12 +2,12 @@
   "curationType": "UFUQ_LESSON_ROUTE_CURATION",
   "schemaVersion": 1,
   "note": "Routes are selected by the server from data: a route is eligible only when every required star has a valid pending-or-approved geometric direction that is not below the geometric horizon. Priority encodes the owner's route preference (2D.1C D-2); no pattern is hard-coded as the entry point.",
-  "knowledgeComponentMappingNote": "Each step credits one primary knowledge component (TUTORING_BKT_SPEC.md: one scored task, one KC). PROPOSED for EDU-002 review with the route: Banat Na'sh to KC-01; al-Kaff al-Khadib, the Cassiopeia figure whose Greco-Arabic name Dhat al-Kursi is recorded in the same pattern record, to KC-02; al-Jady to KC-03; True North to KC-04. KC-05 (Qibla) has no task yet.",
+  "knowledgeComponentMappingNote": "Each step credits one primary knowledge component (TUTORING_BKT_SPEC.md: one scored task, one KC). PROPOSED for EDU-002 review with the route: Banat Na'sh to KC-01; Dhat al-Kursi (Cassiopeia; also al-Kaff al-Khadib, recorded in the same pattern record), to KC-02; al-Jady to KC-03; True North to KC-04. KC-05 (Qibla) has no task yet.",
   "routes": [
     {
       "stableId": "route-kaff-to-jady-to-north",
       "routeVersion": "1",
-      "title": "From al-Kaff al-Khaḍīb to al-Jady to True North",
+      "title": "From Dhāt al-Kursī to al-Jady to True North",
       "selectionPriority": 1,
       "requiredStarIds": [
         "ufuq-star-001",
@@ -25,9 +25,9 @@
           "patternId": "pattern-al-kaff-al-khadib",
           "directionId": null,
           "guidanceRelationshipId": null,
-          "prompt": "Find al-Kaff al-Khaḍīb, the henna-dyed hand: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
-          "successFeedback": "That star belongs to al-Kaff al-Khaḍīb. The hand is now outlined.",
-          "retryFeedback": "That star is not part of the hand. Look for five bright stars in a W shape."
+          "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+          "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
+          "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape."
         },
         {
           "stepId": "step-2-find-jady",
@@ -36,7 +36,7 @@
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-kaff-to-jady",
-          "prompt": "Follow the guide line from the middle of the hand towards the horizon and select al-Jady.",
+          "prompt": "Follow the guide line from the middle of Dhāt al-Kursī towards the horizon and select al-Jady.",
           "successFeedback": "That is al-Jady, the polar star.",
           "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon."
         },

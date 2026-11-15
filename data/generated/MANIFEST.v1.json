@@ -39,10 +39,10 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "lesson-content-v1",
-      "byteLength": 22216,
+      "byteLength": 22525,
       "path": "data/generated/lesson-content-v1.json",
-      "payloadSha256": "37c1a8998921ac7b102299122cdaba9e0877487a120b1bb63973cd512cfbb400",
-      "sha256": "0fb9fc97dcb8515e57b4d5575d389d17baf2b00c61b3b132ae41c44195750ebf",
+      "payloadSha256": "cc16ae2bc609c95b66651e3def9f48c33351bcf89eab7d466359d88da76d79d5",
+      "sha256": "ac1fc17720b811e0960c768af079a0e82e52b81dad3ac2a307d1a525a7f24fb3",
       "tracked": true
     },
     {
@@ -75,10 +75,10 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "sky-culture-arabic-anwa-v1",
-      "byteLength": 421745,
+      "byteLength": 423027,
       "path": "data/generated/sky-culture-arabic-anwa-v1.json",
-      "payloadSha256": "9f76df6380c932559900b0986f468e7587aa787c12a80b7aba2d407268d350df",
-      "sha256": "2b87cb9fb8c998c4c3bd90794d2bbef855c0ef7200127f7edd85d364651e9bf1",
+      "payloadSha256": "fb8d6cc7d376bdcf97d1ed32840420dca86f3fefd60c254a873f280eeab7e791",
+      "sha256": "6b6f33e09e2532b96ef8e7bf3fdd4651e84ee363b5f0044fd9a8a27b3e40c7d3",
       "tracked": true
     },
     {

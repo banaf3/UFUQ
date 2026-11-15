@@ -33,8 +33,8 @@
           ]
         },
         {
-          "languageTag": "ar-Latn",
-          "script": null,
+          "languageTag": "ar",
+          "script": "ذات الكرسي",
           "transliteration": "Dhāt al-Kursī",
           "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
           "layer": "GRECO_ARABIC_SCHOLARLY",
@@ -42,7 +42,12 @@
             {
               "sourceId": "HAFEZ-2010",
               "locator": "al-Sufi catalogue heading, PDF p. 151",
-              "supports": "the chair figure name for Cassiopeia; exact Arabic form unresolved in the local texts, so no Arabic script is recorded"
+              "supports": "the chair figure name for Cassiopeia"
+            },
+            {
+              "sourceId": "AL-SUFI-KAWAKIB",
+              "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
+              "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
             }
           ]
         }

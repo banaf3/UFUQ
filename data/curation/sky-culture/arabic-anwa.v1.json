@@ -43,6 +43,10 @@
       "role": "philological readings"
     },
     {
+      "sourceId": "AL-SUFI-KAWAKIB",
+      "role": "al-Ṣūfī, Ṣuwar al-Kawākib al-Thābita (public Arabic text on Arabic Wikisource, from the Library of Congress scan): the name Dhāt al-Kursī and its description"
+    },
+    {
       "sourceId": "IAU-WGSN-CSN",
       "role": "modern identification cross-check (etymologies follow Kunitzsch and Smart)"
     }
@@ -2259,10 +2263,16 @@
     },
     {
       "figureId": "anwa-al-kaff-al-khadib",
-      "arabic": "الكف الخضيب",
-      "transliteration": "al-Kaff al-Khaḍīb",
+      "arabic": "ذات الكرسي",
+      "transliteration": "Dhāt al-Kursī",
       "vocalization": "FROM_SOURCE_FORM",
-      "alternativeNames": [],
+      "alternativeNames": [
+        {
+          "arabic": "الكف الخضيب",
+          "transliteration": "al-Kaff al-Khaḍīb",
+          "basis": "the anwāʾ name of its bright stars (Ibn Qutayba §40)"
+        }
+      ],
       "style": "FIGURE",
       "members": [
         {
@@ -2334,14 +2344,23 @@
       ],
       "conflicts": [
         {
+          "text": "Al-Ṣūfī's figure Dhāt al-Kursī is a whole seated woman of thirteen stars; UFUQ's figure is only the five bright stars the Arabs called al-Kaff al-Khaḍīb, with the five-star membership of the compilation.",
+          "sourceId": "AL-SUFI-KAWAKIB",
+          "locator": "chapter Dhat al-Kursi (opening paragraph)"
+        },
+        {
           "text": "Ibn ʿĀṣim's text (as read locally) calls al-Kaff al-Khaḍīb faint stars of irregular arrangement, unlike Ibn Qutayba's five white stars; check the reading against a scan.",
           "sourceId": "IBN-ASIM-ANWA",
           "locator": "local text L3008-3009"
         }
       ],
       "compilationEntry": "CON arabic_ancient 2001",
-      "about": "Al-Kaff al-Khadib is the henna-dyed hand of al-Thurayya: five white stars at the end of her long outstretched right arm. The same five stars were also read as the hump of the she-camel, al-Naqa. Ibn Qutayba quotes a Syrian poet, al-Hisni, who knew the stars well.",
+      "about": "Dhat al-Kursi, the lady of the chair, is the W-shaped group of five bright stars in the north. Al-Sufi describes a woman sitting on a chair with a support like a pulpit's, her legs let down. The Arabs of the anwa texts called the same bright stars al-Kaff al-Khadib, the henna-dyed hand of al-Thurayya: five white stars at the end of her long outstretched right arm. They also read them as the hump of the she-camel, al-Naqa. Ibn Qutayba quotes a Syrian poet, al-Hisni, who knew the stars well.",
       "aboutSources": [
+        {
+          "sourceId": "AL-SUFI-KAWAKIB",
+          "locator": "chapter Dhat al-Kursi (Wikisource transcription of the Library of Congress scan)"
+        },
         {
           "sourceId": "IBN-QUTAYBA-ANWA",
           "locator": "§40-41 (local text L1574-1596)"
