@@ -38,7 +38,7 @@ const INITIAL_VIEW: ViewState = {
 
 /** The report's three presentation levels (storyboard figures 3-5 to 3-7). */
 const SUPPORT_TEXT = {
-  GUIDED: 'Guided: figure lines, names and the guide are shown.',
+  GUIDED: 'Guided: the figure lines are shown (you are still learning this skill).',
   FADING: 'Lines only: the figure lines are shown without names.',
   INDEPENDENT: 'From memory: no lines and no names.',
 } as const;

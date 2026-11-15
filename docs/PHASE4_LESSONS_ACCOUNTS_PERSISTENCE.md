@@ -178,3 +178,13 @@ star in the assessment that follows.
   admin2, user1 and user2 at `@ufuq.test`, all with the password `1234567`. The password is
   deliberately weak and public, so the command refuses `NODE_ENV=production` and
   `UFUQ_SECURE_COOKIES=1`. Self-registration still needs 8 to 64 characters.
+
+## Update 2026-11-15 (third owner request): assessment shows lines, never names
+
+Assessment never shows names or the yellow target outline, which gave the answer away. For
+the find-it steps (KC-01 to KC-03) a learner who is still learning the skill (guided or
+lines-only) sees the ordinary blue figure lines; a learner who has mastered it (mastery at
+least 0.85) sees no lines. Names, outlines and shape hints are only in the walkthrough.
+The direction steps keep their compass, vertical guide and Qibla arc while the skill is
+being learned. Cue configuration version 2; this replaces the earlier GUIDED description
+(names, outline) above.

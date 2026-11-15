@@ -702,14 +702,10 @@ describe('report-based adaptive cues on the sky culture', () => {
         scaffoldTo: 'GUIDED',
         scaffoldReasonCode: 'RESTORE_GUIDANCE_BELOW_THRESHOLD',
       });
-      expect(wrong.nextStep?.support.cueIds).toEqual([
-        'FIGURE_LINES',
-        'FIGURE_NAMES',
-        'TARGET_OUTLINE',
-        'SHAPE_HINT_TEXT',
-        'CARDINAL_MARKS',
-      ]);
-      expect(wrong.nextStep?.hideCardinalLabels).toBe(false);
+      // Never the names or the yellow target outline: only the figure lines.
+      expect(wrong.nextStep?.support.cueIds).toEqual(['FIGURE_LINES']);
+      expect(overlay(wrong.nextStep ?? null, 'FIGURE_NAMES')).toBeUndefined();
+      expect(overlay(wrong.nextStep ?? null, 'PATTERN_OUTLINE')).toBeUndefined();
     }
   });
 });
