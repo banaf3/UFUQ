@@ -1,8 +1,7 @@
 /**
  * Qibla direction as the initial great-circle bearing on a sphere (the founding report's
- * NFR-2: "established spherical trigonometry formulas utilized in traditional Ilm
- * al-Falak"; docs/references/syntheses/qibla-geodesy-synthesis.md: the runtime uses the
- * spherical initial bearing). This is UFUQ's own code, not a geodesic library.
+ * NFR-2: the spherical trigonometry of traditional Ilm al-Falak; the Qibla geodesy
+ * synthesis names the spherical initial bearing as the runtime model). This is UFUQ's own code, not a geodesic library.
  *
  * With observer latitude phi1, destination latitude phi2 and the destination's longitude
  * minus the observer's, dLambda (east-positive), the bearing clockwise from True North is

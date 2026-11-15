@@ -41,8 +41,8 @@ ScientificProfileV1 lessons still fail closed, and the review preview runs them.
 | P(L0), P(T), P(G), P(S) | 0.20, 0.10, 0.20, 0.10 | Table 3-14 |
 | Mastery threshold | 0.85, equal to or greater than | §2.5.4 |
 | Model update | every scored attempt, correct or incorrect | §2.5.4 steps 1-8 |
-| Independent confirmation | 2 consecutive correct answers without support | Table 2-5, "repeated correct responses without hints" (read as two) |
-| Initial support | lines only (FADING) | storyboard figure 3-6: a low P(L0) gives "hints enabled", dashed lines without names |
+| Independent confirmation | 2 consecutive correct answers without support | Table 2-5, last row: repeated unaided correct answers (read as two) |
+| Initial support | lines only (FADING) | storyboard figure 3-6: a low initial mastery keeps hints on, shown as figure lines without names |
 
 Support levels map the storyboard: **GUIDED** = lines, names, guide and compass
 (figure 3-5); **FADING** = all figure lines, no names (figure 3-6); **INDEPENDENT** = no
@@ -72,8 +72,7 @@ of one attempt (each decision uses the latest answer, as Table 2-5 does).
 ## The Qibla (KC-05, IMP-023)
 
 - **Model:** the spherical initial great-circle bearing, clockwise from True North (report
-  NFR-2: "established spherical trigonometry formulas utilized in traditional Ilm
-  al-Falak"). Code: `packages/astronomy-core/src/qibla/spherical-bearing.ts`, with explicit
+  NFR-2: True North and the Qibla by the spherical trigonometry of Ilm al-Falak). Code: `packages/astronomy-core/src/qibla/spherical-bearing.ts`, with explicit
   undefined results for coincident, antipodal, polar and invalid input.
 - **Destination (AST-005 candidate, `REVIEW_REQUIRED`):** the Kaaba as OpenStreetMap way
   103914569, Nominatim centroid 21.4225079° N, 39.8261890° E (WGS 84; footprint about

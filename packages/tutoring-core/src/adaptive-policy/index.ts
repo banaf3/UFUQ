@@ -245,7 +245,7 @@ export const CUE_CLASSIFICATION = {
   SOURCE_STAR_LABEL: 'ORIENTATION',
   /**
    * Draws every figure line of the sky culture, without any name (report storyboard
-   * figure 3-6: "subtle dashed lines" while hints are enabled). The target is one figure
+   * figure 3-6: faint lines while hints are on). The target is one figure
    * among many, so the lines orient without naming the answer.
    */
   FIGURE_LINES: 'ORIENTATION',
