@@ -188,3 +188,19 @@ least 0.85) sees no lines. Names, outlines and shape hints are only in the walkt
 The direction steps keep their compass, vertical guide and Qibla arc while the skill is
 being learned. Cue configuration version 2; this replaces the earlier GUIDED description
 (names, outline) above.
+
+## Update 2026-11-15 (fourth owner request): the compass ring
+
+A compass ring is drawn on the horizon in the sky's own 3D projection
+(`apps/web/src/lesson/compass-ring.ts`): degree ticks every 10°, numbers every 30° counted
+clockwise from True North (0 = 360), a bright marker reading "You face N°", and the Qibla
+marked when the place has one. It appears:
+
+- in the walkthrough's True North and Qibla frames, with the Qibla marked, so the learner
+  sees the turn from north as degrees;
+- in the Qibla assessment step, always (that task is the turn from north, so north is
+  given), without the Qibla mark; the side panel also reads "Facing N° from True North";
+- in the True North step only while the compass cue is issued (guided), because the ring
+  would otherwise reveal north.
+
+The contract gains `LessonStepPromptV2.compassRing` and `WalkthroughFrameV2.compassRing`.

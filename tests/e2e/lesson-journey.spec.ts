@@ -155,6 +155,8 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await expect(page.getByLabel('Feedback')).toContainText('inside the 10.0° tolerance');
   await next(page);
   await expect(page.getByText('Step 4 of 4')).toBeVisible();
+  // The Qibla step shows the compass ring and the bearing the learner faces.
+  await expect(page.getByText(/Facing d+° from True North/)).toBeVisible();
 
   // Step 4: the Qibla, computed for the observer and graded by the same synthetic tolerance.
   await faceQiblaAndConfirm(page, at);
