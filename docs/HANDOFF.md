@@ -1,9 +1,21 @@
 # Session handoff
 
 Read this first. Keep it short and current: replace, do not append history (history
-belongs in `docs/STATUS.md` and Git). Updated 2026-11-05.
+belongs in `docs/STATUS.md` and Git). Updated 2026-11-15.
 
 ## Current phase
+
+**Phase 4 (2026-11-15) is implemented, pending review**
+(`PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`). It covers:
+
+- lessons with a taught walkthrough (camera flights, traced lines) to al-Jady, True North
+  and the Qibla;
+- report-based adaptive BKT: lines without names, then no lines;
+- the spherical Qibla (292° 07′ at UMPSA Pekan, 15° owner tolerance);
+- MySQL 8.4 storage, accounts, the progress dashboard, administrator analytics and the
+  system log.
+
+The PSM 2 EV1 rubric map and demo script are in `PSM2_EV1_READINESS.md`.
 
 **Phases 1 and 2 are implemented, pending named review, and Phase 3 (assessments and BKT
 adaptation) is implemented on the synthetic fixture, pending approval of the learning
@@ -48,6 +60,10 @@ validated (approvals pending); participant study NO; deployment NO.
 
 | Purpose | Command |
 | --- | --- |
+| Local MySQL (once, then automatic in the preview) | `npm run db:local -- init`; also `start`, `stop`, `status`, `url` |
+| Integration suite (real MySQL) | `UFUQ_TEST_MYSQL_URL=$(node scripts/dev/mysql-local.mjs url test) npm run test:integration` |
+| Create an administrator | `UFUQ_MYSQL_URL=... UFUQ_ADMIN_PASSWORD=... npm run admin:create -- "Name" email` |
+| Qibla oracle | `python -I tools/qibla-reference/qibla_reference.py --check`; `python -I -m unittest discover -s tools/qibla-reference/tests` |
 | All gates | `npm run check && npm run test && npm run test:reference && npm run evidence:bkt-sensitivity -- --check && npm run build && npm run exports:check && npm run test:e2e` |
 | E2E beside a running preview | `UFUQ_E2E_WEB_PORT=4183 UFUQ_E2E_API_PORT=4184 npm run test:e2e` (the runner refuses ports it does not own) |
 | Re-acquire sky sources (network) | `node scripts/evidence/acquire-sky-catalogue-v1.mjs` (new evidence directory; then regenerate) |
@@ -58,7 +74,17 @@ validated (approvals pending); participant study NO; deployment NO.
 | BKT oracle (uv CPython 3.14.6) | `python -I tools/bkt-reference/bkt_reference.py --check`; `python -I -m unittest discover -s tools/bkt-reference/tests` |
 | Astronomy oracle | `tools/astronomy-reference` with uv 0.11.32 at `%USERPROFILE%\.local\uv-0.11.32\uv.exe` |
 
-## Last completed increment (2026-11-05)
+## Last completed increment (2026-11-15)
+
+Branch `feat/navigation-lessons-bkt-accounts` (owner request: lessons, report BKT, Qibla,
+PSM 2 EV1 readiness). See `PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md` for the full record,
+`IMPLEMENTATION_DECISIONS.md` IMP-012/014/015/016/017/023/024 for the decisions, and
+`.agent/execplans/phase-04-navigation-lessons-accounts.md` for the plan.
+
+Earlier the same day, on `main`: the five-star Cassiopeia figure was renamed Dhāt
+al-Kursī with teaching lines, and al-Nāqa and its parts were removed (owner requests).
+
+## Earlier increment (2026-11-05)
 
 **Latest (owner request): the five-star Cassiopeia figure is now named Dhāt al-Kursī (ذات الكرسي).**
 al-Kaff al-Khaḍīb stays as its alternative name. The change covers the sky figure, its card, the pattern record
@@ -137,6 +163,15 @@ that, `feat/phase-03-assessment-bkt` added Phase 3.
 
 ## Next justified step
 
+- **Owner, before PSM 2 EV1:** run `npm run db:local -- init` once (already done on
+  this computer), create your administrator with `npm run admin:create`, then follow
+  the demo script in `PSM2_EV1_READINESS.md`.
+- **Agent, no approval needed to start:**
+  - replay of matching retries (IMP-015 request fingerprints);
+  - local caching of an answer when the API is unreachable (UC-103 E1);
+  - NFR-1 frame-rate and picking-latency measurements;
+  - the pre-test, post-test and SUS instruments, which need BKT-005 approval first.
+
 0. **Arabic sky and lessons (agent, no approval needed to start):**
    - turn `anwa-general-knowledge.md` (GK-01..GK-15) into proposed lesson-content
      records, introduction first (al-Jady stays north and why), for educational review;
@@ -161,6 +196,17 @@ that, `feat/phase-03-assessment-bkt` added Phase 3.
    deployment; Qibla (KC-05) after the Qibla geodesy decisions.
 
 ## Open owner actions
+
+- **New (2026-11-15):**
+  - review the report-based learning configuration and the implementer's readings
+    (IMP-014: levels, "repeated" as two, restore rule);
+  - approve the Kaaba coordinate and the spherical model with the Ilm al-Falak reviewer
+    (IMP-023, AST-005);
+  - confirm the provisional account policy (IMP-017: 5 failures and 15 minutes, 8-hour
+    sessions);
+  - educational review of the walkthrough texts (IMP-024).
+- **Test data:** the local database holds the test learners created while checking this
+  increment (emails ending in `@example.test`). They are test data only.
 
 - **Arabic sky review:**
   - cultural, Arabic-language, identification and educational review of

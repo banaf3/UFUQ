@@ -3,18 +3,25 @@
  * for a scenario or a chosen instant, navigated with the mouse, touch or keyboard. A
  * lesson starts only from the top bar.
  */
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import {
+  type KeyboardEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import type {
   DatasetSummaryV2,
   LessonExecutionScope,
-  LessonSessionV2,
   SkyFigureV2,
   SkyReferenceV2,
   SkyViewV2,
 } from '@ufuq/contracts';
 
-import { ApiError, createLesson, getSky, listDatasets } from '../api.js';
+import { ApiError, getSky, listDatasets } from '../api.js';
 import {
   altAz,
   meanDirection,
@@ -91,14 +98,35 @@ const describeError = (caught: unknown) => {
 /** "YYYY-MM-DDTHH:mm" (datetime-local, read as UTC) to canonical whole-second UTC. */
 const canonicalUtc = (value: string) => `${value}:00Z`;
 
+/**
+ * A star without an Arabic name: its IAU name, else its Hipparcos number, else its
+ * magnitude. Route stars carry UFUQ ids (ufuq-star-NNN) that mean nothing to a reader.
+ */
+function plainStarName(sky: SkyViewV2, index: number): string {
+  const modern = sky.modernNames.find((name) => name.starIndex === index);
+  if (modern) return modern.name;
+  const id = sky.stars.ids[index] ?? '';
+  if (id.startsWith('hip-')) return id.replace('hip-', 'HIP ');
+  const magnitude = sky.stars.visualMagnitudes[index];
+  return magnitude === undefined ? 'Star' : `Star of magnitude ${magnitude.toFixed(1)}`;
+}
+
 export function ExplorerPage({
   learnerId,
   identityEnabled,
-  onLessonStarted,
+  onStartLesson,
+  accountSlot,
 }: {
   readonly learnerId: string | null;
   readonly identityEnabled: boolean;
-  readonly onLessonStarted: (lesson: LessonSessionV2) => void;
+  /** Opens the lesson for a scenario: the walkthrough first, then the assessment. */
+  readonly onStartLesson: (choice: {
+    readonly datasetId: string;
+    readonly scenarioId: string;
+    readonly scope: LessonExecutionScope;
+  }) => Promise<void>;
+  /** The account menu (sign in, progress, analytics), shown before Start lesson. */
+  readonly accountSlot?: ReactNode;
 }) {
   const [datasets, setDatasets] = useState<readonly DatasetSummaryV2[]>([]);
   const [selection, setSelection] = useState<Selection | null>(null);
@@ -257,7 +285,7 @@ export function ExplorerPage({
       target.kind === 'figure'
         ? (figure?.transliteration ?? '')
         : (sky.arabicNames.find((n) => n.starIndex === target.index)?.transliteration ??
-          (sky.stars.ids[target.index] ?? '').replace('hip-', 'HIP '));
+          plainStarName(sky, target.index));
     lookAt(directions, name, frame.fov);
   };
 
@@ -299,9 +327,11 @@ export function ExplorerPage({
     setStarting(true);
     setError(null);
     try {
-      onLessonStarted(
-        await createLesson(selection.datasetId, selection.scenarioId, selection.scope, learnerId),
-      );
+      await onStartLesson({
+        datasetId: selection.datasetId,
+        scenarioId: selection.scenarioId,
+        scope: selection.scope,
+      });
     } catch (caught) {
       setError(describeError(caught));
     } finally {
@@ -328,7 +358,7 @@ export function ExplorerPage({
   };
 
   const lessonBlocked = !identityEnabled
-    ? 'Lessons need a learner identity (start the API with UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1).'
+    ? 'Sign in to take a lesson.'
     : selection?.scenarioId === CUSTOM
       ? 'Lessons run on reviewed scenarios: choose a scenario first.'
       : null;
@@ -466,6 +496,7 @@ export function ExplorerPage({
             {SCOPE_BADGE[selection.scope]}
           </span>
         )}
+        {accountSlot}
         <button
           type="button"
           className="primary"
@@ -843,9 +874,9 @@ function FigureCard({
               <button type="button" className="link" onClick={() => onStar(index)}>
                 {name ? (
                   <Name arabic={name.arabic} transliteration={name.transliteration} />
-                ) : (
-                  (sky?.stars.ids[index] ?? '').replace('hip-', 'HIP ')
-                )}
+                ) : sky ? (
+                  plainStarName(sky, index)
+                ) : null}
               </button>
             </li>
           ))}

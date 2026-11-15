@@ -15,4 +15,5 @@ export * from './observer/observer-preset.js';
 export * from './catalogue/catalogue-star.js';
 export * from './profile/evaluate.js';
 export * from './profile/sky-display.js';
+export * from './qibla/spherical-bearing.js';
 export * as astrometry from './astrometry/public.js';

@@ -2,14 +2,34 @@
 // local reviewer inspection of real ScientificProfileV1 data that is still
 // REVIEW_REQUIRED. Results are labelled unreviewed and are never learner content.
 // Stop with Ctrl+C.
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..', '..');
+// Accounts and saved progress use the local MySQL server when it has been set up
+// (npm run db:local -- init); otherwise the preview runs with the in-memory learner only.
+const mysqlConfig = join(
+  process.env.UFUQ_MYSQL_HOME ??
+    join(process.env.LOCALAPPDATA ?? join(process.env.HOME ?? '.', '.local'), 'UFUQ', 'mysql-8.4'),
+  'ufuq-dev.json',
+);
+let mysqlUrl = process.env.UFUQ_MYSQL_URL;
+if (!mysqlUrl && existsSync(mysqlConfig)) {
+  spawnSync(process.execPath, [join(root, 'scripts/dev/mysql-local.mjs'), 'start'], {
+    stdio: 'inherit',
+  });
+  mysqlUrl = JSON.parse(readFileSync(mysqlConfig, 'utf8')).url;
+}
 const children = [
   spawn(process.execPath, [join(root, 'apps/api/dist/server.js')], {
     cwd: root,
-    env: { ...process.env, UFUQ_ENABLE_REVIEW_PREVIEW: '1', UFUQ_ENABLE_DEVELOPMENT_IDENTITY: '1' },
+    env: {
+      ...process.env,
+      UFUQ_ENABLE_REVIEW_PREVIEW: '1',
+      UFUQ_ENABLE_DEVELOPMENT_IDENTITY: '1',
+      ...(mysqlUrl ? { UFUQ_MYSQL_URL: mysqlUrl } : {}),
+    },
     stdio: 'inherit',
     windowsHide: true,
   }),

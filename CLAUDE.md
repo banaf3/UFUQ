@@ -51,11 +51,18 @@ statements. Names show the `UFUQ_PLAIN_V1` transliteration in Tajawal. Lesson
 background: `docs/references/syntheses/anwa-general-knowledge.md`. The private authoring
 scripts and research notes are in `local-reference/cultural-astronomy/derived/research-notes/`.
 
+**Phase 4 (2026-11-15), owner request:** lessons open with a taught walkthrough (IMP-024)
+and assess with the report's adaptive support (lines without names, then none; IMP-014,
+`ADAPTIVE` but `REVIEW_REQUIRED`). The Qibla is the spherical bearing to an OSM Kaaba
+candidate (IMP-023, owner tolerance 15°). Accounts, mastery and attempts are stored in
+MySQL 8.4 (`npm run db:local`, IMP-015/017). The integration suite is active. See
+`docs/PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md` and `docs/PSM2_EV1_READINESS.md`.
+
 The V1 route-star catalogue is ESA Hipparcos 1997 `hip_main` with bounded RV omission
 (`docs/spikes/PHASE1_ROUTE_CATALOGUE_DECISION.md`). The leap, EOP, restoration and
 observer sources are in `docs/spikes/PHASE1_TIME_EOP_OBSERVER_AUTHORITY.md`. IERS
 Bulletin B values stay in ignored `data/generated/local-only/`. The first route's helper
-is al-Kaff al-Khaḍīb leading to al-Jady, with greater Banāt Naʿsh as the alternative. Search the owner's Arabic sources with
+is Dhāt al-Kursī (al-Kaff al-Khaḍīb, owner rename 2026-11-15) leading to al-Jady, with greater Banāt Naʿsh as the alternative. Search the owner's Arabic sources with
 `.agents/skills/ufuq-najdi-arabian-sky/scripts/arabic_sources.mjs`.
 
 ## Repository map
@@ -81,7 +88,7 @@ graph. Add a justified edge together with its check; never disable the gate.
 
 Run from the repository root with Node 22.16.0 and npm 10.9.2 (`.nvmrc`). In
 PowerShell use `npm.cmd`/`npx.cmd` if the execution policy blocks the wrappers.
-All commands below passed on 2026-11-02 except `test:integration` (inactive until Phase 4).
+All commands below passed on 2026-11-15; `test:integration` needs the local MySQL (`npm run db:local -- init`).
 
 | Purpose                                     | Command                                                                                                                    |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -93,7 +100,7 @@ All commands below passed on 2026-11-02 except `test:integration` (inactive unti
 | Browser smoke (owns the 4173/4174 servers)  | `npm run test:e2e`                                                                                                         |
 | Install Chromium if absent                  | `npx --no-install playwright install chromium`                                                                             |
 | Production/reference comparison (active)    | `npm run test:reference`                                                                                                   |
-| Integration suite (inactive until Phase 4)  | `npm run test:integration` (fails closed when empty)                                                                       |
+| Integration suite (real MySQL, active)      | `UFUQ_TEST_MYSQL_URL=$(node scripts/dev/mysql-local.mjs url test) npm run test:integration`                                |
 | Regenerate data / verify rebuild            | `npm run data:generate` / `npm run data:generate -- --check` (needs local `data/raw`)                                      |
 | Reviewer preview of the real sky            | `npm run preview:review` (labelled unreviewed; never learner content)                                                      |
 | Pending approvals                           | `npm run approvals:status`                                                                                                 |

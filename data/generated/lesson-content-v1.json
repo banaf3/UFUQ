@@ -11,10 +11,10 @@
   "artifactVersion": "1",
   "payload": {
     "contentScope": "SCIENTIFIC_PROFILE_V1",
-    "contentVersion": "1",
+    "contentVersion": "2",
     "directions": [
       {
-        "contentVersion": "1",
+        "contentVersion": "2",
         "definition": {
           "azimuthRadians": 0,
           "kind": "TERRESTRIAL_TRUE_NORTH"
@@ -35,7 +35,12 @@
             "transliteration": null
           }
         ],
-        "learnerTolerance": null,
+        "learnerTolerance": {
+          "approvalReference": "Owner decision 2026-11-15 (chat): a True North or Qibla answer within 15 degrees counts as correct (IMP-012).",
+          "decidedBy": "PROJECT_OWNER",
+          "maximumDifferenceRadians": 0.2617993877991494,
+          "policyId": "owner-direction-tolerance-15deg"
+        },
         "review": {
           "decisionDate": null,
           "decisionReference": null,
@@ -47,12 +52,96 @@
           "state": "REVIEW_REQUIRED"
         },
         "stableId": "direction-true-north"
+      },
+      {
+        "contentVersion": "1",
+        "definition": {
+          "destination": {
+            "crossChecks": [
+              {
+                "locator": "article Kaaba, coordinates 21 25 21 N, 39 49 34 E (accessed 2026-11-15)",
+                "sourceId": "WIKIPEDIA-KAABA",
+                "supports": "agrees within about 2 m"
+              },
+              {
+                "locator": "Jabatan Mufti Wilayah Persekutuan, Soalan lazim falak: Kiblat (accessed 2026-11-15)",
+                "sourceId": "MUFTI-WP-FALAK",
+                "supports": "Qibla azimuths used in Malaysia lie between 291 and 293 degrees"
+              }
+            ],
+            "datum": "WGS84",
+            "destinationId": "kaaba-osm-way-103914569",
+            "footprintRadiusMetres": 8,
+            "label": "The Kaaba, Makkah",
+            "latitudeDegrees": 21.4225079,
+            "longitudeDegrees": 39.826189,
+            "source": {
+              "locator": "OpenStreetMap way 103914569 (\"الكعبة\"), Nominatim centroid 21.4225079, 39.8261890, bounding box 21.4224468-21.4225861 N, 39.8261095-39.8262546 E, accessed 2026-11-15",
+              "sourceId": "OSM-NOMINATIM",
+              "supports": "the destination point; data (c) OpenStreetMap contributors, ODbL 1.0"
+            }
+          },
+          "kind": "QIBLA_SPHERICAL_INITIAL_BEARING"
+        },
+        "labels": [
+          {
+            "citations": [
+              {
+                "locator": "section 1.1 and NFR-2",
+                "sourceId": "UFUQ-REPORT",
+                "supports": "the Qibla as the direction derived from True North by spherical trigonometry"
+              }
+            ],
+            "gloss": "the direction of the Kaaba in Makkah, faced in prayer",
+            "languageTag": "ar",
+            "layer": "MODERN_ASTRONOMICAL",
+            "script": "القبلة",
+            "transliteration": "al-Qibla"
+          }
+        ],
+        "learnerTolerance": {
+          "approvalReference": "Owner decision 2026-11-15 (chat): a True North or Qibla answer within 15 degrees counts as correct (IMP-012).",
+          "decidedBy": "PROJECT_OWNER",
+          "maximumDifferenceRadians": 0.2617993877991494,
+          "policyId": "owner-direction-tolerance-15deg"
+        },
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL",
+            "SCIENTIFIC"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "stableId": "direction-qibla"
       }
     ],
     "patterns": [
       {
-        "contentVersion": "1",
+        "contentVersion": "2",
         "labels": [
+          {
+            "citations": [
+              {
+                "locator": "al-Sufi catalogue heading, PDF p. 151",
+                "sourceId": "HAFEZ-2010",
+                "supports": "the chair figure name for Cassiopeia"
+              },
+              {
+                "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
+                "sourceId": "AL-SUFI-KAWAKIB",
+                "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
+              }
+            ],
+            "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
+            "languageTag": "ar",
+            "layer": "GRECO_ARABIC_SCHOLARLY",
+            "script": "ذات الكرسي",
+            "transliteration": "Dhāt al-Kursī"
+          },
           {
             "citations": [
               {
@@ -76,25 +165,6 @@
             "layer": "OLD_ARABIAN",
             "script": "الكف الخضيب",
             "transliteration": "al-Kaff al-Khaḍīb"
-          },
-          {
-            "citations": [
-              {
-                "locator": "al-Sufi catalogue heading, PDF p. 151",
-                "sourceId": "HAFEZ-2010",
-                "supports": "the chair figure name for Cassiopeia"
-              },
-              {
-                "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
-                "sourceId": "AL-SUFI-KAWAKIB",
-                "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
-              }
-            ],
-            "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
-            "languageTag": "ar",
-            "layer": "GRECO_ARABIC_SCHOLARLY",
-            "script": "ذات الكرسي",
-            "transliteration": "Dhāt al-Kursī"
           }
         ],
         "lineSegmentLayer": "MODERN_PEDAGOGICAL",
@@ -424,6 +494,54 @@
           "kind": "direction",
           "stableId": "direction-true-north"
         }
+      },
+      {
+        "citations": [
+          {
+            "locator": "NFR-2; storyboard figure 3-5 (Qibla derivation line)",
+            "sourceId": "UFUQ-REPORT",
+            "supports": "deriving the Qibla bearing from True North by spherical trigonometry"
+          }
+        ],
+        "explanation": "Stand facing True North, the point on the horizon below al-Jady. The Qibla is the shortest way over the Earth to the Kaaba. From this place it is a fixed angle clockwise from True North: turn that many degrees through east, south and west, or equally turn the rest of the way back from north towards the west.",
+        "historicalContext": {
+          "citations": [
+            {
+              "locator": "section 218 (local text)",
+              "sourceId": "IBN-QUTAYBA-ANWA",
+              "supports": "a historical, region-specific qibla rule (Iraq)"
+            }
+          ],
+          "layer": "HISTORICAL_CONTEXT_ONLY",
+          "text": "Arabic anwa writers tied the qibla to al-Jady for their own lands, for example al-Jady against the right shoulder in Iraq. Such rules belong to their place; away from it the angle must be computed for the observer."
+        },
+        "instruction": {
+          "fromStarId": "ufuq-star-006",
+          "kind": "HORIZON_TURN_FROM_NORTH"
+        },
+        "layer": "MODERN_ASTRONOMICAL",
+        "relationshipType": "LEADS_TO_DIRECTION",
+        "relationshipVersion": "1",
+        "review": {
+          "decisionDate": null,
+          "decisionReference": null,
+          "requiredReviewKinds": [
+            "EDUCATIONAL",
+            "SCIENTIFIC"
+          ],
+          "reviewer": null,
+          "scope": "SCIENTIFIC_PROFILE_V1",
+          "state": "REVIEW_REQUIRED"
+        },
+        "source": {
+          "kind": "pattern",
+          "stableId": "pattern-al-jady"
+        },
+        "stableId": "guide-north-to-qibla",
+        "target": {
+          "kind": "direction",
+          "stableId": "direction-qibla"
+        }
       }
     ],
     "routes": [
@@ -450,7 +568,7 @@
           "scope": "SCIENTIFIC_PROFILE_V1",
           "state": "REVIEW_REQUIRED"
         },
-        "routeVersion": "1",
+        "routeVersion": "2",
         "selectionPriority": 1,
         "stableId": "route-kaff-to-jady-to-north",
         "steps": [
@@ -459,7 +577,7 @@
             "guidanceRelationshipId": null,
             "knowledgeComponentId": "KC-02",
             "patternId": "pattern-al-kaff-al-khadib",
-            "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
+            "prompt": "Find Dhāt al-Kursī: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
             "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape.",
             "stepId": "step-1-find-helper",
             "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
@@ -470,8 +588,8 @@
             "guidanceRelationshipId": "guide-kaff-to-jady",
             "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
-            "prompt": "Follow the guide line from the middle of Dhāt al-Kursī towards the horizon and select al-Jady.",
-            "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
+            "prompt": "Now find al-Jady and select it.",
+            "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north.",
             "stepId": "step-2-find-jady",
             "successFeedback": "That is al-Jady, the polar star.",
             "taskKind": "IDENTIFY_TARGET_STAR"
@@ -486,9 +604,70 @@
             "stepId": "step-3-face-north",
             "successFeedback": "Your direction has been recorded and compared with True North.",
             "taskKind": "INDICATE_DIRECTION"
+          },
+          {
+            "directionId": "direction-qibla",
+            "guidanceRelationshipId": "guide-north-to-qibla",
+            "knowledgeComponentId": "KC-05",
+            "patternId": null,
+            "prompt": "Now face the Qibla: find True North, turn clockwise by the Qibla bearing of this place, then confirm your direction.",
+            "retryFeedback": "Your direction has been recorded and compared with the Qibla.",
+            "stepId": "step-4-face-qibla",
+            "successFeedback": "Your direction has been recorded and compared with the Qibla.",
+            "taskKind": "INDICATE_DIRECTION"
           }
         ],
-        "title": "From Dhāt al-Kursī to al-Jady to True North"
+        "title": "From Dhāt al-Kursī to al-Jady to True North and the Qibla",
+        "walkthrough": [
+          {
+            "focus": {
+              "figureId": "anwa-al-kaff-al-khadib",
+              "kind": "CULTURE_FIGURE"
+            },
+            "frameId": "frame-dhat-al-kursi",
+            "instruction": "Start in the north with Dhāt al-Kursī: five bright stars in a W or M. Learn its shape first; it is your way in to al-Jady."
+          },
+          {
+            "focus": {
+              "figureId": "anwa-kawkaba-al-firq",
+              "kind": "CULTURE_FIGURE"
+            },
+            "frameId": "frame-kawkaba-al-firq",
+            "instruction": "Next to it is Kawkabā al-Firq. Its bright star, al-Abyaḍ, is one of the stars the anwāʾ writers say lead the eye to al-Jady."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-kaff-to-jady"
+            },
+            "frameId": "frame-guide-to-jady",
+            "instruction": "Now trace from the middle star of Dhāt al-Kursī towards the pole. Follow the line until you reach al-Jady. The line is a UFUQ teaching aid, not a historical figure."
+          },
+          {
+            "focus": {
+              "hip": 11767,
+              "kind": "CULTURE_STAR"
+            },
+            "frameId": "frame-al-jady",
+            "instruction": "This is al-Jady. Learn its place well: every route in UFUQ ends here, and from it you find True North."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-jady-to-true-north"
+            },
+            "frameId": "frame-true-north",
+            "instruction": "Drop straight down from al-Jady to the horizon. That point on the ground is True North. al-Jady is the star; True North is the direction below it."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-north-to-qibla"
+            },
+            "frameId": "frame-qibla",
+            "instruction": "Face True North, then turn clockwise along the horizon by the Qibla bearing of this place. The arc shows the turn; the end of the arc is the Qibla."
+          }
+        ]
       },
       {
         "allowedAlternativeRouteIds": [
@@ -515,7 +694,7 @@
           "scope": "SCIENTIFIC_PROFILE_V1",
           "state": "REVIEW_REQUIRED"
         },
-        "routeVersion": "1",
+        "routeVersion": "2",
         "selectionPriority": 2,
         "stableId": "route-banat-to-jady-to-north",
         "steps": [
@@ -535,8 +714,8 @@
             "guidanceRelationshipId": "guide-banat-to-jady",
             "knowledgeComponentId": "KC-03",
             "patternId": "pattern-al-jady",
-            "prompt": "Follow the guide line through the two end stars of the box and select al-Jady.",
-            "retryFeedback": "That is not al-Jady. Follow the guide line all the way to the star low above the northern horizon.",
+            "prompt": "Now find al-Jady and select it.",
+            "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north.",
             "stepId": "step-2-find-jady",
             "successFeedback": "That is al-Jady, the polar star.",
             "taskKind": "IDENTIFY_TARGET_STAR"
@@ -551,9 +730,70 @@
             "stepId": "step-3-face-north",
             "successFeedback": "Your direction has been recorded and compared with True North.",
             "taskKind": "INDICATE_DIRECTION"
+          },
+          {
+            "directionId": "direction-qibla",
+            "guidanceRelationshipId": "guide-north-to-qibla",
+            "knowledgeComponentId": "KC-05",
+            "patternId": null,
+            "prompt": "Now face the Qibla: find True North, turn clockwise by the Qibla bearing of this place, then confirm your direction.",
+            "retryFeedback": "Your direction has been recorded and compared with the Qibla.",
+            "stepId": "step-4-face-qibla",
+            "successFeedback": "Your direction has been recorded and compared with the Qibla.",
+            "taskKind": "INDICATE_DIRECTION"
           }
         ],
-        "title": "From Banāt Naʿsh to al-Jady to True North"
+        "title": "From Banāt Naʿsh to al-Jady to True North and the Qibla",
+        "walkthrough": [
+          {
+            "focus": {
+              "figureId": "anwa-banat-nash-al-kubra",
+              "kind": "CULTURE_FIGURE"
+            },
+            "frameId": "frame-banat-nash-al-kubra",
+            "instruction": "Start with Banāt Naʿsh al-Kubrā: four stars make the bier and three daughters walk behind it. Learn this shape first."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-banat-to-jady"
+            },
+            "frameId": "frame-guide-to-jady",
+            "instruction": "Take the two stars at the end of the bier farthest from the daughters, and continue their line out of the box. Follow it to al-Jady. This pointer line is a modern UFUQ teaching aid; the anwāʾ texts do not state it."
+          },
+          {
+            "focus": {
+              "figureId": "anwa-al-farqadan",
+              "kind": "CULTURE_FIGURE"
+            },
+            "frameId": "frame-al-farqadan",
+            "instruction": "Around al-Jady wheel al-Farqadān, the two leading stars of the lesser Banāt Naʿsh. The group runs from this bright pair to al-Jady, its last daughter."
+          },
+          {
+            "focus": {
+              "hip": 11767,
+              "kind": "CULTURE_STAR"
+            },
+            "frameId": "frame-al-jady",
+            "instruction": "This is al-Jady. Learn its place well: every route in UFUQ ends here, and from it you find True North."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-jady-to-true-north"
+            },
+            "frameId": "frame-true-north",
+            "instruction": "Drop straight down from al-Jady to the horizon. That point on the ground is True North. al-Jady is the star; True North is the direction below it."
+          },
+          {
+            "focus": {
+              "kind": "RELATIONSHIP",
+              "relationshipId": "guide-north-to-qibla"
+            },
+            "frameId": "frame-qibla",
+            "instruction": "Face True North, then turn clockwise along the horizon by the Qibla bearing of this place. The arc shows the turn; the end of the arc is the Qibla."
+          }
+        ]
       }
     ],
     "scenarios": [
@@ -614,6 +854,6 @@
       "payloadSha256": "52c9bf424e30334c89ca082d87a22b34aae9f1640772e1f8ef33edc83b36231c"
     }
   },
-  "payloadSha256": "cc16ae2bc609c95b66651e3def9f48c33351bcf89eab7d466359d88da76d79d5",
+  "payloadSha256": "6a7c068a7663678712d7979f74acb70c33a06ad860354fba6ad128092837959d",
   "schemaVersion": 1
 }

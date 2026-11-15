@@ -123,6 +123,21 @@ Added 2026-11-02 from official records retrieved that day (`docs/SKY_EXPLORER.md
 
 ## Learner-modelling sources
 
+**Added 2026-11-15 (Phase 4):**
+
+- J. J. van Wijk and W. A. A. Nuij, "Smooth and efficient zooming and panning", IEEE
+  Symposium on Information Visualization (InfoVis 2003): the camera path of lesson
+  walkthroughs (`apps/web/src/sky/fly-to.ts`). d3-interpolate's `interpolateZoom`
+  documents the same method (https://d3js.org/d3-interpolate/zoom).
+- OWASP Password Storage Cheat Sheet (scrypt minimum N = 2^17, r = 8, p = 1) and OWASP
+  ASVS 5.0 V6.2 (password length 8 to 64, no composition rules): the provisional account
+  policy (IMP-017).
+- OpenStreetMap way 103914569 via Nominatim (ODbL 1.0, accessed 2026-11-15): the Kaaba
+  destination candidate (IMP-023). Cross-checks: Wikipedia, "Kaaba" (coordinates); Jabatan
+  Mufti Wilayah Persekutuan, falak FAQ "Kiblat" (Malaysian Qibla azimuths 291°–293°).
+- al-Ṣūfī, *Ṣuwar al-Kawākib al-Thābita*, chapter Dhāt al-Kursī, Arabic Wikisource
+  transcription of the Library of Congress scan: the name Dhāt al-Kursī (sky culture).
+
 Added 2026-11-02 for Phase 3 from official publisher, proceedings, DOI or repository
 records retrieved that day. They inform BKT-001..BKT-005; none approves a UFUQ parameter,
 threshold, cue or policy, and secondary summaries are never cited as the paper's words.

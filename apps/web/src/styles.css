@@ -630,3 +630,163 @@ input {
     width: 9rem;
   }
 }
+
+/* Accounts (UC-101), progress (UC-104), analytics (UC-105) and the walkthrough. */
+button.link {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  padding: 0.25rem 0;
+  text-decoration: underline;
+}
+
+.account-menu {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 55%);
+}
+
+.dialog {
+  display: grid;
+  gap: 0.75rem;
+  width: min(92vw, 380px);
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.dialog h2 {
+  margin: 0;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.form-field input {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(0 0 0 / 30%);
+  color: inherit;
+  font: inherit;
+}
+
+.form-field small {
+  opacity: 0.75;
+}
+
+.dialog-buttons,
+.walkthrough-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.walkthrough-buttons {
+  margin: 1rem 0 0.5rem;
+}
+
+.instruction {
+  font-weight: 600;
+}
+
+.account-page {
+  max-width: 1080px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.account-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.data-table {
+  width: 100%;
+  margin: 0.75rem 0 1.5rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.meter {
+  display: inline-block;
+  width: 7rem;
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 12%);
+  vertical-align: middle;
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.stat-tiles > div {
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--glass);
+}
+
+.stat-tiles dt {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.stat-tiles dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bars {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.bars li {
+  display: grid;
+  grid-template-columns: 7rem 1fr 3rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bars .bar {
+  display: block;
+  height: 0.7rem;
+  border-radius: 3px;
+  background: var(--accent);
+}

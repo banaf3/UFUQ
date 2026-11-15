@@ -3,7 +3,14 @@
  * view, the target it eases towards, drag inertia and the viewport size. Mutated only
  * through these methods from pointer handlers and the render loop.
  */
-import { clampFov, createProjector, type Projector, type ViewState } from './projection.js';
+import { type Flight, flyPath } from './fly-to.js';
+import {
+  clampFov,
+  createProjector,
+  PROJECTIONS,
+  type Projector,
+  type ViewState,
+} from './projection.js';
 
 const DEG = Math.PI / 180;
 export const MIN_ALTITUDE = -85 * DEG;
@@ -19,6 +26,8 @@ export class ViewController {
   private dragging = false;
   private size = { width: 1, height: 1 };
   private requestFrameFn: () => void = () => undefined;
+  /** A van Wijk and Nuij flight in progress (lesson walkthroughs); any user input ends it. */
+  private flight: { readonly path: Flight; elapsedMs: number } | null = null;
 
   constructor(initial: ViewState) {
     this.current = initial;
@@ -42,7 +51,22 @@ export class ViewController {
   }
 
   get settled(): boolean {
-    return this.current === this.goal;
+    return this.current === this.goal && this.flight === null;
+  }
+
+  /** Flies smoothly to a view (zooming out on long moves), then settles there. */
+  flyTo(change: Partial<ViewState>): void {
+    const projection = change.projection ?? this.goal.projection;
+    const target: ViewState = {
+      projection,
+      azimuth: change.azimuth ?? this.goal.azimuth,
+      altitude: clampAltitude(change.altitude ?? this.goal.altitude),
+      fov: clampFov(change.fov ?? this.goal.fov, projection),
+    };
+    this.velocity = { azimuth: 0, altitude: 0 };
+    const maximum = PROJECTIONS[projection].maxFov;
+    this.flight = { path: flyPath(this.current, target, maximum), elapsedMs: 0 };
+    this.goal = target;
   }
 
   /** Binds this canvas's own frame request (R3F invalidate of its root only). */
@@ -65,6 +89,7 @@ export class ViewController {
 
   /** Eases towards the change; without animation the view jumps there. */
   setTarget(change: Partial<ViewState>, animate = true): void {
+    this.flight = null;
     const projection = change.projection ?? this.goal.projection;
     this.goal = {
       projection,
@@ -82,6 +107,7 @@ export class ViewController {
   }
 
   beginDrag(): void {
+    this.flight = null;
     this.dragging = true;
     this.velocity = { azimuth: 0, altitude: 0 };
     this.goal = this.current;
@@ -102,6 +128,7 @@ export class ViewController {
   }
 
   zoomTo(fov: number): void {
+    this.flight = null;
     this.current = { ...this.current, fov: clampFov(fov, this.current.projection) };
     this.goal = this.current;
   }
@@ -113,6 +140,17 @@ export class ViewController {
 
   /** Advances inertia and easing by dt seconds; true while still moving. */
   step(dt: number): boolean {
+    if (this.flight) {
+      this.flight.elapsedMs += dt * 1000;
+      const t = this.flight.elapsedMs / this.flight.path.durationMs;
+      if (t < 1) {
+        this.current = this.flight.path.at(t);
+        return true;
+      }
+      this.current = this.goal;
+      this.flight = null;
+      return false;
+    }
     let moving = false;
     const v = this.velocity;
     if (!this.dragging && (Math.abs(v.azimuth) > 1e-4 || Math.abs(v.altitude) > 1e-4)) {

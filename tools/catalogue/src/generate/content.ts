@@ -45,7 +45,7 @@ export function generateLessonContent(
     'data/curation/scenarios/scenarios.v1.json',
   );
   const payload: LessonContentPayload = {
-    contentVersion: '1',
+    contentVersion: '2',
     contentScope: 'SCIENTIFIC_PROFILE_V1',
     starArtifact: { artifactId: stars.artifactId, payloadSha256: stars.payloadSha256 },
     patterns: patterns.patterns,
@@ -54,9 +54,17 @@ export function generateLessonContent(
     routes: routes.routes,
     scenarios: scenarios.scenarios,
   };
+  const culture = readCuration<{
+    figures: { figureId: string }[];
+    stars: { hip: number }[];
+  }>(root, 'data/curation/sky-culture/arabic-anwa.v1.json');
   const errors = validateLessonContent(
     payload,
     new Set(stars.payload.stars.map((star) => star.starId)),
+    {
+      figureIds: new Set(culture.figures.map((figure) => figure.figureId)),
+      starHips: new Set(culture.stars.map((star) => star.hip)),
+    },
   );
   if (errors.length > 0) throw new Error(`Lesson content is invalid:\n${errors.join('\n')}`);
   const { approval } = loadApproval(root, 'lesson-content-v1', sha256Hex(canonicalJson(payload)));
@@ -126,6 +134,14 @@ const LEAP_STEPS: readonly (readonly [number, number])[] = [
   [57204, 36],
   [57754, 37],
 ];
+
+/** Invented technical tolerance (10 degrees) for the graded direction path; not IMP-012. */
+const SYNTHETIC_TOLERANCE = {
+  policyId: 'synthetic-direction-tolerance',
+  maximumDifferenceRadians: Math.PI / 18,
+  decidedBy: 'SYNTHETIC_TECHNICAL' as const,
+  approvalReference: 'SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)',
+};
 
 const review = (kinds: string[] = []) => ({
   ...SYNTHETIC_REVIEW,
@@ -321,7 +337,7 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
       | 'SELECT_ALL_PATTERN_MEMBERS'
       | 'IDENTIFY_TARGET_STAR'
       | 'INDICATE_DIRECTION',
-    knowledgeComponentId: 'KC-01' | 'KC-02' | 'KC-03' | 'KC-04',
+    knowledgeComponentId: 'KC-01' | 'KC-02' | 'KC-03' | 'KC-04' | 'KC-05',
     patternId: string | null,
     guidanceRelationshipId: string | null,
     prompt: string,
@@ -331,7 +347,12 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
     // Technical KC slots for the synthetic routes; not a cultural or educational mapping.
     knowledgeComponentId,
     patternId,
-    directionId: taskKind === 'INDICATE_DIRECTION' ? 'direction-true-north' : null,
+    directionId:
+      taskKind !== 'INDICATE_DIRECTION'
+        ? null
+        : knowledgeComponentId === 'KC-05'
+          ? 'direction-qibla'
+          : 'direction-true-north',
     guidanceRelationshipId,
     prompt,
     successFeedback: 'Accepted (synthetic technical fixture).',
@@ -387,11 +408,32 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         definition: { kind: 'TERRESTRIAL_TRUE_NORTH', azimuthRadians: 0 },
         // Invented technical tolerance (10 degrees) so the graded direction path can be
         // tested. It is not a learner tolerance; IMP-012 remains unresolved.
-        learnerTolerance: {
-          policyId: 'synthetic-direction-tolerance',
-          maximumDifferenceRadians: Math.PI / 18,
-          approvalReference: 'SYNTHETIC TECHNICAL FIXTURE: not a learner tolerance (IMP-012)',
+        learnerTolerance: SYNTHETIC_TOLERANCE,
+        review: review(),
+      },
+      {
+        stableId: 'direction-qibla',
+        contentVersion: '1',
+        labels: [label('Qibla (synthetic fixture)')],
+        definition: {
+          kind: 'QIBLA_SPHERICAL_INITIAL_BEARING',
+          // Invented technical destination, not the Kaaba: it only exercises the code path.
+          destination: {
+            destinationId: 'synthetic-destination',
+            label: 'Synthetic destination (technical fixture)',
+            latitudeDegrees: 20,
+            longitudeDegrees: 40,
+            datum: 'WGS84',
+            footprintRadiusMetres: 1,
+            source: {
+              sourceId: 'SYNTHETIC',
+              locator: 'invented technical value',
+              supports: 'software tests only',
+            },
+            crossChecks: [],
+          },
         },
+        learnerTolerance: SYNTHETIC_TOLERANCE,
         review: review(),
       },
     ],
@@ -432,6 +474,19 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         review: review(),
       },
       {
+        stableId: 'synthetic-guide-qibla',
+        relationshipVersion: '1',
+        source: { kind: 'pattern', stableId: 'synthetic-pattern-target' },
+        target: { kind: 'direction', stableId: 'direction-qibla' },
+        relationshipType: 'LEADS_TO_DIRECTION',
+        instruction: { kind: 'HORIZON_TURN_FROM_NORTH', fromStarId: 'synthetic-star-target' },
+        layer: 'SYNTHETIC_TECHNICAL',
+        explanation: 'Synthetic turn from north to the destination bearing.',
+        historicalContext: null,
+        citations: [],
+        review: review(),
+      },
+      {
         stableId: 'synthetic-guide-north',
         relationshipVersion: '1',
         source: { kind: 'pattern', stableId: 'synthetic-pattern-target' },
@@ -452,6 +507,33 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         title: 'Synthetic route A',
         selectionPriority: 1,
         requiredStarIds: [...helperA, 'synthetic-star-target'],
+        walkthrough: [
+          {
+            frameId: 'frame-helper',
+            focus: { kind: 'PATTERN', patternId: 'synthetic-pattern-helper-a' },
+            instruction: 'Synthetic helper pattern.',
+          },
+          {
+            frameId: 'frame-guide',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-a' },
+            instruction: 'Synthetic guide.',
+          },
+          {
+            frameId: 'frame-target',
+            focus: { kind: 'PATTERN', patternId: 'synthetic-pattern-target' },
+            instruction: 'Synthetic target.',
+          },
+          {
+            frameId: 'frame-north',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-north' },
+            instruction: 'Synthetic north.',
+          },
+          {
+            frameId: 'frame-qibla',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-qibla' },
+            instruction: 'Synthetic qibla.',
+          },
+        ],
         steps: [
           step(
             'step-1',
@@ -477,6 +559,14 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
             'synthetic-guide-north',
             'Face True North and confirm.',
           ),
+          step(
+            'step-4',
+            'INDICATE_DIRECTION',
+            'KC-05',
+            null,
+            'synthetic-guide-qibla',
+            'Face the synthetic destination and confirm.',
+          ),
         ],
         allowedAlternativeRouteIds: ['synthetic-route-b'],
         review: review(),
@@ -487,6 +577,33 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
         title: 'Synthetic route B',
         selectionPriority: 2,
         requiredStarIds: [...helperB, 'synthetic-star-target'],
+        walkthrough: [
+          {
+            frameId: 'frame-helper',
+            focus: { kind: 'PATTERN', patternId: 'synthetic-pattern-helper-b' },
+            instruction: 'Synthetic helper pattern.',
+          },
+          {
+            frameId: 'frame-guide',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-b' },
+            instruction: 'Synthetic guide.',
+          },
+          {
+            frameId: 'frame-target',
+            focus: { kind: 'PATTERN', patternId: 'synthetic-pattern-target' },
+            instruction: 'Synthetic target.',
+          },
+          {
+            frameId: 'frame-north',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-north' },
+            instruction: 'Synthetic north.',
+          },
+          {
+            frameId: 'frame-qibla',
+            focus: { kind: 'RELATIONSHIP', relationshipId: 'synthetic-guide-qibla' },
+            instruction: 'Synthetic qibla.',
+          },
+        ],
         steps: [
           step(
             'step-1',
@@ -511,6 +628,14 @@ export function generateSyntheticTechnicalDataset(root: string): ArtifactEnvelop
             null,
             'synthetic-guide-north',
             'Face True North and confirm.',
+          ),
+          step(
+            'step-4',
+            'INDICATE_DIRECTION',
+            'KC-05',
+            null,
+            'synthetic-guide-qibla',
+            'Face the synthetic destination and confirm.',
           ),
         ],
         allowedAlternativeRouteIds: ['synthetic-route-a'],

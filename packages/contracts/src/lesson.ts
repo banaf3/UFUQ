@@ -124,6 +124,41 @@ export type SkyOverlayV2 =
       readonly kind: 'STAR_LABEL';
       readonly handle: string;
       readonly labels: readonly OverlayLabelV2[];
+    }
+  | {
+      /**
+       * Every figure line of the sky culture, without names (cue FIGURE_LINES). The target
+       * figure is one of many, so the lines orient without naming the answer.
+       */
+      readonly kind: 'FIGURE_LINES';
+      readonly segments: readonly (readonly [string, string])[];
+    }
+  | {
+      /** Names of every figure and named star, the target included (cue FIGURE_NAMES). */
+      readonly kind: 'FIGURE_NAMES';
+      readonly figures: readonly {
+        readonly memberHandles: readonly string[];
+        readonly arabic: string;
+        readonly transliteration: string;
+        /** True for figures nested inside a larger one (drawn smaller). */
+        readonly child: boolean;
+      }[];
+      readonly stars: readonly {
+        readonly handle: string;
+        readonly arabic: string;
+        readonly transliteration: string;
+        /** The culture's guidance target (al-Jady), named in bold. */
+        readonly guidanceTarget: boolean;
+      }[];
+    }
+  | {
+      /** The turn along the horizon from True North to a direction (cue QIBLA_ARC_FULL). */
+      readonly kind: 'HORIZON_ARC';
+      readonly relationshipId: string;
+      readonly fromAzimuthRadians: number;
+      readonly toAzimuthRadians: number;
+      readonly label: string;
+      readonly explanation: string;
     };
 
 export type LessonTaskKindV2 =
@@ -148,7 +183,10 @@ export interface LessonStepPromptV2 {
   readonly taskKind: LessonTaskKindV2;
   readonly knowledgeComponentId: KnowledgeComponentIdV2 | null;
   readonly prompt: string;
-  /** Presentation hint: cardinal labels are hidden while the learner indicates a direction. */
+  /**
+   * Cardinal labels are hidden unless the issued cues include CARDINAL_MARKS (adaptive) or,
+   * without an adaptive policy, while the learner indicates a direction.
+   */
   readonly hideCardinalLabels: boolean;
   readonly support: IssuedSupportV2;
   /** Everything the scene shows for this step: the issued cues and nothing else. */
@@ -185,6 +223,54 @@ export interface LessonSessionV2 {
   readonly stars: readonly SkyStarV2[];
   readonly currentStep: LessonStepPromptV2 | null;
   readonly provenance: LessonProvenanceV2;
+}
+
+/**
+ * The taught walkthrough before an assessment (report storyboard figure 3-5). It uses its
+ * own star handles, so nothing it shows identifies a star in a later assessment lesson.
+ */
+export interface CreateWalkthroughRequestV2 {
+  readonly contractVersion: LessonContractVersion;
+  readonly datasetId: string;
+  readonly scenarioId: string;
+  readonly executionScope: LessonExecutionScope;
+}
+
+export interface WalkthroughFrameV2 {
+  readonly frameId: string;
+  /** The focus name: Arabic script (or null) and its plain transliteration or English name. */
+  readonly title: { readonly arabic: string | null; readonly text: string };
+  /** UFUQ's teaching instruction for this frame. */
+  readonly instruction: string;
+  /** The cited card text of the focus record, when it has one. */
+  readonly about: string | null;
+  readonly references: readonly { readonly title: string; readonly detail: string | null }[];
+  /** Set when the frame draws a modern teaching aid rather than a historical figure. */
+  readonly layerNote: string | null;
+  /** Stars and horizon directions the camera frames, as handles and unit ENU vectors. */
+  readonly focusHandles: readonly string[];
+  readonly focusEnu: readonly (readonly [number, number, number])[];
+  readonly overlays: readonly SkyOverlayV2[];
+}
+
+export interface WalkthroughV2 {
+  readonly contractVersion: LessonContractVersion;
+  readonly walkthroughId: string;
+  readonly datasetId: string;
+  readonly scenario: { readonly scenarioId: string; readonly label: string; readonly utc: string };
+  readonly observerLabel: string;
+  readonly routeTitle: string;
+  readonly stars: readonly SkyStarV2[];
+  /** Faint context: every figure line of the sky culture. */
+  readonly figureLines: readonly (readonly [string, string])[];
+  readonly frames: readonly WalkthroughFrameV2[];
+  /** Frames left out because their focus is below the horizon in this scenario. */
+  readonly skippedFrameIds: readonly string[];
+  readonly provenance: {
+    readonly executionScope: LessonExecutionScope;
+    readonly contentReviewState: string;
+    readonly notices: readonly string[];
+  };
 }
 
 export type StepAnswerV2 =
@@ -311,6 +397,21 @@ export function parseCreateLessonRequest(value: unknown): Parsed<CreateLessonReq
   if (!PURPOSES.has(body.sessionPurpose as string))
     return { ok: false, reason: 'sessionPurpose must be PRE_TEST, LEARNING, POST_TEST or RECALL.' };
   return { ok: true, value: body as unknown as CreateLessonRequestV2 };
+}
+
+/** Framework-free validator for the create-walkthrough request (IMP-019). */
+export function parseCreateWalkthroughRequest(value: unknown): Parsed<CreateWalkthroughRequestV2> {
+  const body = objectWith(value, ['contractVersion', 'datasetId', 'scenarioId', 'executionScope']);
+  if (typeof body === 'string') return { ok: false, reason: body };
+  if (body.contractVersion !== LESSON_CONTRACT_VERSION)
+    return { ok: false, reason: `contractVersion must be ${LESSON_CONTRACT_VERSION}.` };
+  if (typeof body.datasetId !== 'string' || !IDENTIFIER.test(body.datasetId))
+    return { ok: false, reason: 'datasetId required.' };
+  if (typeof body.scenarioId !== 'string' || !IDENTIFIER.test(body.scenarioId))
+    return { ok: false, reason: 'scenarioId required.' };
+  if (!SCOPES.has(body.executionScope as string))
+    return { ok: false, reason: 'Unknown executionScope.' };
+  return { ok: true, value: body as unknown as CreateWalkthroughRequestV2 };
 }
 
 function parseAnswer(value: unknown): string | null {

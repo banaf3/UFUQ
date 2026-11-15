@@ -7,3 +7,5 @@ export interface HealthResponse {
 export * from './lesson.js';
 
 export * from './sky.js';
+
+export * from './account.js';

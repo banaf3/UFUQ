@@ -605,6 +605,11 @@ Historical report/deviation/authority status remains in `governance/`.
   refuses a real tolerance without approved review. The synthetic fixture carries an
   invented 10° technical tolerance to exercise the graded path. Set answers
   (`SELECT_ALL_PATTERN_MEMBERS`) are scored by exact set equality, with no partial credit.
+  **2026-11-15 (owner decision, chat):** a True North or Qibla answer within 15° counts
+  as correct. Both direction records carry it as `decidedBy: PROJECT_OWNER`; the records
+  stay `REVIEW_REQUIRED`, so strict execution still fails closed. The validator accepts
+  an owner-decided tolerance on a record under review, and a reviewer tolerance only on an
+  approved record. The Qibla direction is IMP-023.
 - **Status:** unresolved
 - **What code it affects:** Scenario/route fixture, route-selection use case,
   assessment-core scoring, API validation, browser interaction, reference tests.
@@ -641,6 +646,16 @@ Historical report/deviation/authority status remains in `governance/`.
   report example parameters (`REPORT_EXAMPLE_NOT_CALIBRATED`) and lists every null policy
   with its owning decision; real lessons therefore run `NON_ADAPTIVE`. The synthetic
   fixture's adaptive policies are invented technical values, not proposals.
+  **2026-11-15 (owner instruction, "as the report stated"):** the real configuration is
+  now `ADAPTIVE` with the report's values: Table 3-14 parameters, a 0.85 threshold (at or
+  above), an update after every scored attempt (§2.5.4) and the Table 2-5 responses. The
+  implementer's readings are recorded for review: GUIDED, FADING and INDEPENDENT are the
+  storyboard's figures 3-5, 3-6 and 3-7; new learners start in FADING (lines without
+  names); "repeated" correct answers without hints means two; an incorrect answer below the
+  threshold restores the next level of support (UC-103 A1); decisions read the latest
+  answer only. New cues: `FIGURE_LINES`, `FIGURE_NAMES`, `CARDINAL_MARKS`,
+  `QIBLA_ARC_FULL` and `QIBLA_BEARING_TEXT`. The artifact stays `REVIEW_REQUIRED`
+  (`PHASE4_LESSONS_ACCOUNTS_PERSISTENCE.md`).
 - **Status:** unresolved
 - **What code it affects:** BKT configuration, the `tutoring-core/src/adaptive-policy`
   module, lesson cues, mastery display, and model-policy tests.
@@ -654,6 +669,12 @@ Historical report/deviation/authority status remains in `governance/`.
 - **Current choice:** MySQL/InnoDB transaction with immutable scenario, request
   fingerprint, stored canonical result, attempt/model/scaffold record, monotonic per-KC
   revision, fixed lock order, and bounded recognized retries.
+  **2026-11-15 (implemented):** the frozen profile is MySQL 8.4.9 LTS, InnoDB, utf8mb4,
+  UTC sessions and READ COMMITTED attempt transactions. Each transaction locks the
+  skill's mastery row, checks its revision, updates it and inserts the attempt. Migrations
+  live in `apps/api/src/persistence/migrations.ts`. The integration suite is active (real
+  MySQL in CI as a service container). Request fingerprints and replay of matching retries
+  are not built yet.
 - **Status:** approved
 - **What code it affects:** API use case, persistence ports/adapters, schema/migrations,
   integration tests.
@@ -670,6 +691,9 @@ Historical report/deviation/authority status remains in `governance/`.
   register with no personal data. It is composed only with `enableDevelopmentIdentity`
   (`UFUQ_ENABLE_DEVELOPMENT_IDENTITY=1`, set by `test:e2e` and `preview:review`).
   Without it, lesson creation fails closed with `DEVELOPMENT_IDENTITY_DISABLED`.
+  **2026-11-15:** accounts now exist (IMP-017). Learner ids `u-<id>` go to MySQL and
+  `dev-learner-*` ids stay in memory. The development identity remains opt-in for tests
+  and the review preview.
 - **Status:** provisional
 - **What code it affects:** API composition root, development configuration, build
   guards, early E2E fixtures.
@@ -682,6 +706,14 @@ Historical report/deviation/authority status remains in `governance/`.
   revocation, and privileged capabilities.
 - **Current choice:** Ports and capability types may be scaffolded; production policy is
   unresolved.
+  **2026-11-15 (provisional implementation, owner review):**
+  - learners register themselves; administrators are created only from the command line;
+  - scrypt at the OWASP minimum (N = 2^17, r = 8, p = 1);
+  - passwords of 8 to 64 characters with no composition rules (OWASP ASVS 5.0 V6.2);
+  - a 15-minute lock after five consecutive failures (the report asks for a temporary
+    lock without numbers);
+  - 8-hour HttpOnly, SameSite=Strict session cookies whose tokens are stored hashed.
+  Recovery, MFA, a common-password list and deployment security remain open.
 - **Status:** unresolved
 - **What code it affects:** Authentication/session adapters, account schema, routes,
   authorization and security tests.
@@ -708,3 +740,38 @@ Historical report/deviation/authority status remains in `governance/`.
   validator library added. **2026-11-02:** `lesson.v2` parsers (learner, session purpose,
   set answers, bounded untrusted telemetry) and `tutoring-core`'s configuration
   validators, still without a library.
+
+## IMP-023 — Qibla direction model and destination
+
+- **Decision:** How UFUQ computes the Qibla for a scenario observer, and which destination
+  coordinate it uses.
+- **Current choice (2026-11-15):** the spherical initial great-circle bearing, clockwise
+  from True North in [0°, 360°) (report NFR-2; the Qibla geodesy synthesis already named
+  the spherical model as the runtime choice). Degenerate geometry (coincident, antipodal,
+  observer at a pole, invalid) has no direction and is reported as such. The destination
+  candidate is OpenStreetMap way 103914569, Nominatim centroid 21.4225079° N, 39.8261890°
+  E (WGS 84, footprint about 8 m, accessed 2026-11-15). It is cross-checked against
+  Wikipedia's "Kaaba" coordinates and the Federal Territory Mufti's 291°–293° range for
+  Malaysia. UMPSA Pekan gives 292° 07′ 15″. An independent standard-library oracle
+  (`tools/qibla-reference`) checks ten cases in `test:reference`.
+- **Status:** provisional (AST-005 still needs the named Ilm al-Falak reviewer and the
+  Malaysian comparison authority).
+- **What code it affects:** `packages/astronomy-core/src/qibla`, the `direction-qibla`
+  record, lesson scoring and the walkthrough.
+- **Validation required:** reviewer approval of the coordinate and model, and a
+  comparison with JAKIM or the Pahang Mufti Department for the UMPSA point.
+
+## IMP-024 — Taught walkthrough and lessons on the Arabic sky
+
+- **Decision:** How a lesson teaches before it assesses, and what the learner sees.
+- **Current choice (2026-11-15, owner request):** each route has walkthrough frames
+  (`LessonRoute.walkthrough`): figures and stars of the Arabic sky culture, the route's
+  patterns, its guide lines, True North and the Qibla. Frames below the horizon are
+  skipped. The camera moves between frames on van Wijk and Nuij's smooth zoom-and-pan path
+  (IEEE InfoVis 2003; ρ = √2, as in d3), and lines are drawn progressively as it arrives. A
+  walkthrough has its own star handles and is never scored. Assessment cues use the same
+  culture's lines and names, so the lesson sky looks like the explorer.
+- **Status:** provisional (EDU-002 and cultural review of the frame texts).
+- **What code it affects:** `catalogue-schema` content model, `lesson-service.ts`,
+  `POST /api/v2/walkthroughs`, `apps/web/src/lesson`, `apps/web/src/sky/fly-to.ts`.
+- **Validation required:** educational review of the frame sequence and texts.

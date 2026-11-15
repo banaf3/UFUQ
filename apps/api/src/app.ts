@@ -4,18 +4,35 @@ import express from 'express';
 
 import type { ExecutionScope } from '@ufuq/astronomy-core';
 import {
+  ACCOUNT_CONTRACT_VERSION,
   type ApiErrorV2,
   type DatasetListResponseV2,
   type DevelopmentLearnerV2,
   type HealthResponse,
   LESSON_CONTRACT_VERSION,
   parseCreateLessonRequest,
+  parseLoginRequest,
+  parseRegisterRequest,
+  parseCreateWalkthroughRequest,
   parseSkyRequest,
   parseSubmitAnswerRequest,
 } from '@ufuq/contracts';
 
+import {
+  AccountError,
+  AccountService,
+  clearedSessionCookie,
+  publicUser,
+  readCookie,
+  SESSION_COOKIE,
+  sessionCookie,
+} from './accounts/account-service.js';
+import type { AccountStore, UserRecord } from './accounts/account-store.js';
+import type { ReportContext, ReportStore } from './accounts/reports.js';
 import { loadDataset } from './data/artifacts.js';
 import { DevelopmentLearnerRegistry } from './learners/development-learners.js';
+import type { LearnerStore } from './learners/learner-store.js';
+import { CompositeLearnerStore } from './persistence/mysql-learner-store.js';
 import { type DatasetRegistration, LessonError, LessonService } from './lesson/lesson-service.js';
 import { SkyService } from './sky/sky-service.js';
 
@@ -32,6 +49,17 @@ export interface AppOptions {
    * data). Off by default and never part of a production composition.
    */
   readonly enableDevelopmentIdentity?: boolean;
+  /**
+   * Accounts and durable learner models (report UC-101, UC-104, UC-105; MySQL in the
+   * server composition, in-memory stores in unit tests).
+   */
+  readonly accounts?: {
+    readonly accountStore: AccountStore;
+    readonly learnerStore: LearnerStore;
+    readonly reports: ReportStore | null;
+    /** Adds the Secure cookie attribute (HTTPS deployments). */
+    readonly secureCookies?: boolean;
+  };
 }
 
 export function defaultDataDirectory(): string {
@@ -110,9 +138,35 @@ export function createApp(options: AppOptions = {}): express.Express {
   app.disable('x-powered-by');
   app.use(express.json({ limit: '16kb' }));
   const learners = options.enableDevelopmentIdentity ? new DevelopmentLearnerRegistry() : null;
+  const accounts = options.accounts ?? null;
+  const store: LearnerStore | null = accounts
+    ? new CompositeLearnerStore(learners, accounts.learnerStore)
+    : learners;
   const datasets = createDatasets(options);
-  const service = new LessonService(datasets, learners);
+  const service = new LessonService(datasets, store);
   const sky = new SkyService(datasets);
+  const accountService = accounts ? new AccountService(accounts.accountStore) : null;
+  const reportContext = (): ReportContext => {
+    const learning = datasets.get('profile-v1-umpsa-pekan')?.dataset.learning;
+    return {
+      configurationSha256: learning?.payloadSha256 ?? null,
+      masteryThreshold: learning?.value?.masteryThreshold?.threshold ?? null,
+    };
+  };
+  const signedIn = async (request: express.Request): Promise<UserRecord | null> =>
+    accountService
+      ? accountService.userForToken(readCookie(request.headers.cookie, SESSION_COOKIE))
+      : null;
+  const requireAccounts = () => {
+    if (!accountService)
+      throw new AccountError(
+        503,
+        'ACCOUNTS_UNAVAILABLE',
+        'Accounts need the database; start the API with UFUQ_MYSQL_URL.',
+      );
+    return accountService;
+  };
+  const cookieFor = (token: string) => sessionCookie(token, accounts?.secureCookies ?? false);
 
   app.get('/health', (_request, response) => {
     const body: HealthResponse = { status: 'ok', service: 'api', phase: 'adaptive-tutoring' };
@@ -140,6 +194,88 @@ export function createApp(options: AppOptions = {}): express.Express {
     }
   });
 
+  // Accounts (report UC-101).
+  app.post('/api/v2/auth/register', async (request, response) => {
+    try {
+      const accountsService = requireAccounts();
+      const parsed = parseRegisterRequest(request.body);
+      if (!parsed.ok) throw new AccountError(400, 'BAD_REQUEST', parsed.reason);
+      const user = await accountsService.register(parsed.value);
+      const token = await accountsService.startSession(user);
+      response.status(201).setHeader('Set-Cookie', cookieFor(token)).json(publicUser(user));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  app.post('/api/v2/auth/login', async (request, response) => {
+    try {
+      const accountsService = requireAccounts();
+      const parsed = parseLoginRequest(request.body);
+      if (!parsed.ok) throw new AccountError(400, 'BAD_REQUEST', parsed.reason);
+      const { user, token } = await accountsService.login(parsed.value);
+      response.status(200).setHeader('Set-Cookie', cookieFor(token)).json(publicUser(user));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  app.post('/api/v2/auth/logout', async (request, response) => {
+    try {
+      await accountService?.logout(readCookie(request.headers.cookie, SESSION_COOKIE));
+      response.status(204).setHeader('Set-Cookie', clearedSessionCookie).end();
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  app.get('/api/v2/auth/me', async (request, response) => {
+    try {
+      requireAccounts();
+      const user = await signedIn(request);
+      if (!user) throw new AccountError(401, 'NOT_SIGNED_IN', 'Sign in to continue.');
+      response.status(200).json(publicUser(user));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  // Learner progress dashboard (report UC-104): only the signed-in learner's own data.
+  app.get('/api/v2/progress', async (request, response) => {
+    try {
+      requireAccounts();
+      const user = await signedIn(request);
+      if (!user) throw new AccountError(401, 'NOT_SIGNED_IN', 'Sign in to continue.');
+      if (!accounts?.reports)
+        throw new AccountError(503, 'ACCOUNTS_UNAVAILABLE', 'Progress needs the database.');
+      response.status(200).json(await accounts.reports.progress(user, reportContext()));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  // System analytics (report UC-105): administrators only, strictly read-only.
+  app.get('/api/v2/admin/analytics', async (request, response) => {
+    try {
+      const accountsService = requireAccounts();
+      const user = await signedIn(request);
+      if (!user) throw new AccountError(401, 'NOT_SIGNED_IN', 'Sign in to continue.');
+      if (user.role !== 'ADMIN') {
+        await accountsService.log(
+          user.userId,
+          'ACCESS_DENIED',
+          'Analytics requested by a learner.',
+        );
+        throw new AccountError(403, 'FORBIDDEN', 'Administrators only.');
+      }
+      if (!accounts?.reports)
+        throw new AccountError(503, 'ACCOUNTS_UNAVAILABLE', 'Analytics need the database.');
+      response.status(200).json(await accounts.reports.analytics(reportContext()));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
   app.post('/api/v2/development-learners', (_request, response) => {
     if (!learners) {
       return sendError(response, 403, {
@@ -158,38 +294,61 @@ export function createApp(options: AppOptions = {}): express.Express {
     response.status(201).json(body);
   });
 
-  app.get('/api/v2/development-learners/:learnerId/trace', (request, response) => {
+  app.get('/api/v2/development-learners/:learnerId/trace', async (request, response) => {
     try {
-      response.status(200).json(service.learnerTrace(request.params.learnerId));
+      if (!request.params.learnerId.startsWith('dev-learner-'))
+        throw new LessonError(404, 'UNKNOWN_LEARNER', 'Unknown learner.');
+      response.status(200).json(await service.learnerTrace(request.params.learnerId));
     } catch (error) {
       handle(error, response);
     }
   });
 
-  app.post('/api/v2/lessons', (request, response) => {
+  // The taught walkthrough (report storyboard figure 3-5): no learner identity, never scored.
+  app.post('/api/v2/walkthroughs', (request, response) => {
+    const parsed = parseCreateWalkthroughRequest(request.body);
+    if (!parsed.ok)
+      return sendError(response, 400, { error: 'BAD_REQUEST', detail: parsed.reason });
+    try {
+      response.status(201).json(service.createWalkthrough(parsed.value));
+    } catch (error) {
+      handle(error, response);
+    }
+  });
+
+  app.post('/api/v2/lessons', async (request, response) => {
     const parsed = parseCreateLessonRequest(request.body);
     if (!parsed.ok)
       return sendError(response, 400, { error: 'BAD_REQUEST', detail: parsed.reason });
     try {
-      response.status(201).json(service.createLesson(parsed.value));
+      // An account's lessons are created only by that signed-in account.
+      if (parsed.value.learnerId.startsWith('u-')) {
+        const user = await signedIn(request);
+        if (!user) throw new AccountError(401, 'NOT_SIGNED_IN', 'Sign in to continue.');
+        if (publicUser(user).learnerId !== parsed.value.learnerId)
+          throw new AccountError(403, 'FORBIDDEN', 'That learner is not you.');
+      }
+      response.status(201).json(await service.createLesson(parsed.value));
     } catch (error) {
       handle(error, response);
     }
   });
 
-  app.post('/api/v2/lessons/:lessonId/steps/:stepId/responses', (request, response) => {
+  app.post('/api/v2/lessons/:lessonId/steps/:stepId/responses', async (request, response) => {
     const parsed = parseSubmitAnswerRequest(request.body);
     if (!parsed.ok)
       return sendError(response, 400, { error: 'BAD_REQUEST', detail: parsed.reason });
     try {
+      const user = await signedIn(request);
       response
         .status(200)
         .json(
-          service.submitAnswer(
+          await service.submitAnswer(
             request.params.lessonId,
             request.params.stepId,
             parsed.value.answer,
             parsed.value.clientTelemetry ?? null,
+            user ? publicUser(user).learnerId : null,
           ),
         );
     } catch (error) {
@@ -215,6 +374,14 @@ export function createApp(options: AppOptions = {}): express.Express {
 }
 
 function handle(error: unknown, response: express.Response) {
+  if (error instanceof AccountError) {
+    response.status(error.status).json({
+      contractVersion: ACCOUNT_CONTRACT_VERSION,
+      error: error.code,
+      detail: error.message,
+    });
+    return;
+  }
   if (error instanceof LessonError) {
     sendError(response, error.status, {
       error: error.code,

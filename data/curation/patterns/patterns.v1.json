@@ -5,9 +5,28 @@
   "patterns": [
     {
       "stableId": "pattern-al-kaff-al-khadib",
-      "contentVersion": "1",
+      "contentVersion": "2",
       "patternKind": "ASTERISM",
       "labels": [
+        {
+          "languageTag": "ar",
+          "script": "ذات الكرسي",
+          "transliteration": "Dhāt al-Kursī",
+          "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
+          "layer": "GRECO_ARABIC_SCHOLARLY",
+          "citations": [
+            {
+              "sourceId": "HAFEZ-2010",
+              "locator": "al-Sufi catalogue heading, PDF p. 151",
+              "supports": "the chair figure name for Cassiopeia"
+            },
+            {
+              "sourceId": "AL-SUFI-KAWAKIB",
+              "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
+              "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
+            }
+          ]
+        },
         {
           "languageTag": "ar",
           "script": "الكف الخضيب",
@@ -29,25 +48,6 @@
               "sourceId": "AL-MARZUQI-AZMINA",
               "locator": "local OCR text lines 6438 and 22133",
               "supports": "the name in a later azmina compilation"
-            }
-          ]
-        },
-        {
-          "languageTag": "ar",
-          "script": "ذات الكرسي",
-          "transliteration": "Dhāt al-Kursī",
-          "gloss": "the one with the chair (Cassiopeia in the translated Ptolemaic tradition)",
-          "layer": "GRECO_ARABIC_SCHOLARLY",
-          "citations": [
-            {
-              "sourceId": "HAFEZ-2010",
-              "locator": "al-Sufi catalogue heading, PDF p. 151",
-              "supports": "the chair figure name for Cassiopeia"
-            },
-            {
-              "sourceId": "AL-SUFI-KAWAKIB",
-              "locator": "chapter Dhat al-Kursi (Arabic Wikisource transcription of the Library of Congress scan)",
-              "supports": "the Arabic form ذات الكرسي, and the statement that the Arabs called its bright stars al-Kaff al-Khaḍīb"
             }
           ]
         }
@@ -72,10 +72,22 @@
         }
       ],
       "lineSegments": [
-        { "fromStarId": "ufuq-star-001", "toStarId": "ufuq-star-002" },
-        { "fromStarId": "ufuq-star-002", "toStarId": "ufuq-star-003" },
-        { "fromStarId": "ufuq-star-003", "toStarId": "ufuq-star-004" },
-        { "fromStarId": "ufuq-star-004", "toStarId": "ufuq-star-005" }
+        {
+          "fromStarId": "ufuq-star-001",
+          "toStarId": "ufuq-star-002"
+        },
+        {
+          "fromStarId": "ufuq-star-002",
+          "toStarId": "ufuq-star-003"
+        },
+        {
+          "fromStarId": "ufuq-star-003",
+          "toStarId": "ufuq-star-004"
+        },
+        {
+          "fromStarId": "ufuq-star-004",
+          "toStarId": "ufuq-star-005"
+        }
       ],
       "lineSegmentLayer": "MODERN_PEDAGOGICAL",
       "shapeHint": "Five bright stars in a zigzag, like the letter W or M, high in the north.",
@@ -135,13 +147,34 @@
         }
       ],
       "lineSegments": [
-        { "fromStarId": "ufuq-star-013", "toStarId": "ufuq-star-012" },
-        { "fromStarId": "ufuq-star-012", "toStarId": "ufuq-star-011" },
-        { "fromStarId": "ufuq-star-011", "toStarId": "ufuq-star-010" },
-        { "fromStarId": "ufuq-star-010", "toStarId": "ufuq-star-009" },
-        { "fromStarId": "ufuq-star-009", "toStarId": "ufuq-star-007" },
-        { "fromStarId": "ufuq-star-007", "toStarId": "ufuq-star-008" },
-        { "fromStarId": "ufuq-star-008", "toStarId": "ufuq-star-010" }
+        {
+          "fromStarId": "ufuq-star-013",
+          "toStarId": "ufuq-star-012"
+        },
+        {
+          "fromStarId": "ufuq-star-012",
+          "toStarId": "ufuq-star-011"
+        },
+        {
+          "fromStarId": "ufuq-star-011",
+          "toStarId": "ufuq-star-010"
+        },
+        {
+          "fromStarId": "ufuq-star-010",
+          "toStarId": "ufuq-star-009"
+        },
+        {
+          "fromStarId": "ufuq-star-009",
+          "toStarId": "ufuq-star-007"
+        },
+        {
+          "fromStarId": "ufuq-star-007",
+          "toStarId": "ufuq-star-008"
+        },
+        {
+          "fromStarId": "ufuq-star-008",
+          "toStarId": "ufuq-star-010"
+        }
       ],
       "lineSegmentLayer": "MODERN_PEDAGOGICAL",
       "shapeHint": "Seven bright stars: four make a box and three trail away from it in a curve.",

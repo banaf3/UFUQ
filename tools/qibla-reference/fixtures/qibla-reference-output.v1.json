@@ -1,0 +1,92 @@
+{
+  "generatorId": "ufuq-qibla-reference",
+  "generatorVersion": "1",
+  "model": "SPHERICAL_INITIAL_GREAT_CIRCLE_BEARING",
+  "method": "unit vectors and local east/north frame, 50-digit decimal",
+  "destination": {
+    "latitudeDegrees": "21.4225079",
+    "longitudeDegrees": "39.8261890"
+  },
+  "cases": [
+    {
+      "caseId": "umpsa-pekan-faculty",
+      "observer": {
+        "latitudeDegrees": "3.5466545",
+        "longitudeDegrees": "103.4273953"
+      },
+      "expectedAzimuthDegrees": "292.120772766709"
+    },
+    {
+      "caseId": "kuala-lumpur-sample",
+      "observer": {
+        "latitudeDegrees": "3.1390",
+        "longitudeDegrees": "101.6869"
+      },
+      "expectedAzimuthDegrees": "292.537715424951"
+    },
+    {
+      "caseId": "kota-kinabalu-sample",
+      "observer": {
+        "latitudeDegrees": "5.9804",
+        "longitudeDegrees": "116.0735"
+      },
+      "expectedAzimuthDegrees": "290.617855939984"
+    },
+    {
+      "caseId": "equator-meridian-of-destination",
+      "observer": {
+        "latitudeDegrees": "0",
+        "longitudeDegrees": "39.8261890"
+      },
+      "expectedAzimuthDegrees": "0.000000000000"
+    },
+    {
+      "caseId": "southern-hemisphere-sample",
+      "observer": {
+        "latitudeDegrees": "-33.8688",
+        "longitudeDegrees": "151.2093"
+      },
+      "expectedAzimuthDegrees": "277.499591642842"
+    },
+    {
+      "caseId": "western-hemisphere-sample",
+      "observer": {
+        "latitudeDegrees": "40.7128",
+        "longitudeDegrees": "-74.0060"
+      },
+      "expectedAzimuthDegrees": "58.481702927797"
+    },
+    {
+      "caseId": "wrap-east-of-180",
+      "observer": {
+        "latitudeDegrees": "-17.7134",
+        "longitudeDegrees": "178.0650"
+      },
+      "expectedAzimuthDegrees": "282.429493887403"
+    },
+    {
+      "caseId": "high-north-sample",
+      "observer": {
+        "latitudeDegrees": "64.1466",
+        "longitudeDegrees": "-21.9426"
+      },
+      "expectedAzimuthDegrees": "106.117645652326"
+    },
+    {
+      "caseId": "near-destination-north",
+      "observer": {
+        "latitudeDegrees": "21.5000",
+        "longitudeDegrees": "39.8261890"
+      },
+      "expectedAzimuthDegrees": "180.000000000000"
+    },
+    {
+      "caseId": "near-destination-east",
+      "observer": {
+        "latitudeDegrees": "21.4225079",
+        "longitudeDegrees": "39.9000"
+      },
+      "expectedAzimuthDegrees": "270.013479459043"
+    }
+  ]
+}

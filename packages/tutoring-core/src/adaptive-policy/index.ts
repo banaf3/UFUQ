@@ -243,6 +243,20 @@ export const CUE_CLASSIFICATION = {
   GUIDE_LINE_PARTIAL: 'ORIENTATION',
   /** Labels the star the step's guidance starts from. */
   SOURCE_STAR_LABEL: 'ORIENTATION',
+  /**
+   * Draws every figure line of the sky culture, without any name (report storyboard
+   * figure 3-6: "subtle dashed lines" while hints are enabled). The target is one figure
+   * among many, so the lines orient without naming the answer.
+   */
+  FIGURE_LINES: 'ORIENTATION',
+  /** Names every figure and named star, the target included. */
+  FIGURE_NAMES: 'DIRECT_TARGET_REVEAL',
+  /** Compass letters on the horizon: they show True North directly. */
+  CARDINAL_MARKS: 'DIRECT_TARGET_REVEAL',
+  /** Draws the turn along the horizon from True North to the Qibla bearing. */
+  QIBLA_ARC_FULL: 'DIRECT_TARGET_REVEAL',
+  /** States the Qibla bearing of the scenario's place, in degrees from True North. */
+  QIBLA_BEARING_TEXT: 'ORIENTATION',
 } as const;
 export type CueId = keyof typeof CUE_CLASSIFICATION;
 export const CUE_IDS = Object.keys(CUE_CLASSIFICATION) as CueId[];

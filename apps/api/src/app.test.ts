@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import request from 'supertest';
 import { afterAll, describe, expect, it } from 'vitest';
 
+import { sphericalInitialBearing } from '@ufuq/astronomy-core';
 import { canonicalJson } from '@ufuq/catalogue-schema';
 import type {
   LearnerTraceResponseV2,
@@ -14,6 +15,7 @@ import type {
   SkyOverlayV2,
   SkyViewV2,
   StepFeedbackV2,
+  WalkthroughV2,
 } from '@ufuq/contracts';
 
 import { createApp, defaultDataDirectory } from './app.js';
@@ -88,7 +90,8 @@ describe('server composition', () => {
       response.body.datasets.map((d: { datasetId: string }) => [d.datasetId, d]),
     );
     expect(byId['profile-v1-umpsa-pekan'].executionScopes).toEqual(['SCIENTIFIC_PROFILE_V1']);
-    expect(byId['profile-v1-umpsa-pekan'].learningMode).toBe('NON_ADAPTIVE');
+    // The report's provisional values (owner instruction 2026-11-15), still REVIEW_REQUIRED.
+    expect(byId['profile-v1-umpsa-pekan'].learningMode).toBe('ADAPTIVE');
     expect(byId['synthetic-technical'].learningMode).toBe('ADAPTIVE');
   });
 });
@@ -169,13 +172,27 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
     const far = (await submit('step-3', { kind: 'DIRECTION', azimuthRadians: 0.5 }))
       .body as StepFeedbackV2;
     expect(far.result).toBe('INCORRECT');
-    expect(far.feedback).toContain('synthetic-direction-tolerance');
+    expect(far.feedback).toContain('outside the 10.0° tolerance');
     const near = (await submit('step-3', { kind: 'DIRECTION', azimuthRadians: 0.1 }))
       .body as StepFeedbackV2;
     expect(near.result).toBe('CORRECT');
     expect(near.measurement?.angularDifferenceRadians).toBeCloseTo(0.1, 12);
-    expect(near.completed).toBe(true);
-    expect(near.overlays.length).toBeGreaterThan(0);
+    expect(near.completed).toBe(false);
+    expect(near.nextStep?.knowledgeComponentId).toBe('KC-05');
+    // The Qibla is computed for the observer: here the synthetic observer and destination.
+    const qibla = sphericalInitialBearing(
+      { latitudeDegrees: 3.5, longitudeDegrees: 103.4 },
+      { latitudeDegrees: 20, longitudeDegrees: 40 },
+    );
+    if (qibla.kind !== 'BEARING') throw new Error('degenerate synthetic geometry');
+    const turned = (
+      await submit('step-4', { kind: 'DIRECTION', azimuthRadians: qibla.azimuthRadians - 0.05 })
+    ).body as StepFeedbackV2;
+    expect(turned.result).toBe('CORRECT');
+    expect(turned.feedback).toContain('differs from the Qibla by 2.9 degrees');
+    expect(turned.trace?.knowledgeComponentId).toBe('KC-05');
+    expect(turned.completed).toBe(true);
+    expect(turned.overlays.map((o) => o.kind)).toContain('HORIZON_ARC');
 
     // Lesson 2: the al-Jady-type step is now issued in FADING with a partial guide.
     const fading = async () => {
@@ -353,10 +370,27 @@ describe('non-adaptive configuration (policies unresolved)', () => {
     });
     const path = join(directory, 'synthetic', 'synthetic-learning-configuration-v1.json');
     const envelope = JSON.parse(readFileSync(path, 'utf8'));
-    const real = JSON.parse(
-      readFileSync(join(defaultDataDirectory(), 'learning-configuration-v1.json'), 'utf8'),
-    );
-    envelope.payload = { ...real.payload, configurationScope: 'SYNTHETIC_TECHNICAL_FIXTURE' };
+    // Every policy unresolved and a fixed presentation: the NON_ADAPTIVE shape.
+    envelope.payload = {
+      ...envelope.payload,
+      masteryThreshold: null,
+      independentConfirmation: null,
+      observationPolicy: null,
+      scaffoldPolicy: null,
+      cueConfiguration: {
+        kind: 'NON_ADAPTIVE_FIXED',
+        configurationId: 'fixed',
+        configurationVersion: '1',
+        status: 'SYNTHETIC_TECHNICAL_FIXTURE',
+        cues: { 'KC-01': [], 'KC-02': [], 'KC-03': [], 'KC-04': [], 'KC-05': [] },
+      },
+      unresolved: [
+        { field: 'masteryThreshold', decisionId: 'BKT-003', note: 'test' },
+        { field: 'independentConfirmation', decisionId: 'BKT-003', note: 'test' },
+        { field: 'observationPolicy', decisionId: 'BKT-001', note: 'test' },
+        { field: 'scaffoldPolicy', decisionId: 'BKT-004', note: 'test' },
+      ],
+    };
     envelope.payloadSha256 = createHash('sha256')
       .update(canonicalJson(envelope.payload), 'utf8')
       .digest('hex');
@@ -426,6 +460,7 @@ describe('route eligibility (IMP-018)', () => {
           title: 'r1',
           selectionPriority: 1,
           requiredStarIds: ['s1', 's2'],
+          walkthrough: [],
           steps: [],
           allowedAlternativeRouteIds: [],
           review: {
@@ -536,5 +571,114 @@ describe('sky explorer API (report UC-102)', () => {
     expect(lesson.stars).toHaveLength(413);
     expect(JSON.stringify(lesson.stars)).not.toMatch(/hip-|synthetic-star-|Synthetica/);
     expect(lesson.stars.some((star) => star.colorIndexBV !== null)).toBe(true);
+  });
+});
+
+describe('taught walkthrough (report storyboard figure 3-5)', () => {
+  const app = createApp({ enableDevelopmentIdentity: true });
+  const walk = (change: Record<string, unknown> = {}) =>
+    request(app)
+      .post('/api/v2/walkthroughs')
+      .send({
+        contractVersion: V2,
+        datasetId: 'synthetic-technical',
+        executionScope: 'SYNTHETIC_TECHNICAL_FIXTURE',
+        scenarioId: 'synthetic-scenario-a',
+        ...change,
+      });
+
+  it('teaches the route frame by frame, ending at the Qibla, with its own handles', async () => {
+    const response = await walk();
+    expect(response.status).toBe(201);
+    const walkthrough = response.body as WalkthroughV2;
+    expect(walkthrough.routeTitle).toBe('Synthetic route A');
+    expect(walkthrough.frames.map((f) => f.frameId)).toEqual([
+      'frame-helper',
+      'frame-guide',
+      'frame-target',
+      'frame-north',
+      'frame-qibla',
+    ]);
+    expect(walkthrough.frames[0]?.overlays.map((o) => o.kind)).toEqual(['PATTERN_OUTLINE']);
+    expect(walkthrough.frames[1]?.overlays.map((o) => o.kind)).toEqual([
+      'PATTERN_OUTLINE',
+      'GUIDE_ARC',
+    ]);
+    const qibla = walkthrough.frames[4];
+    expect(qibla?.overlays.map((o) => o.kind)).toContain('HORIZON_ARC');
+    expect(qibla?.focusEnu).toHaveLength(2);
+    expect(qibla?.about).toMatch(/the Qibla is \d+° \d\d′ clockwise from True North/);
+    expect(JSON.stringify(walkthrough)).not.toMatch(/synthetic-star-|starId/);
+    const lesson = (await createLesson(app, await newLearner(app), 'synthetic-scenario-a'))
+      .body as LessonSessionV2;
+    const lessonHandles = new Set(lesson.stars.map((s) => s.handle));
+    expect(walkthrough.stars.some((s) => lessonHandles.has(s.handle))).toBe(false);
+  });
+
+  it('validates the request and needs no learner identity', async () => {
+    expect((await walk({ extra: 1 })).status).toBe(400);
+    expect((await walk({ scenarioId: 'nope' })).status).toBe(404);
+    const anonymous = await request(createApp()).post('/api/v2/walkthroughs').send({
+      contractVersion: V2,
+      datasetId: 'synthetic-technical',
+      executionScope: 'SYNTHETIC_TECHNICAL_FIXTURE',
+      scenarioId: 'synthetic-scenario-a',
+    });
+    expect(anonymous.status).toBe(201);
+  });
+});
+
+describe('report-based adaptive cues on the sky culture', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'ufuq-report-cues-'));
+  afterAll(() => rmSync(directory, { recursive: true, force: true }));
+
+  it('assesses with figure lines but no names, then without lines once mastery is high', async () => {
+    cpSync(join(defaultDataDirectory(), 'synthetic'), join(directory, 'synthetic'), {
+      recursive: true,
+    });
+    const path = join(directory, 'synthetic', 'synthetic-learning-configuration-v1.json');
+    const envelope = JSON.parse(readFileSync(path, 'utf8'));
+    const real = JSON.parse(
+      readFileSync(join(defaultDataDirectory(), 'learning-configuration-v1.json'), 'utf8'),
+    );
+    envelope.payload = { ...real.payload, configurationScope: 'SYNTHETIC_TECHNICAL_FIXTURE' };
+    envelope.payloadSha256 = createHash('sha256')
+      .update(canonicalJson(envelope.payload), 'utf8')
+      .digest('hex');
+    writeFileSync(path, JSON.stringify(envelope));
+    const app = createApp({ dataDirectory: directory, enableDevelopmentIdentity: true });
+    const learner = await newLearner(app);
+    const lesson = (await createLesson(app, learner, 'synthetic-scenario-a'))
+      .body as LessonSessionV2;
+    // Report figure 3-6: a new learner (P(L0) = 0.2) starts with lines and no names.
+    expect(lesson.currentStep?.support).toMatchObject({
+      scaffoldState: 'FADING',
+      cueIds: ['FIGURE_LINES'],
+    });
+    expect(overlay(lesson.currentStep, 'FIGURE_LINES')?.segments.length).toBeGreaterThan(0);
+    expect(overlay(lesson.currentStep, 'FIGURE_NAMES')).toBeUndefined();
+    expect(lesson.currentStep?.hideCardinalLabels).toBe(true);
+
+    const submit = submitter(app, lesson.lessonId);
+    const wrongStar = lesson.stars.find((s) => !s.belowGeometricHorizon)?.handle as string;
+    const wrong = (await submit('step-1', { kind: 'STAR_SELECTION', starHandle: wrongStar }))
+      .body as StepFeedbackV2;
+    if (wrong.result === 'INCORRECT') {
+      // UC-103 A1: an incorrect answer below the threshold restores full guidance.
+      expect(wrong.trace).toMatchObject({
+        modelDecision: 'OBSERVATION',
+        scaffoldFrom: 'FADING',
+        scaffoldTo: 'GUIDED',
+        scaffoldReasonCode: 'RESTORE_GUIDANCE_BELOW_THRESHOLD',
+      });
+      expect(wrong.nextStep?.support.cueIds).toEqual([
+        'FIGURE_LINES',
+        'FIGURE_NAMES',
+        'TARGET_OUTLINE',
+        'SHAPE_HINT_TEXT',
+        'CARDINAL_MARKS',
+      ]);
+      expect(wrong.nextStep?.hideCardinalLabels).toBe(false);
+    }
   });
 });
