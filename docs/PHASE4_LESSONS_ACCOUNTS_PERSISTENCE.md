@@ -221,3 +221,14 @@ compass ring in the Qibla step shows the facing bearing only.
   was 0.6° from…", "differs by 2.9 degrees, inside the 15° tolerance"). It says only
   whether the circle is on the figure or the learner is facing the direction. The measured
   difference stays in the technical `measurement` and the trace.
+
+## Update 2026-11-15 (seventh owner request): the green Qibla line
+
+- When a learner faces the Qibla correctly, a green vertical line appears on the horizon at
+  the Qibla bearing, fading at its top and bottom, labelled "القبلة · Qibla" (overlay
+  `QIBLA_MARK`, sent only with a correct answer; it also stays on the completion summary,
+  which no longer draws the orange arc). The walkthrough's north and Qibla frames use the
+  same line (with the bearing in degrees) in place of the orange marker.
+- Once the learner's Qibla skill is mastered (KC-05 INDEPENDENT), the compass ring is no
+  longer drawn in the Qibla step; N, E, S and W remain. Mastery is tracked per skill, not
+  per scenario, so the ring disappears in every scenario once the skill is mastered.

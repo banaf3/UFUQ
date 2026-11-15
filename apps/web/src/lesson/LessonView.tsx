@@ -72,7 +72,11 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
     step?.taskKind === 'IDENTIFY_PATTERN_MEMBER' || step?.taskKind === 'IDENTIFY_TARGET_STAR';
   const synthetic = lesson.provenance.executionScope === 'SYNTHETIC_TECHNICAL_FIXTURE';
   // The scene shows only what the server issued for the current step.
-  const overlays = step ? step.overlays : summary;
+  // While a correct answer waits for Next, its result overlays (the Qibla line) show too.
+  const overlays = useMemo(
+    () => (step ? [...step.overlays, ...(awaiting?.overlays ?? [])] : summary),
+    [step, awaiting, summary],
+  );
   const indexOf = useMemo(
     () => new Map(lesson.stars.map((star, index) => [star.handle, index])),
     [lesson.stars],

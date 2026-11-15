@@ -230,7 +230,9 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
     expect(turned.measurement?.angularDifferenceRadians).toBeCloseTo(0.05, 9);
     expect(turned.trace?.knowledgeComponentId).toBe('KC-05');
     expect(turned.completed).toBe(true);
-    expect(turned.overlays.map((o) => o.kind)).toContain('HORIZON_ARC');
+    // A correct Qibla answer shows the green Qibla line, never the orange arc.
+    expect(turned.overlays.map((o) => o.kind)).toContain('QIBLA_MARK');
+    expect(turned.overlays.map((o) => o.kind)).not.toContain('HORIZON_ARC');
 
     // Lesson 2: the al-Jady-type step is now issued in FADING with a partial guide.
     const fading = async () => {
