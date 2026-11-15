@@ -10,6 +10,8 @@ import {
   type SkyCanvasStar,
   type SkyLine,
 } from '../sky/SkyCanvas.js';
+import { normalizeHeading } from '../scene/mapping.js';
+import { compassRingLayers } from './compass-ring.js';
 import { LESSON_COLOURS, overlayLayers } from './overlay-layers.js';
 
 const DEG = Math.PI / 180;
@@ -42,6 +44,7 @@ export function WalkthroughView({
 }) {
   const [index, setIndex] = useState(0);
   const [drawFrom, setDrawFrom] = useState(() => performance.now() + DRAW_DELAY_MS);
+  const [heading, setHeading] = useState(INITIAL_VIEW.azimuth);
   const canvas = useRef<SkyCanvasHandle>(null);
   const frames = walkthrough.frames;
   const frame = frames[index];
@@ -143,10 +146,20 @@ export function WalkthroughView({
       seen.add(label.text);
       return true;
     });
+    // The compass ring of the direction frames, with the Qibla marked and the facing bearing.
+    const ringSpec = frames[index]?.compassRing;
+    if (ringSpec) {
+      const ring = compassRingLayers({
+        headingAzimuth: heading,
+        qiblaAzimuth: ringSpec.qiblaAzimuthRadians,
+      });
+      lines.unshift(...ring.lines);
+      for (const label of ring.labels) if (!seen.has(label.text)) unique.push(label);
+    }
     return { lines, labels: unique };
     // focusOf reads the frame list and handles above.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, drawFrom, frames, walkthrough.figureLines, enuByHandle]);
+  }, [index, drawFrom, frames, walkthrough.figureLines, enuByHandle, heading]);
 
   const last = index === frames.length - 1;
   return (
@@ -160,6 +173,7 @@ export function WalkthroughView({
           initialView={INITIAL_VIEW}
           showGround
           showCardinals
+          onViewChange={(v) => setHeading(normalizeHeading(v.azimuth))}
           ariaLabel="Walkthrough sky"
         />
       </div>

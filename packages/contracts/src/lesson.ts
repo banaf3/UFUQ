@@ -195,6 +195,12 @@ export interface LessonStepPromptV2 {
    * without an adaptive policy, while the learner indicates a direction.
    */
   readonly hideCardinalLabels: boolean;
+  /**
+   * Draws the compass ring on the horizon (degree ticks from True North, with the learner's
+   * facing bearing). Always on for the Qibla step, whose task is the turn from north;
+   * otherwise only when the compass cue is issued.
+   */
+  readonly compassRing: boolean;
   readonly support: IssuedSupportV2;
   /** Everything the scene shows for this step: the issued cues and nothing else. */
   readonly overlays: readonly SkyOverlayV2[];
@@ -258,6 +264,8 @@ export interface WalkthroughFrameV2 {
   readonly focusHandles: readonly string[];
   readonly focusEnu: readonly (readonly [number, number, number])[];
   readonly overlays: readonly SkyOverlayV2[];
+  /** The compass ring on the horizon, with the Qibla marked when the place has one. */
+  readonly compassRing: { readonly qiblaAzimuthRadians: number | null } | null;
 }
 
 export interface WalkthroughV2 {

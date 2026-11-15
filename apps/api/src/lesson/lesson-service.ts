@@ -707,6 +707,14 @@ export class LessonService {
     const patterns = new Map(context.content.patterns.map((p) => [p.stableId, p]));
     const directionsById = new Map(context.content.directions.map((d) => [d.stableId, d]));
     const frames: WalkthroughFrameV2[] = [];
+    // The Qibla bearing of this place, for the compass ring of the direction frames.
+    const qiblaDirection = context.content.directions.find(
+      (d) => d.definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING',
+    );
+    const qiblaAzimuth =
+      qiblaDirection === undefined
+        ? null
+        : (context.targetAzimuths.get(qiblaDirection.stableId) ?? null);
     const skipped: string[] = [];
     const firstLabel = (labels: readonly CulturalLabel[]) => {
       const arabic = labels.find((l) => l.languageTag === 'ar' && l.script !== null);
@@ -735,6 +743,7 @@ export class LessonService {
                 : null,
             focusHandles: starIds.map(handle),
             focusEnu: [],
+            compassRing: null,
             overlays: [
               { kind: 'FIGURE_LINES', segments: figureLines(context, handles, [figure]) },
               figureNames(context, handles, culture, [figure], []),
@@ -752,6 +761,7 @@ export class LessonService {
             layerNote: null,
             focusHandles: starIds.map(handle),
             focusEnu: [],
+            compassRing: null,
             overlays: [figureNames(context, handles, culture, [], [star])],
           };
         }
@@ -769,6 +779,7 @@ export class LessonService {
                 : null,
             focusHandles: starIds.map(handle),
             focusEnu: [],
+            compassRing: null,
             overlays: [outlineOf(pattern, handle)],
           };
         }
@@ -816,6 +827,7 @@ export class LessonService {
                 : azimuth === 0
                   ? [horizonEnu(0)]
                   : [horizonEnu(0), horizonEnu(azimuth)],
+            compassRing: target ? { qiblaAzimuthRadians: qiblaAzimuth } : null,
             overlays: [...(source ? [outlineOf(source, handle)] : []), ...(guide ? [guide] : [])],
           };
         }
@@ -830,6 +842,7 @@ export class LessonService {
             layerNote: null,
             focusHandles: [],
             focusEnu: [horizonEnu(azimuth)],
+            compassRing: { qiblaAzimuthRadians: qiblaAzimuth },
             overlays: [],
           };
         }
@@ -1171,6 +1184,11 @@ export class LessonService {
           mode === 'ADAPTIVE'
             ? !rendered.issued.includes('CARDINAL_MARKS')
             : step.taskKind === 'INDICATE_DIRECTION',
+        // The Qibla task is the turn from True North, so its ring is the instrument, not a cue.
+        compassRing:
+          rendered.issued.includes('CARDINAL_MARKS') ||
+          session.context.content.directions.find((d) => d.stableId === step.directionId)
+            ?.definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING',
         support: {
           mode,
           scaffoldState: cues.scaffoldState,

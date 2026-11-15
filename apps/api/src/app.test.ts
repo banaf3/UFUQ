@@ -210,6 +210,9 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
     expect(near.measurement?.angularDifferenceRadians).toBeCloseTo(0.1, 12);
     expect(near.completed).toBe(false);
     expect(near.nextStep?.knowledgeComponentId).toBe('KC-05');
+    // The Qibla task always has the compass ring; the find-it steps had none.
+    expect(near.nextStep?.compassRing).toBe(true);
+    expect(lesson.currentStep?.compassRing).toBe(false);
     // The Qibla is computed for the observer: here the synthetic observer and destination.
     const qibla = sphericalInitialBearing(
       { latitudeDegrees: 3.5, longitudeDegrees: 103.4 },
@@ -637,6 +640,18 @@ describe('taught walkthrough (report storyboard figure 3-5)', () => {
     ]);
     const qibla = walkthrough.frames[4];
     expect(qibla?.overlays.map((o) => o.kind)).toContain('HORIZON_ARC');
+    // The compass ring: on the north and Qibla frames, with the Qibla marked; not on figures.
+    expect(walkthrough.frames.map((f) => f.compassRing !== null)).toEqual([
+      false,
+      false,
+      false,
+      true,
+      true,
+    ]);
+    expect(walkthrough.frames[3]?.compassRing?.qiblaAzimuthRadians).toBeCloseTo(
+      (290.5924668827787 * Math.PI) / 180,
+      9,
+    );
     expect(qibla?.focusEnu).toHaveLength(2);
     expect(qibla?.about).toMatch(/the Qibla is \d+° \d\d′ clockwise from True North/);
     expect(JSON.stringify(walkthrough)).not.toMatch(/synthetic-star-|starId/);

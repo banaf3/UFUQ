@@ -20,6 +20,7 @@ import { ApiError, submitAnswer } from '../api.js';
 import { describeEnu, normalizeHeading } from '../scene/mapping.js';
 import type { ViewState } from '../sky/projection.js';
 import { SkyCanvas, type SkyCanvasHandle, type SkyCanvasStar } from '../sky/SkyCanvas.js';
+import { compassRingLayers } from './compass-ring.js';
 import { guideTexts, overlayLayers } from './overlay-layers.js';
 
 const DEG = Math.PI / 180;
@@ -85,10 +86,17 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
       })),
     [lesson.stars],
   );
-  const layers = useMemo(
-    () => overlayLayers(overlays, (handle) => lesson.stars[indexOf.get(handle) ?? -1]?.enu),
-    [overlays, lesson.stars, indexOf],
-  );
+  const ringOn = step?.compassRing ?? false;
+  const layers = useMemo(() => {
+    const base = overlayLayers(overlays, (handle) => lesson.stars[indexOf.get(handle) ?? -1]?.enu);
+    if (!ringOn) return base;
+    // The ring shows the facing bearing; the Qibla itself is never marked in an assessment.
+    const ring = compassRingLayers({
+      headingAzimuth: normalizeHeading(view.azimuth),
+      qiblaAzimuth: null,
+    });
+    return { lines: [...ring.lines, ...base.lines], labels: [...base.labels, ...ring.labels] };
+  }, [overlays, lesson.stars, indexOf, ringOn, view.azimuth]);
   const highlighted = useMemo(
     () =>
       [...selected, ...(focused ? [focused] : [])]
@@ -265,6 +273,10 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
             Circle at azimuth {headingDegrees.toFixed(0)}° · altitude{' '}
             {toDegrees(view.altitude).toFixed(0)}°
           </div>
+        ) : ringOn ? (
+          <div className="heading-readout" aria-live="polite">
+            Facing {Math.round(headingDegrees) % 360}° from True North
+          </div>
         ) : (
           !directionStep &&
           !step?.hideCardinalLabels && (
@@ -388,7 +400,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           <section>
             <p className="hint">
               {step?.knowledgeComponentId === 'KC-05'
-                ? 'Find True North first, then turn the view by the Qibla bearing until the centre marker is on the Qibla.'
+                ? 'The compass ring counts degrees from True North. Turn until the ring reads the Qibla bearing of this place, then confirm.'
                 : 'Turn the view until the centre marker is on the horizon below al-Jady.'}
             </p>
             <button type="button" className="primary" disabled={busy} onClick={confirmDirection}>
