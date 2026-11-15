@@ -11,7 +11,7 @@
   "artifactVersion": "2",
   "payload": {
     "counts": {
-      "figures": 114,
+      "figures": 110,
       "relationships": 28,
       "segments": 555,
       "segmentsNotInField": 3,
@@ -22,7 +22,7 @@
     "cultureId": "arabic-anwa",
     "curation": {
       "path": "data/curation/sky-culture/arabic-anwa.v1.json",
-      "sha256": "5debe5864ec6247866f3794fb6629a43059692d8340f71a5b4499006868f00ea"
+      "sha256": "7eee06e32466accda6d6715203d42e1afcd510e5cf66be386abcbd3f180b5193"
     },
     "curationReview": {
       "decisionDate": null,
@@ -2089,211 +2089,6 @@
         "style": "FIGURE",
         "transliteration": "Al-Fawaris",
         "transliterationScholarly": "al-Fawāris",
-        "vocalization": "FROM_SOURCE_FORM"
-      },
-      {
-        "about": "The head of al-Naqa, the she-camel. Al-Marzuqi and Ibn Asim note that the camel's head is also the tail of a second, smaller fish, so the same stars belong to two pictures.",
-        "aboutSources": [
-          {
-            "locator": "local text L23744-23745",
-            "sourceId": "AL-MARZUQI-AZMINA"
-          },
-          {
-            "locator": "local text L3053",
-            "sourceId": "IBN-ASIM-ANWA"
-          },
-          {
-            "locator": "§96 (local text L2279-2281)",
-            "sourceId": "IBN-QUTAYBA-ANWA"
-          }
-        ],
-        "alternativeNames": [],
-        "arabic": "رأس الناقة",
-        "attestation": [],
-        "compilationEntry": "CON arabic_ancient 1901",
-        "conflicts": [],
-        "evidence": "PRIMARY_TEXT_READ",
-        "figureId": "anwa-ras-al-naqa",
-        "lineSource": "COMPILATION",
-        "members": [
-          116584,
-          116631,
-          116805,
-          117221
-        ],
-        "membershipCitations": [
-          {
-            "locator": "CON arabic_ancient 1901 (pinned commit 014fbb5e)",
-            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
-            "supports": "membership as compiled from the primary anwāʾ texts"
-          }
-        ],
-        "notes": [
-          {
-            "locator": "local text L23744-23745",
-            "sourceId": "AL-MARZUQI-AZMINA",
-            "text": "al-Marzuqi: above the head of al-Naqa is another fish; the camel's head is its tail, and it is shorter and wider than the lower fish."
-          }
-        ],
-        "omittedMembersNotInField": [],
-        "omittedSegmentsNotInField": [],
-        "parentId": "anwa-al-naqa",
-        "segments": [],
-        "style": "FIGURE",
-        "transliteration": "Ras al-Naqa",
-        "transliterationScholarly": "Raʾs al-Nāqa",
-        "vocalization": "FROM_SOURCE_FORM"
-      },
-      {
-        "about": "The long, thin neck of al-Naqa, the she-camel, pictured as a lean and noble riding camel.",
-        "aboutSources": [
-          {
-            "locator": "§40 (local text L1582-1584)",
-            "sourceId": "IBN-QUTAYBA-ANWA"
-          }
-        ],
-        "alternativeNames": [],
-        "arabic": "عنق الناقة",
-        "attestation": [],
-        "compilationEntry": "CON arabic_ancient 1902",
-        "conflicts": [],
-        "evidence": "PRIMARY_TEXT_READ",
-        "figureId": "anwa-unuq-al-naqa",
-        "lineSource": "COMPILATION",
-        "members": [
-          841,
-          2225,
-          2900,
-          2920,
-          3300,
-          3414,
-          3504,
-          117221
-        ],
-        "membershipCitations": [
-          {
-            "locator": "CON arabic_ancient 1902 (pinned commit 014fbb5e)",
-            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
-            "supports": "membership as compiled from the primary anwāʾ texts"
-          }
-        ],
-        "notes": [
-          {
-            "locator": "§40 (local text L1583-1584)",
-            "sourceId": "IBN-QUTAYBA-ANWA",
-            "text": "The camel's neck runs from the hump down towards the small fish (al-samaka al-ṣughrā), rises as high as al-ʿAyyūq and ends in the head above the small fish."
-          }
-        ],
-        "omittedMembersNotInField": [],
-        "omittedSegmentsNotInField": [],
-        "parentId": "anwa-al-naqa",
-        "segments": [],
-        "style": "FIGURE",
-        "transliteration": "Unuq al-Naqa",
-        "transliterationScholarly": "ʿUnuq al-Nāqa",
-        "vocalization": "FROM_SOURCE_FORM"
-      },
-      {
-        "about": null,
-        "aboutSources": [],
-        "alternativeNames": [],
-        "arabic": "يدا الناقة",
-        "attestation": [],
-        "compilationEntry": "CON arabic_ancient 1903",
-        "conflicts": [],
-        "evidence": "COMPILATION_ONLY",
-        "figureId": "anwa-yada-al-naqa",
-        "lineSource": "COMPILATION",
-        "members": [
-          4998,
-          5251,
-          7607,
-          8068
-        ],
-        "membershipCitations": [
-          {
-            "locator": "CON arabic_ancient 1903 (pinned commit 014fbb5e)",
-            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
-            "supports": "membership as compiled from the primary anwāʾ texts"
-          }
-        ],
-        "notes": [],
-        "omittedMembersNotInField": [],
-        "omittedSegmentsNotInField": [],
-        "parentId": null,
-        "segments": [],
-        "style": "FIGURE",
-        "transliteration": "Yada al-Naqa",
-        "transliterationScholarly": "Yadā al-Nāqa",
-        "vocalization": "FROM_SOURCE_FORM"
-      },
-      {
-        "about": "Al-Naqa is a lean, noble riding camel with a thin neck and a small head. Her picture overlaps others: the five stars of al-Kaff al-Khadib are both al-Thurayya's hand and the camel's hump, and her head is also the tail of a small fish.",
-        "aboutSources": [
-          {
-            "locator": "§40 (local text L1581-1582)",
-            "sourceId": "IBN-QUTAYBA-ANWA"
-          },
-          {
-            "locator": "local text L23739-23745",
-            "sourceId": "AL-MARZUQI-AZMINA"
-          }
-        ],
-        "alternativeNames": [],
-        "arabic": "الناقة",
-        "attestation": [],
-        "compilationEntry": "CON arabic_ancient 1999",
-        "conflicts": [],
-        "evidence": "PRIMARY_TEXT_READ",
-        "figureId": "anwa-al-naqa",
-        "lineSource": "COMPILATION",
-        "members": [
-          746,
-          841,
-          2225,
-          2505,
-          2599,
-          2900,
-          2920,
-          3179,
-          3300,
-          3414,
-          3504,
-          3821,
-          4292,
-          4427,
-          8886,
-          116584,
-          116631,
-          116805,
-          117221
-        ],
-        "membershipCitations": [
-          {
-            "locator": "CON arabic_ancient 1999 (pinned commit 014fbb5e)",
-            "sourceId": "STELLARIUM-ARABIC-ANCIENT",
-            "supports": "membership as compiled from the primary anwāʾ texts"
-          }
-        ],
-        "notes": [
-          {
-            "locator": "§40 (local text L1582)",
-            "sourceId": "IBN-QUTAYBA-ANWA",
-            "text": "Shaped like a lean, noble riding camel with a thin neck and a small head."
-          },
-          {
-            "locator": "§40 (local text L1581)",
-            "sourceId": "IBN-QUTAYBA-ANWA",
-            "text": "The five stars of al-Kaff al-Khaḍīb can be read either as al-Thurayyā's hand or as the camel's hump; the head of al-Ḥūt lies at the camel's chest."
-          }
-        ],
-        "omittedMembersNotInField": [],
-        "omittedSegmentsNotInField": [],
-        "parentId": null,
-        "segments": [],
-        "style": "FIGURE",
-        "transliteration": "Al-Naqa",
-        "transliterationScholarly": "al-Nāqa",
         "vocalization": "FROM_SOURCE_FORM"
       },
       {
@@ -13397,6 +13192,6 @@
       "vocalization": "From the vocalized source forms and IAU WGSN/Kunitzsch spellings; records marked UNVERIFIED need a philologist."
     }
   },
-  "payloadSha256": "6bcc2f0bbc1641fe0eb7bfe2ed9bd8e06b3c5be1cb672a157636dffe202393c0",
+  "payloadSha256": "c4c66b16285f8da07d4b941b185bc7fbd6a12321d55094fd906e7f72a57ea093",
   "schemaVersion": 1
 }

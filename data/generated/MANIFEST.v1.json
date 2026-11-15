@@ -75,10 +75,10 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "sky-culture-arabic-anwa-v1",
-      "byteLength": 425584,
+      "byteLength": 418696,
       "path": "data/generated/sky-culture-arabic-anwa-v1.json",
-      "payloadSha256": "6bcc2f0bbc1641fe0eb7bfe2ed9bd8e06b3c5be1cb672a157636dffe202393c0",
-      "sha256": "e96354de62480a59db2f5e85659c42e6ea99c51be555c7bf8aa8e9bc88b97c54",
+      "payloadSha256": "c4c66b16285f8da07d4b941b185bc7fbd6a12321d55094fd906e7f72a57ea093",
+      "sha256": "7460a1018f1d753418f2c1c64dddb533f187dd4c8987cc4b95d022a3d3886501",
       "tracked": true
     },
     {
