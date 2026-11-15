@@ -47,11 +47,13 @@ export function App() {
   const [signingIn, setSigningIn] = useState(false);
   const [starting, setStarting] = useState(false);
   const [lastChoice, setLastChoice] = useState<Choice | null>(null);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     void currentUser().then((me) => {
       setAccountsAvailable(me !== 'UNAVAILABLE');
       setUser(me === 'UNAVAILABLE' ? null : me);
+      setChecked(true);
     });
     listDatasets()
       .then((response) => {
@@ -63,8 +65,9 @@ export function App() {
       .catch(() => undefined);
   }, []);
 
-  // A signed-in account always takes precedence over the development learner.
-  const learnerId = user?.learnerId ?? developmentLearner;
+  // With accounts, lessons belong to the signed-in account; the in-memory development
+  // learner is only for servers without a database.
+  const learnerId = user?.learnerId ?? (accountsAvailable ? null : developmentLearner);
 
   const startLesson = async (choice: Choice) => {
     setLastChoice(choice);
@@ -90,7 +93,7 @@ export function App() {
     }
   };
 
-  const accountSlot = accountsAvailable ? (
+  const accountSlot = !checked ? null : accountsAvailable ? (
     user ? (
       <div className="account-menu" role="group" aria-label="Account">
         <span className="chip" title={user.email}>
@@ -120,21 +123,41 @@ export function App() {
         </button>
       </div>
     ) : (
-      <button type="button" className="secondary" onClick={() => setSigningIn(true)}>
-        Sign in
+      <button type="button" className="primary account-signin" onClick={() => setSigningIn(true)}>
+        Sign in / Register
       </button>
     )
-  ) : null;
+  ) : (
+    <button
+      type="button"
+      className="secondary"
+      disabled
+      title="Accounts need the database: start the API with UFUQ_MYSQL_URL (npm run preview:review does)."
+    >
+      Sign in
+    </button>
+  );
 
   return (
     <>
       <div hidden={screen.kind !== 'SKY'} className="page">
         <ExplorerPage
           learnerId={learnerId}
-          identityEnabled={learnerId !== null}
           onStartLesson={startLesson}
+          onRequireSignIn={() => setSigningIn(true)}
           accountSlot={accountSlot}
         />
+        {checked && accountsAvailable && screen.kind === 'SKY' && !user && (
+          <aside className="signin-callout" aria-label="Account">
+            <p>
+              <strong>Welcome to UFUQ.</strong> Sign in or register to take lessons and keep your
+              progress.
+            </p>
+            <button type="button" className="primary" onClick={() => setSigningIn(true)}>
+              Sign in / Register
+            </button>
+          </aside>
+        )}
       </div>
       {screen.kind === 'WALKTHROUGH' && (
         <WalkthroughView

@@ -1,5 +1,13 @@
-import { useCallback, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
+import { POINT_CIRCLE_RADIUS_SHARE } from '@ufuq/contracts';
 import type {
   LessonSessionV2,
   LessonStepPromptV2,
@@ -55,6 +63,10 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
 
   const directionStep = step?.taskKind === 'INDICATE_DIRECTION';
   const selectAllStep = step?.taskKind === 'SELECT_ALL_PATTERN_MEMBERS';
+  // Find-it tasks: the learner drags the sky until the circle is on the answer.
+  const pointStep =
+    step?.taskKind === 'IDENTIFY_PATTERN_MEMBER' || step?.taskKind === 'IDENTIFY_TARGET_STAR';
+  const synthetic = lesson.provenance.executionScope === 'SYNTHETIC_TECHNICAL_FIXTURE';
   // The scene shows only what the server issued for the current step.
   const overlays = step ? step.overlays : summary;
   const indexOf = useMemo(
@@ -145,14 +157,20 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
     setFocused(visibleStars[next]?.star.handle ?? null);
   };
   const selectStar = (handle: string) => {
-    if (!step || directionStep) return;
-    if (selectAllStep) {
-      setSelected((previous) =>
-        previous.includes(handle) ? previous.filter((h) => h !== handle) : [...previous, handle],
-      );
-      return;
-    }
-    void send({ kind: 'STAR_SELECTION', starHandle: handle });
+    if (!step || !selectAllStep) return;
+    setSelected((previous) =>
+      previous.includes(handle) ? previous.filter((h) => h !== handle) : [...previous, handle],
+    );
+  };
+  // The answer is where the circle (the view centre) is, at the field of view shown.
+  const confirmPoint = () => {
+    const aim = canvas.current?.getView() ?? view;
+    void send({
+      kind: 'SKY_POINT',
+      azimuthRadians: normalizeHeading(aim.azimuth),
+      altitudeRadians: aim.altitude,
+      fovRadians: aim.fov,
+    });
   };
   const submitSelection = () => {
     if (selected.length > 0) void send({ kind: 'STAR_SET_SELECTION', starHandles: selected });
@@ -175,7 +193,12 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
       '-': () => canvas.current?.zoomBy(1.25),
       ']': () => cycle(1),
       '[': () => cycle(-1),
-      Enter: () => (directionStep ? confirmDirection() : focused && selectStar(focused)),
+      Enter: () =>
+        directionStep
+          ? confirmDirection()
+          : pointStep
+            ? confirmPoint()
+            : focused && selectStar(focused),
     };
     const action = actions[event.key];
     if (action) {
@@ -193,7 +216,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
         className="sky-stage"
         tabIndex={0}
         role="application"
-        aria-label="Sky view. Arrow keys turn and tilt the view, plus and minus zoom. Square brackets move between bright stars. Enter selects the focused star, or confirms your facing direction in the direction step."
+        aria-label="Sky view. Drag to move the sky under the circle, or use the arrow keys. Scroll, or plus and minus, zoom. Enter confirms where the circle is, or your facing direction."
         onKeyDown={onKeyDown}
       >
         <SkyCanvas
@@ -212,18 +235,34 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           onViewChange={setView}
           ariaLabel="Lesson sky"
         />
-        <div className="reticle" aria-hidden="true" />
-        {!directionStep && !step?.hideCardinalLabels && (
+        <div
+          className="reticle"
+          aria-hidden="true"
+          style={
+            { '--reticle-diameter': `${200 * POINT_CIRCLE_RADIUS_SHARE}cqmin` } as CSSProperties
+          }
+        />
+        {pointStep ? (
           <div className="heading-readout" aria-live="polite">
-            Facing {headingDegrees.toFixed(0)}° ({compassPoint(headingDegrees)})
+            Circle at azimuth {headingDegrees.toFixed(0)}° · altitude{' '}
+            {toDegrees(view.altitude).toFixed(0)}°
           </div>
+        ) : (
+          !directionStep &&
+          !step?.hideCardinalLabels && (
+            <div className="heading-readout" aria-live="polite">
+              Facing {headingDegrees.toFixed(0)}° ({compassPoint(headingDegrees)})
+            </div>
+          )
         )}
       </div>
 
       <header className="top-bar lesson-bar">
         <span className="brand">UFUQ</span>
         <div className="lesson-title">
-          <p className="eyebrow">{lesson.provenance.profileId}</p>
+          <p className="eyebrow">
+            {synthetic ? lesson.provenance.profileId : lesson.observerLabel}
+          </p>
           <h1>{lesson.routeTitle}</h1>
         </div>
         <span className="chip">
@@ -236,16 +275,14 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
       </header>
 
       <aside className="lesson-panel">
-        <div
-          className={`notice notice-${lesson.provenance.executionScope.toLowerCase()}`}
-          role="note"
-        >
-          {lesson.provenance.notices[0]}
-          <span className="state">
-            {' '}
-            Result state: {lesson.provenance.scientificValidationState}.
-          </span>
-        </div>
+        {synthetic && (
+          <div
+            className={`notice notice-${lesson.provenance.executionScope.toLowerCase()}`}
+            role="note"
+          >
+            {lesson.provenance.notices[0]}
+          </div>
+        )}
         {step ? (
           <section aria-labelledby="step-title">
             <p className="eyebrow">
@@ -271,14 +308,22 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           </section>
         )}
 
-        {step && !directionStep && (
+        {pointStep && (
+          <section aria-label="Put the circle on the answer">
+            <p className="hint">
+              Drag the sky (or use the arrow keys) until the circle is on the answer. Zoom in for a
+              smaller circle and a more exact answer.
+            </p>
+            <button type="button" className="primary" disabled={busy} onClick={confirmPoint}>
+              Confirm: the circle is on it
+            </button>
+          </section>
+        )}
+
+        {step && selectAllStep && (
           <section className="star-list" aria-labelledby="star-list-title">
             <h3 id="star-list-title">Bright stars above the horizon</h3>
-            <p className="hint">
-              {selectAllStep
-                ? 'Select every star of the pattern, then submit the selection.'
-                : 'Select a star in the sky, or use this list (keyboard and screen-reader friendly).'}
-            </p>
+            <p className="hint">Select every star of the pattern, then submit the selection.</p>
             <ol>
               {visibleStars.map(({ star, altitudeDegrees, azimuthDegrees }, index) => {
                 const label = labelFor(star.handle);
@@ -366,20 +411,19 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           <ul>
             <li>Profile: {lesson.provenance.profileId}</li>
             <li>Algorithm: {lesson.provenance.algorithmId}</li>
-            <li>Content review state: {lesson.provenance.contentReviewState}</li>
+            {synthetic && <li>Content review state: {lesson.provenance.contentReviewState}</li>}
             <li>
               Learning configuration: {lesson.provenance.learningConfiguration.artifactId} (
-              {lesson.provenance.learningConfiguration.approvalState},{' '}
               {lesson.provenance.learningConfiguration.mode})
             </li>
-            {lesson.provenance.notices.slice(1).map((notice) => (
+            {lesson.provenance.notices.slice(synthetic ? 1 : 0).map((notice) => (
               <li key={notice}>{notice}</li>
             ))}
           </ul>
         </details>
 
         <details className="provenance" data-testid="model-trace">
-          <summary>Technical model trace (developers and reviewers; not learner feedback)</summary>
+          <summary>Technical model trace (for developers; not learner feedback)</summary>
           <ol>
             {traces.map(({ entry, trace }) => (
               <li key={`${entry.stepId}-${entry.attempt}`}>

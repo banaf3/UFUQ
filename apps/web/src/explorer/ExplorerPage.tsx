@@ -54,7 +54,7 @@ const SCOPE_PREFERENCE: readonly LessonExecutionScope[] = [
 ];
 const SCOPE_BADGE: Record<LessonExecutionScope, string> = {
   SCIENTIFIC_PROFILE_V1: 'ScientificProfileV1',
-  REVIEW_PREVIEW: 'Review preview: unreviewed data',
+  REVIEW_PREVIEW: '',
   SYNTHETIC_TECHNICAL_FIXTURE: 'Synthetic fixture: not the real sky',
 };
 const INITIAL_VIEW: ViewState = {
@@ -113,12 +113,11 @@ function plainStarName(sky: SkyViewV2, index: number): string {
 
 export function ExplorerPage({
   learnerId,
-  identityEnabled,
   onStartLesson,
   accountSlot,
+  onRequireSignIn,
 }: {
   readonly learnerId: string | null;
-  readonly identityEnabled: boolean;
   /** Opens the lesson for a scenario: the walkthrough first, then the assessment. */
   readonly onStartLesson: (choice: {
     readonly datasetId: string;
@@ -127,6 +126,8 @@ export function ExplorerPage({
   }) => Promise<void>;
   /** The account menu (sign in, progress, analytics), shown before Start lesson. */
   readonly accountSlot?: ReactNode;
+  /** Called when a signed-out visitor presses Start lesson (opens the sign-in dialog). */
+  readonly onRequireSignIn?: () => void;
 }) {
   const [datasets, setDatasets] = useState<readonly DatasetSummaryV2[]>([]);
   const [selection, setSelection] = useState<Selection | null>(null);
@@ -323,7 +324,11 @@ export function ExplorerPage({
   };
 
   const startLesson = async () => {
-    if (!selection || !learnerId || selection.scenarioId === CUSTOM) return;
+    if (!selection || selection.scenarioId === CUSTOM) return;
+    if (!learnerId) {
+      onRequireSignIn?.();
+      return;
+    }
     setStarting(true);
     setError(null);
     try {
@@ -357,9 +362,8 @@ export function ExplorerPage({
     }
   };
 
-  const lessonBlocked = !identityEnabled
-    ? 'Sign in to take a lesson.'
-    : selection?.scenarioId === CUSTOM
+  const lessonBlocked =
+    selection?.scenarioId === CUSTOM
       ? 'Lessons run on reviewed scenarios: choose a scenario first.'
       : null;
   const facing = (((view.azimuth / DEG) % 360) + 360) % 360;
@@ -422,7 +426,7 @@ export function ExplorerPage({
                 {datasets.flatMap((d) =>
                   d.executionScopes.map((scope) => (
                     <option key={`${d.datasetId}|${scope}`} value={`${d.datasetId}|${scope}`}>
-                      {d.title} · {SCOPE_BADGE[scope]}
+                      {SCOPE_BADGE[scope] ? `${d.title} · ${SCOPE_BADGE[scope]}` : d.title}
                     </option>
                   )),
                 )}
@@ -491,7 +495,7 @@ export function ExplorerPage({
           </>
         )}
         <span className="spacer" />
-        {selection && (
+        {selection && SCOPE_BADGE[selection.scope] && (
           <span className={`badge badge-${selection.scope.toLowerCase()}`}>
             {SCOPE_BADGE[selection.scope]}
           </span>
@@ -500,8 +504,11 @@ export function ExplorerPage({
         <button
           type="button"
           className="primary"
-          disabled={!selection || !!lessonBlocked || starting || !learnerId}
-          title={lessonBlocked ?? 'Start the guided lesson for this scenario'}
+          disabled={!selection || !!lessonBlocked || starting}
+          title={
+            lessonBlocked ??
+            (learnerId ? 'Start the guided lesson for this scenario' : 'Sign in to start a lesson')
+          }
           onClick={() => void startLesson()}
         >
           {starting ? 'Preparing…' : 'Start lesson'}
@@ -611,7 +618,8 @@ export function ExplorerPage({
         {sky && (
           <details>
             <summary>
-              {sky.utc} · {sky.stars.count} stars · {sky.provenance.profileId}
+              {sky.utc} · {sky.stars.count} stars ·{' '}
+              {sky.provenance.profileId.replace(/ReviewPreview$/, '')}
             </summary>
             <ul>
               {sky.provenance.notices.map((n) => (
@@ -621,11 +629,12 @@ export function ExplorerPage({
                 Positions: geometric (no refraction or atmospheric dimming); background stars use
                 the display-only policy {sky.provenance.displayPolicyId}.
               </li>
-              {sky.provenance.artifacts.map((a) => (
-                <li key={a.artifactId}>
-                  {a.artifactId}: {a.approvalState}
-                </li>
-              ))}
+              {selection?.scope === 'SYNTHETIC_TECHNICAL_FIXTURE' &&
+                sky.provenance.artifacts.map((a) => (
+                  <li key={a.artifactId}>
+                    {a.artifactId}: {a.approvalState}
+                  </li>
+                ))}
               {sky.provenance.attributions.map((a) => (
                 <li key={a}>{a}</li>
               ))}

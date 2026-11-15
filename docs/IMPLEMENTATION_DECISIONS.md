@@ -775,3 +775,24 @@ Historical report/deviation/authority status remains in `governance/`.
 - **What code it affects:** `catalogue-schema` content model, `lesson-service.ts`,
   `POST /api/v2/walkthroughs`, `apps/web/src/lesson`, `apps/web/src/sky/fly-to.ts`.
 - **Validation required:** educational review of the frame sequence and texts.
+
+## IMP-025 — Find-it tasks are answered by pointing the circle
+
+- **Decision:** How a learner answers "find this figure or star".
+- **Current choice (2026-11-15, owner request):** no list or multiple choice. The learner
+  navigates the sky (mouse drag, wheel, arrow keys) until the circle at the centre of the
+  view is on the answer and confirms. The client sends the circle's place (`SKY_POINT`:
+  azimuth, altitude, field of view); the server decides. The answer is correct when the
+  nearest star of the target pattern lies within the circle's angular radius. The circle's
+  radius is 4% of the field of view (`POINT_CIRCLE_RADIUS_SHARE`, shared by the drawn
+  circle and the scoring, so what is seen is what is scored). The reported field is clamped
+  to 2°–120°, so the circle is at most 4.8° and zooming in demands a more exact answer.
+  Select-every-member tasks (synthetic fixture only) keep their list. A wrong answer gives
+  no distance, only the instruction to look again.
+- **Status:** provisional. The 4% share is the implementer's choice; the owner or the
+  educational reviewer may change it (one constant).
+- **What code it affects:** `assessment-core` (`scorePointedLocation`), the `SKY_POINT`
+  contract, `lesson-service.ts`, `LessonView.tsx`, route prompts.
+- **Validation required:** educational review of the circle size per task.
+- **Trade-off:** the accessible star list is gone for these tasks. The arrow keys and the
+  Enter key still work, but a screen-reader learner has no list of star positions.

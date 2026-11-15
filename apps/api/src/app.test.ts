@@ -30,13 +30,28 @@ async function newLearner(app: App): Promise<string> {
   return response.body.learnerId as string;
 }
 
+/** Star directions of each created lesson, so tests can "put the circle" on a handle. */
+const lessonStars = new Map<string, Map<string, readonly number[]>>();
+
+/** A pointing answer for a star handle: the circle on its direction at a 60 degree field. */
+function pointAnswer(lessonId: string, handle: string) {
+  const enu = lessonStars.get(lessonId)?.get(handle);
+  if (!enu) return null;
+  return {
+    kind: 'SKY_POINT',
+    azimuthRadians: Math.atan2(enu[0] as number, enu[1] as number),
+    altitudeRadians: Math.asin(enu[2] as number),
+    fovRadians: Math.PI / 3,
+  };
+}
+
 async function createLesson(
   app: App,
   learnerId: string,
   scenarioId: string,
   change: Record<string, unknown> = {},
 ) {
-  return request(app)
+  const response = await request(app)
     .post('/api/v2/lessons')
     .send({
       contractVersion: V2,
@@ -47,13 +62,29 @@ async function createLesson(
       sessionPurpose: 'LEARNING',
       ...change,
     });
+  const body = response.body as LessonSessionV2;
+  if (response.status === 201)
+    lessonStars.set(body.lessonId, new Map(body.stars.map((s) => [s.handle, s.enu])));
+  return response;
 }
 
+/**
+ * Tests name a star by its handle ({ kind: 'STAR_SELECTION', starHandle }) for brevity; the
+ * API takes the pointed direction, so the helper turns the handle into the circle's place.
+ */
 function submitter(app: App, lessonId: string) {
-  return (stepId: string, answer: unknown, extra: Record<string, unknown> = {}) =>
-    request(app)
+  return (stepId: string, answer: unknown, extra: Record<string, unknown> = {}) => {
+    const named = answer as { kind?: string; starHandle?: string; correct?: boolean };
+    const pointed =
+      named.kind === 'STAR_SELECTION' &&
+      named.starHandle !== undefined &&
+      named.correct === undefined
+        ? pointAnswer(lessonId, named.starHandle)
+        : null;
+    return request(app)
       .post(`/api/v2/lessons/${lessonId}/steps/${stepId}/responses`)
-      .send({ contractVersion: V2, answer, ...extra });
+      .send({ contractVersion: V2, answer: pointed ?? answer, ...extra });
+  };
 }
 
 const overlay = <K extends SkyOverlayV2['kind']>(step: LessonStepPromptV2 | null, kind: K) =>
@@ -680,5 +711,82 @@ describe('report-based adaptive cues on the sky culture', () => {
       ]);
       expect(wrong.nextStep?.hideCardinalLabels).toBe(false);
     }
+  });
+});
+
+describe('pointing the circle at the answer (owner request 2026-11-15)', () => {
+  const app = createApp({ enableDevelopmentIdentity: true });
+
+  /** The circle placed `offsetDegrees` above the direction of a star, at a field of view. */
+  async function pointNear(offsetDegrees: number, fovDegrees: number) {
+    const learner = await newLearner(app);
+    const lesson = (await createLesson(app, learner, 'synthetic-scenario-a'))
+      .body as LessonSessionV2;
+    const helper = outlineMembers(lesson.currentStep)[0] as string;
+    const enu = lesson.stars.find((s) => s.handle === helper)?.enu as readonly number[];
+    return request(app)
+      .post(`/api/v2/lessons/${lesson.lessonId}/steps/step-1/responses`)
+      .send({
+        contractVersion: V2,
+        answer: {
+          kind: 'SKY_POINT',
+          azimuthRadians: Math.atan2(enu[0] as number, enu[1] as number),
+          altitudeRadians: Math.asin(enu[2] as number) + (offsetDegrees * Math.PI) / 180,
+          fovRadians: (fovDegrees * Math.PI) / 180,
+        },
+      });
+  }
+
+  it('is correct inside the circle (4% of the field) and incorrect outside it', async () => {
+    // At a 60 degree field the circle's radius is 2.4 degrees.
+    const inside = (await pointNear(2, 60)).body as StepFeedbackV2;
+    expect(inside.result).toBe('CORRECT');
+    expect(inside.feedback).toMatch(/The circle was \d\.\d° from the nearest star/);
+    const outside = (await pointNear(3, 60)).body as StepFeedbackV2;
+    expect(outside.result).toBe('INCORRECT');
+    expect(outside.feedback).toContain('zoom in for a smaller circle');
+    // Zoomed in to 20 degrees the circle is 0.8 degrees: 2 degrees off is now wrong.
+    expect(((await pointNear(2, 20)).body as StepFeedbackV2).result).toBe('INCORRECT');
+    expect(((await pointNear(0.5, 20)).body as StepFeedbackV2).result).toBe('CORRECT');
+  });
+
+  it('cannot widen the circle by reporting a huge field of view', async () => {
+    // The field is clamped to 120 degrees, so the circle never exceeds 4.8 degrees.
+    expect(((await pointNear(6, 360)).body as StepFeedbackV2).result).toBe('INCORRECT');
+  });
+
+  it('rejects malformed points and the old list answer', async () => {
+    const learner = await newLearner(app);
+    const lesson = (await createLesson(app, learner, 'synthetic-scenario-a'))
+      .body as LessonSessionV2;
+    const send = (answer: unknown) =>
+      request(app)
+        .post(`/api/v2/lessons/${lesson.lessonId}/steps/step-1/responses`)
+        .send({ contractVersion: V2, answer });
+    expect((await send({ kind: 'SKY_POINT', azimuthRadians: 0, altitudeRadians: 0 })).status).toBe(
+      400,
+    );
+    expect(
+      (
+        await send({
+          kind: 'SKY_POINT',
+          azimuthRadians: 0,
+          altitudeRadians: 2,
+          fovRadians: 1,
+        })
+      ).status,
+    ).toBe(400);
+    expect(
+      (
+        await send({
+          kind: 'SKY_POINT',
+          azimuthRadians: 0,
+          altitudeRadians: 0,
+          fovRadians: 1,
+          correct: true,
+        })
+      ).status,
+    ).toBe(400);
+    expect((await send({ kind: 'STAR_SELECTION', starHandle: 'x' })).status).toBe(400);
   });
 });

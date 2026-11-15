@@ -6,6 +6,7 @@ import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AccountService } from '../../apps/api/src/accounts/account-service.js';
+import { DEMO_ACCOUNTS, DEMO_PASSWORD } from '../../apps/api/src/accounts/demo-accounts.js';
 import { MySqlAccountStore } from '../../apps/api/src/accounts/account-store.js';
 import { MySqlReportStore } from '../../apps/api/src/accounts/reports.js';
 import { createApp } from '../../apps/api/src/app.js';
@@ -267,10 +268,17 @@ describe('HTTP: accounts, lessons, progress and analytics (UC-101, UC-103, UC-10
     const step = lesson.body.currentStep;
     const target = step.overlays.find((o: { kind: string }) => o.kind === 'PATTERN_OUTLINE')
       ?.memberHandles[0] as string;
+    const targetEnu = lesson.body.stars.find((s: { handle: string }) => s.handle === target)
+      .enu as number[];
     const path = `/api/v2/lessons/${lesson.body.lessonId}/steps/${step.stepId}/responses`;
     const answer = {
       contractVersion: 'lesson.v2',
-      answer: { kind: 'STAR_SELECTION', starHandle: target },
+      answer: {
+        kind: 'SKY_POINT',
+        azimuthRadians: Math.atan2(targetEnu[0] as number, targetEnu[1] as number),
+        altitudeRadians: Math.asin(targetEnu[2] as number),
+        fovRadians: Math.PI / 3,
+      },
     };
     expect((await request(server).post(path).send(answer)).status).toBe(404);
     const answered = await agent.post(path).send(answer);
@@ -314,5 +322,42 @@ describe('HTTP: accounts, lessons, progress and analytics (UC-101, UC-103, UC-10
     expect(analytics.body.recentLogs.map((l: { eventType: string }) => l.eventType)).toContain(
       'ACCESS_DENIED',
     );
+  });
+});
+
+describe('demo accounts (owner request: simple admin and learner logins)', () => {
+  it('lets the seeded administrators and learners sign in with the demo password', async () => {
+    const service = new AccountService(new MySqlAccountStore(pool));
+    for (const account of DEMO_ACCOUNTS)
+      await service.register(
+        { name: account.name, email: account.email, password: DEMO_PASSWORD },
+        account.role,
+      );
+    const app = createApp({
+      accounts: {
+        accountStore: new MySqlAccountStore(pool),
+        learnerStore: new MySqlLearnerStore(pool),
+        reports: new MySqlReportStore(pool),
+      },
+    });
+    for (const account of DEMO_ACCOUNTS) {
+      const agent = request.agent(app);
+      const login = await agent
+        .post('/api/v2/auth/login')
+        .send({ email: account.email, password: DEMO_PASSWORD });
+      expect(login.status).toBe(200);
+      expect(login.body.role).toBe(account.role);
+      expect((await agent.get('/api/v2/admin/analytics')).status).toBe(
+        account.role === 'ADMIN' ? 200 : 403,
+      );
+    }
+    // Registering the same address again is refused; the demo password is too short to register with.
+    expect(
+      (
+        await request(app)
+          .post('/api/v2/auth/register')
+          .send({ name: 'x', email: 'new@ufuq.test', password: DEMO_PASSWORD })
+      ).status,
+    ).toBe(400);
   });
 });

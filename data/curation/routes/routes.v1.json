@@ -6,7 +6,7 @@
   "routes": [
     {
       "stableId": "route-kaff-to-jady-to-north",
-      "routeVersion": "2",
+      "routeVersion": "3",
       "title": "From Dhāt al-Kursī to al-Jady to True North and the Qibla",
       "selectionPriority": 1,
       "requiredStarIds": [
@@ -75,9 +75,9 @@
           "patternId": "pattern-al-kaff-al-khadib",
           "directionId": null,
           "guidanceRelationshipId": null,
-          "prompt": "Find Dhāt al-Kursī: five bright stars in a zigzag like a W, in the northern sky. Select one of its stars.",
-          "successFeedback": "That star belongs to Dhāt al-Kursī. The figure is now outlined.",
-          "retryFeedback": "That star is not part of Dhāt al-Kursī. Look for five bright stars in a W shape."
+          "prompt": "Find Dhāt al-Kursī (also called al-Kaff al-Khaḍīb, the henna-dyed hand): five bright stars in a zigzag like a W, in the northern sky. Drag the sky until the circle is on one of its stars, then confirm.",
+          "successFeedback": "The circle is on Dhāt al-Kursī.",
+          "retryFeedback": "The circle is not on Dhāt al-Kursī. Look for five bright stars in a W shape."
         },
         {
           "stepId": "step-2-find-jady",
@@ -86,9 +86,9 @@
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-kaff-to-jady",
-          "prompt": "Now find al-Jady and select it.",
-          "successFeedback": "That is al-Jady, the polar star.",
-          "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north."
+          "prompt": "Now find al-Jady: drag the sky until the circle is on it, then confirm.",
+          "successFeedback": "The circle is on al-Jady, the polar star.",
+          "retryFeedback": "The circle is not on al-Jady. Trace again from the figure you found towards the north."
         },
         {
           "stepId": "step-3-face-north",
@@ -125,7 +125,7 @@
     },
     {
       "stableId": "route-banat-to-jady-to-north",
-      "routeVersion": "2",
+      "routeVersion": "3",
       "title": "From Banāt Naʿsh to al-Jady to True North and the Qibla",
       "selectionPriority": 2,
       "requiredStarIds": [
@@ -196,9 +196,9 @@
           "patternId": "pattern-banat-nash-al-kubra",
           "directionId": null,
           "guidanceRelationshipId": null,
-          "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Select one of its stars.",
-          "successFeedback": "That star belongs to Banāt Naʿsh. The group is now outlined.",
-          "retryFeedback": "That star is not part of Banāt Naʿsh. Look for a box of four stars with a curved tail of three."
+          "prompt": "Find Banāt Naʿsh al-Kubrā: seven bright stars, four in a box and three trailing away, in the northern sky. Drag the sky until the circle is on one of its stars, then confirm.",
+          "successFeedback": "The circle is on Banāt Naʿsh.",
+          "retryFeedback": "The circle is not on Banāt Naʿsh. Look for a box of four stars with a curved tail of three."
         },
         {
           "stepId": "step-2-find-jady",
@@ -207,9 +207,9 @@
           "patternId": "pattern-al-jady",
           "directionId": null,
           "guidanceRelationshipId": "guide-banat-to-jady",
-          "prompt": "Now find al-Jady and select it.",
-          "successFeedback": "That is al-Jady, the polar star.",
-          "retryFeedback": "That is not al-Jady. Trace again from the figure you found towards the north."
+          "prompt": "Now find al-Jady: drag the sky until the circle is on it, then confirm.",
+          "successFeedback": "The circle is on al-Jady, the polar star.",
+          "retryFeedback": "The circle is not on al-Jady. Trace again from the figure you found towards the north."
         },
         {
           "stepId": "step-3-face-north",

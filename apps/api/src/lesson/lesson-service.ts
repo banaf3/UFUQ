@@ -12,9 +12,8 @@ import {
   type DirectionMeasurement,
   measureDirectionAnswer,
   scoredOutcomeOf,
-  scoreStarSelection,
+  scorePointedLocation,
   scoreStarSetSelection,
-  type StarSelectionScore,
   type StarSetScore,
 } from '@ufuq/assessment-core';
 import {
@@ -37,6 +36,7 @@ import type {
 } from '@ufuq/catalogue-schema';
 import {
   LESSON_CONTRACT_VERSION,
+  POINT_CIRCLE_RADIUS_SHARE,
   type LessonSessionV2,
   type LessonStepPromptV2,
   type OverlayLabelV2,
@@ -893,7 +893,7 @@ export class LessonService {
         ? 'DIRECTION'
         : step.taskKind === 'SELECT_ALL_PATTERN_MEMBERS'
           ? 'STAR_SET_SELECTION'
-          : 'STAR_SELECTION';
+          : 'SKY_POINT';
     if (answer.kind !== expectedKind)
       throw new LessonError(400, 'WRONG_ANSWER_KIND', `A ${expectedKind} answer is required.`);
 
@@ -1087,13 +1087,40 @@ export class LessonService {
     const pattern = patterns.get(step.patternId as string) as SkyPattern;
     const members = new Set(pattern.memberStarIds);
     const starOf = session.handles.starOf;
-    const score: StarSelectionScore | StarSetScore =
-      answer.kind === 'STAR_SET_SELECTION'
-        ? scoreStarSetSelection(
-            answer.starHandles.map((handle) => starOf.get(handle) ?? null),
-            members,
-          )
-        : scoreStarSelection(starOf.get(answer.starHandle) ?? null, members);
+    if (answer.kind === 'SKY_POINT') {
+      // The circle: its radius is the share of the field of view the learner sees drawn.
+      const fov = Math.min(MAXIMUM_POINT_FOV, Math.max(MINIMUM_POINT_FOV, answer.fovRadians));
+      const tolerance = POINT_CIRCLE_RADIUS_SHARE * fov;
+      const accepted = new Map(
+        [...members].flatMap((starId) => {
+          const enu = session.context.directions.get(starId)?.enu;
+          return enu ? [[starId, [enu[0], enu[1], enu[2]] as const] as const] : [];
+        }),
+      );
+      const cosAlt = Math.cos(answer.altitudeRadians);
+      const pointed = scorePointedLocation(
+        [
+          cosAlt * Math.sin(answer.azimuthRadians),
+          cosAlt * Math.cos(answer.azimuthRadians),
+          Math.sin(answer.altitudeRadians),
+        ],
+        accepted,
+        tolerance,
+      );
+      const name = firstName(pattern.labels);
+      return {
+        score: pointed,
+        measurement: null,
+        feedback: (outcome: string) =>
+          outcome === 'CORRECT'
+            ? `${step.successFeedback} The circle was ${degrees(pointed.separationRadians ?? 0)}° from the nearest star of ${name}.`
+            : `${step.retryFeedback} The circle must cover a star of ${name}: drag the sky until it does, and zoom in for a smaller circle.`,
+      };
+    }
+    const score: StarSetScore = scoreStarSetSelection(
+      answer.starHandles.map((handle) => starOf.get(handle) ?? null),
+      members,
+    );
     return {
       score,
       measurement: null,
@@ -1285,9 +1312,24 @@ export class LessonService {
 
 function answerText(answer: StepAnswerV2): string {
   if (answer.kind === 'DIRECTION') return `azimuth ${answer.azimuthRadians.toFixed(6)} rad`;
-  if (answer.kind === 'STAR_SET_SELECTION') return `handles ${answer.starHandles.join(',')}`;
-  return `handle ${answer.starHandle}`;
+  if (answer.kind === 'SKY_POINT')
+    return `point az ${answer.azimuthRadians.toFixed(5)} alt ${answer.altitudeRadians.toFixed(5)} fov ${answer.fovRadians.toFixed(4)} rad`;
+  return `handles ${answer.starHandles.join(',')}`;
 }
+
+/** The name a learner knows a pattern by: its transliteration, else its script. */
+function firstName(labels: readonly CulturalLabel[]): string {
+  return (
+    labels.find((l) => l.transliteration !== null)?.transliteration ??
+    labels[0]?.script ??
+    'the pattern'
+  );
+}
+
+const DEG_RADIANS = Math.PI / 180;
+/** The reported field of view is clamped before it sets the circle's radius. */
+const MINIMUM_POINT_FOV = 2 * DEG_RADIANS;
+const MAXIMUM_POINT_FOV = 120 * DEG_RADIANS;
 
 function outlineOf(pattern: SkyPattern, handle: (starId: string) => string): SkyOverlayV2 {
   return {

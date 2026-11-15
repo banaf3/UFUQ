@@ -26,7 +26,10 @@ ScientificProfileV1 lessons still fail closed, and the review preview runs them.
    - A frame whose figure is below the horizon is left out.
 4. **Assessment** (four steps, one skill each, EDU-002 proposal): find Dhāt al-Kursī
    (KC-02) or Banāt Naʿsh (KC-01); find al-Jady (KC-03); face True North (KC-04); face
-   the Qibla (KC-05).
+   the Qibla (KC-05). The two find-it steps are answered by dragging the sky until the
+   circle in the middle of the view is on the answer and confirming; the server checks the
+   circle's place (IMP-025, circle radius 4% of the field of view). There is no list or
+   multiple choice.
 5. **Support follows mastery** per skill (report Table 2-5, below).
 6. **My progress** (UC-104) shows the estimated mastery, the support level and every
    answer; **Analytics** (UC-105) shows administrators read-only aggregates and the system
@@ -159,3 +162,19 @@ star in the assessment that follows.
 - **Account policy:** password-reset, MFA and a common-password list (ASVS) are not
   built; the lockout numbers need owner approval (IMP-017).
 - **Approvals:** every value above needs its named reviewer.
+
+## Update 2026-11-15 (second owner request): pointing, no review labels, demo accounts
+
+- **Pointing:** see IMP-025 above.
+- **No "unreviewed" wording:** the learner and explorer screens no longer show review-state
+  banners, badges or approval lists for the real sky, and the preview data is the default.
+  The synthetic technical fixture keeps its own label because it is invented data. The
+  records themselves are still `REVIEW_REQUIRED`: no approval record was written, so strict
+  mode still fails closed and the preview scope is still what serves the real sky.
+- **Sign-in:** a signed-out visitor sees a welcome card with Sign in / Register and a
+  Sign in / Register button in the top bar; Start lesson opens the sign-in dialog. Lessons
+  belong to the signed-in account whenever a database is present.
+- **Demo accounts** (`npm run db:seed-demo`, also run by `npm run preview:review`): admin1,
+  admin2, user1 and user2 at `@ufuq.test`, all with the password `1234567`. The password is
+  deliberately weak and public, so the command refuses `NODE_ENV=production` and
+  `UFUQ_SECURE_COOKIES=1`. Self-registration still needs 8 to 64 characters.

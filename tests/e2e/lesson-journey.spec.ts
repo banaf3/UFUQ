@@ -29,35 +29,94 @@ function starButtons(page: Page) {
   return page.locator('.star-list').getByRole('listitem').getByRole('button');
 }
 
-/** Reads the accessible star list and returns altitudes keyed by button index. */
-async function altitudes(page: Page): Promise<number[]> {
-  const labels = await starButtons(page).evaluateAll((buttons) =>
-    buttons.map((button) => button.getAttribute('aria-label') ?? ''),
-  );
-  return labels.map((label) => Number(/altitude (-?\d+) degrees/.exec(label)?.[1] ?? 'NaN'));
+/** The lesson view starts at azimuth 90 and altitude 12 degrees (LessonView INITIAL_VIEW). */
+interface View {
+  az: number;
+  alt: number;
+}
+const START: View = { az: 90, alt: 12 };
+
+/** East-north-up direction to the azimuth and altitude (degrees) of the circle's place. */
+function place(enu: readonly number[]): View {
+  const [e, n, u] = enu as [number, number, number];
+  return {
+    az: ((Math.atan2(e, n) * 180) / Math.PI + 360) % 360,
+    alt: (Math.asin(u) * 180) / Math.PI,
+  };
+}
+
+/**
+ * Moves the circle with the keyboard: each arrow press turns the view 2 degrees. The
+ * circle's radius is 4% of the 100 degree field, i.e. 4 degrees, so 2 degree steps are fine.
+ */
+async function moveCircleTo(page: Page, from: View, to: View): Promise<View> {
+  const sky = page.getByRole('application');
+  await sky.focus();
+  const turn = (((to.az - from.az + 540) % 360) - 180) / 2;
+  const tilt = (to.alt - from.alt) / 2;
+  for (let i = 0; i < Math.abs(Math.round(turn)); i += 1)
+    await sky.press(turn < 0 ? 'ArrowLeft' : 'ArrowRight');
+  for (let i = 0; i < Math.abs(Math.round(tilt)); i += 1)
+    await sky.press(tilt < 0 ? 'ArrowDown' : 'ArrowUp');
+  return {
+    az: from.az + Math.round(turn) * 2,
+    alt: from.alt + Math.round(tilt) * 2,
+  };
+}
+
+async function confirmCircle(page: Page) {
+  await page.getByRole('button', { name: 'Confirm: the circle is on it' }).click();
+}
+
+/** What the API sent for the current lesson: star directions and the revealed answer stars. */
+function watchLesson(page: Page) {
+  const seen = {
+    stars: new Map<string, readonly number[]>(),
+    helper: null as readonly number[] | null,
+    target: null as readonly number[] | null,
+  };
+  const outlineMember = (overlays: { kind: string; memberHandles?: string[] }[]) =>
+    overlays.find((o) => o.kind === 'PATTERN_OUTLINE')?.memberHandles?.[0];
+  page.on('response', (response) => {
+    if (!response.url().includes('/api/v2/lessons')) return;
+    void response
+      .json()
+      .then((body) => {
+        for (const star of body.stars ?? []) seen.stars.set(star.handle, star.enu);
+        const steps = [body.currentStep, body.nextStep].filter(Boolean);
+        for (const step of steps) {
+          const member = outlineMember(step.overlays);
+          if (member && seen.stars.has(member) && !seen.helper)
+            seen.helper = seen.stars.get(member) ?? null;
+          const arc = step.overlays.find((o: { kind: string }) => o.kind === 'GUIDE_ARC');
+          const last = arc?.handles?.at(-1);
+          if (last && seen.stars.has(last) && !seen.target)
+            seen.target = seen.stars.get(last) ?? null;
+        }
+      })
+      .catch(() => undefined);
+  });
+  return seen;
 }
 
 /** From True North, 35 two-degree turns to the west face the synthetic destination (about 290.6 degrees). */
-async function faceQiblaAndConfirm(page: Page) {
-  const sky = page.getByRole('application');
-  await sky.focus();
-  for (let i = 0; i < 35; i += 1) await sky.press('ArrowLeft');
+async function faceQiblaAndConfirm(page: Page, from: View) {
+  await moveCircleTo(page, from, { az: 290, alt: from.alt });
   await page.getByRole('button', { name: 'Confirm: I am facing the Qibla' }).click();
 }
 
-async function faceNorthAndConfirm(page: Page) {
-  await expect(page.getByText(/Facing \d+°/)).toHaveCount(0);
-  const sky = page.getByRole('application');
-  await sky.focus();
-  // The view starts facing east; 45 two-degree turns face north.
-  for (let i = 0; i < 45; i += 1) await sky.press('ArrowLeft');
+async function faceNorthAndConfirm(page: Page, from: View): Promise<View> {
+  await expect(page.getByText(/Facing d+°/)).toHaveCount(0);
+  const at = await moveCircleTo(page, from, { az: 0, alt: from.alt });
   await page.getByRole('button', { name: 'Confirm: I am facing True North' }).click();
+  return at;
 }
 
 test('adaptive synthetic lesson: guided first, support fades in the next lesson', async ({
   page,
 }) => {
   await page.goto('/');
+  const seen = watchLesson(page);
   await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
   await expect(page.getByRole('heading', { name: 'Synthetic route A' })).toBeVisible();
   await expect(page.getByRole('note').first()).toContainText('SYNTHETIC TECHNICAL FIXTURE');
@@ -65,29 +124,31 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await expect(page.getByTestId('support-level')).toContainText('Guided');
   await expect(page.getByText('Hint: Synthetic zigzag of five stars.')).toBeVisible();
 
-  // Step 1: a high star belongs to the helper; the low near-pole star is the target.
-  const heights = await altitudes(page);
-  const lowIndex = heights.indexOf(Math.min(...heights));
-  const highIndex = heights.indexOf(Math.max(...heights));
-  await starButtons(page).nth(lowIndex).click();
+  // Step 1: put the circle on the helper. Empty sky first: the answer is checked by place.
+  await expect(page.getByRole('button', { name: /Star d/ })).toHaveCount(0); // no list to pick from
+  await confirmCircle(page);
   await expect(page.getByLabel('Feedback')).toContainText('Try again');
-  await starButtons(page).nth(highIndex).click();
+  await expect.poll(() => seen.helper).not.toBeNull();
+  let at = await moveCircleTo(page, START, place(seen.helper as number[]));
+  await confirmCircle(page);
   await expect(page.getByText('Step 2 of 4')).toBeVisible();
+  await expect(page.getByLabel('Feedback')).toContainText('The circle was');
   await expect(page.getByLabel('Feedback')).toContainText('Synthetic guide line.');
 
-  // Step 2: select the target with the keyboard (focus it in the list, press Enter).
-  await starButtons(page).nth(lowIndex).focus();
-  await page.keyboard.press('Enter');
+  // Step 2: the target star near the pole, found by moving the circle to it.
+  await expect.poll(() => seen.target).not.toBeNull();
+  at = await moveCircleTo(page, at, place(seen.target as number[]));
+  await confirmCircle(page);
   await expect(page.getByText('Step 3 of 4')).toBeVisible();
 
   // Step 3: graded only because the synthetic fixture carries a synthetic tolerance.
-  await faceNorthAndConfirm(page);
+  at = await faceNorthAndConfirm(page, at);
   await expect(page.getByLabel('Feedback')).toContainText('differs from True North by 0.0 degrees');
   await expect(page.getByLabel('Feedback')).toContainText('inside the 10.0° tolerance');
   await expect(page.getByText('Step 4 of 4')).toBeVisible();
 
   // Step 4: the Qibla, computed for the observer and graded by the same synthetic tolerance.
-  await faceQiblaAndConfirm(page);
+  await faceQiblaAndConfirm(page, at);
   await expect(page.getByLabel('Feedback')).toContainText('differs from the Qibla by 0.6 degrees');
   await expect(page.getByRole('heading', { name: 'Lesson complete' })).toBeVisible();
   await page.getByTestId('model-trace').locator('summary').click();
@@ -97,7 +158,8 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await page.getByRole('button', { name: 'Back to the sky' }).click();
   await startSyntheticLesson(page, 'Synthetic scenario A (route A)', '2026-11-15T13:00:00Z');
   await expect(page.getByTestId('support-level')).toContainText('Guided');
-  await starButtons(page).nth(highIndex).click();
+  await moveCircleTo(page, START, place(seen.helper as number[]));
+  await confirmCircle(page);
   await expect(page.getByText('Step 2 of 4')).toBeVisible();
   await expect(page.getByTestId('support-level')).toContainText('Lines only');
 });
