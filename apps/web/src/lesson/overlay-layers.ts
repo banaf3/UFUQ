@@ -6,6 +6,7 @@
 import type { SkyOverlayV2 } from '@ufuq/contracts';
 
 import { NAME_FONT } from '../explorer/sky-layers.js';
+import { qiblaBeamLayers } from './compass-ring.js';
 import { horizonPointBelow } from '../scene/mapping.js';
 import { directionFromAltAz, greatCircle, meanDirection, type Vec3 } from '../sky/projection.js';
 import type { SkyLabel, SkyLine } from '../sky/sky-types.js';
@@ -147,6 +148,10 @@ export function overlayLayers(
           width: 1.8,
           dash: [6, 6],
         });
+    } else if (overlay.kind === 'QIBLA_MARK') {
+      const beam = qiblaBeamLayers(overlay.azimuthRadians, false);
+      lines.push(...beam.lines);
+      labels.push(...beam.labels);
     } else if (overlay.kind === 'HORIZON_ARC') {
       line(horizonArc(overlay.fromAzimuthRadians, overlay.toAzimuthRadians), {
         color: LESSON_COLOURS.qibla,

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { altAz } from '../sky/projection.js';
-import { compassRingLayers } from './compass-ring.js';
+import { compassRingLayers, qiblaBeamLayers } from './compass-ring.js';
 
 const DEG = Math.PI / 180;
 
@@ -29,7 +29,7 @@ describe('the compass ring on the horizon', () => {
     expect(labels.find((l) => l.text === 'You face 123°')).toBeDefined();
     const qibla = labels.find((l) => l.text === 'القبلة');
     expect(qibla?.secondary).toBe('Qibla 292°');
-    expect(lines).toHaveLength(1 + 36 + 2);
+    expect(lines).toHaveLength(1 + 36 + 24 + 1); // ring, ticks, the Qibla line, the facing marker
   });
 
   it('draws ticks and the marker without any degree text when not numbered', () => {
@@ -49,5 +49,20 @@ describe('the compass ring on the horizon', () => {
       numbered: true,
     });
     expect(labels.at(-1)?.text).toBe('You face 0°');
+  });
+});
+
+describe('the green Qibla line', () => {
+  it('stands on the horizon at the bearing and fades at both ends', () => {
+    const { lines, labels } = qiblaBeamLayers(292.12 * DEG, false);
+    const alpha = (color: string) => Number(/, ([\d.]+)\)$/.exec(color)?.[1]);
+    const alphas = lines.map((line) => alpha(line.color));
+    expect(alphas[0]).toBeLessThan(0.1);
+    expect(alphas.at(-1)).toBeLessThan(0.1);
+    expect(Math.max(...alphas)).toBeGreaterThan(0.9);
+    for (const line of lines)
+      for (const point of line.points) expect(altAz(point).azimuth).toBeCloseTo(292.12 * DEG, 9);
+    expect(labels[0]?.text).toBe('القبلة');
+    expect(labels[0]?.secondary).toBe('Qibla'); // no degrees in an assessment
   });
 });

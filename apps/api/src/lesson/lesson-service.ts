@@ -200,7 +200,6 @@ function labelsOf(labels: readonly CulturalLabel[]): OverlayLabelV2[] {
   }));
 }
 
-
 /** Transport rounding (about 0.2 arcsec); the server keeps full precision for scoring. */
 const roundedEnu = (enu: readonly number[]): [number, number, number] => [
   Math.round((enu[0] as number) * 1e6) / 1e6,
@@ -998,6 +997,14 @@ export class LessonService {
       nextChain = result.nextState;
     }
 
+    const answeredDirection =
+      step.directionId === null
+        ? undefined
+        : session.context.content.directions.find((d) => d.stableId === step.directionId);
+    const qiblaAzimuth =
+      answeredDirection?.definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING'
+        ? (session.context.targetAzimuths.get(answeredDirection.stableId) ?? null)
+        : null;
     session.attempts.set(stepId, attempt);
     const advance = outcome !== 'INCORRECT';
     if (advance) session.stepIndex += 1;
@@ -1012,7 +1019,13 @@ export class LessonService {
       result: outcome === 'UNCLASSIFIED' ? 'MEASURED_NO_TOLERANCE' : outcome,
       feedback: scored.feedback(outcome),
       measurement: scored.measurement,
-      overlays: completed ? this.summary(session) : [],
+      overlays: [
+        ...(completed ? this.summary(session) : []),
+        // A correct Qibla answer shows where the Qibla is (the green line).
+        ...(outcome === 'CORRECT' && qiblaAzimuth !== null
+          ? [{ kind: 'QIBLA_MARK' as const, azimuthRadians: qiblaAzimuth }]
+          : []),
+      ],
       nextStep: session.issued?.prompt ?? null,
       completed,
       trace,
@@ -1178,7 +1191,10 @@ export class LessonService {
           : mode === 'ADAPTIVE'
             ? !rendered.issued.includes('CARDINAL_MARKS')
             : step.taskKind === 'INDICATE_DIRECTION',
-        compassRing: qiblaStep || rendered.issued.includes('CARDINAL_MARKS'),
+        // Once the Qibla skill is mastered (INDEPENDENT) the ring is gone too.
+        compassRing:
+          (qiblaStep && scaffoldState !== 'INDEPENDENT') ||
+          rendered.issued.includes('CARDINAL_MARKS'),
         support: {
           mode,
           scaffoldState: cues.scaffoldState,
@@ -1312,7 +1328,8 @@ export class LessonService {
       const guide = relationship
         ? guideOverlay(session.context, relationship, 'FULL', handle)
         : null;
-      if (guide) overlays.push(guide);
+      // The Qibla is shown by its green line (QIBLA_MARK), not the orange arc.
+      if (guide && guide.kind !== 'HORIZON_ARC') overlays.push(guide);
     }
     return overlays;
   }

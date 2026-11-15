@@ -70,21 +70,9 @@ export function compassRingLayers(options: CompassRingOptions): {
       });
   }
   if (options.qiblaAzimuth !== null) {
-    lines.push({
-      points: tick(options.qiblaAzimuth, MARKER_TOP),
-      color: RING_COLOURS.qibla,
-      width: 3,
-    });
-    labels.push({
-      direction: directionFromAltAz(MARKER_LABEL_ALTITUDE, options.qiblaAzimuth),
-      text: 'القبلة',
-      secondary: `Qibla ${degreesText(options.qiblaAzimuth)}`,
-      color: RING_COLOURS.qibla,
-      font: `700 15px ${NAME_FONT}`,
-      secondaryFont: `500 12px ${NAME_FONT}`,
-      priority: -1,
-      offset: 0,
-    });
+    const beam = qiblaBeamLayers(options.qiblaAzimuth, options.numbered);
+    lines.push(...beam.lines);
+    labels.push(...beam.labels);
   }
   if (options.headingAzimuth !== null) {
     lines.push({
@@ -102,5 +90,49 @@ export function compassRingLayers(options: CompassRingOptions): {
         offset: 0,
       });
   }
+  return { lines, labels };
+}
+
+const BEAM_TOP = 24 * DEG;
+const BEAM_SEGMENTS = 24;
+export const QIBLA_GREEN = { r: 110, g: 231, b: 140 } as const;
+
+/**
+ * The Qibla line: a green vertical line standing on the horizon at the Qibla bearing. It
+ * is drawn as short segments whose opacity rises from the bottom and falls towards the top,
+ * so it fades at both ends. Lessons show it after a correct Qibla answer; the walkthrough
+ * shows it on its Qibla frame.
+ */
+export function qiblaBeamLayers(
+  azimuth: number,
+  withBearing: boolean,
+): { lines: SkyLine[]; labels: SkyLabel[] } {
+  const lines: SkyLine[] = [];
+  for (let i = 0; i < BEAM_SEGMENTS; i += 1) {
+    const t0 = i / BEAM_SEGMENTS;
+    const t1 = (i + 1) / BEAM_SEGMENTS;
+    const middle = (t0 + t1) / 2;
+    const alpha = Math.sin(Math.PI * middle) ** 1.5;
+    lines.push({
+      points: [
+        directionFromAltAz(t0 * BEAM_TOP, azimuth),
+        directionFromAltAz(t1 * BEAM_TOP, azimuth),
+      ],
+      color: `rgba(${QIBLA_GREEN.r}, ${QIBLA_GREEN.g}, ${QIBLA_GREEN.b}, ${alpha.toFixed(3)})`,
+      width: 4,
+    });
+  }
+  const labels: SkyLabel[] = [
+    {
+      direction: directionFromAltAz(BEAM_TOP + 2 * DEG, azimuth),
+      text: 'القبلة',
+      ...(withBearing ? { secondary: `Qibla ${degreesText(azimuth)}` } : { secondary: 'Qibla' }),
+      color: `rgb(${QIBLA_GREEN.r}, ${QIBLA_GREEN.g}, ${QIBLA_GREEN.b})`,
+      font: `700 15px ${NAME_FONT}`,
+      secondaryFont: `500 12px ${NAME_FONT}`,
+      priority: -1,
+      offset: 0,
+    },
+  ];
   return { lines, labels };
 }

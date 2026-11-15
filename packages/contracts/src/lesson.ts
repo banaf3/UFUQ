@@ -159,6 +159,14 @@ export type SkyOverlayV2 =
       }[];
     }
   | {
+      /**
+       * Where the Qibla is: a green vertical line on the horizon, fading at both ends. Sent
+       * only after a correct Qibla answer (never as a cue), and in the walkthrough.
+       */
+      readonly kind: 'QIBLA_MARK';
+      readonly azimuthRadians: number;
+    }
+  | {
       /** The turn along the horizon from True North to a direction (cue QIBLA_ARC_FULL). */
       readonly kind: 'HORIZON_ARC';
       readonly relationshipId: string;
