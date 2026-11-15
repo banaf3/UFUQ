@@ -203,7 +203,8 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
     const far = (await submit('step-3', { kind: 'DIRECTION', azimuthRadians: 0.5 }))
       .body as StepFeedbackV2;
     expect(far.result).toBe('INCORRECT');
-    expect(far.feedback).toContain('outside the 10.0° tolerance');
+    expect(far.feedback).toContain('You are not facing True North yet');
+    expect(far.feedback).not.toMatch(/\d degrees|°/);
     const near = (await submit('step-3', { kind: 'DIRECTION', azimuthRadians: 0.1 }))
       .body as StepFeedbackV2;
     expect(near.result).toBe('CORRECT');
@@ -212,6 +213,7 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
     expect(near.nextStep?.knowledgeComponentId).toBe('KC-05');
     // The Qibla task always has the compass ring; the find-it steps had none.
     expect(near.nextStep?.compassRing).toBe(true);
+    expect(near.nextStep?.hideCardinalLabels).toBe(false); // N, E, S, W after north is found
     expect(lesson.currentStep?.compassRing).toBe(false);
     // The Qibla is computed for the observer: here the synthetic observer and destination.
     const qibla = sphericalInitialBearing(
@@ -223,7 +225,9 @@ describe('adaptive lesson API (synthetic technical fixture)', () => {
       await submit('step-4', { kind: 'DIRECTION', azimuthRadians: qibla.azimuthRadians - 0.05 })
     ).body as StepFeedbackV2;
     expect(turned.result).toBe('CORRECT');
-    expect(turned.feedback).toContain('differs from the Qibla by 2.9 degrees');
+    expect(turned.feedback).toContain('You are facing the Qibla');
+    expect(turned.feedback).not.toMatch(/\d degrees|°/);
+    expect(turned.measurement?.angularDifferenceRadians).toBeCloseTo(0.05, 9);
     expect(turned.trace?.knowledgeComponentId).toBe('KC-05');
     expect(turned.completed).toBe(true);
     expect(turned.overlays.map((o) => o.kind)).toContain('HORIZON_ARC');
@@ -752,10 +756,11 @@ describe('pointing the circle at the answer (owner request 2026-11-15)', () => {
     // At a 60 degree field the circle's radius is 2.4 degrees.
     const inside = (await pointNear(2, 60)).body as StepFeedbackV2;
     expect(inside.result).toBe('CORRECT');
-    expect(inside.feedback).toMatch(/The circle was \d\.\d° from the nearest star/);
+    expect(inside.feedback).not.toMatch(/°|degree/);
     const outside = (await pointNear(3, 60)).body as StepFeedbackV2;
     expect(outside.result).toBe('INCORRECT');
-    expect(outside.feedback).toContain('zoom in for a smaller circle');
+    expect(outside.feedback).toContain('Drag the sky until the circle is on');
+    expect(outside.feedback).not.toMatch(/°|degree/);
     // Zoomed in to 20 degrees the circle is 0.8 degrees: 2 degrees off is now wrong.
     expect(((await pointNear(2, 20)).body as StepFeedbackV2).result).toBe('INCORRECT');
     expect(((await pointNear(0.5, 20)).body as StepFeedbackV2).result).toBe('CORRECT');

@@ -211,3 +211,13 @@ The orange Qibla arc and its "القبلة Qibla 292°" marker are shown only in
 No assessment support level draws them (cue configuration version 3), and the guided hint
 no longer names the place: "The Qibla here is 292° 07′ clockwise from True North". The
 compass ring in the Qibla step shows the facing bearing only.
+
+## Update 2026-11-15 (sixth owner request): cardinal letters, no degrees, no accuracy figures
+
+- In the Qibla assessment step the horizon shows N, E, S and W (the learner has just found
+  north) and the compass ring shows ticks and the facing marker only: no degree numbers and
+  no "You face N°" or "Facing N°" text. Degree numbers remain in the walkthrough.
+- Learner feedback no longer states how far the answer was from the target ("the circle
+  was 0.6° from…", "differs by 2.9 degrees, inside the 15° tolerance"). It says only
+  whether the circle is on the figure or the learner is facing the direction. The measured
+  difference stays in the technical `measurement` and the trace.
