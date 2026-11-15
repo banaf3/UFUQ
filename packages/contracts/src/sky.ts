@@ -51,6 +51,11 @@ export interface SkyFigureV2 {
   readonly style: 'FIGURE' | 'GROUP';
   /** Pairs of star indices into the star arrays: the compilation's lines, unmodified. */
   readonly segments: readonly (readonly [number, number])[];
+  /**
+   * Whose lines these are: the Stellarium compilation's (unmodified, CC BY-ND) or a UFUQ
+   * teaching aid drawn where the compilation has none (owner decision 2026-11-15).
+   */
+  readonly lineSource: 'COMPILATION' | 'UFUQ_TEACHING_AID';
   readonly memberIndices: readonly number[];
   readonly evidence: SkyEvidenceV2;
   /**

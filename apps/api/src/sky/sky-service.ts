@@ -108,7 +108,7 @@ const sourceList = (
 export const ARABIC_SKY_ATTRIBUTION =
   'Arabic sky: star names, star groups and figure lines from "Arabic (Ancient)" by Khalid al-Ajaji, Stellarium sky cultures (https://github.com/Stellarium/stellarium-skycultures, arabic_ancient), licensed CC BY-ND 4.0 (https://creativecommons.org/licenses/by-nd/4.0/). The lines are reproduced without changes; a line is left out only where its star is not in the UFUQ star field. Names are checked against Ibn Qutayba, al-Marzuqi and Ibn Asim; card texts are UFUQ paraphrases. Cross-reference: Bright Star Catalogue, 5th ed. (CDS V/50).';
 const LINE_CREDIT =
-  'Lines: Khalid al-Ajaji, Arabic (Ancient) sky culture for Stellarium (CC BY-ND 4.0), unmodified.';
+  'Lines: Khalid al-Ajaji, Arabic (Ancient) sky culture for Stellarium (CC BY-ND 4.0), unmodified. Lines marked as a UFUQ teaching aid are UFUQ’s own, not the compilation’s.';
 
 export interface ComputedSky {
   readonly utc: string;
@@ -287,6 +287,7 @@ export class SkyService {
             transliteration: name.transliteration,
           })),
           style: figure.style,
+          lineSource: figure.lineSource ?? 'COMPILATION',
           segments: figure.segments.flatMap(([from, to]) => {
             const a = indexForHip(from);
             const b = indexForHip(to);

@@ -172,6 +172,25 @@ describe('Arabic sky culture payload', () => {
     expect(label.get(4)).toBe(true);
   });
 
+  it('draws teaching lines instead of the compilation lines, and labels their source', () => {
+    const payload = build(
+      curation([
+        figure('anwa-a', [1, 2, 3], { lines: [[1, 1]], teachingLines: [[1, 2, 3]] }),
+        figure('anwa-b', [1, 3]),
+      ]),
+    );
+    const a = payload.figures.find((f) => f.figureId === 'anwa-a');
+    expect(a?.lineSource).toBe('UFUQ_TEACHING_AID');
+    expect(a?.segments).toEqual([
+      [1, 2],
+      [2, 3],
+    ]);
+    expect(payload.figures.find((f) => f.figureId === 'anwa-b')?.lineSource).toBe('COMPILATION');
+    expect(
+      validateArabicSkyCuration(curation([figure('anwa-a', [1, 2], { teachingLines: [[1, 9]] })])),
+    ).toContain('figure anwa-a: teachingLines must join member stars.');
+  });
+
   it('shows plain transliterations and keeps the scholarly form', () => {
     const payload = build(curation([figure('anwa-a', [1, 2], { transliteration: 'al-Ḥūt' })]));
     expect(payload.figures[0]?.transliteration).toBe('Al-Hut');

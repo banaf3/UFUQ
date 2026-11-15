@@ -43,6 +43,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-synthetic-a",
+        "lineSource": "COMPILATION",
         "members": [
           900001,
           900002,
@@ -99,6 +100,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-synthetic-b",
+        "lineSource": "COMPILATION",
         "members": [
           900011,
           900012,
@@ -204,6 +206,6 @@
       "system": "none (synthetic)"
     }
   },
-  "payloadSha256": "630c20436559bb75e1201b3f16279322d0edf70a8aad13bb660dd4ecd9ba8296",
+  "payloadSha256": "bd428982b98d0ce6fe7dd026f34e5a0957215347e9aceb1b4b4be2da69a3a69c",
   "schemaVersion": 1
 }

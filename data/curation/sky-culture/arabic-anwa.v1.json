@@ -1994,7 +1994,7 @@
           "supports": "membership as compiled from the primary anwāʾ texts"
         }
       ],
-      "lines": [[116631, 116805, 116584, 117221]],
+      "lines": [],
       "evidence": "PRIMARY_TEXT_READ",
       "attestation": [],
       "notes": [
@@ -2070,7 +2070,7 @@
           "supports": "membership as compiled from the primary anwāʾ texts"
         }
       ],
-      "lines": [[117221, 841, 2225, 2900, 3414, 3504, 3300, 2920]],
+      "lines": [],
       "evidence": "PRIMARY_TEXT_READ",
       "attestation": [],
       "notes": [
@@ -2122,10 +2122,7 @@
           "supports": "membership as compiled from the primary anwāʾ texts"
         }
       ],
-      "lines": [
-        [5251, 8068],
-        [4998, 7607]
-      ],
+      "lines": [],
       "evidence": "COMPILATION_ONLY",
       "attestation": [],
       "notes": [],
@@ -2226,13 +2223,7 @@
           "supports": "membership as compiled from the primary anwāʾ texts"
         }
       ],
-      "lines": [
-        [
-          116631, 116805, 116584, 117221, 841, 2225, 2900, 3414, 3504, 3300, 2920, 2505, 746, 2599,
-          8886
-        ],
-        [2505, 3179, 3821, 4292, 4427, 2599]
-      ],
+      "lines": [],
       "evidence": "PRIMARY_TEXT_READ",
       "attestation": [],
       "notes": [
@@ -2310,6 +2301,7 @@
         [746, 746],
         [3179, 3179]
       ],
+      "teachingLines": [[746, 3179, 4427, 6686, 8886]],
       "evidence": "PRIMARY_TEXT_READ",
       "attestation": [
         {

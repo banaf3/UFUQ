@@ -365,6 +365,7 @@ export interface ArabicSkyPayload {
     readonly style: 'FIGURE' | 'GROUP';
     readonly members: readonly number[];
     readonly segments: readonly (readonly [number, number])[];
+    readonly lineSource?: 'COMPILATION' | 'UFUQ_TEACHING_AID';
     readonly membershipCitations: readonly {
       readonly sourceId: string;
       readonly locator: string;

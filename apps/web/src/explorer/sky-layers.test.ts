@@ -32,6 +32,7 @@ const figure = (overrides: Partial<SkyFigureV2> & Pick<SkyFigureV2, 'figureId'>)
   memberIndices: [],
   evidence: 'PRIMARY_TEXT_READ',
   guidance: false,
+  lineSource: 'COMPILATION',
   about: null,
   references: [],
   notes: [],

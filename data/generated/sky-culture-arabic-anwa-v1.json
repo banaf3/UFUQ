@@ -13,7 +13,7 @@
     "counts": {
       "figures": 114,
       "relationships": 28,
-      "segments": 582,
+      "segments": 555,
       "segmentsNotInField": 3,
       "singleMemberFiguresNotDrawn": 2,
       "stars": 123,
@@ -22,7 +22,7 @@
     "cultureId": "arabic-anwa",
     "curation": {
       "path": "data/curation/sky-culture/arabic-anwa.v1.json",
-      "sha256": "1fda45185ba2cf03d54b3eaef0cba8ffdc3f766fbb716f52c7feb986c88fa56c"
+      "sha256": "5debe5864ec6247866f3794fb6629a43059692d8340f71a5b4499006868f00ea"
     },
     "curationReview": {
       "decisionDate": null,
@@ -65,6 +65,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-farqadan",
+        "lineSource": "COMPILATION",
         "members": [
           72607,
           75097
@@ -130,6 +131,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-fas-al-raha",
+        "lineSource": "COMPILATION",
         "members": [
           11767,
           62572,
@@ -231,6 +233,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-banat-nash-al-kubra",
+        "lineSource": "COMPILATION",
         "members": [
           53910,
           54061,
@@ -319,6 +322,7 @@
         ],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-qafza-al-ula",
+        "lineSource": "COMPILATION",
         "members": [
           55203,
           55219
@@ -366,6 +370,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-qafza-al-thaniya",
+        "lineSource": "COMPILATION",
         "members": [
           50372,
           50801
@@ -413,6 +418,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-qafza-al-thalitha",
+        "lineSource": "COMPILATION",
         "members": [
           44127,
           44471
@@ -464,6 +470,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-ziba-wa-awlad-al-ziba",
+        "lineSource": "COMPILATION",
         "members": [
           44248,
           44700,
@@ -576,6 +583,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-al-faritan",
+        "lineSource": "COMPILATION",
         "members": [
           46733,
           48319
@@ -621,6 +629,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-hawd",
+        "lineSource": "COMPILATION",
         "members": [
           41704,
           44901,
@@ -710,6 +719,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-azfar-al-dhib",
+        "lineSource": "COMPILATION",
         "members": [
           85805,
           86201
@@ -772,6 +782,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-dhiban",
+        "lineSource": "COMPILATION",
         "members": [
           80331,
           83895
@@ -841,6 +852,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-awaidh",
+        "lineSource": "COMPILATION",
         "members": [
           85670,
           85819,
@@ -902,6 +914,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-athafi",
+        "lineSource": "COMPILATION",
         "members": [
           89937,
           94376,
@@ -962,6 +975,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-qidr",
+        "lineSource": "COMPILATION",
         "members": [
           97892,
           98073,
@@ -1073,6 +1087,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-kawkaba-al-firq",
+        "lineSource": "COMPILATION",
         "members": [
           105199,
           106032
@@ -1133,6 +1148,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-sha",
+        "lineSource": "COMPILATION",
         "members": [
           3721,
           5372,
@@ -1224,6 +1240,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-rumh",
+        "lineSource": "COMPILATION",
         "members": [
           67275,
           67459,
@@ -1300,6 +1317,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-dhu-al-silah",
+        "lineSource": "COMPILATION",
         "members": [
           67275,
           67459,
@@ -1382,6 +1400,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-diba-wa-awlad-al-diba",
+        "lineSource": "COMPILATION",
         "members": [
           69483,
           69732,
@@ -1517,6 +1536,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-fakka",
+        "lineSource": "COMPILATION",
         "members": [
           75695,
           76127,
@@ -1612,6 +1632,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nasaq-al-shaami",
+        "lineSource": "COMPILATION",
         "members": [
           75530,
           77233,
@@ -1722,6 +1743,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nasaq-al-yamani",
+        "lineSource": "COMPILATION",
         "members": [
           75530,
           76276,
@@ -1818,6 +1840,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-rawda-wa-l-aghnam",
+        "lineSource": "COMPILATION",
         "members": [
           75530,
           84893,
@@ -1883,6 +1906,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nasr-al-waqi",
+        "lineSource": "COMPILATION",
         "members": [
           91262,
           91919,
@@ -1953,6 +1977,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nasr-al-tair",
+        "lineSource": "COMPILATION",
         "members": [
           97278,
           97649,
@@ -2018,6 +2043,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-fawaris",
+        "lineSource": "COMPILATION",
         "members": [
           94779,
           97165,
@@ -2088,6 +2114,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-ras-al-naqa",
+        "lineSource": "COMPILATION",
         "members": [
           116584,
           116631,
@@ -2111,20 +2138,7 @@
         "omittedMembersNotInField": [],
         "omittedSegmentsNotInField": [],
         "parentId": "anwa-al-naqa",
-        "segments": [
-          [
-            116631,
-            116805
-          ],
-          [
-            116805,
-            116584
-          ],
-          [
-            116584,
-            117221
-          ]
-        ],
+        "segments": [],
         "style": "FIGURE",
         "transliteration": "Ras al-Naqa",
         "transliterationScholarly": "Raʾs al-Nāqa",
@@ -2145,6 +2159,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-unuq-al-naqa",
+        "lineSource": "COMPILATION",
         "members": [
           841,
           2225,
@@ -2172,36 +2187,7 @@
         "omittedMembersNotInField": [],
         "omittedSegmentsNotInField": [],
         "parentId": "anwa-al-naqa",
-        "segments": [
-          [
-            117221,
-            841
-          ],
-          [
-            841,
-            2225
-          ],
-          [
-            2225,
-            2900
-          ],
-          [
-            2900,
-            3414
-          ],
-          [
-            3414,
-            3504
-          ],
-          [
-            3504,
-            3300
-          ],
-          [
-            3300,
-            2920
-          ]
-        ],
+        "segments": [],
         "style": "FIGURE",
         "transliteration": "Unuq al-Naqa",
         "transliterationScholarly": "ʿUnuq al-Nāqa",
@@ -2217,6 +2203,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-yada-al-naqa",
+        "lineSource": "COMPILATION",
         "members": [
           4998,
           5251,
@@ -2234,16 +2221,7 @@
         "omittedMembersNotInField": [],
         "omittedSegmentsNotInField": [],
         "parentId": null,
-        "segments": [
-          [
-            5251,
-            8068
-          ],
-          [
-            4998,
-            7607
-          ]
-        ],
+        "segments": [],
         "style": "FIGURE",
         "transliteration": "Yada al-Naqa",
         "transliterationScholarly": "Yadā al-Nāqa",
@@ -2268,6 +2246,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-naqa",
+        "lineSource": "COMPILATION",
         "members": [
           746,
           841,
@@ -2311,84 +2290,7 @@
         "omittedMembersNotInField": [],
         "omittedSegmentsNotInField": [],
         "parentId": null,
-        "segments": [
-          [
-            116631,
-            116805
-          ],
-          [
-            116805,
-            116584
-          ],
-          [
-            116584,
-            117221
-          ],
-          [
-            117221,
-            841
-          ],
-          [
-            841,
-            2225
-          ],
-          [
-            2225,
-            2900
-          ],
-          [
-            2900,
-            3414
-          ],
-          [
-            3414,
-            3504
-          ],
-          [
-            3504,
-            3300
-          ],
-          [
-            3300,
-            2920
-          ],
-          [
-            2920,
-            2505
-          ],
-          [
-            2505,
-            746
-          ],
-          [
-            746,
-            2599
-          ],
-          [
-            2599,
-            8886
-          ],
-          [
-            2505,
-            3179
-          ],
-          [
-            3179,
-            3821
-          ],
-          [
-            3821,
-            4292
-          ],
-          [
-            4292,
-            4427
-          ],
-          [
-            4427,
-            2599
-          ]
-        ],
+        "segments": [],
         "style": "FIGURE",
         "transliteration": "Al-Naqa",
         "transliterationScholarly": "al-Nāqa",
@@ -2448,6 +2350,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-kaff-al-khadib",
+        "lineSource": "UFUQ_TEACHING_AID",
         "members": [
           746,
           3179,
@@ -2482,7 +2385,24 @@
         "omittedMembersNotInField": [],
         "omittedSegmentsNotInField": [],
         "parentId": null,
-        "segments": [],
+        "segments": [
+          [
+            746,
+            3179
+          ],
+          [
+            3179,
+            4427
+          ],
+          [
+            4427,
+            6686
+          ],
+          [
+            6686,
+            8886
+          ]
+        ],
         "style": "FIGURE",
         "transliteration": "Dhat al-Kursi",
         "transliterationScholarly": "Dhāt al-Kursī",
@@ -2507,6 +2427,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-atiq",
+        "lineSource": "COMPILATION",
         "members": [
           17448,
           17702,
@@ -2559,6 +2480,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-mankib",
+        "lineSource": "COMPILATION",
         "members": [
           17448,
           17460,
@@ -2616,6 +2538,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-adud",
+        "lineSource": "COMPILATION",
         "members": [
           16335,
           17358,
@@ -2683,6 +2606,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-mirfaq",
+        "lineSource": "COMPILATION",
         "members": [
           14328,
           15863,
@@ -2748,6 +2672,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-said",
+        "lineSource": "COMPILATION",
         "members": [
           11020,
           13268,
@@ -2822,6 +2747,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-kaff-al-jadhma",
+        "lineSource": "COMPILATION",
         "members": [
           11484,
           11791,
@@ -2932,6 +2858,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-thurayya-al-sura",
+        "lineSource": "COMPILATION",
         "members": [
           11020,
           11484,
@@ -3101,6 +3028,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-ayyuq-wa-tawabiuhu",
+        "lineSource": "COMPILATION",
         "members": [
           23015,
           24608,
@@ -3171,6 +3099,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-khiba-al-shaami",
+        "lineSource": "COMPILATION",
         "members": [
           22783,
           23522,
@@ -3236,6 +3165,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-qaud",
+        "lineSource": "COMPILATION",
         "members": [
           101769,
           101958,
@@ -3312,6 +3242,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-karab",
+        "lineSource": "COMPILATION",
         "members": [
           115250,
           115623
@@ -3383,6 +3314,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-fargh-al-muqaddam",
+        "lineSource": "COMPILATION",
         "members": [
           113881,
           113963
@@ -3454,6 +3386,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-fargh-al-muakhkhar",
+        "lineSource": "COMPILATION",
         "members": [
           677,
           1067
@@ -3505,6 +3438,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-risha",
+        "lineSource": "COMPILATION",
         "members": [
           2912,
           3031,
@@ -3606,6 +3540,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-hut",
+        "lineSource": "COMPILATION",
         "members": [
           2912,
           3031,
@@ -3702,6 +3637,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-dalw",
+        "lineSource": "COMPILATION",
         "members": [
           677,
           1067,
@@ -3787,6 +3723,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-al-aybasan",
+        "lineSource": "COMPILATION",
         "members": [
           8796,
           10064
@@ -3845,6 +3782,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-sharatan",
+        "lineSource": "COMPILATION",
         "members": [
           8903,
           9884
@@ -3918,6 +3856,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-butayn",
+        "lineSource": "COMPILATION",
         "members": [
           12719,
           13061,
@@ -3991,6 +3930,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-thurayya",
+        "lineSource": "COMPILATION",
         "members": [
           17499,
           17531,
@@ -4053,6 +3993,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-hamal",
+        "lineSource": "COMPILATION",
         "members": [
           8796,
           8832,
@@ -4177,6 +4118,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-kalba-al-dabaran",
+        "lineSource": "COMPILATION",
         "members": [
           20635,
           20711
@@ -4237,6 +4179,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-qilas",
+        "lineSource": "COMPILATION",
         "members": [
           19038,
           19284,
@@ -4313,6 +4256,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-dabaran-wa-qilasuhu-wa-kalbahu",
+        "lineSource": "COMPILATION",
         "members": [
           19038,
           19284,
@@ -4428,6 +4372,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-dhira-al-maqbuda",
+        "lineSource": "COMPILATION",
         "members": [
           36188,
           37279
@@ -4502,6 +4447,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-dhira-al-mabsuta",
+        "lineSource": "COMPILATION",
         "members": [
           36850,
           37826
@@ -4566,6 +4512,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nathra",
+        "lineSource": "COMPILATION",
         "members": [
           42556,
           42806,
@@ -4639,6 +4586,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-tarf",
+        "lineSource": "COMPILATION",
         "members": [
           47508,
           47908
@@ -4699,6 +4647,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-jabha",
+        "lineSource": "COMPILATION",
         "members": [
           49583,
           49669,
@@ -4779,6 +4728,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-zubra",
+        "lineSource": "COMPILATION",
         "members": [
           54872,
           54879
@@ -4846,6 +4796,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-awwa",
+        "lineSource": "COMPILATION",
         "members": [
           57757,
           60129,
@@ -4929,6 +4880,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-ghafr",
+        "lineSource": "COMPILATION",
         "members": [
           69427,
           69701,
@@ -4983,6 +4935,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-hulba",
+        "lineSource": "COMPILATION",
         "members": [
           59364,
           59468,
@@ -5092,6 +5045,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-asad",
+        "lineSource": "COMPILATION",
         "members": [
           37279,
           37826,
@@ -5238,6 +5192,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-zubana",
+        "lineSource": "COMPILATION",
         "members": [
           72622,
           74785
@@ -5298,6 +5253,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-iklil",
+        "lineSource": "COMPILATION",
         "members": [
           78265,
           78401,
@@ -5367,6 +5323,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-shawla",
+        "lineSource": "COMPILATION",
         "members": [
           85696,
           85927
@@ -5414,6 +5371,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-aqrab",
+        "lineSource": "COMPILATION",
         "members": [
           72622,
           74785,
@@ -5531,6 +5489,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-naam-al-warid",
+        "lineSource": "COMPILATION",
         "members": [
           88635,
           89642,
@@ -5592,6 +5551,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-naam-al-sadir",
+        "lineSource": "COMPILATION",
         "members": [
           92041,
           92855,
@@ -5670,6 +5630,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-qilada",
+        "lineSource": "COMPILATION",
         "members": [
           93085,
           93683,
@@ -5741,6 +5702,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-udhi-al-naam",
+        "lineSource": "COMPILATION",
         "members": [
           90759,
           90887,
@@ -5855,6 +5817,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-balda",
+        "lineSource": "COMPILATION",
         "members": [
           95503,
           95564,
@@ -5930,6 +5893,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-naaim",
+        "lineSource": "COMPILATION",
         "members": [
           88635,
           89642,
@@ -6041,6 +6005,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-dhabih",
+        "lineSource": "COMPILATION",
         "members": [
           100064,
           100310,
@@ -6106,6 +6071,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-bula",
+        "lineSource": "COMPILATION",
         "members": [
           102618,
           103045,
@@ -6171,6 +6137,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-suud",
+        "lineSource": "COMPILATION",
         "members": [
           106278,
           106786,
@@ -6236,6 +6203,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-akhbiya",
+        "lineSource": "COMPILATION",
         "members": [
           110395,
           110672,
@@ -6314,6 +6282,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-nashira",
+        "lineSource": "COMPILATION",
         "members": [
           106985,
           107556
@@ -6378,6 +6347,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-malik",
+        "lineSource": "COMPILATION",
         "members": [
           108874,
           109074
@@ -6441,6 +6411,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-baham",
+        "lineSource": "COMPILATION",
         "members": [
           109068,
           109427
@@ -6497,6 +6468,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-humam",
+        "lineSource": "COMPILATION",
         "members": [
           112029,
           112447
@@ -6557,6 +6529,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-al-bari",
+        "lineSource": "COMPILATION",
         "members": [
           112440,
           112748
@@ -6617,6 +6590,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-sad-matar",
+        "lineSource": "COMPILATION",
         "members": [
           112051,
           112158
@@ -6668,6 +6642,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-rubaq",
+        "lineSource": "COMPILATION",
         "members": [
           113889,
           114971,
@@ -6776,6 +6751,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-haqa",
+        "lineSource": "COMPILATION",
         "members": [
           26176,
           26207,
@@ -6838,6 +6814,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-nazm",
+        "lineSource": "COMPILATION",
         "members": [
           25930,
           26311,
@@ -6896,6 +6873,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-lat",
+        "lineSource": "COMPILATION",
         "members": [
           26235,
           26237,
@@ -6961,6 +6939,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-dhawaib-al-jawza",
+        "lineSource": "COMPILATION",
         "members": [
           22449,
           22509,
@@ -7047,6 +7026,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-qaws-al-jawza",
+        "lineSource": "COMPILATION",
         "members": [
           29655,
           30343,
@@ -7141,6 +7121,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-hana",
+        "lineSource": "COMPILATION",
         "members": [
           31681,
           32362
@@ -7212,6 +7193,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-tahayi",
+        "lineSource": "COMPILATION",
         "members": [
           29655,
           30343,
@@ -7285,6 +7267,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-jawza",
+        "lineSource": "COMPILATION",
         "members": [
           22449,
           22509,
@@ -7460,6 +7443,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-kursi-al-jawza-al-muqaddam",
+        "lineSource": "COMPILATION",
         "members": [
           23364,
           23875,
@@ -7521,6 +7505,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-kursi-al-jawza-al-muakhkhar",
+        "lineSource": "COMPILATION",
         "members": [
           25606,
           25985,
@@ -7598,6 +7583,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-adhara",
+        "lineSource": "COMPILATION",
         "members": [
           33579,
           33977,
@@ -7669,6 +7655,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-al-aghriba",
+        "lineSource": "COMPILATION",
         "members": [
           25859,
           26634,
@@ -7725,6 +7712,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-naamat",
+        "lineSource": "COMPILATION",
         "members": [
           5364,
           6537,
@@ -7787,6 +7775,7 @@
         "conflicts": [],
         "evidence": "COMPILATION_ONLY",
         "figureId": "anwa-udhi-al-naam-wa-l-bayd-wa-l-qayd",
+        "lineSource": "COMPILATION",
         "members": [
           12770,
           12843,
@@ -7862,6 +7851,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-baqar",
+        "lineSource": "COMPILATION",
         "members": [
           15457,
           16852,
@@ -7941,6 +7931,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-sharasif",
+        "lineSource": "COMPILATION",
         "members": [
           49841,
           52943,
@@ -8035,6 +8026,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-milaf",
+        "lineSource": "COMPILATION",
         "members": [
           55282,
           55687,
@@ -8102,6 +8094,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-khiba-al-yamani",
+        "lineSource": "COMPILATION",
         "members": [
           59316,
           59803,
@@ -8180,6 +8173,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-shamarikh",
+        "lineSource": "COMPILATION",
         "members": [
           56343,
           57443,
@@ -8286,6 +8280,7 @@
         "conflicts": [],
         "evidence": "COLLECTIVE_NAME_IN_PRIMARY_TEXT",
         "figureId": "anwa-al-khayl-wa-afla-al-khayl",
+        "lineSource": "COMPILATION",
         "members": [
           65109,
           68002,
@@ -8390,6 +8385,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-suradan",
+        "lineSource": "COMPILATION",
         "members": [
           100751,
           101772
@@ -8450,6 +8446,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-yamamatan",
+        "lineSource": "COMPILATION",
         "members": [
           109268,
           112122
@@ -8529,6 +8526,7 @@
         ],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-zaliman",
+        "lineSource": "COMPILATION",
         "members": [
           3419,
           113368
@@ -8584,6 +8582,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-rial",
+        "lineSource": "COMPILATION",
         "members": [
           301,
           983,
@@ -8673,6 +8672,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-makaki",
+        "lineSource": "COMPILATION",
         "members": [
           765,
           3245,
@@ -8749,6 +8749,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-qata",
+        "lineSource": "COMPILATION",
         "members": [
           103738,
           105140,
@@ -8845,6 +8846,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-ana",
+        "lineSource": "COMPILATION",
         "members": [
           1562,
           112716,
@@ -8925,6 +8927,7 @@
         "conflicts": [],
         "evidence": "PRIMARY_TEXT_READ",
         "figureId": "anwa-al-sullam",
+        "lineSource": "COMPILATION",
         "members": [
           3786,
           4906,
@@ -13394,6 +13397,6 @@
       "vocalization": "From the vocalized source forms and IAU WGSN/Kunitzsch spellings; records marked UNVERIFIED need a philologist."
     }
   },
-  "payloadSha256": "fb8d6cc7d376bdcf97d1ed32840420dca86f3fefd60c254a873f280eeab7e791",
+  "payloadSha256": "6bcc2f0bbc1641fe0eb7bfe2ed9bd8e06b3c5be1cb672a157636dffe202393c0",
   "schemaVersion": 1
 }

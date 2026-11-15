@@ -69,6 +69,12 @@ export interface CuratedFigure extends CuratedRecordBase {
   readonly membershipCitations: readonly SourcePointer[];
   /** The compilation's line arrays (polylines of HIP numbers), copied unmodified. */
   readonly lines: readonly (readonly number[])[];
+  /**
+   * Owner decision (2026-11-15): lines UFUQ draws as its own teaching aid where the
+   * compilation has none (Dhat al-Kursi, essential for finding north). Drawn instead of
+   * the compilation's lines, labelled UFUQ_TEACHING_AID and never credited to the compilation.
+   */
+  readonly teachingLines?: readonly (readonly number[])[];
 }
 
 export interface CuratedStar extends CuratedRecordBase {
@@ -232,7 +238,13 @@ export function validateArabicSkyCuration(curation: ArabicSkyCuration): string[]
           line.every((hip) => Number.isInteger(hip) && hip > 0),
       );
     if (!wellFormed) errors.push(`${label}: lines must be arrays of HIP numbers.`);
-    else {
+    else if (figure.teachingLines !== undefined) {
+      const memberHips = new Set(figure.members.map((member) => member.hip));
+      const teachingOk = figure.teachingLines.every(
+        (line) => line.length > 1 && line.every((hip) => memberHips.has(hip)),
+      );
+      if (!teachingOk) errors.push(`${label}: teachingLines must join member stars.`);
+    } else {
       const memberHips = new Set(figure.members.map((member) => member.hip));
       const joined = lineSegments(figure.lines, () => true).segments.flat();
       if (joined.some((hip) => !memberHips.has(hip)))
@@ -326,8 +338,10 @@ export function buildArabicSkyCulture(
       ?.figure.figureId ?? null;
 
   const figures = drawable.map(({ figure, members, omitted }) => {
-    const lines = lineSegments(figure.lines, inField);
+    const teaching = figure.teachingLines !== undefined;
+    const lines = lineSegments(figure.teachingLines ?? figure.lines, inField);
     return {
+      lineSource: teaching ? 'UFUQ_TEACHING_AID' : 'COMPILATION',
       figureId: figure.figureId,
       parentId: parentOf(figure.figureId),
       arabic: figure.arabic,
