@@ -23,18 +23,14 @@
     "configurationVersion": "2",
     "cueConfiguration": {
       "configurationId": "report-storyboard-cues",
-      "configurationVersion": "1",
+      "configurationVersion": "2",
       "cues": {
         "KC-01": {
           "FADING": [
             "FIGURE_LINES"
           ],
           "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "TARGET_OUTLINE",
-            "SHAPE_HINT_TEXT",
-            "CARDINAL_MARKS"
+            "FIGURE_LINES"
           ],
           "INDEPENDENT": []
         },
@@ -43,11 +39,7 @@
             "FIGURE_LINES"
           ],
           "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "TARGET_OUTLINE",
-            "SHAPE_HINT_TEXT",
-            "CARDINAL_MARKS"
+            "FIGURE_LINES"
           ],
           "INDEPENDENT": []
         },
@@ -56,11 +48,7 @@
             "FIGURE_LINES"
           ],
           "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "SOURCE_PATTERN_OUTLINE",
-            "GUIDE_LINE_FULL",
-            "CARDINAL_MARKS"
+            "FIGURE_LINES"
           ],
           "INDEPENDENT": []
         },
@@ -70,8 +58,6 @@
           ],
           "GUIDED": [
             "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "SOURCE_STAR_LABEL",
             "GUIDE_LINE_FULL",
             "CARDINAL_MARKS"
           ],
@@ -84,7 +70,6 @@
           ],
           "GUIDED": [
             "FIGURE_LINES",
-            "FIGURE_NAMES",
             "CARDINAL_MARKS",
             "QIBLA_ARC_FULL",
             "QIBLA_BEARING_TEXT"
@@ -264,6 +249,6 @@
     },
     "unresolved": []
   },
-  "payloadSha256": "d15f2b06fe349c0cac7dae5273cfabb79a894de72cad5bfb1dfc2a81e9731d36",
+  "payloadSha256": "2e48101a277c6d65d7f4c4423b93cdd8094b5e74c7be8ab2caa82e9326d267d8",
   "schemaVersion": 1
 }

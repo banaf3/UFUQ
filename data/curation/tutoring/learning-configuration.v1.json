@@ -169,61 +169,31 @@
     "cueConfiguration": {
       "kind": "ADAPTIVE",
       "configurationId": "report-storyboard-cues",
-      "configurationVersion": "1",
+      "configurationVersion": "2",
       "status": "REVIEW_REQUIRED",
       "cues": {
         "KC-01": {
-          "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "TARGET_OUTLINE",
-            "SHAPE_HINT_TEXT",
-            "CARDINAL_MARKS"
-          ],
+          "GUIDED": ["FIGURE_LINES"],
           "FADING": ["FIGURE_LINES"],
           "INDEPENDENT": []
         },
         "KC-02": {
-          "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "TARGET_OUTLINE",
-            "SHAPE_HINT_TEXT",
-            "CARDINAL_MARKS"
-          ],
+          "GUIDED": ["FIGURE_LINES"],
           "FADING": ["FIGURE_LINES"],
           "INDEPENDENT": []
         },
         "KC-03": {
-          "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "SOURCE_PATTERN_OUTLINE",
-            "GUIDE_LINE_FULL",
-            "CARDINAL_MARKS"
-          ],
+          "GUIDED": ["FIGURE_LINES"],
           "FADING": ["FIGURE_LINES"],
           "INDEPENDENT": []
         },
         "KC-04": {
-          "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "SOURCE_STAR_LABEL",
-            "GUIDE_LINE_FULL",
-            "CARDINAL_MARKS"
-          ],
+          "GUIDED": ["FIGURE_LINES", "GUIDE_LINE_FULL", "CARDINAL_MARKS"],
           "FADING": ["FIGURE_LINES"],
           "INDEPENDENT": []
         },
         "KC-05": {
-          "GUIDED": [
-            "FIGURE_LINES",
-            "FIGURE_NAMES",
-            "CARDINAL_MARKS",
-            "QIBLA_ARC_FULL",
-            "QIBLA_BEARING_TEXT"
-          ],
+          "GUIDED": ["FIGURE_LINES", "CARDINAL_MARKS", "QIBLA_ARC_FULL", "QIBLA_BEARING_TEXT"],
           "FADING": ["FIGURE_LINES", "QIBLA_BEARING_TEXT"],
           "INDEPENDENT": []
         }
