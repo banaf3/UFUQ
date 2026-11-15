@@ -55,6 +55,9 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
   const [step, setStep] = useState(lesson.currentStep);
   const [summary, setSummary] = useState<readonly SkyOverlayV2[]>([]);
   const [feedback, setFeedback] = useState<StepFeedbackV2[]>([]);
+  /** The latest result, shown as a card; a correct one waits for Next. */
+  const [latest, setLatest] = useState<StepFeedbackV2 | null>(null);
+  const [awaiting, setAwaiting] = useState<StepFeedbackV2 | null>(null);
   const [focused, setFocused] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
@@ -128,9 +131,15 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
       try {
         const result = await submitAnswer(lesson.lessonId, step.stepId, answer);
         setFeedback((previous) => [result, ...previous]);
-        if (result.nextStep?.stepId !== step.stepId) setSelected([]);
-        if (result.completed) setSummary(result.overlays);
-        setStep(result.nextStep);
+        setLatest(result);
+        if (result.result === 'INCORRECT') {
+          // Same step again, possibly with more support; the learner tries again.
+          setStep(result.nextStep);
+        } else {
+          // Correct: show the result and wait for Next.
+          setAwaiting(result);
+          if (result.completed) setSummary(result.overlays);
+        }
       } catch (caught) {
         if (
           caught instanceof ApiError &&
@@ -150,6 +159,13 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
     [busy, lesson.lessonId, step],
   );
 
+  const goNext = () => {
+    if (!awaiting) return;
+    setStep(awaiting.nextStep);
+    setSelected([]);
+    setAwaiting(null);
+    setLatest(null);
+  };
   const cycle = (delta: number) => {
     if (visibleStars.length === 0) return;
     const index = visibleStars.findIndex((entry) => entry.star.handle === focused);
@@ -194,11 +210,13 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
       ']': () => cycle(1),
       '[': () => cycle(-1),
       Enter: () =>
-        directionStep
-          ? confirmDirection()
-          : pointStep
-            ? confirmPoint()
-            : focused && selectStar(focused),
+        awaiting
+          ? goNext()
+          : directionStep
+            ? confirmDirection()
+            : pointStep
+              ? confirmPoint()
+              : focused && selectStar(focused),
     };
     const action = actions[event.key];
     if (action) {
@@ -308,7 +326,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           </section>
         )}
 
-        {pointStep && (
+        {pointStep && !awaiting && (
           <section aria-label="Put the circle on the answer">
             <p className="hint">
               Drag the sky (or use the arrow keys) until the circle is on the answer. Zoom in for a
@@ -320,7 +338,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           </section>
         )}
 
-        {step && selectAllStep && (
+        {step && selectAllStep && !awaiting && (
           <section className="star-list" aria-labelledby="star-list-title">
             <h3 id="star-list-title">Bright stars above the horizon</h3>
             <p className="hint">Select every star of the pattern, then submit the selection.</p>
@@ -366,7 +384,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           </section>
         )}
 
-        {directionStep && (
+        {directionStep && !awaiting && (
           <section>
             <p className="hint">
               {step?.knowledgeComponentId === 'KC-05'
@@ -383,22 +401,23 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
 
         <section className="feedback" aria-live="polite" aria-label="Feedback">
           {error && <p className="error">{error}</p>}
-          {feedback.map((entry) => (
-            <p
-              key={`${entry.stepId}-${entry.attempt}`}
-              className={`result result-${entry.result.toLowerCase()}`}
-            >
-              <strong>
-                {entry.result === 'MEASURED_NO_TOLERANCE'
-                  ? 'Measured'
-                  : entry.result === 'CORRECT'
-                    ? 'Correct'
+          {latest && (
+            <div className={`result-card result-${latest.result.toLowerCase()}`}>
+              <h3>
+                {latest.result === 'CORRECT'
+                  ? 'Correct'
+                  : latest.result === 'MEASURED_NO_TOLERANCE'
+                    ? 'Measured'
                     : 'Try again'}
-                :
-              </strong>{' '}
-              {entry.feedback}
-            </p>
-          ))}
+              </h3>
+              <p>{latest.feedback}</p>
+              {awaiting && (
+                <button type="button" className="primary" onClick={goNext}>
+                  {awaiting.completed ? 'Finish' : 'Next →'}
+                </button>
+              )}
+            </div>
+          )}
           {guideTexts(overlays).map((guide) => (
             <p key={guide.key} className="guide">
               {guide.text}
