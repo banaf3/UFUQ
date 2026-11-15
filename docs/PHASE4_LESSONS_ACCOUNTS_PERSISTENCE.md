@@ -204,3 +204,10 @@ marked when the place has one. It appears:
   would otherwise reveal north.
 
 The contract gains `LessonStepPromptV2.compassRing` and `WalkthroughFrameV2.compassRing`.
+
+## Update 2026-11-15 (fifth owner request): no Qibla arc or place name in assessment
+
+The orange Qibla arc and its "القبلة Qibla 292°" marker are shown only in the walkthrough.
+No assessment support level draws them (cue configuration version 3), and the guided hint
+no longer names the place: "The Qibla here is 292° 07′ clockwise from True North". The
+compass ring in the Qibla step shows the facing bearing only.

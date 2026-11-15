@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "note": "Learning configuration for ScientificProfileV1 lessons, taken from the founding report on the owner's instruction of 2026-11-15 ('as the report stated'): the provisional parameters of Table 3-14, the 0.85 threshold of section 2.5.4 (equal to or greater than), an update after every assessment attempt (section 2.5.4 steps 1-8) and the adaptive responses of Table 2-5. Where the report leaves a choice open, the implementer's reading is marked in each policy's 'basis' and in docs/IMPLEMENTATION_DECISIONS.md (IMP-014). Nothing here is approved: the artifact stays REVIEW_REQUIRED, so strict ScientificProfileV1 lessons fail closed until a named reviewer records approval (BKT-001..BKT-005), and the review preview runs it.",
   "configuration": {
-    "configurationVersion": "2",
+    "configurationVersion": "3",
     "configurationScope": "SCIENTIFIC_PROFILE_V1",
     "knowledgeComponents": [
       {
@@ -193,7 +193,7 @@
           "INDEPENDENT": []
         },
         "KC-05": {
-          "GUIDED": ["FIGURE_LINES", "CARDINAL_MARKS", "QIBLA_ARC_FULL", "QIBLA_BEARING_TEXT"],
+          "GUIDED": ["FIGURE_LINES", "CARDINAL_MARKS", "QIBLA_BEARING_TEXT"],
           "FADING": ["FIGURE_LINES", "QIBLA_BEARING_TEXT"],
           "INDEPENDENT": []
         }

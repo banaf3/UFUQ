@@ -20,7 +20,7 @@
       "status": "REPORT_EXAMPLE_NOT_CALIBRATED"
     },
     "configurationScope": "SCIENTIFIC_PROFILE_V1",
-    "configurationVersion": "2",
+    "configurationVersion": "3",
     "cueConfiguration": {
       "configurationId": "report-storyboard-cues",
       "configurationVersion": "2",
@@ -71,7 +71,6 @@
           "GUIDED": [
             "FIGURE_LINES",
             "CARDINAL_MARKS",
-            "QIBLA_ARC_FULL",
             "QIBLA_BEARING_TEXT"
           ],
           "INDEPENDENT": []
@@ -249,6 +248,6 @@
     },
     "unresolved": []
   },
-  "payloadSha256": "2e48101a277c6d65d7f4c4423b93cdd8094b5e74c7be8ab2caa82e9326d267d8",
+  "payloadSha256": "b4288d028a60a05fc573b50d13b4e713a3508a46187b84e56b9dbec39e16bb72",
   "schemaVersion": 1
 }

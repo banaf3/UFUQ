@@ -48,10 +48,10 @@
     {
       "approvalState": "REVIEW_REQUIRED",
       "artifactId": "learning-configuration-v1",
-      "byteLength": 6538,
+      "byteLength": 6508,
       "path": "data/generated/learning-configuration-v1.json",
-      "payloadSha256": "2e48101a277c6d65d7f4c4423b93cdd8094b5e74c7be8ab2caa82e9326d267d8",
-      "sha256": "08638c3af54fc93c077a1629c432b54197d4564e9d9e89ed4944f75a156e4c8a",
+      "payloadSha256": "b4288d028a60a05fc573b50d13b4e713a3508a46187b84e56b9dbec39e16bb72",
+      "sha256": "d8aaa165040e522c45ec9afb24ce94616496a44d647d1cde3b8d991524c26f2f",
       "tracked": true
     },
     {
