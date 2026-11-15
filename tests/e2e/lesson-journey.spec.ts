@@ -136,7 +136,6 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
   await expect.poll(() => seen.helper).not.toBeNull();
   let at = await moveCircleTo(page, START, place(seen.helper as number[]));
   await confirmCircle(page);
-  await expect(page.getByLabel('Feedback')).toContainText('The circle was');
   await expect(page.getByText('Step 1 of 4')).toBeVisible(); // waits for Next
   await next(page);
   await expect(page.getByText('Step 2 of 4')).toBeVisible();
@@ -151,16 +150,16 @@ test('adaptive synthetic lesson: guided first, support fades in the next lesson'
 
   // Step 3: graded only because the synthetic fixture carries a synthetic tolerance.
   at = await faceNorthAndConfirm(page, at);
-  await expect(page.getByLabel('Feedback')).toContainText('differs from True North by 0.0 degrees');
-  await expect(page.getByLabel('Feedback')).toContainText('inside the 10.0° tolerance');
+  await expect(page.getByLabel('Feedback')).toContainText('You are facing True North');
+  await expect(page.getByLabel('Feedback')).not.toContainText('degrees');
   await next(page);
   await expect(page.getByText('Step 4 of 4')).toBeVisible();
-  // The Qibla step shows the compass ring and the bearing the learner faces.
-  await expect(page.getByText(/Facing \d+° from True North/)).toBeVisible();
+  // The Qibla step shows the cardinal letters and the ring, but no degrees.
+  await expect(page.getByText(/Facing \d+°/)).toHaveCount(0);
 
   // Step 4: the Qibla, computed for the observer and graded by the same synthetic tolerance.
   await faceQiblaAndConfirm(page, at);
-  await expect(page.getByLabel('Feedback')).toContainText('differs from the Qibla by 0.6 degrees');
+  await expect(page.getByLabel('Feedback')).toContainText('You are facing the Qibla');
   await next(page, 'Finish');
   await expect(page.getByRole('heading', { name: 'Lesson complete' })).toBeVisible();
   await page.getByTestId('model-trace').locator('summary').click();

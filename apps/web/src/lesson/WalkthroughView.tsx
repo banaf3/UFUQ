@@ -152,6 +152,7 @@ export function WalkthroughView({
       const ring = compassRingLayers({
         headingAzimuth: heading,
         qiblaAzimuth: ringSpec.qiblaAzimuthRadians,
+        numbered: true,
       });
       lines.unshift(...ring.lines);
       for (const label of ring.labels) if (!seen.has(label.text)) unique.push(label);

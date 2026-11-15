@@ -200,7 +200,6 @@ function labelsOf(labels: readonly CulturalLabel[]): OverlayLabelV2[] {
   }));
 }
 
-const degrees = (radians: number) => ((radians * 180) / Math.PI).toFixed(1);
 
 /** Transport rounding (about 0.2 arcsec); the server keeps full precision for scoring. */
 const roundedEnu = (enu: readonly number[]): [number, number, number] => [
@@ -1069,20 +1068,9 @@ export class LessonService {
         cueStarId === null
           ? null
           : (session.context.directions.get(cueStarId)?.azimuthRadians ?? null);
-      const difference = degrees(measurement.angularDifferenceRadians);
       const name = directionName(direction);
-      const tolerance =
-        direction.learnerTolerance === null
-          ? ''
-          : `${degrees(direction.learnerTolerance.maximumDifferenceRadians)}°`;
-      const cueText =
-        cueAzimuth === null
-          ? ''
-          : ` The cue star itself is at azimuth ${degrees(cueAzimuth > Math.PI ? cueAzimuth - 2 * Math.PI : cueAzimuth)} degrees: close to True North, but not exactly on it.`;
-      const bearingText =
-        direction.definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING'
-          ? ` Here the Qibla is ${degreesMinutes(target)} clockwise from True North.`
-          : '';
+      // Learner feedback states the outcome only; the measured difference stays in the
+      // technical measurement and trace (owner request 2026-11-15: no accuracy figures).
       return {
         score: measurement,
         measurement: {
@@ -1091,10 +1079,10 @@ export class LessonService {
         },
         feedback: (outcome: string) =>
           outcome === 'UNCLASSIFIED'
-            ? `${step.successFeedback} Your direction differs from ${name} by ${difference} degrees.${cueText} No pass mark is set yet.`
+            ? `${step.successFeedback} No pass mark is set yet.`
             : outcome === 'CORRECT'
-              ? `${step.successFeedback} Your direction differs from ${name} by ${difference} degrees, inside the ${tolerance} tolerance.${cueText}${bearingText}`
-              : `${step.retryFeedback} Your direction differs from ${name} by ${difference} degrees, outside the ${tolerance} tolerance.`,
+              ? `You are facing ${name}. ${step.successFeedback}`
+              : `You are not facing ${name} yet. ${step.retryFeedback} Turn and confirm again.`,
       };
     }
     const pattern = patterns.get(step.patternId as string) as SkyPattern;
@@ -1126,8 +1114,8 @@ export class LessonService {
         measurement: null,
         feedback: (outcome: string) =>
           outcome === 'CORRECT'
-            ? `${step.successFeedback} The circle was ${degrees(pointed.separationRadians ?? 0)}° from the nearest star of ${name}.`
-            : `${step.retryFeedback} The circle must cover a star of ${name}: drag the sky until it does, and zoom in for a smaller circle.`,
+            ? step.successFeedback
+            : `${step.retryFeedback} Drag the sky until the circle is on ${name}, then confirm again.`,
       };
     }
     const score: StarSetScore = scoreStarSetSelection(
@@ -1159,6 +1147,9 @@ export class LessonService {
         ? []
         : configuredCues(configuration.cueConfiguration, kc, scaffoldState);
     const rendered = this.renderCues(session, step, configured);
+    const qiblaStep =
+      session.context.content.directions.find((d) => d.stableId === step.directionId)?.definition
+        .kind === 'QIBLA_SPHERICAL_INITIAL_BEARING';
     const cueConfiguration = configuration.cueConfiguration;
     const cues: IssuedTaskCues = {
       snapshotId: `cues-${randomBytes(6).toString('hex')}`,
@@ -1180,15 +1171,14 @@ export class LessonService {
         taskKind: step.taskKind,
         knowledgeComponentId: kc,
         prompt: step.prompt,
-        hideCardinalLabels:
-          mode === 'ADAPTIVE'
+        // The Qibla task comes after True North is found, so the learner may know the
+        // cardinal points: N, E, S and W and the ring are the instrument, not a cue.
+        hideCardinalLabels: qiblaStep
+          ? false
+          : mode === 'ADAPTIVE'
             ? !rendered.issued.includes('CARDINAL_MARKS')
             : step.taskKind === 'INDICATE_DIRECTION',
-        // The Qibla task is the turn from True North, so its ring is the instrument, not a cue.
-        compassRing:
-          rendered.issued.includes('CARDINAL_MARKS') ||
-          session.context.content.directions.find((d) => d.stableId === step.directionId)
-            ?.definition.kind === 'QIBLA_SPHERICAL_INITIAL_BEARING',
+        compassRing: qiblaStep || rendered.issued.includes('CARDINAL_MARKS'),
         support: {
           mode,
           scaffoldState: cues.scaffoldState,

@@ -94,6 +94,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
     const ring = compassRingLayers({
       headingAzimuth: normalizeHeading(view.azimuth),
       qiblaAzimuth: null,
+      numbered: false,
     });
     return { lines: [...ring.lines, ...base.lines], labels: [...base.labels, ...ring.labels] };
   }, [overlays, lesson.stars, indexOf, ringOn, view.azimuth]);
@@ -273,10 +274,6 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
             Circle at azimuth {headingDegrees.toFixed(0)}° · altitude{' '}
             {toDegrees(view.altitude).toFixed(0)}°
           </div>
-        ) : ringOn ? (
-          <div className="heading-readout" aria-live="polite">
-            Facing {Math.round(headingDegrees) % 360}° from True North
-          </div>
         ) : (
           !directionStep &&
           !step?.hideCardinalLabels && (
@@ -400,7 +397,7 @@ export function LessonView({ lesson, onExit }: { lesson: LessonSessionV2; onExit
           <section>
             <p className="hint">
               {step?.knowledgeComponentId === 'KC-05'
-                ? 'The compass ring counts degrees from True North. Turn until the ring reads the Qibla bearing of this place, then confirm.'
+                ? 'You found True North, so you know where east, south and west are. Turn to where the Qibla is from here, then confirm.'
                 : 'Turn the view until the centre marker is on the horizon below al-Jady.'}
             </p>
             <button type="button" className="primary" disabled={busy} onClick={confirmDirection}>

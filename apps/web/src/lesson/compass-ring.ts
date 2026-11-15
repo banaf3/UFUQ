@@ -29,6 +29,8 @@ export interface CompassRingOptions {
   readonly headingAzimuth: number | null;
   /** The Qibla bearing to mark, or null. */
   readonly qiblaAzimuth: number | null;
+  /** Degree numbers and the "You face N°" text; off in assessments (ticks and marker only). */
+  readonly numbered: boolean;
 }
 
 const tick = (azimuth: number, top: number): Vec3[] => [
@@ -57,7 +59,7 @@ export function compassRingLayers(options: CompassRingOptions): {
       color: RING_COLOURS.tick,
       width: major ? 2 : 1.2,
     });
-    if (major)
+    if (major && options.numbered)
       labels.push({
         direction: directionFromAltAz(NUMBER_ALTITUDE, degrees * DEG),
         text: `${degrees}`,
@@ -90,14 +92,15 @@ export function compassRingLayers(options: CompassRingOptions): {
       color: RING_COLOURS.heading,
       width: 3,
     });
-    labels.push({
-      direction: directionFromAltAz(MARKER_LABEL_ALTITUDE, options.headingAzimuth),
-      text: `You face ${degreesText(options.headingAzimuth)}`,
-      color: RING_COLOURS.heading,
-      font: `600 12px ${NAME_FONT}`,
-      priority: -2,
-      offset: 0,
-    });
+    if (options.numbered)
+      labels.push({
+        direction: directionFromAltAz(MARKER_LABEL_ALTITUDE, options.headingAzimuth),
+        text: `You face ${degreesText(options.headingAzimuth)}`,
+        color: RING_COLOURS.heading,
+        font: `600 12px ${NAME_FONT}`,
+        priority: -2,
+        offset: 0,
+      });
   }
   return { lines, labels };
 }
