@@ -1284,7 +1284,7 @@ export class LessonService {
         }
       } else if (cue === 'QIBLA_BEARING_TEXT' && qiblaAzimuth !== undefined) {
         hints.push(
-          `From ${context.observerLabel}, the Qibla is ${degreesMinutes(qiblaAzimuth)} clockwise from True North (${degreesMinutes(2 * Math.PI - qiblaAzimuth)} west of north).`,
+          `The Qibla here is ${degreesMinutes(qiblaAzimuth)} clockwise from True North (${degreesMinutes(2 * Math.PI - qiblaAzimuth)} west of north).`,
         );
         applied = true;
       }
